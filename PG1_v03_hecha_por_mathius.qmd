@@ -1,0 +1,481 @@
+---
+title: "PROYECTO"
+subtitle: "PG1"
+author: "GRUPO 6"
+date: "`r Sys.Date()`"
+format:
+  html:
+    self-contained: true
+    embed-resources: true
+    toc: true
+    toc-depth: 3
+---
+
+# 1. Introducción
+
+Actualmente, muchos estudiantes usan la inteligencia artificial para realizar sus actividades académicas, ya sea para resumir información, estudiar para exámenes, etcétera. Por ello, nuestro proyecto buscará analizar cómo el uso de esta herramienta afecta al desempeño académico de los estudiantes. Asimismo, también consideraremos el factor del sueño y su impacto en el rendimiento de los universitarios.
+
+## 1.1 Relevancia
+
+Este tema es importante porque la mayoría de estudiantes usa la inteligencia artificial diariamente para sus actividades académicas. Analizar este uso nos puede ayudar a saber con qué frecuencia la utilizan, para qué lo usan y en qué cursos hacen más consultas. También nos puede servir para ver si el uso de estas herramientas realmente les ayuda a comprender mejor los temas o a ahorrar tiempo que muchas veces hace falta. Además, consideraremos otros factores asociados a hábitos de los estudiantes, como las horas de sueño y horas efectivas de estudio, para determinar su influencia en el rendimiento académico.
+
+## 1.2 Planificación
+
+### Diagrama de Gantt
+
+```{r}
+library(ggplot2)
+
+tareas <- data.frame(
+  tarea = c(
+    "Recolección de datos",
+    "Limpieza de datos",
+    "Análisis exploratorio",
+    "Análisis estadístico",
+    "Redacción del informe",
+    "Revisión final"
+  ),
+  inicio = as.Date(c(
+    "2026-09-12", "2026-10-18", "2026-10-21", "2026-10-24", "2026-10-28", "2026-10-30"  # TODO: completar fechas "YYYY-MM-DD"
+  )),
+  fin = as.Date(c(
+    "2026-10-18", "2026-10-21", "2026-10-24", "2026-10-28", "2026-10-30", "2026-11-02"  # TODO: completar fechas "YYYY-MM-DD"
+  )),
+  seccion = c(
+    "Planificación",
+    "Planificación",
+    "Desarrollo",
+    "Desarrollo",
+    "Cierre",
+    "Cierre"
+  )
+)
+
+ggplot(tareas,
+       aes(x = inicio,
+           xend = fin,
+           y = tarea,
+           yend = tarea,
+           color = seccion)) +
+  geom_segment(linewidth = 8) +
+  labs(title = "Diagrama de Gantt",
+       x = "Fecha",
+       y = "Actividad") +
+  theme_minimal()
+```
+
+## 1.3 Objetivos
+
+### 1.3.1 Objetivo general
+
+Analizar el impacto de las horas de sueño y el uso de IA en el rendimiento académico de lo estudiantes UTEC de Estadística sección 1 durante el ciclo 2026-2.
+
+### 1.3.2 Objetivos específicos
+
+<!-- ¿Es necesario que involucra al sueño? (mostrar contraejemplo) -->
+
+1)  Analizar la existencia de alguna relación entre la frecuencia diaria de consultas a la Inteligencia Artificial y el Nivel de satisfacción con el avance académico diario. Análisis bivariado: "N° consultas a IA realizada ese día" y "Nivel de satisfacción con el avance académico diario"
+2)  Analizar si existe alguna correlación entre el número de consultas a la IA en un cierto día y la cantidad de horas dedicadas al estudio. Se usarán las variables "N° de consultas a IA realizadas ese día" y "Suma de horas efectivas de estudio".
+3)  Identificar si el curso de mayor consulta influye en el principal uso que se le da a la Inteligencia Artificial ese día y determinar qué usos generan mayor número de tareas con tiempo ahorrado. Para este caso se usará doble análisis bivariado. ("curso sobre el cual se hicieron la mayoría de consultas de IA" vs "Principal uso de IA ese día") y ("Principal uso de IA ese día" vs "N° de tareas ese día en las que usar IA le ahorró tiempo")
+4)  Determinar si existe una relación entre las horas de sueño de la noche anterior y el nivel de comprensión de las actividades académicas realizadas durante el día. Se usará un análisis bivariado a las variables "Horas de sueño de la noche anterior" y "Nivel de comprensión de las actividades académicas realizadas ese día".
+
+# 2. Datos
+
+## 2.1 Población objetivo
+
+Estudiantes universitarios de UTEC durante el semestre 2026-2 que cursan la materia de Estadística y Probabilidades de la sección 01.
+
+### 2.1.1 Unidad muestral
+
+Está conformada por los estudiantes universitarios evaluados de forma individual y diaria. A cada uno de ellos se le aplicará un registro de datos para medir su comportamiento diario, su rendimiento académico y su relación con el uso de Inteligencia Artificial (en la tabla principal).
+
+Además se contará con dos tablas externas:
+
+"Tabla Exámenes": en la que cada registro tenga los datos de cada examen tomado por el estudiante. En este caso, cada examen es la unidad muestral.
+
+"Tabla Demográfica": la que contará con los datos de los estudiantes que son invariantes en el ciclo. Para esta tabla, cada estudiante también sería la unidad muestral.
+
+### 2.1.2 Representatividad de la muestra
+
+<!-- TODO: Explicar qué medidas se tomaron para aproximarse a una muestra representativa (difusión, diversidad de perfiles, periodo de recolección, etc.). -->
+
+Con la finalidad de que la muestra obtenida refleje a la población y se minimicen posibles sesgos, se plantean las siguientes medidas:
+
+Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario y así evitando el sesgo de no respuesta 
+
+Instrumento de registro diario estandarizado: La recolección se ejecutará mediante un formulario digital (Forms) configurado con restricciones de envío único por día, garantizando la consistencia temporal de los registros.  
+
+Medición al cierre del día: El cuestionario se realizará al final de cada día el cual permitirá registra las variables diarias (como las horas de estudio o el uso de IA), atenuando el sesgo de memoria. El registro de un día se contará como válido si este se hace después de las 9:30 p.m. pero antes de la medianoche.
+
+## 2.2 Tipo de muestreo
+
+<!-- ¿muestreo sistematico por conveniencia? -->
+
+Se utilizará un muestreo sistematico por conveniencia, estructurado bajo un diseño de recolección de datos de tipo longitudinal . Esta decisión responde a la exigencia del estudio, el cual requiere que los estudiantes reporten sus métricas académicas, de sueño y de uso de Inteligencia Artificial de forma diaria. El diseño longitudinal generará múltiples observaciones repetidas por cada estudiante, otorgándole al estudio una solidez estadística necesaria para capturar patrones de comportamiento consistentes en el tiempo.
+
+## 2.3 Recolección de datos
+
+<!-- TODO: Indicar instrumento de recolección (encuesta, base de datos secundaria, etc.), tamaño de muestra obtenido y enlace si aplica. -->
+
+Se diseñarán 3 forms (Google Forms) diferentes. Uno será para los datos demográficos (solo se rellenará una vez por estudiante), otro para el diario (se rellenará una vez por día) y otro para los exámenes (se rellenará una vez por cada examen tomado). Se espera idealmente un tamaño de muestra de 1800 para la tabla diaria y un tamaño de muestra de 45 para la tabla demográfica. En cuanto a la tabla de exámenes, no hay un estimado de cuántas muestras esperar.
+
+## 2.4 Variables
+
+### 2.4.1 Consideración de los tipos de variables
+
+| Variable | Tipo general | Subtipo |
+|------------------------|------------------------|------------------------|
+| N° de consultas a IA realizadas ese día | Cuantitativa | Discreta |
+| Principal uso de IA ese día | Cualitativa | Nominal |
+| Nivel de satisfacción con el avance académico diario | Cualitativa | Ordinal |
+| N° de tareas ese día en las que usar IA le ahorró tiempo | Cuantitativa | Discreta |
+| curso sobre el cual se hicieron la mayoría de consultas de IA | Cualitativa | Nominal |
+| Suma de horas efectivas de estudio | Cuantitativa | Continua |
+| Horas de sueño de la noche anterior | Cuantitativa | Continua |
+| Nivel de comprensión de las actividades académicas realizadas ese día | Cualitativa | Ordinal |
+
+### 2.4.2 Libreta de códigos (codebook / restricciones)
+
+| Variable | Restricción / Rango o categorías válidas |
+|-----------------------------------|------------------------------------|
+| N° consultas a IA realizada ese día | x \>= 0 |
+| Nivel de satisfacción con el avance académico diario | Likert 5 niveles: Muy baja → Muy alta |
+| Suma de horas efectivas de estudio | x \>= 0 |
+| curso sobre el cual se hicieron la mayoría de consultas de IA | Texto libre |
+| Principal uso de IA ese día | resumir, resolver ejercicios, redactar, programar, otros |
+| N° de tareas ese día en las que usar IA le ahorró tiempo | x \>= 0 |
+| Horas de sueño de la noche anterior | 0 \<= x \<= 24 |
+| Nivel de comprensión de las actividades académicas realizadas ese día | Muy bajo, Bajo, Moderado, Alto, Muy alto |
+
+### 2.4.3 Mediciones
+
+<!-- TODO: Explicar cómo se mide/registra cada variable y, si corresponde, las fórmulas de variables construidas (índices compuestos, etc.). -->
+
+Cada variable va a ser registrada en el formulario de Google Forms, el cual contendrá todas las restricciones de valores que puede tomar la variable dependiendo de su tipo y de su naturaleza.
+
+## 2.5 Limpieza
+
+### Paso 0: Obtener el conjunto de datos
+
+```{r}
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+
+DF <- read_csv("RespuestasDiario.csv")
+```
+
+```{r}
+names(DF)
+DFL <- DF
+```
+
+Renombramos las columnas que utilizaremos
+
+```{r}
+DFL %>% rename(hora = `Marca temporal`
+               , consultas = `¿Cuántas consultas a una IA realizaste hoy?`
+               , uso = `¿Cuál fue el uso principal que le diste a la IA hoy?`
+               , satisfaccion = `¿Qué nivel de satisfacción tienes con tu avance académico de hoy?`
+               , tareas = `¿En cuántas tareas de hoy el uso de la IA te ahorró tiempo?`
+               , curso = `¿Cuál es el código del curso sobre el que hiciste la mayoría de tus consultas a la IA hoy?`
+               , estudio = `¿Cuántas horas efectivas de estudio acumulaste el día de hoy?`
+               , sueno = `¿Cuántas horas dormiste la noche pasada?`
+               , comprension = `¿Qué nivel de comprensión tuviste de las actividades académicas que realizaste hoy?`
+               , email = `Dirección de correo electrónico`) -> DFL
+```
+
+
+Nos quedamos con las columnas de nuestros objetivos específicos.
+
+```{r}
+DFL <- DFL[, c("hora", "consultas", "uso", "satisfaccion", "tareas", "curso", "estudio", "sueno", "comprension", "email")]
+names(DFL)
+```
+
+### Vista del subset final
+
+```{r}
+dim(DFL)
+head(DFL)
+sapply(DFL, class)
+```
+
+
+### Paso 1: Radiografía de la base
+
+<!-- Detectar valores faltantes (NA), cantidad de ceros y cardinalidad de cada variable. -->
+
+Cantidad de valores faltantes (NA) por columna:
+
+```{r}
+colSums(is.na(DFL))
+```
+
+Porcentaje de valores faltantes (NA) por columna:
+
+```{r}
+round(colSums(is.na(DFL)) / nrow(DFL) * 100, 2)
+```
+
+<!-- TODO: Hallazgo sobre valores faltantes. -->
+
+#### Análisis de ceros
+
+Procedemos a analizar la variable `consultas`, la cual representa la cantidad de consultas realizadas a la IA en un determinado día.
+```{r}
+sum(DFL$consultas == 0, na.rm = TRUE)
+```
+En este caso, sería lógico pensar inicialmente que en los días ya transcurridos han habido a lo mucho 4 personas que no han usa la IA un día entero.
+
+
+Ahora procedemos con la variable `tareas`, la cual representa la cantidad de tareas que la IA ha ayudado a resolver más rápidamente.
+```{r}
+sum(DFL$tareas == 0, na.rm = TRUE)
+```
+Se podría razonar a primera vista que han habido 7 personas a las cuales la IA no les ha ayudado a resolver ni una sola tarea en un cierto día. Esto podría deberse a que la persona no usó IA ese día (conexión con el análisis anterior) o no consiguió los resultados que esperaba en la respuesta de la IA.
+
+
+Ahora analizamos la variable `estudio` (Horas efectivas de estudio en un día)
+```{r}
+sum(DFL$estudio == 0, na.rm = TRUE)
+```
+Considerando este dato aisladamente, no sería descabellado pensar que han habido a lo mucho 3 estudiantes que no han estudiado durante un día entero. Tal vez son alumnos de primer año.
+
+
+Pasemos con la variable `sueno`, la cual representa la cantidad de horas de sueño de la noche anterior al día del registro en el formulario 
+```{r}
+sum(DFL$sueno == 0, na.rm = TRUE)
+```
+Se podría interpretar este dato argumentando que aún no han habido estudiantes que se han pasado despiertos desde la noche hasta la mañana del día siguiente.
+
+
+<!-- TODO: Interpretar si los ceros son respuestas válidas o posibles errores. -->
+
+#### Análisis de cardinalidad
+
+```{r}
+length(unique(DFL$comprension))
+unique(DFL$comprension)
+```
+Considerando que la variable `comprension` es una categórica ordinal de 5 niveles, que solo hayan habido 4 categorías seleccionadas no es tan sorprendente, pues el periodo de toma de datos aún es muy reducido.
+
+
+```{r}
+length(unique(DFL$sueno))
+unique(DFL$sueno)
+```
+En cuanto a la variable `sueno`, se puede notar que ha tomado unos pocos valores considerando que se trata de una numérica continua. Esto podría deberse a la discretización de la variable y al hecho de que el rango de valores admisibles está tan solo en el intervalo [0, 24]
+
+
+```{r}
+length(unique(DFL$estudio))
+unique(DFL$estudio)
+```
+Con variable numérica continua `estudio` se puede ver un fenómeno similar: discretización parcial en el intervalo [0, 24]. La cantidad de valores que está tomando no es realmente amplia para su naturaleza.
+
+
+```{r}
+length(unique(DFL$curso))
+unique(DFL$curso)
+```
+En el caso de `curso` podemos ya notar una gran variabilidad en pocos datos. Era algo esperado debido a que la UTEC dicta varios cursos y los alumnos de Estadística provienen de varias carreras. También se pueden notar 2 representaciones de nulos: `-` y `ninguno`
+
+
+```{r}
+length(unique(DFL$tareas))
+unique(DFL$tareas)
+```
+En cuanto a la variable discreta `tareas`, se puede ver que toma una cantidad reducida de valores encerrados en el intervalo [0, 4], lo cual tiene sentido si consideramos la complejidad de las tareas universitarias y el corto tiempo libre que los estudiantes tienen para realizar las tareas, estén usando IA o no.
+
+
+```{r}
+length(unique(DFL$satisfaccion))
+unique(DFL$satisfaccion)
+```
+En el caso de la categórica ordinal `satisfaccion`, esta presentaba una escala con 5 valores posibles, por lo que es totalmente normal que haya tomado por lo menos uno de cada uno de los 5 valores.
+
+
+```{r}
+length(unique(DFL$uso))
+unique(DFL$uso)
+```
+Hablando sobre la variable categórica nominal `uso` (la cual refleja el principal uso que se le dio a la IA en un cierto día), se puede ver que ya ha empezado a tomar varios valores, lo cual era de esperarse debido a su naturaleza. También se puede notar que hay 4 valores que representan un uso nulo de la IA.
+
+
+```{r}
+length(unique(DFL$consultas))
+unique(DFL$consultas)
+```
+En cuanto a la variable numérica discreta `consultas`, se puede ver la gran variabilidad que tiene en sus valores. Aunque habrá que ser cautelosos puesto que valores como el 68 dejan en duda si de verdad han sido llenados seriamente. 
+
+
+<!-- TODO: Interpretar cardinalidad esperada según el tipo de cada variable. -->
+
+### Paso 2: Normalización
+
+Se filtrara teniendo en cuenta el plazo de tiempo para el envio del forms, tambien se tendra en cuennta los valores que pudieron llegar a pasar por las restricciones del forms los cuales son : verificaciones de vacios en las columnas de consultas, tareas, estudio y su verificacion de valor entero 
+
+```{r} 
+DFL1<-DFL%>%filter(!(((hour(dmy_hms(hora)) + minute(dmy_hms(hora))/60) < 21.5))) %>% # se filtra por horas como se guarda por fecha y hora se hace uso de esa funcion  
+filter(!is.na(suppressWarnings(as.numeric(consultas))), # se verifica la validez de los datos 
+       !is.na(suppressWarnings(as.numeric(tareas))),                                                                        !is.na(suppressWarnings(as.numeric(estudio))),                           !is.na(suppressWarnings(as.numeric(sueno))))%>% 
+filter(as.numeric(consultas)%%1==0, # se verifica que sean numeros enteros 
+       as.numeric(tareas)%%1==0)
+
+```
+
+### Paso 3: Aplicación de criterios (validación de rangos)
+
+Como una respuesta puede relacionarse con las demas entonces se filtra por si los valores se contradicen 
+
+```{r}
+DF2<-DFL1%>%mutate(filtro=!str_detect(chartr("áéíóú","aeiou",tolower(uso)),regex("ia|no|use|ninguno",ignore_case=TRUE))& (as.numeric(consultas)>0|as.numeric(tareas)>0|str_detect(curso,"^[-]*$")|is.na(curso)|str_detect(tareas,"^[-]*$")| is.na(tareas)),
+              # mediante mutate y los if else hacemos el cambio a NA a los datos que se relacionaban 
+               uso = if_else(filtro, uso,NA_character_),
+               consultas=if_else(filtro,consultas,NA_integer_),   
+               tareas= if_else(filtro,tareas,NA_integer_),
+               curso = if_else(filtro,curso,NA_character_)
+  ) %>% select(-filtro) # se elimina la columna temporal creada 
+```
+
+
+
+### Paso 4: Datos atípicos
+
+```{r}
+# boxplot(DFL$VARIABLE,
+#         main = "Boxplot - VARIABLE",
+#         ylab = "VARIABLE",
+#         col = "lightblue")
+```
+
+```{r}
+# boxplot.stats(DFL$VARIABLE)$out
+```
+
+<!-- TODO: Interpretar si los valores atípicos se conservan o se tratan. -->
+
+### Paso 5: Variabilidad
+
+<!-- TODO: Calcular y explicar rango, varianza, desviación estándar e IQR para las variables numéricas relevantes. -->
+
+```{r}
+# sd(DFL$VARIABLE, na.rm = TRUE)
+```
+
+<!-- Para variables categóricas: distribución de frecuencias y proporciones. -->
+
+```{r}
+# table(DFL$VARIABLE_CATEGORICA)
+# prop.table(table(DFL$VARIABLE_CATEGORICA)) * 100
+```
+
+### Paso 6: Gestión de nulos
+
+```{r}
+# tabla_NA <- data.frame(
+#   Variable = c(...),
+#   Cantidad_NA = c(...),
+#   Porcentaje_NA = c(...)
+# )
+# tabla_NA
+```
+
+<!-- TODO: Establecer y justificar la política final de manejo de nulos (ej. umbral de % para conservar/imputar). -->
+
+**Conclusión del proceso de validación y limpieza de datos**
+
+<!-- TODO: Resumen final del proceso de limpieza. -->
+
+# 3. Análisis descriptivo
+
+## 3.1 Análisis univariado: categóricas
+
+### Variable: NOMBRE_VARIABLE
+
+```{r}
+# table(DFL$VARIABLE_CATEGORICA)
+# ggplot(DFL, aes(x = VARIABLE_CATEGORICA, fill = VARIABLE_CATEGORICA)) +
+#   geom_bar() +
+#   labs(title = "TÍTULO", x = "X", y = "Frecuencia") +
+#   theme_minimal() + theme(legend.position = "none")
+```
+
+<!-- TODO: Interpretación del gráfico. -->
+
+## 3.2 Análisis univariado: numéricas
+
+```{r}
+calcular_descriptores <- function(variable) {
+  pctiles <- quantile(variable, c(0.25, 0.50, 0.75), type = 3, na.rm = TRUE)
+  stats <- c(
+    Media = mean(variable, na.rm = TRUE),
+    Mediana = median(variable, na.rm = TRUE),
+    Desviacion_Estandar = sd(variable, na.rm = TRUE),
+    Varianza = var(variable, na.rm = TRUE),
+    Percentil_25 = pctiles[["25%"]],
+    Percentil_50 = pctiles[["50%"]],
+    Percentil_75 = pctiles[["75%"]],
+    IQR = IQR(variable, na.rm = TRUE),
+    CV = sd(variable, na.rm = TRUE) / mean(variable, na.rm = TRUE)
+  )
+  return(round(stats, 2))
+}
+```
+
+```{r}
+# print(calcular_descriptores(DFL$VARIABLE_NUMERICA))  # TODO: repetir por variable
+```
+
+### Gráfico: histograma / boxplot de NOMBRE_VARIABLE
+
+```{r}
+# ggplot(DFL, aes(x = VARIABLE_NUMERICA)) +
+#   geom_histogram(aes(y = after_stat(density)), bins = 15, fill = "#3498db", color = "white") +
+#   geom_vline(aes(xintercept = mean(VARIABLE_NUMERICA, na.rm = TRUE)), color = "red", linetype = "dashed") +
+#   labs(title = "TÍTULO", x = "X", y = "Densidad") +
+#   theme_minimal()
+```
+
+<!-- TODO: Interpretación del gráfico. -->
+
+## 3.3 Análisis multivariado (cruces según objetivos)
+
+### Objetivo 1: VARIABLE_A vs. VARIABLE_B
+
+```{r}
+# ggplot(DFL, aes(x = VARIABLE_A, y = VARIABLE_B, fill = VARIABLE_A)) +
+#   geom_boxplot(alpha = 0.7) +
+#   labs(title = "TÍTULO", x = "X", y = "Y") +
+#   theme_minimal() + theme(legend.position = "none")
+```
+
+<!-- TODO: Interpretación en función del objetivo específico 1. -->
+
+### Objetivo 2: VARIABLE_C vs. VARIABLE_D
+
+<!-- TODO: Repetir análisis y gráfico correspondiente al objetivo específico 2. -->
+
+### Objetivo 3: VARIABLE_E vs. VARIABLE_F
+
+<!-- TODO: Repetir análisis y gráfico correspondiente al objetivo específico 3. -->
+
+# 4. Conclusiones
+
+### Conclusión del Objetivo 1
+
+<!-- TODO -->
+
+### Conclusión del Objetivo 2
+
+<!-- TODO -->
+
+### Conclusión del Objetivo 3
+
+<!-- TODO -->
+
+### Conclusión general del estudio
+
+<!-- TODO -->
