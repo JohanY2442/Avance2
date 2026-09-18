@@ -208,7 +208,7 @@ DFL <- inner_join(DFL, DFAuxiliar, by = "email")
 Comprobamos rápidamente que el inner join se haya hecho exitosamente
 
 ```{r}
-head(DFL)
+head(DFL[c("hora", "email", "Grupo")])
 ```
 
 
