@@ -336,42 +336,32 @@ En cuanto a la variable numérica discreta `consultas`, se puede ver la gran var
 
 ### Paso 2: Normalización
 
-<!-- TODO: Recodificar variables categóricas (etiquetas largas -> cortas) y convertir variables ordinales en factores ordenados. -->
+Se filtrara teniendo en cuenta el plazo de tiempo para el envio del forms, tambien se tendra en cuennta los valores que pudieron llegar a pasar por las restricciones del forms los cuales son : verificaciones de vacios en las columnas de consultas, tareas, estudio y su verificacion de valor entero 
 
-```{r}
-# DFL$VARIABLE_CATEGORICA <- recode(
-#   DFL$VARIABLE_CATEGORICA,
-#   "Categoría larga 1" = "Cat1",
-#   "Categoría larga 2" = "Cat2"
-# )
-```
+```{r} 
+DFL1<-DFL%>%filter(!(((hour(dmy_hms(hora)) + minute(dmy_hms(hora))/60) < 21.5))) %>% # se filtra por horas como se guarda por fecha y hora se hace uso de esa funcion  
+filter(!is.na(suppressWarnings(as.numeric(consultas))), # se verifica la validez de los datos 
+       !is.na(suppressWarnings(as.numeric(tareas))),                                                                        !is.na(suppressWarnings(as.numeric(estudio))),                           !is.na(suppressWarnings(as.numeric(sueno))))%>% 
+filter(as.numeric(consultas)%%1==0, # se verifica que sean numeros enteros 
+       as.numeric(tareas)%%1==0)
 
-```{r}
-# DFL$VARIABLE_ORDINAL <- factor(
-#   DFL$VARIABLE_ORDINAL,
-#   levels = c(...),
-#   labels = c(...),
-#   ordered = TRUE
-# )
-```
-
-<!-- TODO: Convertir variables numéricas/categóricas al tipo de dato correspondiente. -->
-
-```{r}
-# DFL$VARIABLE_NUMERICA <- as.numeric(DFL$VARIABLE_NUMERICA)
-# DFL$VARIABLE_CATEGORICA <- as.factor(DFL$VARIABLE_CATEGORICA)
-sapply(DFL, class)
 ```
 
 ### Paso 3: Aplicación de criterios (validación de rangos)
 
-```{r}
-# DFL$VARIABLE <- ifelse(DFL$VARIABLE >= MIN & DFL$VARIABLE <= MAX, DFL$VARIABLE, NA)
-```
+Como una respuesta puede relacionarse con las demas entonces se filtra por si los valores se contradicen 
 
 ```{r}
-# summary(DFL$VARIABLE)  # TODO: repetir por variable validada
+DF2<-DFL1%>%mutate(filtro=!str_detect(chartr("áéíóú","aeiou",tolower(uso)),regex("ia|no|use|ninguno",ignore_case=TRUE))& (as.numeric(consultas)>0|as.numeric(tareas)>0|str_detect(curso,"^[-]*$")|is.na(curso)|str_detect(tareas,"^[-]*$")| is.na(tareas)),
+              # mediante mutate y los if else hacemos el cambio a NA a los datos que se relacionaban 
+               uso = if_else(filtro, uso,NA_character_),
+               consultas=if_else(filtro,consultas,NA_integer_),   
+               tareas= if_else(filtro,tareas,NA_integer_),
+               curso = if_else(filtro,curso,NA_character_)
+  ) %>% select(-filtro) # se elimina la columna temporal creada 
 ```
+
+
 
 ### Paso 4: Datos atípicos
 
