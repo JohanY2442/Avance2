@@ -186,7 +186,6 @@ DFL %>% rename(hora = `Marca temporal`
                , email = `Dirección de correo electrónico`) -> DFL
 ```
 
-
 Nos quedamos con las columnas de nuestros objetivos específicos.
 
 ```{r}
@@ -201,7 +200,6 @@ dim(DFL)
 head(DFL)
 sapply(DFL, class)
 ```
-
 
 ### Paso 1: Radiografía de la base
 
@@ -224,32 +222,36 @@ round(colSums(is.na(DFL)) / nrow(DFL) * 100, 2)
 #### Análisis de ceros
 
 Procedemos a analizar la variable `consultas`, la cual representa la cantidad de consultas realizadas a la IA en un determinado día.
+
 ```{r}
 sum(DFL$consultas == 0, na.rm = TRUE)
 ```
+
 En este caso, sería lógico pensar inicialmente que en los días ya transcurridos han habido a lo mucho 4 personas que no han usa la IA un día entero.
 
-
 Ahora procedemos con la variable `tareas`, la cual representa la cantidad de tareas que la IA ha ayudado a resolver más rápidamente.
+
 ```{r}
 sum(DFL$tareas == 0, na.rm = TRUE)
 ```
+
 Se podría razonar a primera vista que han habido 7 personas a las cuales la IA no les ha ayudado a resolver ni una sola tarea en un cierto día. Esto podría deberse a que la persona no usó IA ese día (conexión con el análisis anterior) o no consiguió los resultados que esperaba en la respuesta de la IA.
 
-
 Ahora analizamos la variable `estudio` (Horas efectivas de estudio en un día)
+
 ```{r}
 sum(DFL$estudio == 0, na.rm = TRUE)
 ```
+
 Considerando este dato aisladamente, no sería descabellado pensar que han habido a lo mucho 3 estudiantes que no han estudiado durante un día entero. Tal vez son alumnos de primer año.
 
+Pasemos con la variable `sueno`, la cual representa la cantidad de horas de sueño de la noche anterior al día del registro en el formulario
 
-Pasemos con la variable `sueno`, la cual representa la cantidad de horas de sueño de la noche anterior al día del registro en el formulario 
 ```{r}
 sum(DFL$sueno == 0, na.rm = TRUE)
 ```
-Se podría interpretar este dato argumentando que aún no han habido estudiantes que se han pasado despiertos desde la noche hasta la mañana del día siguiente.
 
+Se podría interpretar este dato argumentando que aún no han habido estudiantes que se han pasado despiertos desde la noche hasta la mañana del día siguiente.
 
 <!-- TODO: Interpretar si los ceros son respuestas válidas o posibles errores. -->
 
@@ -259,57 +261,57 @@ Se podría interpretar este dato argumentando que aún no han habido estudiantes
 length(unique(DFL$comprension))
 unique(DFL$comprension)
 ```
-Considerando que la variable `comprension` es una categórica ordinal de 5 niveles, que solo hayan habido 4 categorías seleccionadas no es tan sorprendente, pues el periodo de toma de datos aún es muy reducido.
 
+Considerando que la variable `comprension` es una categórica ordinal de 5 niveles, que solo hayan habido 4 categorías seleccionadas no es tan sorprendente, pues el periodo de toma de datos aún es muy reducido.
 
 ```{r}
 length(unique(DFL$sueno))
 unique(DFL$sueno)
 ```
-En cuanto a la variable `sueno`, se puede notar que ha tomado unos pocos valores considerando que se trata de una numérica continua. Esto podría deberse a la discretización de la variable y al hecho de que el rango de valores admisibles está tan solo en el intervalo [0, 24]
 
+En cuanto a la variable `sueno`, se puede notar que ha tomado unos pocos valores considerando que se trata de una numérica continua. Esto podría deberse a la discretización de la variable y al hecho de que el rango de valores admisibles está tan solo en el intervalo \[0, 24\]
 
 ```{r}
 length(unique(DFL$estudio))
 unique(DFL$estudio)
 ```
-Con variable numérica continua `estudio` se puede ver un fenómeno similar: discretización parcial en el intervalo [0, 24]. La cantidad de valores que está tomando no es realmente amplia para su naturaleza.
 
+Con variable numérica continua `estudio` se puede ver un fenómeno similar: discretización parcial en el intervalo \[0, 24\]. La cantidad de valores que está tomando no es realmente amplia para su naturaleza.
 
 ```{r}
 length(unique(DFL$curso))
 unique(DFL$curso)
 ```
-En el caso de `curso` podemos ya notar una gran variabilidad en pocos datos. Era algo esperado debido a que la UTEC dicta varios cursos y los alumnos de Estadística provienen de varias carreras. También se pueden notar 2 representaciones de nulos: `-` y `ninguno`
 
+En el caso de `curso` podemos ya notar una gran variabilidad en pocos datos. Era algo esperado debido a que la UTEC dicta varios cursos y los alumnos de Estadística provienen de varias carreras. También se pueden notar 2 representaciones de nulos: `-` y `ninguno`
 
 ```{r}
 length(unique(DFL$tareas))
 unique(DFL$tareas)
 ```
-En cuanto a la variable discreta `tareas`, se puede ver que toma una cantidad reducida de valores encerrados en el intervalo [0, 4], lo cual tiene sentido si consideramos la complejidad de las tareas universitarias y el corto tiempo libre que los estudiantes tienen para realizar las tareas, estén usando IA o no.
 
+En cuanto a la variable discreta `tareas`, se puede ver que toma una cantidad reducida de valores encerrados en el intervalo \[0, 4\], lo cual tiene sentido si consideramos la complejidad de las tareas universitarias y el corto tiempo libre que los estudiantes tienen para realizar las tareas, estén usando IA o no.
 
 ```{r}
 length(unique(DFL$satisfaccion))
 unique(DFL$satisfaccion)
 ```
-En el caso de la categórica ordinal `satisfaccion`, esta presentaba una escala con 5 valores posibles, por lo que es totalmente normal que haya tomado por lo menos uno de cada uno de los 5 valores.
 
+En el caso de la categórica ordinal `satisfaccion`, esta presentaba una escala con 5 valores posibles, por lo que es totalmente normal que haya tomado por lo menos uno de cada uno de los 5 valores.
 
 ```{r}
 length(unique(DFL$uso))
 unique(DFL$uso)
 ```
-Hablando sobre la variable categórica nominal `uso` (la cual refleja el principal uso que se le dio a la IA en un cierto día), se puede ver que ya ha empezado a tomar varios valores, lo cual era de esperarse debido a su naturaleza. También se puede notar que hay 4 valores que representan un uso nulo de la IA.
 
+Hablando sobre la variable categórica nominal `uso` (la cual refleja el principal uso que se le dio a la IA en un cierto día), se puede ver que ya ha empezado a tomar varios valores, lo cual era de esperarse debido a su naturaleza. También se puede notar que hay 4 valores que representan un uso nulo de la IA.
 
 ```{r}
 length(unique(DFL$consultas))
 unique(DFL$consultas)
 ```
-En cuanto a la variable numérica discreta `consultas`, se puede ver la gran variabilidad que tiene en sus valores. Aunque habrá que ser cautelosos puesto que valores como el 68 dejan en duda si de verdad han sido llenados seriamente. 
 
+En cuanto a la variable numérica discreta `consultas`, se puede ver la gran variabilidad que tiene en sus valores. Aunque habrá que ser cautelosos puesto que valores como el 68 dejan en duda si de verdad han sido llenados seriamente.
 
 <!-- TODO: Interpretar cardinalidad esperada según el tipo de cada variable. -->
 
@@ -317,7 +319,7 @@ En cuanto a la variable numérica discreta `consultas`, se puede ver la gran var
 
 Se filtrará con base en el plazo de tiempo para el envío del formulario. Además, se tendrán en cuenta los valores que pudieron evadir las restricciones iniciales, por lo que se aplicarán verificaciones de valores vacíos en las columnas de consultas, tareas, estudio y sueno, junto con la validación de valores enteros.
 
-```{r} 
+```{r}
 
 #Se hace el filtrado por horas teniendo en cuenta que se guarda en el formato de 24 horas por lo que solo acotamos desde 21.5 osea 9:30 
 
@@ -341,7 +343,7 @@ filter(as.numeric(consultas)%%1==0,
 
 ### Paso 3: Aplicación de criterios (validación de rangos)
 
-Como la respuesta cualitativa (uso) se relaciona con variables cuantitativas (consultas y tareas), para evitar la pérdida de la fila debido a los datos contradictorios, los valores no válidos se reasignarán con NA. 
+Como la respuesta cualitativa (uso) se relaciona con variables cuantitativas (consultas y tareas), para evitar la pérdida de la fila debido a los datos contradictorios, los valores no válidos se reasignarán con NA.
 
 ```{r}
 DF2<-DFL1%>%
@@ -379,36 +381,128 @@ DF2<-DFL1%>%
 ```
 
 
-
 ### Paso 4: Datos atípicos
 
+Para identificar posibles valores atípicos utilizamos boxplots en las
+variables numéricas.
+
 ```{r}
-# boxplot(DFL$VARIABLE,
-#         main = "Boxplot - VARIABLE",
-#         ylab = "VARIABLE",
-#         col = "lightblue")
+# Número de consultas a IA
+boxplot(DF2$consultas,
+        main = "Boxplot - Consultas a IA",
+        ylab = "Consultas")
+
+boxplot.stats(DF2$consultas)$out
 ```
 
 ```{r}
-# boxplot.stats(DFL$VARIABLE)$out
+# Número de tareas donde la IA ahorró tiempo
+boxplot(DF2$tareas,
+        main = "Boxplot - Tareas",
+        ylab = "Tareas")
+
+boxplot.stats(DF2$tareas)$out
+```
+
+```{r}
+# Horas efectivas de estudio
+boxplot(DF2$estudio,
+        main = "Boxplot - Horas de estudio",
+        ylab = "Horas")
+        
+boxplot.stats(DF2$estudio)$out
+```
+
+```{r}
+# Horas de sueño
+boxplot(DF2$sueno,
+        main = "Boxplot - Horas de sueño",
+        ylab = "Horas")
+
+boxplot.stats(DF2$sueno)$out
 ```
 
 <!-- TODO: Interpretar si los valores atípicos se conservan o se tratan. -->
+
+Se encontraron posibles valores atípicos en consultas, tareas y estudio. Sin embargo, decidimos conservarlos porque no necesariamente son errores. Por ejemplo, estudiar 9 horas en un día puede ser poco frecuente, pero es posible. También es posible que un estudiante haga 50 o 68 consultas a la IA durante un día. En el caso de tareas, realizar 4 tareas donde la IA ayudó a ahorrar tiempo también es posible. Por estas razones, conservamos los valores encontrados.
+
 
 ### Paso 5: Variabilidad
 
 <!-- TODO: Calcular y explicar rango, varianza, desviación estándar e IQR para las variables numéricas relevantes. -->
 
+Para cada una de las variables numéricas calculamos el rango, la varianza, la
+desviación estándar y el IQR.
+
 ```{r}
-# sd(DFL$VARIABLE, na.rm = TRUE)
+# Variabilidad de las consultas
+range(DF2$consultas, na.rm = TRUE)
+var(DF2$consultas, na.rm = TRUE)
+sd(DF2$consultas, na.rm = TRUE)
+IQR(DF2$consultas, na.rm = TRUE)
 ```
+
+En consultas se observa una variabilidad bastante amplia, ya que los valores van desde 2 hasta 68 consultas en un día. El valor máximo es 68 y es uno de los valores identificados anteriormente como atípico, por lo que este valor aumenta la dispersión de los datos.
+
+```{r}
+# Variabilidad de las tareas
+range(DF2$tareas, na.rm = TRUE)
+var(DF2$tareas, na.rm = TRUE)
+sd(DF2$tareas, na.rm = TRUE)
+IQR(DF2$tareas, na.rm = TRUE)
+```
+
+En tareas, los valores se encuentran entre 0 y 4, tiene un rango mucho más reducido que consultas. La mayor parte de los datos se encuentra concentrada en un intervalo pequeño, aunque se identificaron algunos valores de 4 como atípicos.
+
+```{r}
+# Variabilidad de las horas de estudio
+range(DF2$estudio, na.rm = TRUE)
+var(DF2$estudio, na.rm = TRUE)
+sd(DF2$estudio, na.rm = TRUE)
+IQR(DF2$estudio, na.rm = TRUE)
+```
+
+En estudio, los valores van desde 0 hasta 9 horas. Existe una diferencia considerable entre estos extremos, principalmente por el valor de 9 horas, que anteriormente fue identificado como un posible valor atípico. Sin embargo, este valor es posible, por lo que se decidió conservarlo.
+
+```{r}
+# Variabilidad de las horas de sueño
+range(DF2$sueno, na.rm = TRUE)
+var(DF2$sueno, na.rm = TRUE)
+sd(DF2$sueno, na.rm = TRUE)
+IQR(DF2$sueno, na.rm = TRUE)
+```
+
+En sueño, los registros se encuentran entre 3 y 10 horas. A diferencia de las variables anteriores, no se identificaron valores atípicos. 
 
 <!-- Para variables categóricas: distribución de frecuencias y proporciones. -->
 
 ```{r}
-# table(DFL$VARIABLE_CATEGORICA)
-# prop.table(table(DFL$VARIABLE_CATEGORICA)) * 100
+# Frecuencia del principal uso de IA
+table(DF2$uso)
+prop.table(table(DF2$uso)) * 100
 ```
+
+En la variable uso, los principales usos de la IA fueron resolver ejercicios y resumir información, con 9 registros cada uno, representando aproximadamente el 31% de las respuestas válidas cada uno. Programar fue el siguiente uso más frecuente, con 4 registros (13.79%). Los demás usos tuvieron una frecuencia menor.
+
+```{r}
+# Frecuencia del nivel de satisfacción
+table(DF2$satisfaccion)
+prop.table(table(DF2$satisfaccion)) * 100
+```
+
+En satisfaccion, la categoría con mayor frecuencia fue el nivel 3, con 16
+registros, mientras que los niveles 4 y 5 tuvieron una menor cantidad de respuestas.
+
+```{r}
+# Frecuencia del nivel de comprensión
+table(DF2$comprension)
+prop.table(table(DF2$comprension)) * 100
+```
+
+En comprension, la categoría más frecuente fue "Moderado", con 17 registros,
+seguida de "Alto", con 9 registros. Las categorías "Bajo" y "Muy alto" tuvieron
+3 registros cada una.
+
 
 ### Paso 6: Gestión de nulos
 
