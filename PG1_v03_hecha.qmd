@@ -553,7 +553,7 @@ nrow(na.omit(DF2))
 round((1 - nrow(na.omit(DF2)) / nrow(DF2)) * 100, 2)
 ```
 
-La pérdida sería del `r round((1 - nrow(na.omit(DF2))/nrow(DF2))*100, 2)`%. Como las cuatro variables fallan a la vez, excluir una sola no recuperaría ninguna fila.
+La pérdida sería del 9.38%. Como las cuatro variables fallan a la vez, excluir una sola no recuperaría ninguna fila.
 
 ```{r}
 DF2[!complete.cases(DF2), c("hora", "email", "consultas", "uso", "tareas", "curso", "estudio", "sueno")]
@@ -615,7 +615,7 @@ trazabilidad$Retencion <- round(trazabilidad$Observaciones / nrow(DF) * 100, 2)
 trazabilidad
 ```
 
-Se conservan `r nrow(DF3)` de `r nrow(DF)` observaciones (`r round(nrow(DF3)/nrow(DF)*100, 1)`%). Toda la pérdida ocurrió al aplicar los criterios de investigador, no en la gestión de nulos.
+Se conservan 32 de 41 observaciones (78%). Toda la pérdida ocurrió al aplicar los criterios de investigador, no en la gestión de nulos.
 
 ```{r}
 radiografia <- data.frame(
@@ -676,23 +676,23 @@ nrow(DF3_grupo)
 DF3_grupo %>% count(email)
 ```
 
-El grupo tiene **`r nrow(DF3_grupo)` observaciones limpias** frente al mínimo de 150. La recolección lleva `r length(unique(substr(DF3$hora, 1, 10)))` días activos y el diseño es longitudinal, por lo que el volumen crece de forma acumulativa.
+El grupo tiene **10 observaciones limpias** frente al mínimo de 150. La recolección lleva 3 días activos y el diseño es longitudinal, por lo que el volumen crece de forma acumulativa.
 
 ```{r}
 n_distinct(DF3$email)
 ```
 
-La cobertura alcanza a `r n_distinct(DF3$email)` de los 45 estudiantes de la sección, por lo que aún no permite generalizar a la población objetivo.
+La cobertura alcanza a 20 de los 45 estudiantes de la sección, por lo que aún no permite generalizar a la población objetivo.
 
 **Conclusión del proceso de validación y limpieza de datos**
 
 <!-- TODO: Resumen final del proceso de limpieza. -->
 
-De `r nrow(DF)` observaciones crudas se conservan `r nrow(DF3)` (`r round(nrow(DF3)/nrow(DF)*100, 1)`%), y las descartadas responden a la ventana horaria de envío definida de antemano, no a errores de calidad.
+De 41 observaciones crudas se conservan 32 (78%), y las descartadas responden a la ventana horaria de envío definida de antemano, no a errores de calidad.
 
-El hallazgo central fue que los faltantes no eran aleatorios: coincidían en los mismos registros y correspondían a días sin uso de IA, es decir NA naturales por dependencia entre preguntas. El `na.omit` habría costado el `r round((1 - nrow(na.omit(DF2))/nrow(DF2))*100, 2)`%, tolerable en magnitud pero no en composición, ya que eliminaba justamente los registros de menor actividad académica. Reetiquetarlos permitió conciliar el conteo a cero sin perder observaciones ni imputar valores que el estudiante nunca reportó.
+El hallazgo central fue que los faltantes no eran aleatorios: coincidían en los mismos registros y correspondían a días sin uso de IA, es decir NA naturales por dependencia entre preguntas. El `na.omit` habría costado el 9.38%, tolerable en magnitud pero no en composición, ya que eliminaba justamente los registros de menor actividad académica. Reetiquetarlos permitió conciliar el conteo a cero sin perder observaciones ni imputar valores que el estudiante nunca reportó.
 
-La base final no tiene faltantes, duplicados ni valores fuera de rango, con las ordinales como factores ordenados y los identificadores como nominales. Queda apta para el análisis descriptivo. La limitación pendiente es el volumen muestral: `r nrow(DF3_grupo)` observaciones limpias del grupo sobre un mínimo de 150.
+La base final no tiene faltantes, duplicados ni valores fuera de rango, con las ordinales como factores ordenados y los identificadores como nominales. Queda apta para el análisis descriptivo. La limitación pendiente es el volumen muestral: 10 observaciones limpias del grupo sobre un mínimo de 150.
 
 # 3. Análisis descriptivo
 
