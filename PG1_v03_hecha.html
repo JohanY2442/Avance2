@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="GRUPO 6">
-<meta name="dcterms.date" content="2026-09-18">
+<meta name="dcterms.date" content="2026-09-20">
 
 <title>PROYECTO</title>
 <style>
@@ -2247,6 +2247,7 @@ vertical-align: -.125em;
   <li><a href="#paso-4-datos-atípicos" id="toc-paso-4-datos-atípicos" class="nav-link" data-scroll-target="#paso-4-datos-atípicos">Paso 4: Datos atípicos</a></li>
   <li><a href="#paso-5-variabilidad" id="toc-paso-5-variabilidad" class="nav-link" data-scroll-target="#paso-5-variabilidad">Paso 5: Variabilidad</a></li>
   <li><a href="#paso-6-gestión-de-nulos" id="toc-paso-6-gestión-de-nulos" class="nav-link" data-scroll-target="#paso-6-gestión-de-nulos">Paso 6: Gestión de nulos</a></li>
+  <li><a href="#paso-7-radiografia-final" id="toc-paso-7-radiografia-final" class="nav-link" data-scroll-target="#paso-7-radiografia-final">paso 7: Radiografia final</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#análisis-descriptivo" id="toc-análisis-descriptivo" class="nav-link" data-scroll-target="#análisis-descriptivo">3. Análisis descriptivo</a>
@@ -2298,7 +2299,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 18, 2026</p>
+      <p class="date">September 20, 2026</p>
     </div>
   </div>
   
@@ -2404,8 +2405,8 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="representatividad-de-la-muestra">2.1.2 Representatividad de la muestra</h3>
 <!-- TODO: Explicar qué medidas se tomaron para aproximarse a una muestra representativa (difusión, diversidad de perfiles, periodo de recolección, etc.). -->
 <p>Con la finalidad de que la muestra obtenida refleje a la población y se minimicen posibles sesgos, se plantean las siguientes medidas:</p>
-<p>Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario y así evitando el sesgo de no respuesta </p>
-<p>Instrumento de registro diario estandarizado: La recolección se ejecutará mediante un formulario digital (Forms) configurado con restricciones de envío único por día, garantizando la consistencia temporal de los registros.  </p>
+<p>Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario y así evitando el sesgo de no respuesta</p>
+<p>Instrumento de registro diario estandarizado: La recolección se ejecutará mediante un formulario digital (Forms) configurado con restricciones de envío único por día, garantizando la consistencia temporal de los registros.</p>
 <p>Medición al cierre del día: El cuestionario se realizará al final de cada día el cual permitirá registra las variables diarias (como las horas de estudio o el uso de IA), atenuando el sesgo de memoria. El registro de un día se contará como válido si este se hace después de las 9:30 p.m. pero antes de la medianoche.</p>
 </section>
 </section>
@@ -2854,66 +2855,569 @@ dbl (1): Grupo
 </section>
 <section id="paso-2-normalización" class="level3">
 <h3 class="anchored" data-anchor-id="paso-2-normalización">Paso 2: Normalización</h3>
-<p>Se filtrara teniendo en cuenta el plazo de tiempo para el envio del forms, tambien se tendra en cuennta los valores que pudieron llegar a pasar por las restricciones del forms los cuales son : verificaciones de vacios en las columnas de consultas, tareas, estudio y su verificacion de valor entero</p>
+<p>Se filtrará con base en el plazo de tiempo para el envío del formulario. Además, se tendrán en cuenta los valores que pudieron evadir las restricciones iniciales, por lo que se aplicarán verificaciones de valores vacíos en las columnas de consultas, tareas, estudio y sueno, junto con la validación de valores enteros.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>DFL1<span class="ot">&lt;-</span>DFL<span class="sc">%&gt;%</span><span class="fu">filter</span>(<span class="sc">!</span>(((<span class="fu">hour</span>(<span class="fu">dmy_hms</span>(hora)) <span class="sc">+</span> <span class="fu">minute</span>(<span class="fu">dmy_hms</span>(hora))<span class="sc">/</span><span class="dv">60</span>) <span class="sc">&lt;</span> <span class="fl">21.5</span>))) <span class="sc">%&gt;%</span> <span class="co"># se filtra por horas como se guarda por fecha y hora se hace uso de esa funcion  </span></span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(consultas))), <span class="co"># se verifica la validez de los datos </span></span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>       <span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(tareas))),                                                                        <span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(estudio))),                           <span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(sueno))))<span class="sc">%&gt;%</span> </span>
-<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(<span class="fu">as.numeric</span>(consultas)<span class="sc">%%</span><span class="dv">1</span><span class="sc">==</span><span class="dv">0</span>, <span class="co"># se verifica que sean numeros enteros </span></span>
-<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">as.numeric</span>(tareas)<span class="sc">%%</span><span class="dv">1</span><span class="sc">==</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Se hace el filtrado por horas teniendo en cuenta que se guarda en el formato de 24 horas por lo que solo acotamos desde 21.5 osea 9:30 </span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>DFL1<span class="ot">&lt;-</span>DFL<span class="sc">%&gt;%</span><span class="fu">filter</span>(<span class="sc">!</span>(((<span class="fu">hour</span>(<span class="fu">dmy_hms</span>(hora)) <span class="sc">+</span> <span class="fu">minute</span>(<span class="fu">dmy_hms</span>(hora))<span class="sc">/</span><span class="dv">60</span>) <span class="sc">&lt;</span> <span class="fl">21.5</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="co"># en caso de superesswarnings es para evitar que arroje errores en consultas debido a que permite ingreso de datos vacios por lo que se trata de convertir a numero y de ahi vemos si es NA e inviertiendo mediante ! para quedarnos con los que si cumplan eso  </span></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(consultas))), </span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Repetimos el mismo tipo de filtrado con respecto a la variable tareas, sueno y estudio </span></span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-11"><a href="#cb72-11" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(tareas))),                                   </span>
+<span id="cb72-12"><a href="#cb72-12" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(estudio))),                           <span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(sueno))))<span class="sc">%&gt;%</span> </span>
+<span id="cb72-13"><a href="#cb72-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb72-14"><a href="#cb72-14" aria-hidden="true" tabindex="-1"></a><span class="co">#verificamos que las consultas y tareas sean numeros enteros </span></span>
+<span id="cb72-15"><a href="#cb72-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-16"><a href="#cb72-16" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(<span class="fu">as.numeric</span>(consultas)<span class="sc">%%</span><span class="dv">1</span><span class="sc">==</span><span class="dv">0</span>, </span>
+<span id="cb72-17"><a href="#cb72-17" aria-hidden="true" tabindex="-1"></a>       <span class="fu">as.numeric</span>(tareas)<span class="sc">%%</span><span class="dv">1</span><span class="sc">==</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="paso-3-aplicación-de-criterios-validación-de-rangos" class="level3">
 <h3 class="anchored" data-anchor-id="paso-3-aplicación-de-criterios-validación-de-rangos">Paso 3: Aplicación de criterios (validación de rangos)</h3>
-<p>Como una respuesta puede relacionarse con las demas entonces se filtra por si los valores se contradicen</p>
+<p>Como la respuesta cualitativa (uso) se relaciona con variables cuantitativas (consultas y tareas), para evitar la pérdida de la fila debido a los datos contradictorios, los valores no válidos se reasignarán con NA.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>DF2<span class="ot">&lt;-</span>DFL1<span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">filtro=</span><span class="sc">!</span><span class="fu">str_detect</span>(<span class="fu">chartr</span>(<span class="st">&quot;áéíóú&quot;</span>,<span class="st">&quot;aeiou&quot;</span>,<span class="fu">tolower</span>(uso)),<span class="fu">regex</span>(<span class="st">&quot;ia|no|use|ninguno&quot;</span>,<span class="at">ignore_case=</span><span class="cn">TRUE</span>))<span class="sc">&amp;</span> (<span class="fu">as.numeric</span>(consultas)<span class="sc">&gt;</span><span class="dv">0</span><span class="sc">|</span><span class="fu">as.numeric</span>(tareas)<span class="sc">&gt;</span><span class="dv">0</span><span class="sc">|</span><span class="fu">str_detect</span>(curso,<span class="st">&quot;^[-]*$&quot;</span>)<span class="sc">|</span><span class="fu">is.na</span>(curso)<span class="sc">|</span><span class="fu">str_detect</span>(tareas,<span class="st">&quot;^[-]*$&quot;</span>)<span class="sc">|</span> <span class="fu">is.na</span>(tareas)),</span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>              <span class="co"># mediante mutate y los if else hacemos el cambio a NA a los datos que se relacionaban </span></span>
-<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">uso =</span> <span class="fu">if_else</span>(filtro, uso,<span class="cn">NA_character_</span>),</span>
-<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">consultas=</span><span class="fu">if_else</span>(filtro,consultas,<span class="cn">NA_integer_</span>),   </span>
-<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">tareas=</span> <span class="fu">if_else</span>(filtro,tareas,<span class="cn">NA_integer_</span>),</span>
-<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">curso =</span> <span class="fu">if_else</span>(filtro,curso,<span class="cn">NA_character_</span>)</span>
-<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>filtro) <span class="co"># se elimina la columna temporal creada </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>DF2<span class="ot">&lt;-</span>DFL1<span class="sc">%&gt;%</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Mediante mutate se modificara los valores de las columnas por lo que primero usaremos tolower para convertirlo a minusculas y mediante chartr haremos el reemplazo de tildes  </span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">filtro=</span><span class="sc">!</span><span class="fu">str_detect</span>(<span class="fu">chartr</span>(<span class="st">&quot;áéíóú&quot;</span>,<span class="st">&quot;aeiou&quot;</span>,<span class="fu">tolower</span>(uso)),</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Se busca si el texto ya limpio contiene alguna de las palabras como </span></span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>                            </span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">regex</span>(<span class="st">&quot;ia|no|use|ninguno&quot;</span>,<span class="at">ignore_case=</span><span class="cn">TRUE</span>))<span class="sc">&amp;</span></span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Se verifica si consultas o tareas son mayores a 0</span></span>
+<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb73-13"><a href="#cb73-13" aria-hidden="true" tabindex="-1"></a>   (<span class="fu">as.numeric</span>(consultas)<span class="sc">&gt;</span><span class="dv">0</span><span class="sc">|</span></span>
+<span id="cb73-14"><a href="#cb73-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">as.numeric</span>(tareas)<span class="sc">&gt;</span><span class="dv">0</span><span class="sc">|</span></span>
+<span id="cb73-15"><a href="#cb73-15" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb73-16"><a href="#cb73-16" aria-hidden="true" tabindex="-1"></a><span class="co"># verificamos por si son solo guiones o por si es un valor nulo , esto se repetira para tareas tambien</span></span>
+<span id="cb73-17"><a href="#cb73-17" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb73-18"><a href="#cb73-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(curso,<span class="st">&quot;^[ -]*$&quot;</span>)<span class="sc">|</span></span>
+<span id="cb73-19"><a href="#cb73-19" aria-hidden="true" tabindex="-1"></a>   <span class="fu">is.na</span>(curso)<span class="sc">|</span></span>
+<span id="cb73-20"><a href="#cb73-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(tareas,<span class="st">&quot;^[ -]*$&quot;</span>)<span class="sc">|</span> </span>
+<span id="cb73-21"><a href="#cb73-21" aria-hidden="true" tabindex="-1"></a>   <span class="fu">is.na</span>(tareas)),</span>
+<span id="cb73-22"><a href="#cb73-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-23"><a href="#cb73-23" aria-hidden="true" tabindex="-1"></a><span class="co">#  En esta ultima parte se revisa por si cada columna utilizada cumple con filtro y en ese caso se pondra como NA </span></span>
+<span id="cb73-24"><a href="#cb73-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-25"><a href="#cb73-25" aria-hidden="true" tabindex="-1"></a>   <span class="at">uso =</span> <span class="fu">if_else</span>(filtro, uso,<span class="cn">NA_character_</span>),</span>
+<span id="cb73-26"><a href="#cb73-26" aria-hidden="true" tabindex="-1"></a>   <span class="at">consultas=</span><span class="fu">if_else</span>(filtro,consultas,<span class="cn">NA_integer_</span>),   </span>
+<span id="cb73-27"><a href="#cb73-27" aria-hidden="true" tabindex="-1"></a>   <span class="at">tareas=</span> <span class="fu">if_else</span>(filtro,tareas,<span class="cn">NA_integer_</span>),</span>
+<span id="cb73-28"><a href="#cb73-28" aria-hidden="true" tabindex="-1"></a>   <span class="at">curso =</span> <span class="fu">if_else</span>(filtro,curso,<span class="cn">NA_character_</span>)</span>
+<span id="cb73-29"><a href="#cb73-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-30"><a href="#cb73-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Ya hecho los cambios elimminamos filtro </span></span>
+<span id="cb73-31"><a href="#cb73-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-32"><a href="#cb73-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>filtro)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="paso-4-datos-atípicos" class="level3">
 <h3 class="anchored" data-anchor-id="paso-4-datos-atípicos">Paso 4: Datos atípicos</h3>
+<p>Para identificar posibles valores atípicos utilizamos boxplots en las variables numéricas.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boxplot(DFL$VARIABLE,</span></span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="co">#         main = &quot;Boxplot - VARIABLE&quot;,</span></span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="co">#         ylab = &quot;VARIABLE&quot;,</span></span>
-<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="co">#         col = &quot;lightblue&quot;)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de consultas a IA</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(DF2<span class="sc">$</span>consultas,</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Boxplot - Consultas a IA&quot;</span>,</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Consultas&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAAA7VBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZrY6AAA6ADo6OgA6Ojo6OmY6OpA6ZmY6ZpA6ZrY6kLY6kNtmAABmADpmOgBmOjpmZgBmZjpmZmZmZpBmkJBmkLZmkNtmtrZmtttmtv+QOgCQOjqQZgCQZjqQZmaQkGaQkLaQtraQttuQtv+Q29uQ2/+2ZgC2Zjq2kDq2kGa2kJC2kLa2tpC2tra2ttu225C227a229u22/+2///T09PbkDrbkGbbtmbbtpDbtrbb25Db27bb29vb2//b/7bb/9vb////tmb/25D/27b/29v//7b//9v////Jor2FAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nO3df2MT157YYYlAcYENWbKkVylboJfsQjfOdRfRQuoAa98W4yC//5dTjSRbI41kz3x9zmjGfp4/7gVjjWQ488n8PDM4AyBksOsPANBXAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECeot83RuUfffoX78kXPq3H6fLHP561bd9/OemCz79l4ezj/v4TeyDNbP+YzT/vA3M/kVW/s72F/84LzK+K+kI6C2yFtBi3X2ebum1Avrp6eBJs8VOX5Hl426z+mM0/7yNVAI6e/fC/YzvSjoCeotUAzpImIcaAT191fQdJ7+tftwfUm4zb1T+MZp/3oYqAT05/0Hv/J7xbUlGQG+RTQG9ep+7rhoB3W+a7MnL9c97L3dByz9G48/b1HpASz9vzrclGQG9RVZX1z9/S7uvmCOg8yOCw2d/n37cg71WwrLTgM5//19a+S8FKQjoLbK+uu4n3VfMENCTlY3O0x/b2LfdaUAPZz/vx7S7BmQkoLfI5u2dVCtq+oB+Wyvm/BBE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" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot.stats</span>(DF2<span class="sc">$</span>consultas)<span class="sc">$</span>out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 68 50</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boxplot.stats(DFL$VARIABLE)$out</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de tareas donde la IA ahorró tiempo</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(DF2<span class="sc">$</span>tareas,</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Boxplot - Tareas&quot;</span>,</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Tareas&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img role="img" src="data:image/png;base64,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" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot.stats</span>(DF2<span class="sc">$</span>tareas)<span class="sc">$</span>out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4 4</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Horas efectivas de estudio</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(DF2<span class="sc">$</span>estudio,</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Boxplot - Horas de estudio&quot;</span>,</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Horas&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAAA21BMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZrY6AAA6ADo6OgA6Ojo6OmY6ZmY6ZpA6ZrY6kLY6kNtmAABmADpmOgBmOjpmZjpmZmZmZpBmkLZmkNtmtrZmtttmtv+QOgCQZgCQZjqQZmaQkGaQkLaQtraQttuQ29uQ2/+2ZgC2Zjq2kDq2kGa2kJC2tpC2tra2ttu225C227a229u22/+2///T09PbkDrbkGbbtmbbtpDbtrbb25Db27bb29vb2//b/7bb/9vb////tmb/25D/27b/29v//7b//9v///8g3H8LAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nO3d/2PT1prgYYXCkIWWLixtyp3C0pl2C5eF7kAnhQ50l5Ri//9/0fpbbNmSw/HLOfaR+zw/XEgcS8b31aeyJSvNGICQ5tAPAGCoBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIE9Cj9edq0ffHlv7/PuPSP9ybLPPn5Uz/2+h/JS5w93tYSN7/egyfTJ+pmgQXv8DS0HkTic8yBCehR2gjodFv8Pt/SkzbuN/ebu8lLPN6A7vQ0COjgCOhR6ga02WU7/oSEjfvD453WeKwB3fFpENDBEdCj1BfQfFtjwsb9ZLdkH2tAd3waBHRwBPQorQfor6dN1joI6E4LDQWUYRDQo7QZoNmGee3XTEsX0J0WKqBHTECPUtkgCehOCxXQIyagR6k3SK090LePb02+8cWdnxZfz5J4eYfz5TGn2d8ejkfPpj/95eUPdwK6ubSL1juvD+OP94o1LB7a3fFvk+9/8WB2jtZfz27P/hFfPmidsvXm2+kdm9ute6578810wd+/32jX28fTR3D7wR9b7tZ3++a6Np6G2SO+MX9so0drz03Pg/jUc0wdBPQobQboorXxTm69v9ywr69t7LOfmB+Amv11HtDXl0ekrr+a//D6xt1dWu6A9jzeRUCfrlby2+q42ck/2ou5vGff/uyHyyVff9UO6IdHy7t93XcCbd/t3XWlBrT3QXzqOaYOAnqUet8DvXwped603W39xPSL+bY9v+/sJ89WP7tY4trG3bO0zAHtfbyzb96ef2u6a933Qxdr5yL0vCPQit7JrWW71s9huNEtaN/tPetKDGj/g/jUc0wdBPQorQfp7aPLzExdNE3P9ji6/JmL1jfPN350sYz2xt23tLwB7X+85+vf2Thva/Y45+9LrHRSOHrUbFi1a+N7bX23960rLaBXPYgrnwFqIKBHqec80Gvt19/NyfSNwvlr88VWOr/LzfnNi+18Uanpq8bF68y7y0XM77ZtaZGDSJuuXMP5+s/N1jd9i2H+OFd7gNf+13h5HtdmzM9X/7pHrXbNlnXy/fvxqP9ufbdvWVf7adgS0C0PIuE5pgICepS6QfqXy92vJ61NsKeWt9pb6Pxb89tHq93Y1sa9bWn5ArplDYuALt6CbD2i+aIejpfHmeb/6i+++3HzgNCovWP+ZNmu9r7f+TJoK723b1nXpwO65UGkPMdUQECPUk+QFgcf5lvgZdouWttm67Xk+rulD1vLnP3sauPeurRsAd22hnbbpw/+9x9u32z9A5cBPdl+zGWV2uUXNy/XsYjmbGEb58/23r5lXZ8O6JYHkfIcUwEBPUq9QVod4FkmYb4h39240zJL5+0fXv3sauPeurRsAd22hrW2t60CernQL777pXePbW3R8yXf3Hjos+9u5Kr39i3r+nRAtzyIlOeYCgjoUVo7KDN69+x0mZv2ZjzeOHP7vBWu1TdurL34Xw/o1qVlO5F+2xrOe/fERm//7dbyn9o+PHNy51VnpT3/upt9B3XWM91/+5Z1fTqg/Q8i6TmmAgJ6lHqDNNsKN97VW/tyUYG7/beuNt2Njbtvaf0BbR2rXk/AJwLas4a1neOZD8++We3Hzpr3cXX2ZLM6i3V9Wet72/0BXft3bLm9f127BnT1r014jqmAgB6lzkchlztsV22Oi9ehG3ugFQe0dTDl9Sqey4COR8/a393cX80a0P51CeixE9Cj1AnoxWVWrnhBuEzD+vac8SV8NKDbXsKvvr/4SNLt7375v8v3QGf+enZryzo3Pp61/hJ++7sPV9zeXde2gK7eqO1/EF7CD4WAHqXtAe07JLGozerUyrWj8LseRJotLVtAt61hPSvzY9M/rdax9rblu//9TbO2mNadrj6I1Ofq29fXlRjQnQ8ipX08gfIE9Cj1v4SfbnfbT4ppf6Tw5417rS+z0GlMvQG98jSm7s5xu02jt8+++W8/b3lCxhupXZ1BtPnmwKbe27esq/00tEO4/O/ZtgfhNKaBENCjtNmL+UY423q7p2XPdwYXZ3T/n9NWH+YBnX+GaX777IYrT/LuvnYNPN7NBnXXsJax9svqjf9U3GwtcGMPtH0O++Lti5uXP3r5afqTrx683Ghl3+3b1tUJ6NrHNzdPpG89iJTnmAoI6FFaD9Lozf3Vljnf/rsfDLwMz+pidqvzmr7f+lHObUubbfQ3Xo3fbrse3FWPd+3rLWvoCej0Yf7Vuj7T/HM9N6b5nz8Bm7uN86S1Pqjaev92+hmn0W+nfXfru33LutpPw+IfMlnb2/urB7ntQSQ8x1RAQI/SFR+N7FwhpH1NoOVBlFal2uZZ6HyYsbO01bfT9kKvuphI/xp6jl63Ld+q7XlsS1uu47H55G3ere/2LetqPw3dtaVeTGTLc0wFBPQo9Qb0crvruzha65Xk5vVAr6/OcGy/jlx/n3R9aa0H8PkBveJydsuAtvt1+7TpL2H3obRP3vxqebeNS9N179Z3e/+61p6G1kWVTr6d/u/DKx6Ey9kNg4AepZ6Atn4x/JvW5XkXm+iT1qa5cUX6G//v8eUP915QuWdp4+V5RYlv1119QeW+NWwcyllecfjk+9bn1z88Xt6x/e9fGS1/4O6fq4CuLnG85W59t/eva+1pWF2Z+ufFtf63P4iU55jDE9CjtBHQk9tf/bT2Rt6HH+a/IOLl4uvWBenbhzguKzX7lRPbf6XH5tJm5r+m4qu066d/6ld6dNeweSx89Hp6deXZb/doH7n58G+ziy5/8eVPWw6rv509zAd/jNsBvfwNGifb79Zze++61p6Gv57eWtypHdDeB5H0HHNwAsp2nzqjB/7mBJTtBBSuJKBsJ6BwJQFlOwGFKwko2wkoXElA2U5A4UoCynYCClcSULYTULiSgAIECShAkIACBAkoQJCAAgQJKECQgAIECShAkIACBAkoQJCAAgQJKECQgAIECShAkIACBAkoQJCAAgQJKECQgAIECShAkIACBAkoQJCAAgQJKECQgAIECShAkIACBAkoQJCAAgQJKECQgAIECShAkIACBAkoQJCAAgQJKECQgAIECShAkIACBAkoQJCAAgQJKECQgAIECShAkIACBAkoQJCAAgQJKECQgAIECShAkIACBAkoQJCAAgQJKECQgAIE1R3QBiCb/InKvsSMDv1sA8cle6NyLzCnAv/BAP62BBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEBhQ6kLlXF8BBTWlbvUI0dHQGHNMpwKyicJKLS1smla+BQBhbb2iBgXPkFAoU1A2YGAQpuAsgMBhTYBZQcCCm0Cyg4EFNoElB0IKLQ5jYkdCCiscSI96QQU1vkoJ8kEFDboJ6kEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAAYKGG9DR21/+2PlOAgrkM7SA/v7ixavpnx/uNxMn/9jx7gIK5DOsgL4+nWbzxvvxxewv87/vQkCBfAYV0PNFNW9+vDfZ+zw7uzX9+05LEFAgnyEF9M/Jbuf1H59PXrx/2zR3p9+ZFvXhLosQUCCfIQX0yfwV++jRasfzyY67oAIK5DOggE7DOdvdvJi8fv95/r3JTulO74IKKJDPgAL68V5z7de1v6z9te+h9Cj16IC/HwEFCBpQQCcv4eev3Cev272EBw5vQAFdHjGa/Dk/CD87DO8gEnAgQwroxSScX79797Rpbq/2RZ3GBBzKkAI62/WcffzovybhvPPixeOdP4okoEA+gwro6Omsn5O9z8vPJF11CKmPgAL5DCqg4/HbH25/+WC6z/nb/MPwd3b7KLyAAhkNLKAro99/OPtx5+vZCSiQz2ADGiOgQD4CChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQLKwDTH5NBPJp9JQBmWQycvr0M/m3wmAYUug0ISAYUug0ISAYUug0ISAYUug0ISAYUug0ISAYUug0ISAYUug0ISAYUug0ISAQUIElCAIAEFCBJQgCABBQgSUIAgAQUIElDoMigkEVDoMigkEVDoMigkEVDoMigkEVDoMigkEVDoMigkEVDoMigkEVDoMigkEVDoMigkEVCAIAEFCBJQgCABBQgSUIAgAQUIElCAIAGFLoNCEgGFLoNCEgGFLoNCEgGFLoNCEgGFLoNCEgGFLoNCEgGFLoNCEgGFLoNCEgGFLoNCEgEFCBJQgCABBQgSUIAgAQUIElCAIAEFCBJQ6DIoJBFQ6DIoJBFQ6DIoJBFQ6DIoJBFQ6DIoJBFQ6DIoJBFQ6DIoJBlsQP/6/cXL9zvfy3ZBEoNCkoEF9O03136d/DF6dtpMXf9px/vbLkhiUEgyqICOHjfNNKCjR82lr3fbC7VdAPkMKaCzbk4COvvz5OzsbLobenOnRQgokM+QAnox6eV/fz//8+70G6N/TkL68y6LEFAgnyEF9Mmim09W+51PdtwFFVAgnwEF9OO9+e7m5Z9Tf542N3Z5F1RAgXyGFdDZIfjLP8cbf+95KD1KPTrg72eAAR09ElCgBgMK6PTg+8PpX56sXsJfNF7CU4BBIcmAAjo+n58FOn3jc3HkaNrUu7sswnZBEoNCkiEFdPJ6vbn+ajwr6fw0pqdOY6IIg0KSIQV0fDE9c/7LH9+9++ekpA+ePz5tdtwBtV2QxqCQZFABnb5437BbP20XpDEoJBlWQJdXEVlwMRHKMCgkGVhAJ/56fvbN7Ykvv/vR5ewoxKCQZHgB/Sy2C5IYFJIIKHQZFJIIKECQgAIECShAkIACBAkoQJCAAgQJKECQgEKXQSGJgEKXQSGJgEKXQSGJgEKXQSGJgEKXQSGJgEKXQSGJgEKXQSGJgEKXQSGJgEKXQSGJgAIECShAkIACBAkoQJCAAgQJKECQgAIECSh0GRSSCCh0GRSSCCh0GRSSCCh0GRSSCCh0GRSSCCh0GRSSCCh0GRSSCCh0GRSSCCh0GRSSCChAkIACBAkoQJCAAgQJKECQgAIECShAkIBCl0EhiYBCl0EhyX4D+vq0ae68yr3GHdguSGJQSLKngL65f+3X8fi8mTr5Ofcq09kuSGJQSLKfgE7KOQnon6ezgE7/eii2C5IYFJLsJaDTck6qOcvo6FHT3M29zmS2C5IYFJLsJaCTct54P56m8+Z4fDH73wOxXZDEoJBkHwGdlHP6vud0P/ThePzx3gFfw9suSGJQSLKPgC6SeT4/fiSg1M+gkGSPAX0yP3wkoMCR2F9AF2+BTl/J33ife6WpBBTIZ0/vgTYPL98Cne6IOogEHIN9HYW//vJ/zl7Bj/7ZzDt6GAIK5LOXgE5ew8/cnf/tcDugAgpktJ9PIs0/g3Tj/SygXx/sHVABBXLa02fhR2/Ovns5+fPj/7jzMvcKdyGgQD4uZwddBoUkAgpdBoUkBwnoO+eBUjeDQpJ9vQf6/OzS7Vs+iUTtDApJ9hPQi8WVQJtDXxDUdkESg0KSvV0PtO2Ol/DUzaCQZF+fRGruPL/XnPzrs/tNc3K4DyLZLkhjUEiyr8/C3519CP7h5cWVD8V2QRKDQpI9XY1peiHQ81lG51cWORTbBUkMCkn2eD3Qxe/y8Cs9gCOxx4AuLgQ6+cr1QIFjsKf3QBeXol8E1GlMwDHYy1H4J7P3QFcdFVDgGOzrNKbp257zw/AXhzwML6BAPnu7oPIkmpN0Xnv5X/ccRAKOw54+ytlc/lq5qenr+QMRUCCfPV1M5M392duf92f9/D73KtMJKEkMCkn2fDm7N2dnD/7IvcYd2C5IYlBI4oLK0GVQSLKXgD69/lPutQTZLkhiUEiypxPpD3jcaI3tgiQGhSR7/ChnDWwXJDEoJNnjRzlrYLsgiUEhyT4/iVQB2wVJDApJ9nMU/vVpc/3Hd7nXFGC7IIlBIcleXsL/cPatXyoHHJ09HURqBBQ4OnsJ6De3130poMeooVKHnowj5pNIZHLoSrDdoWfjeAkomTTNf1IlU1+OgJKJgNbK1Jezv4D+9WLil0NeimksoCUJaK1MfTn7CujrW4t3Yw55NVABLUlAa2Xqy9lTQJ+23tD++mC/EUlASxLQWpn6cvYT0PPpruedFy+ePz5tDvqxTqNUjoDWytSXs5eA/nm63O8cPfU7kY6UgNbK1Jezp98L39rrfOK3ch4nAa2VqS9n/xdUnuyO+r3wx0hAa2Xqy9n/BZUPenllo1SOgNbK1JcjoGQioLUy9eV4CU8mAlorU1+Og0hkIqC1MvXl7CWgF03TXH4A6fXk7w9zrzOZUSpHQGtl6svZz4n0k73O6e/0ePfu+X0n0h8rAa2VqS9nPwEdPWp9lPNw74AKaEkCWitTX86ePgs/Wn4Y/uSQH4UX0IIEtFamvpz9Xc7u9x/Ozs6++yX36nZjlMoR0FqZ+nJcUJlMBLRWpr4cASUTAa2VqS9HQMlEQGtl6sspG9DR9H3Pru98EukICWitTH05ZQP68V7vL1n1WfhjJKC1MvXlDDego99f/LLznqxRKkdAa2Xqyyn8Ev73F3PPT5uTH19c2j18PUJXdTJK5QhorUx9OXs6iFTgGnYCWhkBrZWpL2dIAf3rXdvbySJfTv7c6TfNG6VyBLRWpr6cAQU0xxuqRqkcAa2VqS9HQMlEQGtl6ssZUEDHr0+b5mR5Mum3p83JV7ueVGqUyhHQWpn6coYU0PGHR01z/VX6Ivt2WD/7QbCFgNbK1JczqICOx79Ndjv/kbxIAd0nAa2VqS9nYAEdf7jfNDdehRdplMoR0FqZ+nKGFtDx6J9Nc/J9dJFGqRwBrZWpL2dwAR2P/5zshN55L6C1EdBamfpyBhjQ2e8HOflJQCsjoLUy9eUM87Pw0xOavjoV0KoIaK1MfTkDvRrTh0ex5RilcgS0Vqa+nIEGdHZCk4BWRUBrZerL2dNL+HVZLmf34YfAle2NUjkCWitTX47fiUQmAlorU1+OgJKJgNbK1JcjoGQioLUy9eUIKJkIaK1MfTkCSiYCWitTX46AkomA1srUlyOgZCKgtTL15QgomQhorUx9OQJKJgJaK1NfjoCSiYDWytSXI6BkIqC1MvXlCCiZCGitTH05AkomAlorU1+OgJKJgNbK1JcjoGQioLUy9eUIKJkIaK1MfTkCSiYCWitTX46AkomA1srUlyOgZCKgtTL15QgomQhorUx9OQJKJgJaK1NfjoCSiYDWytSXI6BkIqC1MvXlCCiZCGitTH05AkomAlorU1+OgJKJgNbK1JcjoGQioLUy9eUIKJkIaK1MfTkCSiYCWitTX46AkomA1srUlyOgZCKgtTL15QgomQhorUx9OQJKJgJaK1NfjoCSiYDWytSXI6BkIqC1MvXlCCiZCGitTH05AkomAlorU1+OgJKJgNbK1JcjoGQioLUy9eUIKJkIaK1MfTkCSiYCWitTX46AkomA1srUlyOgZCKgtTL15QgomQhorUx9OQJKJgJaK1NfjoCSiYDWytSXI6BkIqC1MvXlCCiZCGitTH05AkomAlorU1+OgJKJgNbK1JcjoGQioLUy9eUIKJkIaK1MfTkCSiYCWitTX46AkomA1srUlyOgZCKgtTL15QgomQhorUx9OQJKJgJaK1NfjoCSiYDWytSXI6BkIqC1MvXlCCiZCGitTH05AkomAlorU1+OgJKJgNbK1JcjoGQioLUy9eUIKJkIaK1MfTkCSiYCWitTX46AkomA1srUlyOgZCKgtTL15QgomQhorUx9OQJKJgJaK1NfjoCSiYDWytSXI6BkIqC1MvXlCCiZCGitTH05AkomAlorU1+OgJKJgNbK1JcjoGQioLUy9eUIKJkIaK1MfTkCSiYCWitTX46AkomA1srUlyOgZCKgtTL15QgomQhorUx9OQJKJgJaK1NfjoCSSUO1Dj0bx0tAyeTQkWC7Q8/G8RJQMjl0JNju0LNxvASUTA4dCbY79GwcLwElk0NHgu0OPRvHS0DJ5NCRYLtDz8bxElAycRpTrUx9OQJKJgJaK1NfjoCSiYDWytSXI6BkIqC1MvXlCCiZCGitTH05AkomAlorU1+OgJKJgNbK1JcjoGQioLUy9eUIKJkIaK1MfTkCSiYCWitTX46AkomA1srUlyOgZCKgtTL15QgomQhorUx9OQJKJgJaK1NfjoCSiYDWytSXI6BkIqC1MvXlCCiZCGitTH05AkomAlorU1+OgJKJgNbK1JcjoGQioLUy9eUIKJkIaK1MfTkDC+jo2Te3v/r398uvP95rrv26w/2NUjkCWitTX86wAvrb6eyXtJ48uEyogNZDQGtl6ssZVEDPl7/n+saioAJaDwGtlakvZ0gB/XOy/3n9p3fvnk3/nGdTQOshoLUy9eUMKaDnl3ueH+5fFlRA6yGgtTL15QwooKNHTfNw9ddZSwW0HgJaK1NfzoAC2o7ltKA3x58KaNOj1KNDQGtl6ssZaECnXzR3BbQmAlorU1/OUAM6PaJ08rOX8BUR0FqZ+nIGFNDWe6BTF01z7ZWA1kNAa2XqyxlQQKdH4W+uf3ntPwS0GgJaK1NfzpACOj0P9M4fq6+fzt7UFNBKCGitTH05Qwro7JNI7V4+FdCKCGitTH05gwro+PXpei8nXwtoLQS0Vqa+nGEFdDx68937ta+fngpoJQS0Vqa+nIEF9HMZpXIEtFamvhwBJRMBrZWpL0dAyURAa2XqyxFQMhHQWpn6cgSUTAS0Vqa+HAElEwGtlakvR0DJREBrZerLEVAy6bt4IHU49GwcLwElk0NHgu0OPRvHS0ABggQUIEhAAYIEFCBIQKHLoJBEQKHLoJBEQKHLoJBEQKHLoJBEQKHLoJBEQKHLoJBEQKHLoJBEQKHLoJBEQKHLoJBEQAGCBBQgSEABggQUIEhAAYIEFCBIQAGCBBS6DApJBBS6DApJBBS6DApJBBS6DApJBBS6DApJBBS6DApJBBS6DApJBBS6DApJBBS6DApJBBQgSEABggQUIEhAAYIEFCBIQAGCBBQgSEChy6CQREChy6CQREChy6CQREChy6CQREChy6CQREChy6CQREChy6CQREChy6CQREChy6CQREABggQUIEhAAYIEFCBIQAGCBBQgSEABggQUugwKSQQUugwKSQQUugwKSQQUugwKSQQUugwKSQQUugwKSQQUugwKSQQUugwKSQQUugwKSQQUIEhAAYIEFCBIQAGCBBQgSEABggQUIEhAocugkERAocugkERAocugkERAocugkERAocugkERAocugkERAocugkERAocugkERAocugkERAAYIEFCBIQAGCBBQgSEABggQUIEhAAYIEFLoMCkkEFLoMCkkEFLoMCkkEFLoMCkkEFLoMCkkEFLoMCkkEFLoMCkkEFLoMCkkEFLoMCkkEFCBIQAGCBBQgSEABggQUIEhAAYIEFCBogAEdvfv9xYsXv7x7H7ivgJLEoJBkaAF9+7hZufNy17vbLkhiUEgyrIB+uN+su/7zbguwXZDEoJBkUAG9OJ1G8/bZ3K3pFycPd1qC7YIkBoUkQwrox3uTYP7U+sabSVCv/brLImwXJDEoJBlSQM87uZwm9e4ui7BdkMSgkGRAAR09aprNF+wXTXNjl6PxtguSGBSSDCigk93Nzuv1vu+1HkqPUo+Ofen7f3WwDv1k8pkElGHZd+LKOvSzyWcaUEAnL+FPNs9a8hIeOJwBBXT8pFPL6duiN3dZhIAC+QwpoH+eTgr6qvWND5N+dnZKrySgQD5DCuj0PKZJMc9+fDH1fH4m/U5nMQkokNGgAjp+fbrxHvzJ97stQECBfIYV0PHoWTuhJw92vSKTgAL5DCygE6O3L56dnZ09ePEycD07AQXyGV5AP4uAAvkIKECQgAIECShAkIACBAkoQJCAAgQJKECQgAIECShAkIACBAkoQJCAAgQJKEDQ3y6gAPlkb1TuBeZ06CcbOC7ZG5V7gQB/FwIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAhdeqVsAAAGiSURBVAoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEH/H8guJQVNqCLjAAAAAElFTkSuQmCC" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot.stats</span>(DF2<span class="sc">$</span>estudio)<span class="sc">$</span>out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Horas de sueño</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(DF2<span class="sc">$</span>sueno,</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Boxplot - Horas de sueño&quot;</span>,</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Horas&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img role="img" src="data:image/png;base64,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3tlqBY8LshgUsgwpoB/vToN588Z0G/TeNKLTC8ZPR4svsnlckMWgkGVIAT0dja68XG6HPphfMn645SaoxwVZDApZBhTQWS3n3ZyG9Nq7xWVnqy+zeFyQxaCQZUABnT6Dv/LL7IvpJuj19cv670qPWveOXen7Vx2sff8y+UxDDOj0CwH9y9p14ura92+TzzSsgC72GI3/181/WD5vn26MfiKgKRMLlDOggM4O/lzfY3Q6utgYzSKgQDlDCuhZctDSh7v2wgN7M6SAznbDj/5htdN9/n7OrXbCCyhQ0JACOvl4b9R9yXN2YP12x9ELKFDQoAI62+a8HNCrL7dbQECBcoYV0MvG/7FlPgUUKGnIAQ0QUKAcAQUIElCAIAEFCBJQgCABBQgSUIAgAQUIElCAIAEFCBJQgCABBQgSUIAgAQUI+ssFFKCc4o0qvWBJ+/5lA4eleKNKLwjwVyGgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChAkoABBAgoQJKAAQQIKECSgAEECChD0/wEWWljTXERvywAAAABJRU5ErkJggg==" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot.stats</span>(DF2<span class="sc">$</span>sueno)<span class="sc">$</span>out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>numeric(0)</code></pre>
+</div>
 </div>
 <!-- TODO: Interpretar si los valores atípicos se conservan o se tratan. -->
+<p>Se encontraron posibles valores atípicos en consultas, tareas y estudio. Sin embargo, decidimos conservarlos porque no necesariamente son errores. Por ejemplo, estudiar 9 horas en un día puede ser poco frecuente, pero es posible. También es posible que un estudiante haga 50 o 68 consultas a la IA durante un día. En el caso de tareas, realizar 4 tareas donde la IA ayudó a ahorrar tiempo también es posible. Por estas razones, conservamos los valores encontrados.</p>
 </section>
 <section id="paso-5-variabilidad" class="level3">
 <h3 class="anchored" data-anchor-id="paso-5-variabilidad">Paso 5: Variabilidad</h3>
 <!-- TODO: Calcular y explicar rango, varianza, desviación estándar e IQR para las variables numéricas relevantes. -->
+<p>Para cada una de las variables numéricas calculamos el rango, la varianza, la desviación estándar y el IQR.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sd(DFL$VARIABLE, na.rm = TRUE)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variabilidad de las consultas</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(DF2<span class="sc">$</span>consultas, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2 68</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(DF2<span class="sc">$</span>consultas, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 265.9729</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(DF2<span class="sc">$</span>consultas, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16.30868</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(DF2<span class="sc">$</span>consultas, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16</code></pre>
+</div>
+</div>
+<p>En consultas se observa una variabilidad bastante amplia, ya que los valores van desde 2 hasta 68 consultas en un día. El valor máximo es 68 y es uno de los valores identificados anteriormente como atípico, por lo que este valor aumenta la dispersión de los datos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variabilidad de las tareas</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(DF2<span class="sc">$</span>tareas, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0 4</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(DF2<span class="sc">$</span>tareas, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.241379</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(DF2<span class="sc">$</span>tareas, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.114172</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(DF2<span class="sc">$</span>tareas, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<p>En tareas, los valores se encuentran entre 0 y 4, tiene un rango mucho más reducido que consultas. La mayor parte de los datos se encuentra concentrada en un intervalo pequeño, aunque se identificaron algunos valores de 4 como atípicos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variabilidad de las horas de estudio</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(DF2<span class="sc">$</span>estudio, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0 9</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(DF2<span class="sc">$</span>estudio, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.397032</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(DF2<span class="sc">$</span>estudio, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.323151</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(DF2<span class="sc">$</span>estudio, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.375</code></pre>
+</div>
+</div>
+<p>En estudio, los valores van desde 0 hasta 9 horas. Existe una diferencia considerable entre estos extremos, principalmente por el valor de 9 horas, que anteriormente fue identificado como un posible valor atípico. Sin embargo, este valor es posible, por lo que se decidió conservarlo.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variabilidad de las horas de sueño</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(DF2<span class="sc">$</span>sueno, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  3 10</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(DF2<span class="sc">$</span>sueno, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.031331</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(DF2<span class="sc">$</span>sueno, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.741072</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(DF2<span class="sc">$</span>sueno, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.4975</code></pre>
+</div>
+</div>
+<p>En sueño, los registros se encuentran entre 3 y 10 horas. A diferencia de las variables anteriores, no se identificaron valores atípicos.</p>
 <!-- Para variables categóricas: distribución de frecuencias y proporciones. -->
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># table(DFL$VARIABLE_CATEGORICA)</span></span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="co"># prop.table(table(DFL$VARIABLE_CATEGORICA)) * 100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Frecuencia del principal uso de IA</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(DF2<span class="sc">$</span>uso)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Agendara recordatorio             Consultar            Investigar 
+                    1                     1                     2 
+profundizar conceptos             Programar              Redactar 
+                    1                     4                     1 
+  Resolver ejercicios               Resumir     Revisar conceptos 
+                    9                     9                     1 </code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(DF2<span class="sc">$</span>uso)) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Agendara recordatorio             Consultar            Investigar 
+             3.448276              3.448276              6.896552 
+profundizar conceptos             Programar              Redactar 
+             3.448276             13.793103              3.448276 
+  Resolver ejercicios               Resumir     Revisar conceptos 
+            31.034483             31.034483              3.448276 </code></pre>
+</div>
+</div>
+<p>En la variable uso, los principales usos de la IA fueron resolver ejercicios y resumir información, con 9 registros cada uno, representando aproximadamente el 31% de las respuestas válidas cada uno. Programar fue el siguiente uso más frecuente, con 4 registros (13.79%). Los demás usos tuvieron una frecuencia menor.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Frecuencia del nivel de satisfacción</span></span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(DF2<span class="sc">$</span>satisfaccion)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 1  2  3  4  5 
+ 4  3 16  6  3 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(DF2<span class="sc">$</span>satisfaccion)) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     1      2      3      4      5 
+12.500  9.375 50.000 18.750  9.375 </code></pre>
+</div>
+</div>
+<p>En satisfaccion, la categoría con mayor frecuencia fue el nivel 3, con 16 registros, mientras que los niveles 4 y 5 tuvieron una menor cantidad de respuestas.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Frecuencia del nivel de comprensión</span></span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(DF2<span class="sc">$</span>comprension)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Alto     Bajo Moderado Muy alto 
+       9        3       17        3 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(DF2<span class="sc">$</span>comprension)) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Alto     Bajo Moderado Muy alto 
+  28.125    9.375   53.125    9.375 </code></pre>
+</div>
+</div>
+<p>En comprension, la categoría más frecuente fue “Moderado”, con 17 registros, seguida de “Alto”, con 9 registros. Las categorías “Bajo” y “Muy alto” tuvieron 3 registros cada una.</p>
 </section>
 <section id="paso-6-gestión-de-nulos" class="level3">
 <h3 class="anchored" data-anchor-id="paso-6-gestión-de-nulos">Paso 6: Gestión de nulos</h3>
+<p>Hasta este punto no se ha eliminado ningún registro por calidad de datos: los pasos anteriores reemplazaron por NA los valores que no superaron los criterios, pero conservaron todas las filas. Ahora corresponde medir el impacto de esos NA y decidir qué hacer con ellos.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabla_NA &lt;- data.frame(</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   Variable = c(...),</span></span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   Cantidad_NA = c(...),</span></span>
-<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   Porcentaje_NA = c(...)</span></span>
-<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
-<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tabla_NA</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>tabla_NA <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="fu">names</span>(DF2),</span>
+<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Cantidad_NA =</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(DF2)),</span>
+<span id="cb130-4"><a href="#cb130-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Porcentaje_NA =</span> <span class="fu">round</span>(<span class="fu">colSums</span>(<span class="fu">is.na</span>(DF2)) <span class="sc">/</span> <span class="fu">nrow</span>(DF2) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>),</span>
+<span id="cb130-5"><a href="#cb130-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="cn">NULL</span></span>
+<span id="cb130-6"><a href="#cb130-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb130-7"><a href="#cb130-7" aria-hidden="true" tabindex="-1"></a>tabla_NA</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Variable Cantidad_NA Porcentaje_NA
+1          hora           0          0.00
+2     consultas           3          9.38
+3           uso           3          9.38
+4  satisfaccion           0          0.00
+5        tareas           3          9.38
+6         curso           3          9.38
+7       estudio           0          0.00
+8         sueno           0          0.00
+9   comprension           0          0.00
+10        email           0          0.00
+11        Grupo           0          0.00</code></pre>
 </div>
+</div>
+<p>Los faltantes se concentran en cuatro variables (<code>consultas</code>, <code>uso</code>, <code>tareas</code> y <code>curso</code>), todas relacionadas con el uso de IA. Las demás están completas.</p>
+<p>Revisamos si los NA aparecen dispersos o si coinciden en los mismos registros.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">rowSums</span>(<span class="fu">is.na</span>(DF2)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 0  4 
+29  3 </code></pre>
+</div>
+</div>
+<p>No hay ningún registro con un NA aislado: las cuatro variables faltan siempre juntas, lo que descarta errores de tipeo y apunta a una causa común.</p>
+<p>Medimos el impacto de eliminar toda fila con al menos un NA.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(DF2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 32</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(<span class="fu">na.omit</span>(DF2))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 29</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>((<span class="dv">1</span> <span class="sc">-</span> <span class="fu">nrow</span>(<span class="fu">na.omit</span>(DF2)) <span class="sc">/</span> <span class="fu">nrow</span>(DF2)) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.38</code></pre>
+</div>
+</div>
+<p>La pérdida sería del 9.38%. Como las cuatro variables fallan a la vez, excluir una sola no recuperaría ninguna fila.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a>DF2[<span class="sc">!</span><span class="fu">complete.cases</span>(DF2), <span class="fu">c</span>(<span class="st">&quot;hora&quot;</span>, <span class="st">&quot;email&quot;</span>, <span class="st">&quot;consultas&quot;</span>, <span class="st">&quot;uso&quot;</span>, <span class="st">&quot;tareas&quot;</span>, <span class="st">&quot;curso&quot;</span>, <span class="st">&quot;estudio&quot;</span>, <span class="st">&quot;sueno&quot;</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 8
+  hora                email           consultas uso   tareas curso estudio sueno
+  &lt;chr&gt;               &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 12/09/2026 23:45:19 cristobal.aran…        NA &lt;NA&gt;      NA &lt;NA&gt;        0    10
+2 12/09/2026 23:45:20 miguel.flores.…        NA &lt;NA&gt;      NA &lt;NA&gt;        0     8
+3 13/09/2026 22:05:58 frank.yauri@ut…        NA &lt;NA&gt;      NA &lt;NA&gt;        0     6</code></pre>
+</div>
+</div>
+<p>Estos registros corresponden a estudiantes que declararon no haber usado IA ese día (“Ninguno”, “No la usé”, “No use ia hoy”, con <code>consultas</code> = 0, <code>tareas</code> = 0 y <code>curso</code> = “-”). El Paso 3 los convirtió a NA por no pertenecer a las categorías válidas del codebook.</p>
+<p>Son NA naturales por dependencia entre preguntas: quien no usó IA no puede indicar para qué la usó. Además comparten 0 horas de estudio, por lo que eliminarlos quitaría solo los días de menor actividad e introduciría sesgo. Se descarta el <code>na.omit</code> por esa razón, y la imputación por media o mediana porque inventaría consultas que el estudiante afirmó no haber hecho, siendo que el valor real es 0.</p>
 <!-- TODO: Establecer y justificar la política final de manejo de nulos (ej. umbral de % para conservar/imputar). -->
+<p>La política es reetiquetar:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 24%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Tratamiento</th>
+<th>Justificación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>consultas</code></td>
+<td>NA → 0</td>
+<td>El estudiante declaró no haber consultado a la IA</td>
+</tr>
+<tr class="even">
+<td><code>tareas</code></td>
+<td>NA → 0</td>
+<td>Sin uso de IA no pudo haber tareas con tiempo ahorrado</td>
+</tr>
+<tr class="odd">
+<td><code>uso</code></td>
+<td>NA → “No usó IA”</td>
+<td>Categoría explícita de la variable nominal</td>
+</tr>
+<tr class="even">
+<td><code>curso</code></td>
+<td>NA → “No aplica”</td>
+<td>No hay curso de consulta si no hubo consultas</td>
+</tr>
+</tbody>
+</table>
+<p>Se agrega <code>uso_ia</code> para que los objetivos 1 y 3 puedan filtrar esos registros sin eliminarlos. También se codifican las ordinales como factor y los identificadores como nominales.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a>DF3 <span class="ot">&lt;-</span> DF2 <span class="sc">%&gt;%</span></span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">uso_ia =</span> <span class="sc">!</span><span class="fu">is.na</span>(uso),</span>
+<span id="cb142-4"><a href="#cb142-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">consultas =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(consultas), <span class="dv">0</span>, <span class="fu">as.numeric</span>(consultas)),</span>
+<span id="cb142-5"><a href="#cb142-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">tareas =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(tareas), <span class="dv">0</span>, <span class="fu">as.numeric</span>(tareas)),</span>
+<span id="cb142-6"><a href="#cb142-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">uso =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(uso), <span class="st">&quot;No usó IA&quot;</span>, <span class="fu">as.character</span>(uso)),</span>
+<span id="cb142-7"><a href="#cb142-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">curso =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(curso), <span class="st">&quot;No aplica&quot;</span>, <span class="fu">as.character</span>(curso)),</span>
+<span id="cb142-8"><a href="#cb142-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">estudio =</span> <span class="fu">as.numeric</span>(estudio),</span>
+<span id="cb142-9"><a href="#cb142-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">sueno =</span> <span class="fu">as.numeric</span>(sueno),</span>
+<span id="cb142-10"><a href="#cb142-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprension =</span> <span class="fu">factor</span>(comprension,</span>
+<span id="cb142-11"><a href="#cb142-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Muy bajo&quot;</span>, <span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Moderado&quot;</span>, <span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Muy alto&quot;</span>),</span>
+<span id="cb142-12"><a href="#cb142-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb142-13"><a href="#cb142-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaccion =</span> <span class="fu">factor</span>(satisfaccion, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb142-14"><a href="#cb142-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">uso =</span> <span class="fu">factor</span>(uso),</span>
+<span id="cb142-15"><a href="#cb142-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Grupo =</span> <span class="fu">factor</span>(Grupo)</span>
+<span id="cb142-16"><a href="#cb142-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(DF3))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(DF3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 32</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(DF3<span class="sc">$</span>uso_ia)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE 
+    3    29 </code></pre>
+</div>
+</div>
+<p>La conciliación cuadra: los NA reetiquetados coinciden con los registros sin uso de IA. La base queda sin faltantes y sin pérdida de observaciones.</p>
+</section>
+<section id="paso-7-radiografia-final" class="level3">
+<h3 class="anchored" data-anchor-id="paso-7-radiografia-final">paso 7: Radiografia final</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a>trazabilidad <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Etapa =</span> <span class="fu">c</span>(<span class="st">&quot;Base cruda (DF)&quot;</span>, <span class="st">&quot;Subset y join (DFL)&quot;</span>, <span class="st">&quot;Normalización (DFL1)&quot;</span>,</span>
+<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Criterios (DF2)&quot;</span>, <span class="st">&quot;Gestión de nulos (DF3)&quot;</span>),</span>
+<span id="cb149-4"><a href="#cb149-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Observaciones =</span> <span class="fu">c</span>(<span class="fu">nrow</span>(DF), <span class="fu">nrow</span>(DFL), <span class="fu">nrow</span>(DFL1), <span class="fu">nrow</span>(DF2), <span class="fu">nrow</span>(DF3))</span>
+<span id="cb149-5"><a href="#cb149-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb149-6"><a href="#cb149-6" aria-hidden="true" tabindex="-1"></a>trazabilidad<span class="sc">$</span>Retencion <span class="ot">&lt;-</span> <span class="fu">round</span>(trazabilidad<span class="sc">$</span>Observaciones <span class="sc">/</span> <span class="fu">nrow</span>(DF) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>)</span>
+<span id="cb149-7"><a href="#cb149-7" aria-hidden="true" tabindex="-1"></a>trazabilidad</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   Etapa Observaciones Retencion
+1        Base cruda (DF)            41    100.00
+2    Subset y join (DFL)            41    100.00
+3   Normalización (DFL1)            32     78.05
+4        Criterios (DF2)            32     78.05
+5 Gestión de nulos (DF3)            32     78.05</code></pre>
+</div>
+</div>
+<p>Se conservan 32 de 41 observaciones (78%). Toda la pérdida ocurrió al aplicar los criterios de investigador, no en la gestión de nulos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a>radiografia <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="fu">names</span>(DF3),</span>
+<span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Tipo =</span> <span class="fu">sapply</span>(DF3, <span class="cf">function</span>(x) <span class="fu">class</span>(x)[<span class="dv">1</span>]),</span>
+<span id="cb151-4"><a href="#cb151-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">NA_total =</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(DF3)),</span>
+<span id="cb151-5"><a href="#cb151-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Porcentaje_NA =</span> <span class="fu">round</span>(<span class="fu">colSums</span>(<span class="fu">is.na</span>(DF3)) <span class="sc">/</span> <span class="fu">nrow</span>(DF3) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>),</span>
+<span id="cb151-6"><a href="#cb151-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Unicos =</span> <span class="fu">sapply</span>(DF3, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x))),</span>
+<span id="cb151-7"><a href="#cb151-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="cn">NULL</span></span>
+<span id="cb151-8"><a href="#cb151-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb151-9"><a href="#cb151-9" aria-hidden="true" tabindex="-1"></a>radiografia</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Variable      Tipo NA_total Porcentaje_NA Unicos
+1          hora character        0             0     32
+2     consultas   numeric        0             0     18
+3           uso    factor        0             0     10
+4  satisfaccion   ordered        0             0      5
+5        tareas   numeric        0             0      5
+6         curso character        0             0     19
+7       estudio   numeric        0             0     13
+8         sueno   numeric        0             0     12
+9   comprension   ordered        0             0      4
+10        email character        0             0     20
+11        Grupo    factor        0             0      7
+12       uso_ia   logical        0             0      2</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(DF3<span class="sc">$</span>consultas <span class="sc">==</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(DF3<span class="sc">$</span>tareas <span class="sc">==</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(DF3<span class="sc">$</span>estudio <span class="sc">==</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(DF3<span class="sc">$</span>sueno <span class="sc">==</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>Los NA quedan en cero. Los ceros de <code>consultas</code> y <code>tareas</code> son los días sin uso de IA ya conciliados, es decir ceros verdaderos y no faltantes disfrazados. Las ordinales quedan como factor ordenado y <code>Grupo</code> como identificador nominal.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="fu">c</span>(<span class="st">&quot;consultas&quot;</span>, <span class="st">&quot;tareas&quot;</span>, <span class="st">&quot;estudio&quot;</span>, <span class="st">&quot;sueno&quot;</span>),</span>
+<span id="cb161-3"><a href="#cb161-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Restriccion =</span> <span class="fu">c</span>(<span class="st">&quot;x &gt;= 0&quot;</span>, <span class="st">&quot;x &gt;= 0&quot;</span>, <span class="st">&quot;x &gt;= 0&quot;</span>, <span class="st">&quot;0 &lt;= x &lt;= 24&quot;</span>),</span>
+<span id="cb161-4"><a href="#cb161-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Minimo =</span> <span class="fu">c</span>(<span class="fu">min</span>(DF3<span class="sc">$</span>consultas), <span class="fu">min</span>(DF3<span class="sc">$</span>tareas), <span class="fu">min</span>(DF3<span class="sc">$</span>estudio), <span class="fu">min</span>(DF3<span class="sc">$</span>sueno)),</span>
+<span id="cb161-5"><a href="#cb161-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Maximo =</span> <span class="fu">c</span>(<span class="fu">max</span>(DF3<span class="sc">$</span>consultas), <span class="fu">max</span>(DF3<span class="sc">$</span>tareas), <span class="fu">max</span>(DF3<span class="sc">$</span>estudio), <span class="fu">max</span>(DF3<span class="sc">$</span>sueno)),</span>
+<span id="cb161-6"><a href="#cb161-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Cumple =</span> <span class="fu">c</span>(<span class="fu">all</span>(DF3<span class="sc">$</span>consultas <span class="sc">&gt;=</span> <span class="dv">0</span>), <span class="fu">all</span>(DF3<span class="sc">$</span>tareas <span class="sc">&gt;=</span> <span class="dv">0</span>), <span class="fu">all</span>(DF3<span class="sc">$</span>estudio <span class="sc">&gt;=</span> <span class="dv">0</span>),</span>
+<span id="cb161-7"><a href="#cb161-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">all</span>(DF3<span class="sc">$</span>sueno <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> DF3<span class="sc">$</span>sueno <span class="sc">&lt;=</span> <span class="dv">24</span>))</span>
+<span id="cb161-8"><a href="#cb161-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Variable  Restriccion Minimo Maximo Cumple
+1 consultas       x &gt;= 0      0     68   TRUE
+2    tareas       x &gt;= 0      0      4   TRUE
+3   estudio       x &gt;= 0      0      9   TRUE
+4     sueno 0 &lt;= x &lt;= 24      3     10   TRUE</code></pre>
+</div>
+</div>
+<p>Todas cumplen los rangos del codebook. Los valores extremos son los atípicos del Paso 4, que se decidió conservar.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">duplicated</span>(DF3))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a>DF3 <span class="sc">%&gt;%</span></span>
+<span id="cb165-2"><a href="#cb165-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fecha =</span> <span class="fu">substr</span>(hora, <span class="dv">1</span>, <span class="dv">10</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb165-3"><a href="#cb165-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(email, fecha) <span class="sc">%&gt;%</span></span>
+<span id="cb165-4"><a href="#cb165-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 0 × 3
+# ℹ 3 variables: email &lt;chr&gt;, fecha &lt;chr&gt;, n &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>No hay duplicados: se cumplió el envío único por día.</p>
+<p>La limpieza se hizo sobre la base completa de la sección, manteniendo <code>Grupo</code> en todas las etapas. Filtramos solo para mostrar las observaciones limpias de nuestro grupo; el análisis posterior continúa con la base completa.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a>DF3 <span class="sc">%&gt;%</span> <span class="fu">count</span>(Grupo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 2
+  Grupo     n
+  &lt;fct&gt; &lt;int&gt;
+1 1         4
+2 2         1
+3 3         2
+4 5         7
+5 6        10
+6 7         1
+7 9         7</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a>GRUPO <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb169-2"><a href="#cb169-2" aria-hidden="true" tabindex="-1"></a>DF3_grupo <span class="ot">&lt;-</span> DF3 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Grupo <span class="sc">==</span> GRUPO)</span>
+<span id="cb169-3"><a href="#cb169-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-4"><a href="#cb169-4" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(DF3_grupo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb171"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a>DF3_grupo <span class="sc">%&gt;%</span> <span class="fu">count</span>(email)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  email                          n
+  &lt;chr&gt;                      &lt;int&gt;
+1 dervy.pillaca@utec.edu.pe      2
+2 eduardo.vila@utec.edu.pe       3
+3 indira.yabar@utec.edu.pe       2
+4 johan.huayta@utec.edu.pe       1
+5 mathius.quispe@utec.edu.pe     2</code></pre>
+</div>
+</div>
+<p>El grupo tiene <strong>10 observaciones limpias</strong> frente al mínimo de 150. La recolección lleva 3 días activos y el diseño es longitudinal, por lo que el volumen crece de forma acumulativa.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb173"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_distinct</span>(DF3<span class="sc">$</span>email)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20</code></pre>
+</div>
+</div>
+<p>La cobertura alcanza a 20 de los 45 estudiantes de la sección, por lo que aún no permite generalizar a la población objetivo.</p>
 <p><strong>Conclusión del proceso de validación y limpieza de datos</strong></p>
 <!-- TODO: Resumen final del proceso de limpieza. -->
+<p>De 41 observaciones crudas se conservan 32 (78%), y las descartadas responden a la ventana horaria de envío definida de antemano, no a errores de calidad.</p>
+<p>El hallazgo central fue que los faltantes no eran aleatorios: coincidían en los mismos registros y correspondían a días sin uso de IA, es decir NA naturales por dependencia entre preguntas. El <code>na.omit</code> habría costado el 9.38%, tolerable en magnitud pero no en composición, ya que eliminaba justamente los registros de menor actividad académica. Reetiquetarlos permitió conciliar el conteo a cero sin perder observaciones ni imputar valores que el estudiante nunca reportó.</p>
+<p>La base final no tiene faltantes, duplicados ni valores fuera de rango, con las ordinales como factores ordenados y los identificadores como nominales. Queda apta para el análisis descriptivo. La limitación pendiente es el volumen muestral: 10 observaciones limpias del grupo sobre un mínimo de 150.</p>
 </section>
 </section>
 </section>
@@ -2924,11 +3428,11 @@ dbl (1): Grupo
 <section id="variable-nombre_variable" class="level3">
 <h3 class="anchored" data-anchor-id="variable-nombre_variable">Variable: NOMBRE_VARIABLE</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># table(DFL$VARIABLE_CATEGORICA)</span></span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(DFL, aes(x = VARIABLE_CATEGORICA, fill = VARIABLE_CATEGORICA)) +</span></span>
-<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar() +</span></span>
-<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(title = &quot;TÍTULO&quot;, x = &quot;X&quot;, y = &quot;Frecuencia&quot;) +</span></span>
-<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_minimal() + theme(legend.position = &quot;none&quot;)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="co"># table(DFL$VARIABLE_CATEGORICA)</span></span>
+<span id="cb175-2"><a href="#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(DFL, aes(x = VARIABLE_CATEGORICA, fill = VARIABLE_CATEGORICA)) +</span></span>
+<span id="cb175-3"><a href="#cb175-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar() +</span></span>
+<span id="cb175-4"><a href="#cb175-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(title = &quot;TÍTULO&quot;, x = &quot;X&quot;, y = &quot;Frecuencia&quot;) +</span></span>
+<span id="cb175-5"><a href="#cb175-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_minimal() + theme(legend.position = &quot;none&quot;)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <!-- TODO: Interpretación del gráfico. -->
 </section>
@@ -2936,33 +3440,33 @@ dbl (1): Grupo
 <section id="análisis-univariado-numéricas" class="level2">
 <h2 class="anchored" data-anchor-id="análisis-univariado-numéricas">3.2 Análisis univariado: numéricas</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>calcular_descriptores <span class="ot">&lt;-</span> <span class="cf">function</span>(variable) {</span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  pctiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(variable, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.50</span>, <span class="fl">0.75</span>), <span class="at">type =</span> <span class="dv">3</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  stats <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Media =</span> <span class="fu">mean</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mediana =</span> <span class="fu">median</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Desviacion_Estandar =</span> <span class="fu">sd</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Varianza =</span> <span class="fu">var</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Percentil_25 =</span> pctiles[[<span class="st">&quot;25%&quot;</span>]],</span>
-<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Percentil_50 =</span> pctiles[[<span class="st">&quot;50%&quot;</span>]],</span>
-<span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Percentil_75 =</span> pctiles[[<span class="st">&quot;75%&quot;</span>]],</span>
-<span id="cb80-11"><a href="#cb80-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb80-12"><a href="#cb80-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">CV =</span> <span class="fu">sd</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">mean</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb80-13"><a href="#cb80-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb80-14"><a href="#cb80-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">round</span>(stats, <span class="dv">2</span>))</span>
-<span id="cb80-15"><a href="#cb80-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a>calcular_descriptores <span class="ot">&lt;-</span> <span class="cf">function</span>(variable) {</span>
+<span id="cb176-2"><a href="#cb176-2" aria-hidden="true" tabindex="-1"></a>  pctiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(variable, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.50</span>, <span class="fl">0.75</span>), <span class="at">type =</span> <span class="dv">3</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb176-3"><a href="#cb176-3" aria-hidden="true" tabindex="-1"></a>  stats <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb176-4"><a href="#cb176-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Media =</span> <span class="fu">mean</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb176-5"><a href="#cb176-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mediana =</span> <span class="fu">median</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb176-6"><a href="#cb176-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Desviacion_Estandar =</span> <span class="fu">sd</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb176-7"><a href="#cb176-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Varianza =</span> <span class="fu">var</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb176-8"><a href="#cb176-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Percentil_25 =</span> pctiles[[<span class="st">&quot;25%&quot;</span>]],</span>
+<span id="cb176-9"><a href="#cb176-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Percentil_50 =</span> pctiles[[<span class="st">&quot;50%&quot;</span>]],</span>
+<span id="cb176-10"><a href="#cb176-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Percentil_75 =</span> pctiles[[<span class="st">&quot;75%&quot;</span>]],</span>
+<span id="cb176-11"><a href="#cb176-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb176-12"><a href="#cb176-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">CV =</span> <span class="fu">sd</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">mean</span>(variable, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb176-13"><a href="#cb176-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb176-14"><a href="#cb176-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">round</span>(stats, <span class="dv">2</span>))</span>
+<span id="cb176-15"><a href="#cb176-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print(calcular_descriptores(DFL$VARIABLE_NUMERICA))  # </span><span class="al">TODO</span><span class="co">: repetir por variable</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print(calcular_descriptores(DFL$VARIABLE_NUMERICA))  # </span><span class="al">TODO</span><span class="co">: repetir por variable</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="gráfico-histograma-boxplot-de-nombre_variable" class="level3">
 <h3 class="anchored" data-anchor-id="gráfico-histograma-boxplot-de-nombre_variable">Gráfico: histograma / boxplot de NOMBRE_VARIABLE</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(DFL, aes(x = VARIABLE_NUMERICA)) +</span></span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_histogram(aes(y = after_stat(density)), bins = 15, fill = &quot;#3498db&quot;, color = &quot;white&quot;) +</span></span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_vline(aes(xintercept = mean(VARIABLE_NUMERICA, na.rm = TRUE)), color = &quot;red&quot;, linetype = &quot;dashed&quot;) +</span></span>
-<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(title = &quot;TÍTULO&quot;, x = &quot;X&quot;, y = &quot;Densidad&quot;) +</span></span>
-<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_minimal()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb178"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(DFL, aes(x = VARIABLE_NUMERICA)) +</span></span>
+<span id="cb178-2"><a href="#cb178-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_histogram(aes(y = after_stat(density)), bins = 15, fill = &quot;#3498db&quot;, color = &quot;white&quot;) +</span></span>
+<span id="cb178-3"><a href="#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_vline(aes(xintercept = mean(VARIABLE_NUMERICA, na.rm = TRUE)), color = &quot;red&quot;, linetype = &quot;dashed&quot;) +</span></span>
+<span id="cb178-4"><a href="#cb178-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(title = &quot;TÍTULO&quot;, x = &quot;X&quot;, y = &quot;Densidad&quot;) +</span></span>
+<span id="cb178-5"><a href="#cb178-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_minimal()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <!-- TODO: Interpretación del gráfico. -->
 </section>
@@ -2972,10 +3476,10 @@ dbl (1): Grupo
 <section id="objetivo-1-variable_a-vs.-variable_b" class="level3">
 <h3 class="anchored" data-anchor-id="objetivo-1-variable_a-vs.-variable_b">Objetivo 1: VARIABLE_A vs. VARIABLE_B</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(DFL, aes(x = VARIABLE_A, y = VARIABLE_B, fill = VARIABLE_A)) +</span></span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_boxplot(alpha = 0.7) +</span></span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(title = &quot;TÍTULO&quot;, x = &quot;X&quot;, y = &quot;Y&quot;) +</span></span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_minimal() + theme(legend.position = &quot;none&quot;)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(DFL, aes(x = VARIABLE_A, y = VARIABLE_B, fill = VARIABLE_A)) +</span></span>
+<span id="cb179-2"><a href="#cb179-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_boxplot(alpha = 0.7) +</span></span>
+<span id="cb179-3"><a href="#cb179-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(title = &quot;TÍTULO&quot;, x = &quot;X&quot;, y = &quot;Y&quot;) +</span></span>
+<span id="cb179-4"><a href="#cb179-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_minimal() + theme(legend.position = &quot;none&quot;)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <!-- TODO: Interpretación en función del objetivo específico 1. -->
 </section>
