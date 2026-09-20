@@ -101,9 +101,9 @@ Además se contará con dos tablas externas:
 
 Con la finalidad de que la muestra obtenida refleje a la población y se minimicen posibles sesgos, se plantean las siguientes medidas:
 
-Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario y así evitando el sesgo de no respuesta 
+Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario y así evitando el sesgo de no respuesta 
 
-Instrumento de registro diario estandarizado: La recolección se ejecutará mediante un formulario digital (Forms) configurado con restricciones de envío único por día, garantizando la consistencia temporal de los registros.  
+Instrumento de registro diario estandarizado: La recolección se ejecutará mediante un formulario digital (Forms) configurado con restricciones de envío único por día, garantizando la consistencia temporal de los registros.  
 
 Medición al cierre del día: El cuestionario se realizará al final de cada día el cual permitirá registra las variables diarias (como las horas de estudio o el uso de IA), atenuando el sesgo de memoria. El registro de un día se contará como válido si este se hace después de las 9:30 p.m. pero antes de la medianoche.
 
@@ -192,6 +192,25 @@ Nos quedamos con las columnas de nuestros objetivos específicos.
 DFL <- DFL[, c("hora", "consultas", "uso", "satisfaccion", "tareas", "curso", "estudio", "sueno", "comprension", "email")]
 names(DFL)
 ```
+
+Obtenemos los grupos que han aportado en base a los correos que tenemos y en base a una tabla auxiliar
+
+```{r}
+DFAuxiliar <- read_csv("CorreosGrupo.csv")
+```
+
+Realizamos un inner join para relacionar `email` con el grupo correspondiente
+
+```{r}
+DFL <- inner_join(DFL, DFAuxiliar, by = "email")
+```
+
+Comprobamos rápidamente que el inner join se haya hecho exitosamente
+
+```{r}
+head(DFL[c("hora", "email", "Grupo")])
+```
+
 
 ### Vista del subset final
 
@@ -503,23 +522,177 @@ En comprension, la categoría más frecuente fue "Moderado", con 17 registros,
 seguida de "Alto", con 9 registros. Las categorías "Bajo" y "Muy alto" tuvieron
 3 registros cada una.
 
-
 ### Paso 6: Gestión de nulos
 
+Hasta este punto no se ha eliminado ningún registro por calidad de datos: los pasos anteriores reemplazaron por NA los valores que no superaron los criterios, pero conservaron todas las filas. Ahora corresponde medir el impacto de esos NA y decidir qué hacer con ellos.
+
 ```{r}
-# tabla_NA <- data.frame(
-#   Variable = c(...),
-#   Cantidad_NA = c(...),
-#   Porcentaje_NA = c(...)
-# )
-# tabla_NA
+tabla_NA <- data.frame(
+  Variable = names(DF2),
+  Cantidad_NA = colSums(is.na(DF2)),
+  Porcentaje_NA = round(colSums(is.na(DF2)) / nrow(DF2) * 100, 2),
+  row.names = NULL
+)
+tabla_NA
 ```
 
+Los faltantes se concentran en cuatro variables (`consultas`, `uso`, `tareas` y `curso`), todas relacionadas con el uso de IA. Las demás están completas.
+
+Revisamos si los NA aparecen dispersos o si coinciden en los mismos registros.
+```{r}
+table(rowSums(is.na(DF2)))
+```
+
+No hay ningún registro con un NA aislado: las cuatro variables faltan siempre juntas, lo que descarta errores de tipeo y apunta a una causa común.
+
+Medimos el impacto de eliminar toda fila con al menos un NA.
+
+```{r}
+nrow(DF2)
+nrow(na.omit(DF2))
+round((1 - nrow(na.omit(DF2)) / nrow(DF2)) * 100, 2)
+```
+
+La pérdida sería del `r round((1 - nrow(na.omit(DF2))/nrow(DF2))*100, 2)`%. Como las cuatro variables fallan a la vez, excluir una sola no recuperaría ninguna fila.
+
+```{r}
+DF2[!complete.cases(DF2), c("hora", "email", "consultas", "uso", "tareas", "curso", "estudio", "sueno")]
+```
+
+Estos registros corresponden a estudiantes que declararon no haber usado IA ese día ("Ninguno", "No la usé", "No use ia hoy", con `consultas` = 0, `tareas` = 0 y `curso` = "-"). El Paso 3 los convirtió a NA por no pertenecer a las categorías válidas del codebook.
+
+Son NA naturales por dependencia entre preguntas: quien no usó IA no puede indicar para qué la usó. Además comparten 0 horas de estudio, por lo que eliminarlos quitaría solo los días de menor actividad e introduciría sesgo. Se descarta el `na.omit` por esa razón, y la imputación por media o mediana porque inventaría consultas que el estudiante afirmó no haber hecho, siendo que el valor real es 0.
+
 <!-- TODO: Establecer y justificar la política final de manejo de nulos (ej. umbral de % para conservar/imputar). -->
+
+La política es reetiquetar:
+
+| Variable | Tratamiento | Justificación |
+|-------------|--------------------|------------------------------------------|
+| `consultas` | NA → 0 | El estudiante declaró no haber consultado a la IA |
+| `tareas` | NA → 0 | Sin uso de IA no pudo haber tareas con tiempo ahorrado |
+| `uso` | NA → "No usó IA" | Categoría explícita de la variable nominal |
+| `curso` | NA → "No aplica" | No hay curso de consulta si no hubo consultas |
+
+Se agrega `uso_ia` para que los objetivos 1 y 3 puedan filtrar esos registros sin eliminarlos. También se codifican las ordinales como factor y los identificadores como nominales.
+
+```{r}
+DF3 <- DF2 %>%
+  mutate(
+    uso_ia = !is.na(uso),
+    consultas = ifelse(is.na(consultas), 0, as.numeric(consultas)),
+    tareas = ifelse(is.na(tareas), 0, as.numeric(tareas)),
+    uso = ifelse(is.na(uso), "No usó IA", as.character(uso)),
+    curso = ifelse(is.na(curso), "No aplica", as.character(curso)),
+    estudio = as.numeric(estudio),
+    sueno = as.numeric(sueno),
+    comprension = factor(comprension,
+                         levels = c("Muy bajo", "Bajo", "Moderado", "Alto", "Muy alto"),
+                         ordered = TRUE),
+    satisfaccion = factor(satisfaccion, levels = 1:5, ordered = TRUE),
+    uso = factor(uso),
+    Grupo = factor(Grupo)
+  )
+```
+
+```{r}
+sum(is.na(DF3))
+nrow(DF3)
+table(DF3$uso_ia)
+```
+
+La conciliación cuadra: los NA reetiquetados coinciden con los registros sin uso de IA. La base queda sin faltantes y sin pérdida de observaciones.
+
+### paso 7: Radiografia final
+
+```{r}
+trazabilidad <- data.frame(
+  Etapa = c("Base cruda (DF)", "Subset y join (DFL)", "Normalización (DFL1)",
+            "Criterios (DF2)", "Gestión de nulos (DF3)"),
+  Observaciones = c(nrow(DF), nrow(DFL), nrow(DFL1), nrow(DF2), nrow(DF3))
+)
+trazabilidad$Retencion <- round(trazabilidad$Observaciones / nrow(DF) * 100, 2)
+trazabilidad
+```
+
+Se conservan `r nrow(DF3)` de `r nrow(DF)` observaciones (`r round(nrow(DF3)/nrow(DF)*100, 1)`%). Toda la pérdida ocurrió al aplicar los criterios de investigador, no en la gestión de nulos.
+
+```{r}
+radiografia <- data.frame(
+  Variable = names(DF3),
+  Tipo = sapply(DF3, function(x) class(x)[1]),
+  NA_total = colSums(is.na(DF3)),
+  Porcentaje_NA = round(colSums(is.na(DF3)) / nrow(DF3) * 100, 2),
+  Unicos = sapply(DF3, function(x) length(unique(x))),
+  row.names = NULL
+)
+radiografia
+```
+
+```{r}
+sum(DF3$consultas == 0)
+sum(DF3$tareas == 0)
+sum(DF3$estudio == 0)
+sum(DF3$sueno == 0)
+```
+
+Los NA quedan en cero. Los ceros de `consultas` y `tareas` son los días sin uso de IA ya conciliados, es decir ceros verdaderos y no faltantes disfrazados. Las ordinales quedan como factor ordenado y `Grupo` como identificador nominal.
+
+```{r}
+data.frame(
+  Variable = c("consultas", "tareas", "estudio", "sueno"),
+  Restriccion = c("x >= 0", "x >= 0", "x >= 0", "0 <= x <= 24"),
+  Minimo = c(min(DF3$consultas), min(DF3$tareas), min(DF3$estudio), min(DF3$sueno)),
+  Maximo = c(max(DF3$consultas), max(DF3$tareas), max(DF3$estudio), max(DF3$sueno)),
+  Cumple = c(all(DF3$consultas >= 0), all(DF3$tareas >= 0), all(DF3$estudio >= 0),
+             all(DF3$sueno >= 0 & DF3$sueno <= 24))
+)
+```
+
+Todas cumplen los rangos del codebook. Los valores extremos son los atípicos del Paso 4, que se decidió conservar.
+
+```{r}
+sum(duplicated(DF3))
+
+DF3 %>%
+  mutate(fecha = substr(hora, 1, 10)) %>%
+  count(email, fecha) %>%
+  filter(n > 1)
+```
+
+No hay duplicados: se cumplió el envío único por día.
+
+La limpieza se hizo sobre la base completa de la sección, manteniendo `Grupo` en todas las etapas. Filtramos solo para mostrar las observaciones limpias de nuestro grupo; el análisis posterior continúa con la base completa.
+
+```{r}
+DF3 %>% count(Grupo)
+```
+
+```{r}
+GRUPO <- 6
+DF3_grupo <- DF3 %>% filter(Grupo == GRUPO)
+
+nrow(DF3_grupo)
+DF3_grupo %>% count(email)
+```
+
+El grupo tiene **`r nrow(DF3_grupo)` observaciones limpias** frente al mínimo de 150. La recolección lleva `r length(unique(substr(DF3$hora, 1, 10)))` días activos y el diseño es longitudinal, por lo que el volumen crece de forma acumulativa.
+
+```{r}
+n_distinct(DF3$email)
+```
+
+La cobertura alcanza a `r n_distinct(DF3$email)` de los 45 estudiantes de la sección, por lo que aún no permite generalizar a la población objetivo.
 
 **Conclusión del proceso de validación y limpieza de datos**
 
 <!-- TODO: Resumen final del proceso de limpieza. -->
+
+De `r nrow(DF)` observaciones crudas se conservan `r nrow(DF3)` (`r round(nrow(DF3)/nrow(DF)*100, 1)`%), y las descartadas responden a la ventana horaria de envío definida de antemano, no a errores de calidad.
+
+El hallazgo central fue que los faltantes no eran aleatorios: coincidían en los mismos registros y correspondían a días sin uso de IA, es decir NA naturales por dependencia entre preguntas. El `na.omit` habría costado el `r round((1 - nrow(na.omit(DF2))/nrow(DF2))*100, 2)`%, tolerable en magnitud pero no en composición, ya que eliminaba justamente los registros de menor actividad académica. Reetiquetarlos permitió conciliar el conteo a cero sin perder observaciones ni imputar valores que el estudiante nunca reportó.
+
+La base final no tiene faltantes, duplicados ni valores fuera de rango, con las ordinales como factores ordenados y los identificadores como nominales. Queda apta para el análisis descriptivo. La limitación pendiente es el volumen muestral: `r nrow(DF3_grupo)` observaciones limpias del grupo sobre un mínimo de 150.
 
 # 3. Análisis descriptivo
 
