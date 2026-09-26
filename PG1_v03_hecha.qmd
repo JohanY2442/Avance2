@@ -354,7 +354,7 @@ filter(as.numeric(consultas)%%1==0,
 Como la respuesta cualitativa (uso) se relaciona con variables cuantitativas (consultas y tareas), para evitar la pérdida de la fila debido a los datos contradictorios, los valores no válidos se reasignarán con NA.
 
 ```{r}
-mutate(
+  DF2<-DFL1%>%mutate(
   uso_= chartr("áéíóúÁÉÍÓÚ", "aeiouAEIOU", tolower(uso)),
   usoC= str_detect(uso_,regex("\\b(ia|no|use|ningun[oa])\\b",ignore_case = TRUE)),
   cursoC = is.na(curso) | str_detect(curso, "^[ -]*$") | 
