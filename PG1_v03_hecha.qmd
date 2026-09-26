@@ -97,25 +97,19 @@ Además se contará con dos tablas externas:
 
 ### 2.1.2 Representatividad de la muestra
 
-<!-- TODO: Explicar qué medidas se tomaron para aproximarse a una muestra representativa (difusión, diversidad de perfiles, periodo de recolección, etc.). -->
-
 Con la finalidad de que la muestra obtenida refleje a la población y se minimicen posibles sesgos, se plantean las siguientes medidas:
 
-Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario y así evitando el sesgo de no respuesta 
+Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario y así evitando el sesgo de no respuesta
 
-Instrumento de registro diario estandarizado: La recolección se ejecutará mediante un formulario digital (Forms) configurado con restricciones de envío único por día, garantizando la consistencia temporal de los registros.  
+Instrumento de registro diario estandarizado: La recolección se ejecutará mediante un formulario digital (Forms) configurado con restricciones de envío único por día, garantizando la consistencia temporal de los registros.
 
 Medición al cierre del día: El cuestionario se realizará al final de cada día el cual permitirá registra las variables diarias (como las horas de estudio o el uso de IA), atenuando el sesgo de memoria. El registro de un día se contará como válido si este se hace después de las 9:30 p.m. pero antes de la medianoche.
 
 ## 2.2 Tipo de muestreo
 
-<!-- ¿muestreo sistematico por conveniencia? -->
-
 Se utilizará un muestreo sistematico por conveniencia, estructurado bajo un diseño de recolección de datos de tipo longitudinal . Esta decisión responde a la exigencia del estudio, el cual requiere que los estudiantes reporten sus métricas académicas, de sueño y de uso de Inteligencia Artificial de forma diaria. El diseño longitudinal generará múltiples observaciones repetidas por cada estudiante, otorgándole al estudio una solidez estadística necesaria para capturar patrones de comportamiento consistentes en el tiempo.
 
 ## 2.3 Recolección de datos
-
-<!-- TODO: Indicar instrumento de recolección (encuesta, base de datos secundaria, etc.), tamaño de muestra obtenido y enlace si aplica. -->
 
 Se diseñarán 3 forms (Google Forms) diferentes. Uno será para los datos demográficos (solo se rellenará una vez por estudiante), otro para el diario (se rellenará una vez por día) y otro para los exámenes (se rellenará una vez por cada examen tomado). Se espera idealmente un tamaño de muestra de 1800 para la tabla diaria y un tamaño de muestra de 45 para la tabla demográfica. En cuanto a la tabla de exámenes, no hay un estimado de cuántas muestras esperar.
 
@@ -148,8 +142,6 @@ Se diseñarán 3 forms (Google Forms) diferentes. Uno será para los datos demog
 | Nivel de comprensión de las actividades académicas realizadas ese día | Muy bajo, Bajo, Moderado, Alto, Muy alto |
 
 ### 2.4.3 Mediciones
-
-<!-- TODO: Explicar cómo se mide/registra cada variable y, si corresponde, las fórmulas de variables construidas (índices compuestos, etc.). -->
 
 Cada variable va a ser registrada en el formulario de Google Forms, el cual contendrá todas las restricciones de valores que puede tomar la variable dependiendo de su tipo y de su naturaleza.
 
@@ -211,7 +203,6 @@ Comprobamos rápidamente que el inner join se haya hecho exitosamente
 head(DFL[c("hora", "email", "Grupo")])
 ```
 
-
 ### Vista del subset final
 
 ```{r}
@@ -236,7 +227,7 @@ Porcentaje de valores faltantes (NA) por columna:
 round(colSums(is.na(DFL)) / nrow(DFL) * 100, 2)
 ```
 
-<!-- TODO: Hallazgo sobre valores faltantes. -->
+En este momento podemos ver que hay 2 valores faltantes en el dataframe, donde uno pertenece a `curso` y el otro a `uso`. Esto es raro si consideramos que el formulario original tenía todas las preguntas marcadas como obligatorias.
 
 #### Análisis de ceros
 
@@ -246,7 +237,7 @@ Procedemos a analizar la variable `consultas`, la cual representa la cantidad de
 sum(DFL$consultas == 0, na.rm = TRUE)
 ```
 
-En este caso, sería lógico pensar inicialmente que en los días ya transcurridos han habido a lo mucho 4 personas que no han usa la IA un día entero.
+En este caso, sería lógico pensar inicialmente que en los tantos días ya transcurridos han habido a lo mucho 16 personas que no han usa la IA un día entero.
 
 Ahora procedemos con la variable `tareas`, la cual representa la cantidad de tareas que la IA ha ayudado a resolver más rápidamente.
 
@@ -254,7 +245,7 @@ Ahora procedemos con la variable `tareas`, la cual representa la cantidad de tar
 sum(DFL$tareas == 0, na.rm = TRUE)
 ```
 
-Se podría razonar a primera vista que han habido 7 personas a las cuales la IA no les ha ayudado a resolver ni una sola tarea en un cierto día. Esto podría deberse a que la persona no usó IA ese día (conexión con el análisis anterior) o no consiguió los resultados que esperaba en la respuesta de la IA.
+Se podría razonar a primera vista que han habido a lo mucho 39 personas a las cuales la IA no les ha ayudado a resolver ni una sola tarea en un cierto día. Esto podría deberse a que la persona no usó IA ese día (conexión con el análisis anterior) o no consiguió los resultados que esperaba en la respuesta de la IA.
 
 Ahora analizamos la variable `estudio` (Horas efectivas de estudio en un día)
 
@@ -262,7 +253,7 @@ Ahora analizamos la variable `estudio` (Horas efectivas de estudio en un día)
 sum(DFL$estudio == 0, na.rm = TRUE)
 ```
 
-Considerando este dato aisladamente, no sería descabellado pensar que han habido a lo mucho 3 estudiantes que no han estudiado durante un día entero. Tal vez son alumnos de primer año.
+Considerando este dato aisladamente, no sería descabellado pensar que han habido a lo mucho 13 estudiantes que no han estudiado durante un día entero. Tal vez son alumnos de primer año.
 
 Pasemos con la variable `sueno`, la cual representa la cantidad de horas de sueño de la noche anterior al día del registro en el formulario
 
@@ -281,7 +272,7 @@ length(unique(DFL$comprension))
 unique(DFL$comprension)
 ```
 
-Considerando que la variable `comprension` es una categórica ordinal de 5 niveles, que solo hayan habido 4 categorías seleccionadas no es tan sorprendente, pues el periodo de toma de datos aún es muy reducido.
+Considerando que la variable `comprension` es una categórica ordinal de 5 niveles,  es completamente normal que con el tiempo que ya ha transcurrido, haya tomado cada uno de los 5 valores por lo menos una vez.
 
 ```{r}
 length(unique(DFL$sueno))
@@ -302,14 +293,14 @@ length(unique(DFL$curso))
 unique(DFL$curso)
 ```
 
-En el caso de `curso` podemos ya notar una gran variabilidad en pocos datos. Era algo esperado debido a que la UTEC dicta varios cursos y los alumnos de Estadística provienen de varias carreras. También se pueden notar 2 representaciones de nulos: `-` y `ninguno`
+En el caso de `curso` podemos ya notar una gran variabilidad en pocos datos. Era algo esperado debido a que la UTEC dicta varios cursos y los alumnos de Estadística provienen de varias carreras. También se pueden notar algunas representaciones de nulos tales como `-` o `ninguno`. Además, se puede ver que se han incluido cursos que no pertenecen a la universidad como el curso `Ingles fuera de la universidad`.
 
 ```{r}
 length(unique(DFL$tareas))
 unique(DFL$tareas)
 ```
 
-En cuanto a la variable discreta `tareas`, se puede ver que toma una cantidad reducida de valores encerrados en el intervalo \[0, 4\], lo cual tiene sentido si consideramos la complejidad de las tareas universitarias y el corto tiempo libre que los estudiantes tienen para realizar las tareas, estén usando IA o no.
+En cuanto a la variable discreta `tareas`, se puede ver que toma una cantidad reducida de valores encerrados en el intervalo \[0, 15\], lo cual tiene sentido si consideramos la complejidad de las tareas universitarias y el corto tiempo libre que los estudiantes tienen para realizar las tareas, estén usando IA o no.
 
 ```{r}
 length(unique(DFL$satisfaccion))
@@ -323,7 +314,7 @@ length(unique(DFL$uso))
 unique(DFL$uso)
 ```
 
-Hablando sobre la variable categórica nominal `uso` (la cual refleja el principal uso que se le dio a la IA en un cierto día), se puede ver que ya ha empezado a tomar varios valores, lo cual era de esperarse debido a su naturaleza. También se puede notar que hay 4 valores que representan un uso nulo de la IA.
+Hablando sobre la variable categórica nominal `uso` (la cual refleja el principal uso que se le dio a la IA en un cierto día), se puede ver que ya ha tomado varios valores, lo cual era de esperarse debido a su naturaleza. También se puede notar que hay distintos valores que representan un uso nulo de la IA.
 
 ```{r}
 length(unique(DFL$consultas))
@@ -331,8 +322,6 @@ unique(DFL$consultas)
 ```
 
 En cuanto a la variable numérica discreta `consultas`, se puede ver la gran variabilidad que tiene en sus valores. Aunque habrá que ser cautelosos puesto que valores como el 68 dejan en duda si de verdad han sido llenados seriamente.
-
-<!-- TODO: Interpretar cardinalidad esperada según el tipo de cada variable. -->
 
 ### Paso 2: Normalización
 
@@ -399,11 +388,9 @@ DF2<-DFL1%>%
   ) %>% select(-filtro)  
 ```
 
-
 ### Paso 4: Datos atípicos
 
-Para identificar posibles valores atípicos utilizamos boxplots en las
-variables numéricas.
+Para identificar posibles valores atípicos utilizamos boxplots en las variables numéricas.
 
 ```{r}
 # Número de consultas a IA
@@ -445,13 +432,11 @@ boxplot.stats(DF2$sueno)$out
 
 Se encontraron posibles valores atípicos en consultas, tareas y estudio. Sin embargo, decidimos conservarlos porque no necesariamente son errores. Por ejemplo, estudiar 9 horas en un día puede ser poco frecuente, pero es posible. También es posible que un estudiante haga 50 o 68 consultas a la IA durante un día. En el caso de tareas, realizar 4 tareas donde la IA ayudó a ahorrar tiempo también es posible. Por estas razones, conservamos los valores encontrados.
 
-
 ### Paso 5: Variabilidad
 
 <!-- TODO: Calcular y explicar rango, varianza, desviación estándar e IQR para las variables numéricas relevantes. -->
 
-Para cada una de las variables numéricas calculamos el rango, la varianza, la
-desviación estándar y el IQR.
+Para cada una de las variables numéricas calculamos el rango, la varianza, la desviación estándar y el IQR.
 
 ```{r}
 # Variabilidad de las consultas
@@ -491,7 +476,7 @@ sd(DF2$sueno, na.rm = TRUE)
 IQR(DF2$sueno, na.rm = TRUE)
 ```
 
-En sueño, los registros se encuentran entre 3 y 10 horas. A diferencia de las variables anteriores, no se identificaron valores atípicos. 
+En sueño, los registros se encuentran entre 3 y 10 horas. A diferencia de las variables anteriores, no se identificaron valores atípicos.
 
 <!-- Para variables categóricas: distribución de frecuencias y proporciones. -->
 
@@ -509,8 +494,7 @@ table(DF2$satisfaccion)
 prop.table(table(DF2$satisfaccion)) * 100
 ```
 
-En satisfaccion, la categoría con mayor frecuencia fue el nivel 3, con 16
-registros, mientras que los niveles 4 y 5 tuvieron una menor cantidad de respuestas.
+En satisfaccion, la categoría con mayor frecuencia fue el nivel 3, con 16 registros, mientras que los niveles 4 y 5 tuvieron una menor cantidad de respuestas.
 
 ```{r}
 # Frecuencia del nivel de comprensión
@@ -518,9 +502,7 @@ table(DF2$comprension)
 prop.table(table(DF2$comprension)) * 100
 ```
 
-En comprension, la categoría más frecuente fue "Moderado", con 17 registros,
-seguida de "Alto", con 9 registros. Las categorías "Bajo" y "Muy alto" tuvieron
-3 registros cada una.
+En comprension, la categoría más frecuente fue "Moderado", con 17 registros, seguida de "Alto", con 9 registros. Las categorías "Bajo" y "Muy alto" tuvieron 3 registros cada una.
 
 ### Paso 6: Gestión de nulos
 
@@ -539,6 +521,7 @@ tabla_NA
 Los faltantes se concentran en cuatro variables (`consultas`, `uso`, `tareas` y `curso`), todas relacionadas con el uso de IA. Las demás están completas.
 
 Revisamos si los NA aparecen dispersos o si coinciden en los mismos registros.
+
 ```{r}
 table(rowSums(is.na(DF2)))
 ```
@@ -568,7 +551,7 @@ Son NA naturales por dependencia entre preguntas: quien no usó IA no puede indi
 La política es reetiquetar:
 
 | Variable | Tratamiento | Justificación |
-|-------------|--------------------|------------------------------------------|
+|-----------------|------------------|--------------------------------------|
 | `consultas` | NA → 0 | El estudiante declaró no haber consultado a la IA |
 | `tareas` | NA → 0 | Sin uso de IA no pudo haber tareas con tiempo ahorrado |
 | `uso` | NA → "No usó IA" | Categoría explícita de la variable nominal |
