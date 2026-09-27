@@ -406,13 +406,9 @@ boxplot(DF2$sueno,
 boxplot.stats(DF2$sueno)$out
 ```
 
-<!-- TODO: Interpretar si los valores atípicos se conservan o se tratan. -->
-
-Se encontraron posibles valores atípicos en consultas, tareas y estudio. Sin embargo, decidimos conservarlos porque no necesariamente son errores. Por ejemplo, estudiar 9 horas en un día puede ser poco frecuente, pero es posible. También es posible que un estudiante haga 50 o 68 consultas a la IA durante un día. En el caso de tareas, realizar 4 tareas donde la IA ayudó a ahorrar tiempo también es posible. Por estas razones, conservamos los valores encontrados.
+Se encontraron posibles valores atípicos en consultas (68), tareas (7, 11 y 15), estudio (9) y sueño (2 y 13). Decidimos conservarlos porque son valores posibles: por ejemplo, se puede dormir solo 2 horas o estudiar 9 horas en un día, aunque no sea lo habitual. En consultas y tareas, los valores extremos también pueden reflejar días de uso más intenso de la IA. Por eso no los tratamos como errores.
 
 ### Paso 5: Variabilidad
-
-<!-- TODO: Calcular y explicar rango, varianza, desviación estándar e IQR para las variables numéricas relevantes. -->
 
 Para cada una de las variables numéricas calculamos el rango, la varianza, la desviación estándar y el IQR.
 
@@ -424,7 +420,7 @@ sd(DF2$consultas, na.rm = TRUE)
 IQR(DF2$consultas, na.rm = TRUE)
 ```
 
-En consultas se observa una variabilidad bastante amplia, ya que los valores van desde 2 hasta 68 consultas en un día. El valor máximo es 68 y es uno de los valores identificados anteriormente como atípico, por lo que este valor aumenta la dispersión de los datos.
+En consultas, los valores van de 1 a 68. La desviación estándar es 14.93 y el IQR es 21.5, así que hay bastante diferencia entre los registros. El máximo de 68, que apareció como atípico, aumenta la dispersión.
 
 ```{r}
 # Variabilidad de las tareas
@@ -434,7 +430,7 @@ sd(DF2$tareas, na.rm = TRUE)
 IQR(DF2$tareas, na.rm = TRUE)
 ```
 
-En tareas, los valores se encuentran entre 0 y 4, tiene un rango mucho más reducido que consultas. La mayor parte de los datos se encuentra concentrada en un intervalo pequeño, aunque se identificaron algunos valores de 4 como atípicos.
+En tareas, los valores van de 0 a 15. El IQR es 2, así que la mitad central de los registros se concentra en un intervalo pequeño. Aun así, aparecieron valores atípicos de 7, 11 y 15 tareas, que muestran que algunos días la IA ayudó a ahorrar tiempo en más tareas.
 
 ```{r}
 # Variabilidad de las horas de estudio
@@ -444,7 +440,7 @@ sd(DF2$estudio, na.rm = TRUE)
 IQR(DF2$estudio, na.rm = TRUE)
 ```
 
-En estudio, los valores van desde 0 hasta 9 horas. Existe una diferencia considerable entre estos extremos, principalmente por el valor de 9 horas, que anteriormente fue identificado como un posible valor atípico. Sin embargo, este valor es posible, por lo que se decidió conservarlo.
+En estudio, los valores van de 0 a 9 horas. La desviación estándar es 1.73 horas y el IQR es 2 horas. El valor de 9 horas apareció como atípico, pero es posible, por lo que se conservó.
 
 ```{r}
 # Variabilidad de las horas de sueño
@@ -454,7 +450,7 @@ sd(DF2$sueno, na.rm = TRUE)
 IQR(DF2$sueno, na.rm = TRUE)
 ```
 
-En sueño, los registros se encuentran entre 3 y 10 horas. A diferencia de las variables anteriores, no se identificaron valores atípicos.
+En sueño, los valores van de 2 a 13 horas. La desviación estándar es 1.80 horas y el IQR es 2 horas. Se identificaron como atípicos los valores de 2 y 13 horas, que muestran algunos registros de sueño bastante distintos del resto.
 
 <!-- Para variables categóricas: distribución de frecuencias y proporciones. -->
 
