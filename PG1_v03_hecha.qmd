@@ -72,8 +72,6 @@ Analizar el impacto de las horas de sueño y el uso de IA en el rendimiento acad
 
 ### 1.3.2 Objetivos específicos
 
-<!-- ¿Es necesario que involucra al sueño? (mostrar contraejemplo) -->
-
 1)  Analizar la existencia de alguna relación entre la frecuencia diaria de consultas a la Inteligencia Artificial y el Nivel de satisfacción con el avance académico diario. Análisis bivariado: "N° consultas a IA realizada ese día" y "Nivel de satisfacción con el avance académico diario"
 2)  Analizar si existe alguna correlación entre el número de consultas a la IA en un cierto día y la cantidad de horas dedicadas al estudio. Se usarán las variables "N° de consultas a IA realizadas ese día" y "Suma de horas efectivas de estudio".
 3)  Identificar si el curso de mayor consulta influye en el principal uso que se le da a la Inteligencia Artificial ese día y determinar qué usos generan mayor número de tareas con tiempo ahorrado. Para este caso se usará doble análisis bivariado. ("curso sobre el cual se hicieron la mayoría de consultas de IA" vs "Principal uso de IA ese día") y ("Principal uso de IA ese día" vs "N° de tareas ese día en las que usar IA le ahorró tiempo")
@@ -272,7 +270,7 @@ length(unique(DFL$comprension))
 unique(DFL$comprension)
 ```
 
-Considerando que la variable `comprension` es una categórica ordinal de 5 niveles,  es completamente normal que con el tiempo que ya ha transcurrido, haya tomado cada uno de los 5 valores por lo menos una vez.
+Considerando que la variable `comprension` es una categórica ordinal de 5 niveles, es completamente normal que con el tiempo que ya ha transcurrido, haya tomado cada uno de los 5 valores por lo menos una vez.
 
 ```{r}
 length(unique(DFL$sueno))
@@ -531,7 +529,7 @@ Son NA naturales por dependencia entre preguntas: quien no usó IA no puede indi
 La política es reetiquetar:
 
 | Variable | Tratamiento | Justificación |
-|-----------------|------------------|--------------------------------------|
+|------------------|------------------|------------------------------------|
 | `consultas` | NA → 0 | El estudiante declaró no haber consultado a la IA |
 | `tareas` | NA → 0 | Sin uso de IA no pudo haber tareas con tiempo ahorrado |
 | `uso` | NA → "No usó IA" | Categoría explícita de la variable nominal |
@@ -659,68 +657,58 @@ La base final no tiene faltantes, duplicados ni valores fuera de rango, con las 
 
 # 3. Análisis descriptivo
 
-## 3.1 Análisis univariado: categóricas
-
-### Variable: NOMBRE_VARIABLE
+## 3.1 Análisis univariado: consultas
 
 ```{r}
-# table(DFL$VARIABLE_CATEGORICA)
-# ggplot(DFL, aes(x = VARIABLE_CATEGORICA, fill = VARIABLE_CATEGORICA)) +
-#   geom_bar() +
-#   labs(title = "TÍTULO", x = "X", y = "Frecuencia") +
-#   theme_minimal() + theme(legend.position = "none")
+boxplot(DF3$consultas)
 ```
+```{r}
+quantile(DF3$consultas, 0.5, na.rm = T, type = 3, )
+quantile(DF3$consultas, 0.75, na.rm = T, type = 3, )
+```
+Se puede apreciar con la variable `consultas` que, en al menos la mitad de los registros, el estudiante hace 6 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta entre los estudiantes de UTEC. Esto se ve reforzado al notar que, en por lo menos un cuarto de los registros, los estudiante han hecho 21 o más consultas diarias a la IA.
+
+```{r}
+barplot(table(DF3$consultas))
+```
+Con el barplot se puede saber que si bien en la mayoría de registros el estudiante no hace un uso intensivo de la IA, este uso sí es constante en el tiempo.
+
+
+
+
+
+
+## 3.2 Análisis univariado: comprension
+
+
+
+### Gráfico
 
 <!-- TODO: Interpretación del gráfico. -->
 
-## 3.2 Análisis univariado: numéricas
+## 3.2 Análisis univariado: sueno
 
-```{r}
-calcular_descriptores <- function(variable) {
-  pctiles <- quantile(variable, c(0.25, 0.50, 0.75), type = 3, na.rm = TRUE)
-  stats <- c(
-    Media = mean(variable, na.rm = TRUE),
-    Mediana = median(variable, na.rm = TRUE),
-    Desviacion_Estandar = sd(variable, na.rm = TRUE),
-    Varianza = var(variable, na.rm = TRUE),
-    Percentil_25 = pctiles[["25%"]],
-    Percentil_50 = pctiles[["50%"]],
-    Percentil_75 = pctiles[["75%"]],
-    IQR = IQR(variable, na.rm = TRUE),
-    CV = sd(variable, na.rm = TRUE) / mean(variable, na.rm = TRUE)
-  )
-  return(round(stats, 2))
-}
-```
-
-```{r}
-# print(calcular_descriptores(DFL$VARIABLE_NUMERICA))  # TODO: repetir por variable
-```
-
-### Gráfico: histograma / boxplot de NOMBRE_VARIABLE
-
-```{r}
-# ggplot(DFL, aes(x = VARIABLE_NUMERICA)) +
-#   geom_histogram(aes(y = after_stat(density)), bins = 15, fill = "#3498db", color = "white") +
-#   geom_vline(aes(xintercept = mean(VARIABLE_NUMERICA, na.rm = TRUE)), color = "red", linetype = "dashed") +
-#   labs(title = "TÍTULO", x = "X", y = "Densidad") +
-#   theme_minimal()
-```
+### Gráfico
 
 <!-- TODO: Interpretación del gráfico. -->
 
-## 3.3 Análisis multivariado (cruces según objetivos)
+## 3.4 Análisis multivariado (cruces según objetivos)
 
-### Objetivo 1: VARIABLE_A vs. VARIABLE_B
+### Objetivo 1: consultas vs. satisfaccion
 
 ```{r}
-# ggplot(DFL, aes(x = VARIABLE_A, y = VARIABLE_B, fill = VARIABLE_A)) +
-#   geom_boxplot(alpha = 0.7) +
-#   labs(title = "TÍTULO", x = "X", y = "Y") +
-#   theme_minimal() + theme(legend.position = "none")
+boxplot(consultas ~ satisfaccion, data = DF3)
 ```
+Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se puede notar un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción. Esto nos indica que podría haber una relación importante entre cuántas consultas se ha hecho a la IA y cuán satisfecho se está con el estudio de ese día.
+Una explicación podría ser que la IA usada como herramienta de estudio ayuda al universitario en su proceso de aprendizaje, incrementando la satisfacción percibida por el estudiante conforme más consultas este hace a la IA para prepararse académicamente.
 
-<!-- TODO: Interpretación en función del objetivo específico 1. -->
+```{r}
+quantile(DF3$consultas[DF3$satisfaccion == 3], 0.3, na.rm = T, type = 3)
+quantile(DF3$consultas[DF3$satisfaccion == 4], 0.3, na.rm = T, type = 3)
+quantile(DF3$consultas[DF3$satisfaccion == 5], 0.3, na.rm = T, type = 3)
+```
+Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 5 o más consultas a la IA diarias.
+
 
 ### Objetivo 2: VARIABLE_C vs. VARIABLE_D
 
