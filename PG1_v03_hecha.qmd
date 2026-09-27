@@ -480,7 +480,7 @@ En comprension, la categoría más frecuente fue "Moderado", con 17 registros, s
 
 ### Paso 6: Gestión de nulos
 
-Hasta este punto no se ha eliminado ningún registro por calidad de datos: los pasos anteriores reemplazaron por NA los valores que no superaron los criterios, pero conservaron todas las filas. Ahora corresponde medir el impacto de esos NA y decidir qué hacer con ellos.
+En los pasos anteriores se descartaron 50 registros por no cumplir con el envío en el horario establecido, y se reemplazaron por NA los valores que no superaron los criterios de coherencia, sin eliminar filas adicionales. Ahora corresponde medir el impacto de esos NA y decidir qué hacer con ellos.
 
 ```{r}
 tabla_NA <- data.frame(
@@ -500,7 +500,7 @@ Revisamos si los NA aparecen dispersos o si coinciden en los mismos registros.
 table(rowSums(is.na(DF2)))
 ```
 
-No hay ningún registro con un NA aislado: las cuatro variables faltan siempre juntas, lo que descarta errores de tipeo y apunta a una causa común.
+Ningún registro tiene un NA aislado: el Paso 3 anula las cuatro variables en bloque cuando la fila no pasa alguno de sus criterios. Falta identificar cuál criterio falló en cada caso.
 
 Medimos el impacto de eliminar toda fila con al menos un NA.
 
@@ -510,71 +510,138 @@ nrow(na.omit(DF2))
 round((1 - nrow(na.omit(DF2)) / nrow(DF2)) * 100, 2)
 ```
 
-La pérdida sería del 9.38%. Como las cuatro variables fallan a la vez, excluir una sola no recuperaría ninguna fila.
+La pérdida sería del 15.93%. Como las cuatro variables fallan a la vez, excluir una sola no recuperaría ninguna fila.
 
 ```{r}
 DF2[!complete.cases(DF2), c("hora", "email", "consultas", "uso", "tareas", "curso", "estudio", "sueno")]
 ```
 
-Estos registros corresponden a estudiantes que declararon no haber usado IA ese día ("Ninguno", "No la usé", "No use ia hoy", con `consultas` = 0, `tareas` = 0 y `curso` = "-"). El Paso 3 los convirtió a NA por no pertenecer a las categorías válidas del codebook.
-
-Son NA naturales por dependencia entre preguntas: quien no usó IA no puede indicar para qué la usó. Además comparten 0 horas de estudio, por lo que eliminarlos quitaría solo los días de menor actividad e introduciría sesgo. Se descarta el `na.omit` por esa razón, y la imputación por media o mediana porque inventaría consultas que el estudiante afirmó no haber hecho, siendo que el valor real es 0.
-
-<!-- TODO: Establecer y justificar la política final de manejo de nulos (ej. umbral de % para conservar/imputar). -->
-
-La política es reetiquetar:
-
-| Variable | Tratamiento | Justificación |
-|------------------|------------------|------------------------------------|
-| `consultas` | NA → 0 | El estudiante declaró no haber consultado a la IA |
-| `tareas` | NA → 0 | Sin uso de IA no pudo haber tareas con tiempo ahorrado |
-| `uso` | NA → "No usó IA" | Categoría explícita de la variable nominal |
-| `curso` | NA → "No aplica" | No hay curso de consulta si no hubo consultas |
-
-Se agrega `uso_ia` para que los objetivos 1 y 3 puedan filtrar esos registros sin eliminarlos. También se codifican las ordinales como factor y los identificadores como nominales.
+Antes de aplicar cualquier política, verificamos si todos los faltantes tienen el mismo origen. Reconstruimos los criterios del Paso 3 sobre la base previa (`DFL1`), que aún conserva los valores originales, y clasificamos cada registro incompleto según cuál de ellos falló.
 
 ```{r}
-DF3 <- DF2 %>%
+# DF2 sale de DFL1 sin filtrar filas, así que ambas bases están alineadas
+# podemos recuperar de DFL1 los valores que el Paso 3 convirtió a NA.
+nrow(DFL1) == nrow(DF2)
+
+diagnostico <- DF2 %>%
   mutate(
-    uso_ia = !is.na(uso),
-    consultas = ifelse(is.na(consultas), 0, as.numeric(consultas)),
-    tareas = ifelse(is.na(tareas), 0, as.numeric(tareas)),
-    uso = ifelse(is.na(uso), "No usó IA", as.character(uso)),
-    curso = ifelse(is.na(curso), "No aplica", as.character(curso)),
-    estudio = as.numeric(estudio),
-    sueno = as.numeric(sueno),
-    comprension = factor(comprension,
-                         levels = c("Muy bajo", "Bajo", "Moderado", "Alto", "Muy alto"),
-                         ordered = TRUE),
-    satisfaccion = factor(satisfaccion, levels = 1:5, ordered = TRUE),
-    uso = factor(uso),
-    Grupo = factor(Grupo)
+    # Valores originales, antes del Paso 3
+    consultas_orig = as.numeric(DFL1$consultas),
+    tareas_orig    = as.numeric(DFL1$tareas),
+    uso_orig       = as.character(DFL1$uso),
+    curso_orig     = as.character(DFL1$curso),
+
+    # ¿El estudiante declaró alguna actividad con IA ese día?
+    hubo_actividad = consultas_orig > 0 | tareas_orig > 0,
+
+    # Motivo por el que el registro quedó incompleto
+    motivo = case_when(
+      !is.na(uso)     ~ "Completo",
+      !hubo_actividad ~ "Sin uso de IA",
+      TRUE            ~ "Curso fuera de formato"
+    )
+  )
+
+table(diagnostico$motivo)
+```
+
+Los faltantes no tienen un origen único: se distinguen dos mecanismos.
+
+```{r}
+# Perfil de cada grupo según las consultas que realmente declararon
+diagnostico %>%
+  filter(motivo != "Completo") %>%
+  group_by(motivo) %>%
+  summarise(
+    n = n(),
+    consultas_min   = min(consultas_orig),
+    consultas_max   = max(consultas_orig),
+    consultas_media = round(mean(consultas_orig), 1)
   )
 ```
 
+**Sin uso de IA (13 registros).** El estudiante respondió "Ninguno", "Nada" o "No la usé", con 0 consultas y 0 tareas. Son NA naturales por dependencia entre preguntas, quien no usó IA no puede indicar para qué la usó. Aquí el valor real del conteo es cero.
+
+**Curso fuera de formato (16 registros).** El estudiante sí usó IA (hasta 30 consultas, media 7.8), pero escribió el curso de modo que el filtro no lo reconoce: solo dígitos, nombre completo, o el código con un espacio de más (CS2031 ). Ningún código se corrige, recuperar unos e inventar otros sería arbitrario.
+  
+Esta distinción es decisiva. Una política uniforme asignaría `consultas = 0` y `uso = "No usó IA"` a estudiantes con uso intensivo, sesgando las variables centrales de los objetivos 1 y 3. 
+
+  
+  | Motivo | Tratamiento | Justificación |
+  |------------------|------------------|------------------------------------|
+  | Sin uso de IA | `consultas` y `tareas` → 0; `uso` → "No usó IA"; `curso` → "No aplica" | El valor real del conteo es cero y la ausencia es una respuesta lógica |
+  | Curso fuera de formato | Se conservan `consultas`, `tareas` y `uso`; solo `curso` → "Sin código válido" | El uso de IA sí ocurrió; lo único inválido es el código del curso |
+  
+  Se agrega `uso_ia` para que los objetivos 1 y 3 puedan filtrar los días sin uso sin eliminarlos. También se codifican las ordinales como factor y los identificadores como nominales.
+
 ```{r}
-sum(is.na(DF3))
+DF3 <- diagnostico %>%
+  mutate(
+    # Marca si de verdad usó IA, según el motivo y no según si había NA
+    uso_ia = motivo != "Sin uso de IA",
+
+    # Si no usó IA, el valor verdadero es 0 
+    # Cuantitativas discretas: 
+    consultas = if_else(motivo == "Sin uso de IA", 0, consultas_orig),
+    tareas    = if_else(motivo == "Sin uso de IA", 0, tareas_orig),
+    # Cualitativa nominal: asignamos una categoría propia
+    uso       = if_else(motivo == "Sin uso de IA", "No usó IA", uso_orig),
+    uso = factor(uso),
+
+  # Si solo falló el curso, se conservan sus datos reales
+  # y únicamente el curso queda marcado como inválido
+    curso = case_when(
+      motivo == "Sin uso de IA"          ~ "No aplica",
+      motivo == "Curso fuera de formato" ~ "Sin código válido",
+      TRUE                               ~ curso_orig
+    ),
+
+    # Cuantitativas continuas
+    estudio = as.numeric(estudio),
+    sueno   = as.numeric(sueno),
+
+    # Ordinal, levels imponen el orden
+    comprension = factor(comprension,
+                         levels = c("Muy bajo", "Bajo", "Moderado", "Alto", "Muy alto"),
+                         ordered = TRUE),
+
+    satisfaccion = factor(satisfaccion, levels = 1:5, ordered = TRUE),
+
+    # Identificador: el promedio de un número de grupo no tendría interpretación
+    Grupo = factor(Grupo)
+  ) %>%
+# Se borran las columnas que solo sirvieron para el diagnóstico
+  select(-consultas_orig, -tareas_orig, -uso_orig, -curso_orig,
+         -hubo_actividad, -motivo)
+```
+
+```{r}
+# Verificamos que no quede ningún NA ni se hayan perdido filassum(is.na(DF3))
 nrow(DF3)
 table(DF3$uso_ia)
 ```
 
-La conciliación cuadra: los NA reetiquetados coinciden con los registros sin uso de IA. La base queda sin faltantes y sin pérdida de observaciones.
+La base queda sin faltantes y sin pérdida de observaciones, con cada faltante tratado según el mecanismo que lo originó.
+
 
 ### paso 7: Radiografia final
 
 ```{r}
+# Cuántas observaciones sobreviven a cada etapa del proceso
 trazabilidad <- data.frame(
   Etapa = c("Base cruda (DF)", "Subset y join (DFL)", "Normalización (DFL1)",
             "Criterios (DF2)", "Gestión de nulos (DF3)"),
   Observaciones = c(nrow(DF), nrow(DFL), nrow(DFL1), nrow(DF2), nrow(DF3))
 )
+# Qué porcentaje de la base original representa cada etapa
 trazabilidad$Retencion <- round(trazabilidad$Observaciones / nrow(DF) * 100, 2)
 trazabilidad
 ```
 
-Se conservan 32 de 41 observaciones (78%). Toda la pérdida ocurrió al aplicar los criterios de investigador, no en la gestión de nulos.
+Se conservan 182 de 232 observaciones (78.45%). La pérdida ocurrió al aplicar los criterios de investigador, no en la gestión de nulos.  
 
 ```{r}
+# Mismo diagnóstico del Paso 1, ahora sobre la base limpia.
 radiografia <- data.frame(
   Variable = names(DF3),
   Tipo = sapply(DF3, function(x) class(x)[1]),
@@ -587,15 +654,18 @@ radiografia
 ```
 
 ```{r}
+# Conteo de ceros en cada numérica
 sum(DF3$consultas == 0)
 sum(DF3$tareas == 0)
 sum(DF3$estudio == 0)
 sum(DF3$sueno == 0)
 ```
 
-Los NA quedan en cero. Los ceros de `consultas` y `tareas` son los días sin uso de IA ya conciliados, es decir ceros verdaderos y no faltantes disfrazados. Las ordinales quedan como factor ordenado y `Grupo` como identificador nominal.
+Los NA quedan en cero. De los 14 ceros en `consultas`, 13 son los días sin uso de IA reetiquetados; los demás, y los de `tareas`, son respuestas declaradas por el estudiante. Las ordinales quedan como factor ordenado y`Grupo` como identificador nominal.
 
 ```{r}
+# Verificamos que ninguna numérica se salga de los rangos del codebook.
+
 data.frame(
   Variable = c("consultas", "tareas", "estudio", "sueno"),
   Restriccion = c("x >= 0", "x >= 0", "x >= 0", "0 <= x <= 24"),
@@ -609,23 +679,24 @@ data.frame(
 Todas cumplen los rangos del codebook. Los valores extremos son los atípicos del Paso 4, que se decidió conservar.
 
 ```{r}
+# Filas idénticas en todas sus columnas
 sum(duplicated(DF3))
-
+# El diseño es longitudinal, cada estudiante debe tener un solo registro por día.
 DF3 %>%
   mutate(fecha = substr(hora, 1, 10)) %>%
   count(email, fecha) %>%
   filter(n > 1)
 ```
 
-No hay duplicados: se cumplió el envío único por día.
-
-La limpieza se hizo sobre la base completa de la sección, manteniendo `Grupo` en todas las etapas. Filtramos solo para mostrar las observaciones limpias de nuestro grupo; el análisis posterior continúa con la base completa.
+Se detectaron 2 registros duplicados, donde enviaron el formulario dos veces el 17/09. Al no poder determinar cuál es el registro válido, se deja constancia del hallazgo para mejorar el instrumento de recolección.
 
 ```{r}
+# Observaciones limpias que aportó cada grupo
 DF3 %>% count(Grupo)
 ```
 
 ```{r}
+# Filtro sobre nuestro grupo
 GRUPO <- 6
 DF3_grupo <- DF3 %>% filter(Grupo == GRUPO)
 
@@ -633,24 +704,22 @@ nrow(DF3_grupo)
 DF3_grupo %>% count(email)
 ```
 
-El grupo tiene **10 observaciones limpias** frente al mínimo de 150. La recolección lleva 3 días activos y el diseño es longitudinal, por lo que el volumen crece de forma acumulativa.
+El grupo tiene **44 observaciones limpias** frente al mínimo de 150. La recolección abarca 14 días, el último aún en curso, y el diseño es longitudinal, por lo que el volumen crece de forma acumulativa.
 
 ```{r}
 n_distinct(DF3$email)
 ```
 
-La cobertura alcanza a 20 de los 45 estudiantes de la sección, por lo que aún no permite generalizar a la población objetivo.
+La cobertura alcanza a 33 de los 45 estudiantes de la sección, por lo que aún no permite generalizar a la población objetivo.
 
 **Conclusión del proceso de validación y limpieza de datos**
 
-<!-- TODO: Resumen final del proceso de limpieza. -->
 
-De 41 observaciones crudas se conservan 32 (78%), y las descartadas responden a la ventana horaria de envío definida de antemano, no a errores de calidad.
+De 232 observaciones crudas se conservan 182 (78.45%), y las descartadas responden a la ventana horaria de envío definida de antemano.
 
-El hallazgo central fue que los faltantes no eran aleatorios: coincidían en los mismos registros y correspondían a días sin uso de IA, es decir NA naturales por dependencia entre preguntas. El `na.omit` habría costado el 9.38%, tolerable en magnitud pero no en composición, ya que eliminaba justamente los registros de menor actividad académica. Reetiquetarlos permitió conciliar el conteo a cero sin perder observaciones ni imputar valores que el estudiante nunca reportó.
+El hallazgo central fue que los faltantes no tenían un origen único: 13 correspondían a días sin uso de IA, donde el valor real es cero, y 16 a registros con uso efectivo cuyo código de curso no superó la validación de formato. El `na.omit` habría costado el 15.93%, pero el problema no era su magnitud sino su composición: habría eliminado registros con uso intensivo de IA. Distinguir ambos mecanismos permitió recuperar los datos reales de esos 16 registros sin perder ninguna observación.
 
-La base final no tiene faltantes, duplicados ni valores fuera de rango, con las ordinales como factores ordenados y los identificadores como nominales. Queda apta para el análisis descriptivo. La limitación pendiente es el volumen muestral: 10 observaciones limpias del grupo sobre un mínimo de 150.
-
+La base final no tiene faltantes ni valores fuera de rango, con las ordinales como factores ordenados y los identificadores como nominales. Queda apta para el análisis descriptivo. Quedan dos limitaciones, los 2 registros duplicados detectados y el volumen muestral, que alcanza 44 observaciones limpias del grupo sobre un mínimo de 150.
 # 3. Análisis descriptivo
 
 ## 3.1 Análisis univariado: consultas
