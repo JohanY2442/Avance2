@@ -754,7 +754,7 @@ Al ser `sueno` una variable cuantitativa continua, se eligieron boxplot e histog
 ```{r}
 boxplot(DF3$sueno)
 ```
-La variable `sueño` muestra un patrón equilibrado entre los estudiantes de UTEC: la mitad duerme 7 horas o menos, y el 50% central concentra su descanso entre las 6 y 8 horas.
+La variable `sueno` muestra un patrón equilibrado entre los estudiantes de UTEC: la mitad duerme 7 horas o menos, y el 50% central concentra su descanso entre las 6 y 8 horas.
 
 ```{r}
 hist(DF3$sueno,
@@ -814,7 +814,48 @@ ggplot(DF3, aes(x = consultas, y = estudio)) +
 
 ### Objetivo 3: VARIABLE_E vs. VARIABLE_F
 
-<!-- TODO: Repetir análisis y gráfico correspondiente al objetivo específico 3. -->
+### Objetivo 3b: uso vs. tareas
+
+```{r}
+DF3 %>%
+  filter(uso_ia) %>%
+  mutate(
+    uso_g = if_else(uso %in% c("Resolver ejercicios", "Resumir",
+                                "Programar", "Redactar", "No usó IA"),
+                     as.character(uso), "Otros"),
+    ahorro = if_else(tareas == 0, "Sin tareas ahorradas", "Con tareas ahorradas")
+  ) %>%
+  count(uso_g, ahorro) %>%
+  tidyr::pivot_wider(names_from = ahorro, values_from = n, values_fill = 0) %>%
+  {
+    tabla <- .[, c("uso_g", "Sin tareas ahorradas", "Con tareas ahorradas")]
+    m <- t(as.matrix(tabla[, -1]))
+    colnames(m) <- tabla$uso_g
+    barplot(m,
+            main = "Proporción de tareas ahorradas según el uso de IA",
+            ylab = "Cantidad de registros",
+            xlab = "Uso principal",
+            col = c("steelblue", "gray80"),
+            legend.text = c("Sin ahorro", "Con ahorro"))
+  }
+```
+
+```{r}
+DF3 %>%
+  filter(uso_ia) %>%
+  mutate(uso_g = if_else(uso %in% c("Resolver ejercicios", "Resumir",
+                                     "Programar", "Redactar", "No usó IA"),
+                          as.character(uso), "Otros")) %>%
+  group_by(uso_g) %>%
+  summarise(
+    registros   = n(),
+    ta_ahorrada = round(mean(tareas > 0, na.rm = TRUE) * 100, 1)
+  ) %>%
+  rename(Uso = uso_g)
+```
+
+Como se puede ver, usar la IA para Redactar (100%) o Resolver ejercicios (96.5%) es una apuesta casi segura para ahorrar tiempo. Aunque la efectividad baja ligeramente al Resumir (87%), Programar (82.9%) y en Otros (73.3%), todos los porcentajes siguen siendo muy altos. Esto demuestra que, si bien al programar hay un poco más de probabilidad de no generar un ahorro inmediato, la IA termina siendo una gran ayuda en la inmensa mayoría de los casos, sin importar el uso que se le dé.
+
 ### Objetivo 4: VARIABLE_E vs. VARIABLE_F
 
 
