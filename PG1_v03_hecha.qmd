@@ -616,7 +616,8 @@ DF3 <- diagnostico %>%
 ```
 
 ```{r}
-# Verificamos que no quede ningún NA ni se hayan perdido filassum(is.na(DF3))
+# Verificamos que no quede ningún NA ni se hayan perdido filas
+sum(is.na(DF3))
 nrow(DF3)
 table(DF3$uso_ia)
 ```
@@ -739,23 +740,39 @@ barplot(table(DF3$consultas))
 Con el barplot se puede saber que si bien en la mayoría de registros el estudiante no hace un uso intensivo de la IA, este uso sí es constante en el tiempo.
 
 
-
-
-
-
 ## 3.2 Análisis univariado: comprension
 
 
-
 ### Gráfico
 
-<!-- TODO: Interpretación del gráfico. -->
 
-## 3.2 Análisis univariado: sueno
+## 3.3 Análisis univariado: sueno
+
+Al ser `sueno` una variable cuantitativa continua, se eligieron boxplot e histograma para describirla.
 
 ### Gráfico
+```{r}
+boxplot(DF3$sueno)
+```
+La variable `sueño` muestra un patrón equilibrado entre los estudiantes de UTEC: la mitad duerme 7 horas o menos, y el 50% central concentra su descanso entre las 6 y 8 horas.
 
-<!-- TODO: Interpretación del gráfico. -->
+```{r}
+hist(DF3$sueno,
+     main = "Horas de sueño",
+     xlab = "Horas",
+     col = "lightgray",
+     ylab = "Frecuencia")
+```
+
+El histograma confirma ese equilibrio, la mayoría de los estudiantes duerme un número similar de horas, y son pocos los que se alejan bastante del resto.
+
+```{r}
+summary(DF3$sueno)
+round(sd(DF3$sueno),2)
+IQR(DF3$sueno)
+round(sd(DF3$sueno) / mean(DF3$sueno),2) #CV
+```
+El coeficiente de variación es `0.26`  por lo que tanto la media como la mediana representan bien el sueño de los estudiantes.
 
 ## 3.4 Análisis multivariado (cruces según objetivos)
 
