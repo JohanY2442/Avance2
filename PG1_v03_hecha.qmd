@@ -854,10 +854,14 @@ DF3 %>%
   rename(Uso = uso_g)
 ```
 
-Como se puede ver, usar la IA para Redactar (100%) o Resolver ejercicios (96.5%) es una apuesta casi segura para ahorrar tiempo. Aunque la efectividad baja ligeramente al Resumir (87%), Programar (82.9%) y en Otros (73.3%), todos los porcentajes siguen siendo muy altos. Esto demuestra que, si bien al programar hay un poco más de probabilidad de no generar un ahorro inmediato, la IA termina siendo una gran ayuda en la inmensa mayoría de los casos, sin importar el uso que se le dé.
+Como se puede ver, hay coincidencias entre el uso de IA y el ahorro de tiempo, aunque cabe aclarar que los datos no especifican si el tiempo ahorrado corresponde exactamente a la misma tarea en la que se usó la IA ese día. Por lo tanto, el uso de la herramienta es solo uno de los múltiples factores que ayudan a ahorrar tiempo; no estamos hablando de una causa directa ni absoluta.
+
+Revisando los datos, se aprecia que el 100% de quienes usan IA para Redactar reporta haber ahorrado tiempo, seguido por un 96.5% en Resolver ejercicios. Luego le sigue Resumir con un 87%, Programar con un 82.9% y la categoría Otros con un 73.3%.
+
+Además se destaca que en donde más se utiliza la IA, es en Resolver ejercicios y Resumir, lo que refleja un impacto significativo por la gran cantidad de registros. Por otro lado, aunque Redactar tiene un 100% de éxito reportando tiempo ahorrado, al ser la categoría con menos consultas su impacto global en el grupo termina siendo menor.
+
 
 ### Objetivo 4: VARIABLE_E vs. VARIABLE_F
-
 
 
 ```{r}
