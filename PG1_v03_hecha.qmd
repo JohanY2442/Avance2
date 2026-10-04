@@ -794,11 +794,52 @@ Se puede notar que al menos el 70% de los registros de cada categoría de satisf
 
 ### Objetivo 2: VARIABLE_C vs. VARIABLE_D
 
-<!-- TODO: Repetir análisis y gráfico correspondiente al objetivo específico 2. -->
+```{r}
+cor.test(DF3$consultas,DF3$estudio,method="spearman")
+```
+Mediante los valores que se consigue de cor.test con el valor de p aprox 0.433 nos indica que existe una asociacion positiva y moderada y el p-value < 0.001 ayuda a saber que esta relacion no es producto del azar 
+
+Respecto a las advertencias se debe a la presencia de empates
+
+```{r}
+ggplot(DF3, aes(x = consultas, y = estudio)) +
+  geom_point(color = "navy", size = 2.5) +
+  labs(
+    title = "Consultas vs Estudio",
+    x = "consultas",
+    y = "estudio"
+  )
+```
+
 
 ### Objetivo 3: VARIABLE_E vs. VARIABLE_F
 
 <!-- TODO: Repetir análisis y gráfico correspondiente al objetivo específico 3. -->
+### Objetivo 4: VARIABLE_E vs. VARIABLE_F
+
+
+
+```{r}
+boxplot(sueno ~ comprension, data = DF3,
+        xlab = "comprension",
+        ylab = "sueno",
+        col = c("skyblue"))
+```
+
+```{r}
+DF3%>%group_by(comprension)%>% summarise(n=n(),
+    Q1= quantile(sueno, 0.25, na.rm = TRUE),
+    Mediana = quantile(sueno, 0.5 ,na.rm = TRUE),
+    Q3= quantile(sueno, 0.75, na.rm = TRUE),
+    RIC     = IQR(sueno, na.rm = TRUE),
+    Media = mean(sueno,na.rm=TRUE),
+    CV = (sd(sueno,na.rm=TRUE)/mean(sueno,na.rm=TRUE))
+                                         )
+```
+
+Los quartiles separados con respecto a las categorias en el 25% nos muestra que las 3 categorias centrales tienen el mismo valor y despues en el 50% podemos ver que en Muy bajo teniendo el valor mas alto de 8 horas ademas de que en el 50% central se aprecia que en las 3 categorias centrales (Bajo, Moderado, Alto) las horas de sueño varian entre 6 a 8.
+
+Y mediante el CV que es menor a 0.3 que garantiza homogeneidad llegamos a la conclusion que la media es la mas representativa pero solo en Moderado y Alto debido a que tienen una mayor cantidad de datos
 
 # 4. Conclusiones
 
