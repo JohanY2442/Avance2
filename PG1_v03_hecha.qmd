@@ -878,10 +878,11 @@ DF3%>%group_by(comprension)%>% summarise(n=n(),
                                          )
 ```
 
-Los quartiles separados con respecto a las categorias en el 25% nos muestra que las 3 categorias centrales tienen el mismo valor y despues en el 50% podemos ver que en Muy bajo teniendo el valor mas alto de 8 horas ademas de que en el 50% central se aprecia que en las 3 categorias centrales (Bajo, Moderado, Alto) las horas de sueño varian entre 6 a 8.
+Los quartiles separados con respecto a las categorias en el 25% nos muestra que las 3 categorias centrales tienen el mismo valor y despues en el 50% podemos ver que en Muy bajo teniendo el valor mas alto de 8 horas ademas de que en el 50% central se aprecia que en las 3 categorias centrales (Bajo, Moderado, Alto) las horas de sueño varian entre 6 a 8. 
 
-Y mediante el CV que es menor a 0.3 que garantiza homogeneidad llegamos a la conclusion que la media es la mas representativa pero solo en Moderado y Alto debido a que tienen una mayor cantidad de datos
-
+Y mediante el CV que es menor a 0.3 que garantiza homogeneidad llegamos a la conclusion que la media es la mas representativa pero solo en Moderado y Alto debido a que tienen una mayor cantidad de datos. Teniendo en cuenta esto 
+ 
+En conclusion se puede apreciar una disminucion leve entre la media de Moderado hacia Alto y en las categorias restantes podemos ver una mayor variabilidad correspondiente a Muy bajo ya que varia de 6.375 hasta 8.875 y demostrando que hay una ligera disminucion con respecto al sueño al pasar entre categorias
 # 4. Conclusiones
 
 ### Conclusión del Objetivo 1
