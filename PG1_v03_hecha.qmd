@@ -466,7 +466,7 @@ En comprension, la categoría más frecuente fue "Moderado", con 17 registros, s
 
 ### Paso 6: Gestión de nulos
 
-En los pasos anteriores se descartaron 50 registros por no cumplir con el envío en el horario establecido, y se reemplazaron por NA los valores que no superaron los criterios de coherencia, sin eliminar filas adicionales. Ahora corresponde medir el impacto de esos NA y decidir qué hacer con ellos.
+Tras los filtros iniciales, los valores nulos (NA) se concentran en cuatro variables sobre IA. A continuación, se evalúa el impacto de una eliminación directa.
 
 ```{r}
 tabla_NA <- data.frame(
@@ -477,32 +477,16 @@ tabla_NA <- data.frame(
 )
 tabla_NA
 ```
-
-Los faltantes se concentran en cuatro variables (`consultas`, `uso`, `tareas` y `curso`), todas relacionadas con el uso de IA. Las demás están completas.
-
-Revisamos si los NA aparecen dispersos o si coinciden en los mismos registros.
-
 ```{r}
+#Revisamos si los NAs están en una mismo registro
 table(rowSums(is.na(DF2)))
-```
-
-Ningún registro tiene un NA aislado: el Paso 3 anula las cuatro variables en bloque cuando la fila no pasa alguno de sus criterios. Falta identificar cuál criterio falló en cada caso.
-
-Medimos el impacto de eliminar toda fila con al menos un NA.
-
-```{r}
+#Impacto si eliminamos los NAs
 nrow(DF2)
 nrow(na.omit(DF2))
 round((1 - nrow(na.omit(DF2)) / nrow(DF2)) * 100, 2)
 ```
 
-La pérdida sería del 15.93%. Como las cuatro variables fallan a la vez, excluir una sola no recuperaría ninguna fila.
-
-```{r}
-DF2[!complete.cases(DF2), c("hora", "email", "consultas", "uso", "tareas", "curso", "estudio", "sueno")]
-```
-
-Antes de aplicar cualquier política, verificamos si todos los faltantes tienen el mismo origen. Reconstruimos los criterios del Paso 3 sobre la base previa (`DFL1`), que aún conserva los valores originales, y clasificamos cada registro incompleto según cuál de ellos falló.
+La eliminación directa mediante `na.omit` descartaría el 15.93% de la muestra. Para evitarlo, se reconstruyen los criterios desde la base previa (`DFL1`) y se clasifica el origen de cada registro incompleto.
 
 ```{r}
 # DF2 sale de DFL1 sin filtrar filas, así que ambas bases están alineadas
@@ -531,7 +515,7 @@ diagnostico <- DF2 %>%
 table(diagnostico$motivo)
 ```
 
-Los faltantes no tienen un origen único: se distinguen dos mecanismos.
+Se identificaron dos mecanismos que exigen un tratamiento diferenciado para no sesgar los datos:
 
 ```{r}
 # Perfil de cada grupo según las consultas que realmente declararon
@@ -546,19 +530,19 @@ diagnostico %>%
   )
 ```
 
-**Sin uso de IA (13 registros).** El estudiante respondió "Ninguno", "Nada" o "No la usé", con 0 consultas y 0 tareas. Son NA naturales por dependencia entre preguntas, quien no usó IA no puede indicar para qué la usó. Aquí el valor real del conteo es cero.
+**Sin uso de IA (13 registros).** El estudiante no usó la herramienta; el valor real del NA es cero.
 
-**Curso fuera de formato (16 registros).** El estudiante sí usó IA (hasta 30 consultas, media 7.8), pero escribió el curso de modo que el filtro no lo reconoce: solo dígitos, nombre completo, o el código con un espacio de más (CS2031 ). Ningún código se corrige, recuperar unos e inventar otros sería arbitrario.
+**Curso fuera de formato (16 registros).** Sí usaron IA, pero el código del curso es inválido.
   
-Esta distinción es decisiva. Una política uniforme asignaría `consultas = 0` y `uso = "No usó IA"` a estudiantes con uso intensivo, sesgando las variables centrales de los objetivos 1 y 3. 
+Una política uniforme asignaría `consultas = 0` y `uso = "No usó IA"` a estudiantes con uso intensivo, sesgando las variables centrales de los objetivos 1 y 3. 
 
   
-  | Motivo | Tratamiento | Justificación |
-  |------------------|------------------|------------------------------------|
-  | Sin uso de IA | `consultas` y `tareas` → 0; `uso` → "No usó IA"; `curso` → "No aplica" | El valor real del conteo es cero y la ausencia es una respuesta lógica |
-  | Curso fuera de formato | Se conservan `consultas`, `tareas` y `uso`; solo `curso` → "Sin código válido" | El uso de IA sí ocurrió; lo único inválido es el código del curso |
+| Motivo | Tratamiento | Justificación |
+|------------------|------------------|------------------------------------|
+| Sin uso de IA | `consultas` y `tareas` → 0; `uso` → "No usó IA"; `curso` → "No aplica" | El valor real del conteo es cero y la ausencia es una respuesta lógica |
+| Curso fuera de formato | Se conservan `consultas`, `tareas` y `uso`; solo `curso` → "Sin código válido" | El uso de IA sí ocurrió; lo único inválido es el código del curso |
   
-  Se agrega `uso_ia` para que los objetivos 1 y 3 puedan filtrar los días sin uso sin eliminarlos. También se codifican las ordinales como factor y los identificadores como nominales.
+Se agrega `uso_ia` para que los objetivos 1 y 3 puedan filtrar los días sin uso sin eliminarlos. También se codifican las variables ordinales como factor y los identificadores como nominales.
 
 ```{r}
 DF3 <- diagnostico %>%
@@ -625,7 +609,7 @@ trazabilidad$Retencion <- round(trazabilidad$Observaciones / nrow(DF) * 100, 2)
 trazabilidad
 ```
 
-Se conservan 182 de 232 observaciones (78.45%). La pérdida ocurrió al aplicar los criterios de investigador, no en la gestión de nulos.  
+La base retiene 182 observaciones (78.45%). La pérdida responde exclusivamente a los criterios de la ventana horaria de envío.
 
 ```{r}
 # Mismo diagnóstico del Paso 1, ahora sobre la base limpia.
@@ -648,7 +632,7 @@ sum(DF3$estudio == 0)
 sum(DF3$sueno == 0)
 ```
 
-Los NA quedan en cero. De los 14 ceros en `consultas`, 13 son los días sin uso de IA reetiquetados; los demás, y los de `tareas`, son respuestas declaradas por el estudiante. Las ordinales quedan como factor ordenado y`Grupo` como identificador nominal.
+La base final no presenta NAs. Los ceros corresponden a días sin uso de IA y a valores reales declarados. Las cualitativas conservan su formato de factor ordenado y nominal.
 
 ```{r}
 # Verificamos que ninguna numérica se salga de los rangos del codebook.
@@ -663,7 +647,7 @@ data.frame(
 )
 ```
 
-Todas cumplen los rangos del codebook. Los valores extremos son los atípicos del Paso 4, que se decidió conservar.
+Todas las variables cumplen los rangos del codebook. Los valores extremos corresponden a los atípicos validados en el Paso 4.
 
 ```{r}
 # Filas idénticas en todas sus columnas
@@ -675,7 +659,7 @@ DF3 %>%
   filter(n > 1)
 ```
 
-Se detectaron 2 registros duplicados, donde enviaron el formulario dos veces el 17/09. Al no poder determinar cuál es el registro válido, se deja constancia del hallazgo para mejorar el instrumento de recolección.
+Se detectaron 2 registros duplicados. Al no poder determinar el válido, se documentan para futuras correcciones del instrumento.
 
 ```{r}
 # Observaciones limpias que aportó cada grupo
@@ -691,22 +675,17 @@ nrow(DF3_grupo)
 DF3_grupo %>% count(email)
 ```
 
-El grupo tiene **44 observaciones limpias** frente al mínimo de 150. La recolección abarca 14 días, el último aún en curso, y el diseño es longitudinal, por lo que el volumen crece de forma acumulativa.
 
 ```{r}
 n_distinct(DF3$email)
 ```
 
-La cobertura alcanza a 33 de los 45 estudiantes de la sección, por lo que aún no permite generalizar a la población objetivo.
+Finalmente, el grupo aportó 44 observaciones limpias (33 de 45 estudiantes). Al ser un estudio longitudinal en curso, el volumen muestral crecerá acumulativamente hasta alcanzar el mínimo requerido (150) para permitir la generalización a la población objetivo.
 
-**Conclusión del proceso de validación y limpieza de datos**
+**Conclusión de validación y limpieza**
 
+En total, se conservaron 182 observaciones (78.45%). La decisión más importante fue evitar el `na.omit` para no perder el 15.93% de la muestra, ya que esto habría sesgado el estudio eliminando injustamente a quienes más usaron IA. Al tratar los nulos según su origen, la base quedó sin faltantes, con los formatos correctos en cada columna y lista para analizar. Quedan como limitaciones pendientes revisar 2 registros duplicados y alcanzar el mínimo de 150 observaciones.
 
-De 232 observaciones crudas se conservan 182 (78.45%), y las descartadas responden a la ventana horaria de envío definida de antemano.
-
-El hallazgo central fue que los faltantes no tenían un origen único: 13 correspondían a días sin uso de IA, donde el valor real es cero, y 16 a registros con uso efectivo cuyo código de curso no superó la validación de formato. El `na.omit` habría costado el 15.93%, pero el problema no era su magnitud sino su composición: habría eliminado registros con uso intensivo de IA. Distinguir ambos mecanismos permitió recuperar los datos reales de esos 16 registros sin perder ninguna observación.
-
-La base final no tiene faltantes ni valores fuera de rango, con las ordinales como factores ordenados y los identificadores como nominales. Queda apta para el análisis descriptivo. Quedan dos limitaciones, los 2 registros duplicados detectados y el volumen muestral, que alcanza 44 observaciones limpias del grupo sobre un mínimo de 150.
 # 3. Análisis descriptivo
 
 ## 3.1 Análisis univariado: consultas
@@ -940,18 +919,12 @@ Se comprobo la asociacion entre consultas y horas de estudio la cual es positiva
 
 ### Conclusión del Objetivo 3
 
-Existe una clara relación entre el curso de mayor consulta y el uso de la IA, lo que evidencia que el estudiante adapta la herramienta a las exigencias de cada materia. A su vez, este propósito de uso determina el impacto en la productividad: aunque ciertas actividades son infalibles, el mayor ahorro global de tareas lo generan los usos más frecuentes (resolver ejercicios y resumir).
-
-<<<<<<< HEAD
-Cabe precisar que estos hallazgos reflejan asociaciones estadísticas y no necesariamente una causalidad estricta, dado que el ahorro de tiempo reportado podría estar influenciado también por otras variables en la rutina del estudiante.
-=======
-
+Se evidencia que el curso influye en el uso que se le da a la IA. El estudiante adapta la herramienta a las exigencias de cada materia. A su vez, el tipo de uso se relaciona con el ahorro de tiempo, que fue más frecuente en las actividades de uso más común. Estos hallazgos son asociaciones y no implican causalidad, pues el ahorro reportado podría depender de otras variables de la rutina del estudiante.
 
 ### Conclusión del Objetivo 4
 
 Sintetizando, se evidencia una relacion inversa y leve entre las horas de sueño y la comprension. Este comportamiento se puede observar mejor en la media de las categorias intermedias (Moderado, Alto) aunque pierde consistencia ya en los extremos debido a la cantidad de datos que las conforman
 
->>>>>>> f783194900e5c9a0863b0b6676709fcc07a7c5e4
 ### Conclusión general del estudio
 
 <!-- TODO -->
