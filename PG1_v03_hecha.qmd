@@ -816,7 +816,8 @@ barplot(t(tabla),
         legend.text = TRUE,
         main = "Uso de la IA según el curso",
         xlab = "Curso",
-        ylab = "Frecuencia")
+        ylab = "Frecuencia",
+        ylim = c(0, 18))
 ```
 
 ```{r}
