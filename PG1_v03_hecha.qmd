@@ -866,8 +866,11 @@ DF3 %>%
             main = "Proporción de tareas ahorradas según el uso de IA",
             ylab = "Cantidad de registros",
             xlab = "Uso principal",
-            col = c("steelblue", "gray80"),
-            legend.text = c("Sin ahorro", "Con ahorro"))
+            col = c("steelblue", "gray80"))
+    legend("topleft",
+           legend = c("Sin ahorro", "Con ahorro"),
+           fill = c("steelblue", "gray80"),
+           cex = 0.8)
   }
 ```
 
@@ -885,11 +888,7 @@ DF3 %>%
   rename(Uso = uso_g)
 ```
 
-Como se puede ver, hay coincidencias entre el uso de IA y el ahorro de tiempo, aunque cabe aclarar que los datos no especifican si el tiempo ahorrado corresponde exactamente a la misma tarea en la que se usó la IA ese día. Por lo tanto, el uso de la herramienta es solo uno de los múltiples factores que ayudan a ahorrar tiempo; no estamos hablando de una causa directa ni absoluta.
-
-Revisando los datos, se aprecia que el 100% de quienes usan IA para Redactar reporta haber ahorrado tiempo, seguido por un 96.5% en Resolver ejercicios. Luego le sigue Resumir con un 87%, Programar con un 82.9% y la categoría Otros con un 73.3%.
-
-Además se destaca que en donde más se utiliza la IA, es en Resolver ejercicios y Resumir, lo que refleja un impacto significativo por la gran cantidad de registros. Por otro lado, aunque Redactar tiene un 100% de éxito reportando tiempo ahorrado, al ser la categoría con menos consultas su impacto global en el grupo termina siendo menor.
+Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades. Existe una clara asociación positiva. El 100% de quienes usaron IA para 'Redactar' reportó ahorro de tiempo, seguidos por 'Resolver ejercicios' (96.5%), 'Resumir' (87%), 'Programar' (82.9%) y 'Otros' (73.3%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios' y 'Resumir', al concentrar la mayor cantidad de registros.
 
 
 ### Objetivo 4: comprension vs. sueno
