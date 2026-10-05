@@ -353,17 +353,30 @@ Como la respuesta cualitativa (uso) se relaciona con variables cuantitativas (co
 
 ```{r}
   DF2<-DFL1%>%mutate(
+  
+  # se arma el primer filtro para normalizar uso
   uso_= chartr("áéíóúÁÉÍÓÚ", "aeiouAEIOU", tolower(uso)),
+  
+  # el segundo filtro para la busqueda de palabras clave 
   usoC= str_detect(uso_,regex("\\b(ia|no|use|ningun[oa])\\b",ignore_case = TRUE)),
+  
+  # el tercer filtro ayuda a buscar datos no validos y validar los mismos
   cursoC = is.na(curso) | str_detect(curso, "^[ -]*$") | 
   str_detect(curso, "^[A-Za-z]{2}\\d{4}$"),
+  
+  # el cuarto filtro verifica las consultas y une con validacion de curso
   filtro=!usoC&cursoC&(as.numeric(consultas)>0|as.numeric(tareas)>0),
+  
+  # se aplica el filtro para cada dato relacionado
   uso = if_else(filtro, uso,NA_character_),
+  
   consultas=if_else(filtro,consultas,NA_integer_),   
+  
   tareas= if_else(filtro,tareas,NA_integer_),
+  
   curso = if_else(filtro,curso,NA_character_)
-
   ) %>% select(-filtro, -usoC,-cursoC,-uso_)  
+# despues se borra las columnas auxiliares     
 ```
 
 ### Paso 4: Datos atípicos
@@ -817,10 +830,7 @@ Se puede notar que al menos el 70% de los registros de cada categoría de satisf
 ```{r}
 cor.test(DF3$consultas,DF3$estudio,method="spearman")
 ```
-Mediante los valores que se consigue de cor.test con el valor de p aprox 0.433 nos indica que existe una asociacion positiva y moderada y el p-value < 0.001 ayuda a saber que esta relacion no es producto del azar 
-
-Respecto a las advertencias se debe a la presencia de empates
-
+Se uso el coeficiente de correlacion de Spearman debido a que resiste mejor la presencia de outliers el cual fue de 0.433 lo que confirma una asociacion positiva y moderada, ademas de que con el p-value<0.001 podemos asegurar significancia estadistica ya que indica que no es resultado de azar. En conclusion hay una tendencia de que a mayor cantidad de consultas mas son las consultas que se realizaron
 ```{r}
 ggplot(DF3, aes(x = consultas, y = estudio)) +
   geom_point(color = "navy", size = 2.5) +
@@ -940,11 +950,9 @@ DF3%>%group_by(comprension)%>% summarise(n=n(),
                                          )
 ```
 
-Los quartiles separados con respecto a las categorias en el 25% nos muestra que las 3 categorias centrales tienen el mismo valor y despues en el 50% podemos ver que en Muy bajo teniendo el valor mas alto de 8 horas ademas de que en el 50% central se aprecia que en las 3 categorias centrales (Bajo, Moderado, Alto) las horas de sueño varian entre 6 a 8. 
+El 25% (Q1) en las 3 categorias intermedias tienen el mismo valor, mientras que en el 50% se alcanza el valor mas alto de 8 horas que pertenece a Muy bajo y el 50% central en las 3 categorias intermedias (Bajo, Moderado, Alto) las horas de sueño varian de 6 a 8. 
 
-Y mediante el CV que es menor a 0.3 que garantiza homogeneidad llegamos a la conclusion que la media es la mas representativa pero solo en Moderado y Alto debido a que tienen una mayor cantidad de datos. Teniendo en cuenta esto 
- 
-En conclusion se puede apreciar una disminucion leve entre la media de Moderado hacia Alto y en las categorias restantes podemos ver una mayor variabilidad correspondiente a Muy bajo ya que varia de 6.375 hasta 8.875 y demostrando que hay una ligera disminucion con respecto al sueño al pasar entre categorias
+Un CV menor a 0.3 garantiza la homogeneidad, por lo que concluimos que la media es mas representativa pero solo en Moderado y Alto por tener una mayor cantidad de datos. Por ello, se puede afirmar que hay una relacion inversa donde a mayor comprension de actividades las horas de sueño se reducen levemente
 # 4. Conclusiones
 
 ### Conclusión del Objetivo 1
