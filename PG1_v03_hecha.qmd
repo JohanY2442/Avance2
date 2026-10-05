@@ -888,7 +888,7 @@ DF3 %>%
   rename(Uso = uso_g)
 ```
 
-Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades. Existe una clara asociación positiva. El 100% de quienes usaron IA para 'Redactar' reportó ahorro de tiempo, seguidos por 'Resolver ejercicios' (96.5%), 'Resumir' (87%), 'Programar' (82.9%) y 'Otros' (73.3%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios' y 'Resumir', al concentrar la mayor cantidad de registros.
+Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades, existe una relación altamente favorable. El 100% de quienes usaron IA para 'Redactar' reportó ahorro de tiempo, seguidos por 'Resolver ejercicios' (96.5%), 'Resumir' (87%), 'Programar' (82.9%) y 'Otros' (73.3%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios' y 'Resumir', al concentrar la mayor cantidad de registros
 
 
 ### Objetivo 4: comprension vs. sueno
@@ -931,8 +931,9 @@ Cabe aclarar que la propuesta de explicación presentada, la cual sigue un forma
 
 ### Conclusión del Objetivo 3
 
-<!-- TODO -->
+Existe una clara relación entre el curso de mayor consulta y el uso de la IA, lo que evidencia que el estudiante adapta la herramienta a las exigencias de cada materia. A su vez, este propósito de uso determina el impacto en la productividad: aunque ciertas actividades son infalibles, el mayor ahorro global de tareas lo generan los usos más frecuentes (resolver ejercicios y resumir).
 
+Cabe precisar que estos hallazgos reflejan asociaciones estadísticas y no necesariamente una causalidad estricta, dado que el ahorro de tiempo reportado podría estar influenciado también por otras variables en la rutina del estudiante.
 ### Conclusión general del estudio
 
 <!-- TODO -->
