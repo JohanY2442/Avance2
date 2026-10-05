@@ -705,7 +705,7 @@ En el barplot se ve que si bien en la mayoría de registros el estudiante no hac
 
 ## 3.2 Análisis univariado: comprension
 
-Ya que comprensión es una variable cualitativa ordinal, usamos tablas de frecuencia, porcentajes y un gráfico de barras. No se calcula media ni desviación estándar porque las categorías no son números, pero como tienen orden sí se puede hallar la mediana.
+Al ser ordinal, usamos frecuencias, porcentajes y barras. No hay media ni desviación porque no son números, pero sí mediana porque tienen orden.
 
 ```{r}
 table(DF3$comprension)
@@ -713,9 +713,7 @@ round(prop.table(table(DF3$comprension)) * 100, 2)
 round(cumsum(prop.table(table(DF3$comprension))) * 100, 2)
 ```
 
-La moda es Moderado, con 102 de los 182 registros (56.04%), seguida de Alto con 53 registros (29.12%). Muy bajo y Bajo juntos solo llegan al 8.79%.
-
-Con el porcentaje acumulado se ve que la mediana está en Moderado, ya que ahí se pasa el 50% (64.84%). Esto quiere decir que al menos la mitad de los registros tuvo una comprensión moderada o menor, y que el 35.16% tuvo una comprensión alta o muy alta.
+La moda y la mediana son Moderado (56.04%; el acumulado pasa el 50% ahí). El 35.16% tuvo comprensión alta o muy alta y solo el 8.79% baja o muy baja.
 
 ### Gráfico
 
@@ -726,8 +724,6 @@ barplot(table(DF3$comprension),
         ylab = "Frecuencia",
         col = "lightgray")
 ```
-
-En el gráfico se ve que la mayoría de respuestas están en Moderado y Alto, y muy pocos estudiantes tuvieron una comprensión baja o muy baja.
 
 ## 3.3 Análisis univariado: sueno
 
@@ -797,7 +793,7 @@ ggplot(DF3, aes(x = consultas, y = estudio)) +
 
 ### Objetivo 3a: curso vs. uso
 
-Como hay muchos cursos distintos, nos quedamos solo con los 4 cursos más consultados (CC1105, CS2031, CC2101 y CS2013) y los 4 usos más frecuentes. También quitamos los días en que no se usó IA, y pasamos curso a mayúsculas con toupper() porque algunos códigos estaban escritos en minúscula. Como curso y uso son nominales, se usan frecuencias y porcentajes por curso, y el gráfico de barras agrupadas y el de mosaico para comparar.
+Al ser ambas nominales, usamos tabla cruzada, porcentajes por curso, barras y mosaico. Quitamos los días sin uso de IA y dejamos los 4 cursos y 4 usos más frecuentes.
 
 ```{r}
 DFC <- DF3[DF3$uso_ia == TRUE, ]
@@ -829,9 +825,7 @@ mosaicplot(tabla,
            color = TRUE)
 ```
 
-Nos quedamos con 75 registros. En CS2031 la IA se usó más para programar (61.11%) y ninguna vez para resolver ejercicios, mientras que en CC2101 se usó más para resolver ejercicios (64.29%). En CS2013 lo más común fue resumir (50%), y en CC1105 programar y resolver ejercicios tuvieron el mismo porcentaje (38.71%). Redactar casi no aparece en ningún curso.
-
-Con esto se puede decir que el uso que se le da a la IA cambia según el curso.
+Con 75 registros, en CS2031 predomina programar (61.11%), en CC2101 resolver ejercicios (64.29%) y en CS2013 resumir (50%). Es decir, el uso de la IA cambia según el curso.
 
 ### Objetivo 3b: uso vs. tareas
 
@@ -925,4 +919,4 @@ Sintetizando, se evidencia una relación inversa y leve entre las horas de sueñ
 
 ### Conclusión general del estudio
 
-<!-- TODO -->
+Después de limpiar los datos, vimos que los estudiantes de Estadística sección 1 usan la IA casi todos los días y para cosas distintas según el curso. Los que hacen más consultas suelen estudiar más horas y sentirse más satisfechos con su avance. En cambio, las horas de sueño casi no cambian según el nivel de comprensión. Esto no prueba que una cosa cause la otra, solo que suelen darse juntas.
