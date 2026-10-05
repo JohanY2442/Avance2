@@ -553,10 +553,14 @@ DF3 <- diagnostico %>%
     # Si no usó IA, el valor verdadero es 0 
     # Cuantitativas discretas: 
     consultas = if_else(motivo == "Sin uso de IA", 0, consultas_orig),
+    consultas= as.integer(consultas),
     tareas    = if_else(motivo == "Sin uso de IA", 0, tareas_orig),
+    tareas= as.integer(tareas),
+
     # Cualitativa nominal: asignamos una categoría propia
-    uso       = if_else(motivo == "Sin uso de IA", "No usó IA", uso_orig),
-    uso = factor(uso),
+    uso   = if_else(motivo == "Sin uso de IA", "No usó IA", uso_orig),
+    uso = factor(uso,levels=unique(uso)),
+    
 
   # Si solo falló el curso, se conservan sus datos reales
   # y únicamente el curso queda marcado como inválido
