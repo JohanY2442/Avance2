@@ -13,11 +13,9 @@ format:
 
 # 1. Introducción
 
-Actualmente,  muchos estudiantes usan la inteligencia artificial para realizar sus actividades académicas, ya sea para resumir información, estudiar para exámenes, etcétera. Por ello, nuestro proyecto buscará analizar cómo el uso de esta herramienta afecta al desempeño académico de los estudiantes. Asimismo, también consideraremos el factor del sueño y su impacto en el rendimiento de los universitarios.
-
 ## 1.1 Relevancia
 
-Este tema es importante porque la mayoría de estudiantes usa la inteligencia artificial diariamente para sus actividades académicas. Analizar este uso nos puede ayudar a saber con qué frecuencia la utilizan, para qué lo usan y en qué cursos hacen más consultas. También nos puede servir para ver si el uso de estas herramientas realmente les ayuda a comprender mejor los temas o a ahorrar tiempo que muchas veces hace falta. Además, consideraremos otros factores asociados a hábitos de los estudiantes, como las horas de sueño y horas efectivas de estudio, para determinar su influencia en el rendimiento académico.
+Este tema es importante porque la mayoría de estudiantes usa la IA diariamente para sus actividades académicas. Analizar este uso nos ayuda a saber con qué frecuencia la utilizan, para qué lo usan y en qué cursos hacen más consultas. También nos ayuda a ver si el uso de estas herramientas realmente les ayuda a comprender mejor los temas o a ahorrar tiempo. Además, consideraremos otros factores asociados a hábitos de los estudiantes, como las horas de sueño y horas efectivas de estudio, para determinar su influencia en el rendimiento académico.
 
 ## 1.2 Planificación
 
@@ -36,10 +34,10 @@ tareas <- data.frame(
     "Revisión final"
   ),
   inicio = as.Date(c(
-    "2026-09-12", "2026-10-18", "2026-10-21", "2026-10-24", "2026-10-28", "2026-10-30"  # TODO: completar fechas "YYYY-MM-DD"
+    "2026-09-12", "2026-10-18", "2026-10-21", "2026-10-24", "2026-10-28", "2026-10-30"
   )),
   fin = as.Date(c(
-    "2026-10-18", "2026-10-21", "2026-10-24", "2026-10-28", "2026-10-30", "2026-11-02"  # TODO: completar fechas "YYYY-MM-DD"
+    "2026-10-18", "2026-10-21", "2026-10-24", "2026-10-28", "2026-10-30", "2026-11-02"
   )),
   seccion = c(
     "Planificación",
@@ -99,17 +97,15 @@ Con la finalidad de que la muestra obtenida refleje a la población y se minimic
 
 Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario y así evitando el sesgo de no respuesta
 
-Instrumento de registro diario estandarizado: La recolección se ejecutará mediante un formulario digital (Forms) configurado con restricciones de envío único por día, garantizando la consistencia temporal de los registros.
-
 Medición al cierre del día: El cuestionario se realizará al final de cada día el cual permitirá registra las variables diarias (como las horas de estudio o el uso de IA), atenuando el sesgo de memoria. El registro de un día se contará como válido si este se hace después de las 9:30 p.m. pero antes de la medianoche.
 
 ## 2.2 Tipo de muestreo
 
-Se utilizará un muestreo sistematico por conveniencia, estructurado bajo un diseño de recolección de datos de tipo longitudinal . Esta decisión responde a la exigencia del estudio, el cual requiere que los estudiantes reporten sus métricas académicas, de sueño y de uso de Inteligencia Artificial de forma diaria. El diseño longitudinal generará múltiples observaciones repetidas por cada estudiante, otorgándole al estudio una solidez estadística necesaria para capturar patrones de comportamiento consistentes en el tiempo.
+Se utilizará un muestreo sistemático por conveniencia, estructurado bajo un diseño de recolección de datos de tipo longitudinal . Esta decisión responde a la exigencia del estudio, el cual requiere que los estudiantes reporten sus métricas académicas, de sueño y de uso de Inteligencia Artificial de forma diaria. El diseño longitudinal generará múltiples observaciones repetidas por cada estudiante, otorgándole al estudio una solidez estadística necesaria para capturar patrones de comportamiento consistentes en el tiempo.
 
 ## 2.3 Recolección de datos
 
-Se diseñarán 3 forms (Google Forms) diferentes. Uno será para los datos demográficos (solo se rellenará una vez por estudiante), otro para el diario (se rellenará una vez por día) y otro para los exámenes (se rellenará una vez por cada examen tomado).
+Se diseñarán 3 formularios (Google Forms) diferentes. Uno será para los datos demográficos (solo se rellenará una vez por estudiante), otro para el diario (se rellenará una vez por día) y otro para los exámenes (se rellenará una vez por cada examen tomado).
 
 ## 2.4 Variables
 
@@ -256,13 +252,13 @@ La variable categórica ordinal de 5 niveles `comprension` ya ha tomado cada uno
 length(unique(DFL$sueno))
 unique(DFL$sueno)
 ```
-La variable `sueno` ha tomado pocos valores debido a la discretización de la variable y al hecho de que el rango de valores admisibles está tan solo en el intervalo \[0, 24\]
+La variable `sueno` ha tomado pocos valores debido a la discretización de la variable y al hecho de que el rango de valores admisibles está confinado en el intervalo \[0, 24\]
 
 ```{r}
 length(unique(DFL$estudio))
 unique(DFL$estudio)
 ```
-La variable `estudio` ha tomado pocos valores debido a la discretización de la variable y al hecho de que el rango de valores admisibles está tan solo en el intervalo \[0, 24\]
+La variable `estudio` ha tomado pocos valores debido a la discretización de la variable y al hecho de que el rango de valores admisibles está confinado en el intervalo \[0, 24\]
 
 ```{r}
 length(unique(DFL$curso))
@@ -438,8 +434,6 @@ IQR(DF2$sueno, na.rm = TRUE)
 
 En sueño, los valores van de 2 a 13 horas. La desviación estándar es 1.80 horas y el IQR es 2 horas. Se identificaron como atípicos los valores de 2 y 13 horas, que muestran algunos registros de sueño bastante distintos del resto.
 
-<!-- Para variables categóricas: distribución de frecuencias y proporciones. -->
-
 ```{r}
 # Frecuencia del principal uso de IA
 table(DF2$uso)
@@ -454,7 +448,7 @@ table(DF2$satisfaccion)
 prop.table(table(DF2$satisfaccion)) * 100
 ```
 
-En satisfaccion, la categoría con mayor frecuencia fue el nivel 3, con 16 registros, mientras que los niveles 4 y 5 tuvieron una menor cantidad de respuestas.
+En satisfacción, la categoría con mayor frecuencia fue el nivel 3, con 16 registros, mientras que los niveles 4 y 5 tuvieron una menor cantidad de respuestas.
 
 ```{r}
 # Frecuencia del nivel de comprensión
@@ -462,7 +456,7 @@ table(DF2$comprension)
 prop.table(table(DF2$comprension)) * 100
 ```
 
-En comprension, la categoría más frecuente fue "Moderado", con 17 registros, seguida de "Alto", con 9 registros. Las categorías "Bajo" y "Muy alto" tuvieron 3 registros cada una.
+En comprensión, la categoría más frecuente fue "Moderado", con 17 registros, seguida de "Alto", con 9 registros. Las categorías "Bajo" y "Muy alto" tuvieron 3 registros cada una.
 
 ### Paso 6: Gestión de nulos
 
@@ -908,7 +902,7 @@ DF3%>%group_by(comprension)%>% summarise(n=n(),
 
 El 25% (Q1) en las 3 categorias intermedias tienen el mismo valor, mientras que en el 50% se alcanza el valor mas alto de 8 horas que pertenece a Muy bajo y el 50% central en las 3 categorias intermedias (Bajo, Moderado, Alto) las horas de sueño varian de 6 a 8. 
 
-Un CV menor a 0.3 garantiza la homogeneidad, por lo que concluimos que la media es mas representativa pero solo en Moderado y Alto por tener una mayor cantidad de datos. Por ello, se puede afirmar que hay una relacion inversa donde a mayor comprension de actividades las horas de sueño se reducen levemente
+Un CV menor a 0.3 garantiza la homogeneidad, por lo que concluimos que la media es mas representativa pero solo en Moderado y Alto por tener una mayor cantidad de datos. Por ello, se puede afirmar que hay una relación inversa donde a mayor comprensión de actividades las horas de sueño se reducen levemente
 # 4. Conclusiones
 
 ### Conclusión del Objetivo 1
@@ -919,7 +913,7 @@ Cabe aclarar que la propuesta de explicación presentada, la cual sigue un forma
 
 ### Conclusión del Objetivo 2
 
-Se comprobo la asociacion entre consultas y horas de estudio la cual es positiva y moderada. Esto demuestra que a mayor cantidad de horas de estudio hay mayor cantidad de consultas
+Se comprobó la asociación entre consultas y horas de estudio la cual es positiva y moderada. Esto demuestra que a mayor cantidad de horas de estudio hay mayor cantidad de consultas
 
 ### Conclusión del Objetivo 3
 
@@ -927,7 +921,7 @@ Se evidencia que el curso influye en el uso que se le da a la IA. El estudiante 
 
 ### Conclusión del Objetivo 4
 
-Sintetizando, se evidencia una relacion inversa y leve entre las horas de sueño y la comprension. Este comportamiento se puede observar mejor en la media de las categorias intermedias (Moderado, Alto) aunque pierde consistencia ya en los extremos debido a la cantidad de datos que las conforman
+Sintetizando, se evidencia una relación inversa y leve entre las horas de sueño y la comprensión. Este comportamiento se puede observar mejor en la media de las categorías intermedias (Moderado, Alto) aunque pierde consistencia ya en los extremos debido a la cantidad de datos que las conforman
 
 ### Conclusión general del estudio
 
