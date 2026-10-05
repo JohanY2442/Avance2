@@ -13,7 +13,7 @@ format:
 
 # 1. Introducción
 
-Actualmente, muchos estudiantes usan la inteligencia artificial para realizar sus actividades académicas, ya sea para resumir información, estudiar para exámenes, etcétera. Por ello, nuestro proyecto buscará analizar cómo el uso de esta herramienta afecta al desempeño académico de los estudiantes. Asimismo, también consideraremos el factor del sueño y su impacto en el rendimiento de los universitarios.
+Actualmente,  muchos estudiantes usan la inteligencia artificial para realizar sus actividades académicas, ya sea para resumir información, estudiar para exámenes, etcétera. Por ello, nuestro proyecto buscará analizar cómo el uso de esta herramienta afecta al desempeño académico de los estudiantes. Asimismo, también consideraremos el factor del sueño y su impacto en el rendimiento de los universitarios.
 
 ## 1.1 Relevancia
 
