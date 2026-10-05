@@ -742,9 +742,29 @@ Con el barplot se puede saber que si bien en la mayoría de registros el estudia
 
 ## 3.2 Análisis univariado: comprension
 
+Ya que comprension es una variable cualitativa ordinal, usamos tablas de frecuencia, porcentajes y un gráfico de barras. No se calcula media ni desviación estándar porque las categorías no son números, pero como tienen orden sí se puede hallar la mediana.
+
+```{r}
+table(DF3$comprension)
+round(prop.table(table(DF3$comprension)) * 100, 2)
+round(cumsum(prop.table(table(DF3$comprension))) * 100, 2)
+```
+
+La moda es Moderado, con 102 de los 182 registros (56.04%), seguida de Alto con 53 registros (29.12%). Muy bajo y Bajo juntos solo llegan al 8.79%.
+
+Con el porcentaje acumulado se ve que la mediana está en Moderado, ya que ahí se pasa el 50% (64.84%). Esto quiere decir que al menos la mitad de los registros tuvo una comprensión moderada o menor, y que el 35.16% tuvo una comprensión alta o muy alta.
 
 ### Gráfico
 
+```{r}
+barplot(table(DF3$comprension),
+        main = "Nivel de comprensión",
+        xlab = "Comprensión",
+        ylab = "Frecuencia",
+        col = "lightgray")
+```
+
+En el gráfico se ve que la mayoría de respuestas están en Moderado y Alto, y muy pocos estudiantes tuvieron una comprensión baja o muy baja.
 
 ## 3.3 Análisis univariado: sueno
 
@@ -813,6 +833,44 @@ ggplot(DF3, aes(x = consultas, y = estudio)) +
 
 
 ### Objetivo 3: VARIABLE_E vs. VARIABLE_F
+
+### Objetivo 3a: curso vs. uso
+
+Como hay muchos cursos distintos, nos quedamos solo con los 4 cursos más consultados (CC1105, CS2031, CC2101 y CS2013) y los 4 usos más frecuentes. También quitamos los días en que no se usó IA, y pasamos curso a mayúsculas con toupper() porque algunos códigos estaban escritos en minúscula. Como curso y uso son nominales, se usan frecuencias y porcentajes por curso, y el gráfico de barras agrupadas y el de mosaico para comparar.
+
+```{r}
+DFC <- DF3[DF3$uso_ia == TRUE, ]
+DFC$curso <- toupper(DFC$curso)
+DFC$uso <- as.character(DFC$uso)
+DFC <- DFC[DFC$curso %in% c("CC1105", "CS2031", "CC2101", "CS2013"), ]
+DFC <- DFC[DFC$uso %in% c("Resolver ejercicios", "Resumir", "Programar", "Redactar"), ]
+nrow(DFC)
+```
+
+```{r}
+tabla <- table(DFC$curso, DFC$uso)
+tabla
+round(prop.table(tabla, 1) * 100, 2)
+```
+
+```{r}
+barplot(t(tabla),
+        beside = TRUE,
+        legend.text = TRUE,
+        main = "Uso de la IA según el curso",
+        xlab = "Curso",s
+        ylab = "Frecuencia")
+```
+
+```{r}
+mosaicplot(tabla,
+           main = "Curso vs. uso de la IA",
+           color = TRUE)
+```
+
+Nos quedamos con 75 registros. En CS2031 la IA se usó más para programar (61.11%) y ninguna vez para resolver ejercicios, mientras que en CC2101 se usó más para resolver ejercicios (64.29%). En CS2013 lo más común fue resumir (50%), y en CC1105 programar y resolver ejercicios tuvieron el mismo porcentaje (38.71%). Redactar casi no aparece en ningún curso.
+
+Con esto se puede decir que el uso que se le da a la IA cambia según el curso.
 
 ### Objetivo 3b: uso vs. tareas
 
