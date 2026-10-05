@@ -109,7 +109,7 @@ Se utilizará un muestreo sistematico por conveniencia, estructurado bajo un dis
 
 ## 2.3 Recolección de datos
 
-Se diseñarán 3 forms (Google Forms) diferentes. Uno será para los datos demográficos (solo se rellenará una vez por estudiante), otro para el diario (se rellenará una vez por día) y otro para los exámenes (se rellenará una vez por cada examen tomado). Se espera idealmente un tamaño de muestra de 1800 para la tabla diaria y un tamaño de muestra de 45 para la tabla demográfica. En cuanto a la tabla de exámenes, no hay un estimado de cuántas muestras esperar.
+Se diseñarán 3 forms (Google Forms) diferentes. Uno será para los datos demográficos (solo se rellenará una vez por estudiante), otro para el diario (se rellenará una vez por día) y otro para los exámenes (se rellenará una vez por cada examen tomado).
 
 ## 2.4 Variables
 
@@ -194,9 +194,6 @@ Realizamos un inner join para relacionar `email` con el grupo correspondiente
 ```{r}
 DFL <- inner_join(DFL, DFAuxiliar, by = "email")
 ```
-
-Comprobamos rápidamente que el inner join se haya hecho exitosamente
-
 ```{r}
 head(DFL[c("hora", "email", "Grupo")])
 ```
@@ -211,57 +208,41 @@ sapply(DFL, class)
 
 ### Paso 1: Radiografía de la base
 
-<!-- Detectar valores faltantes (NA), cantidad de ceros y cardinalidad de cada variable. -->
-
-Cantidad de valores faltantes (NA) por columna:
+Cantidad de NA por columna:
 
 ```{r}
 colSums(is.na(DFL))
 ```
 
-Porcentaje de valores faltantes (NA) por columna:
+Porcentaje de NA por columna:
 
 ```{r}
 round(colSums(is.na(DFL)) / nrow(DFL) * 100, 2)
 ```
 
-En este momento podemos ver que hay 2 valores faltantes en el dataframe, donde uno pertenece a `curso` y el otro a `uso`. Esto es raro si consideramos que el formulario original tenía todas las preguntas marcadas como obligatorias.
+Se puede ver que hay 2 valores faltantes en el dataframe. Esto es raro considerando que el formulario original tiene todas las preguntas marcadas como obligatorias.
 
 #### Análisis de ceros
-
-Procedemos a analizar la variable `consultas`, la cual representa la cantidad de consultas realizadas a la IA en un determinado día.
 
 ```{r}
 sum(DFL$consultas == 0, na.rm = TRUE)
 ```
-
-En este caso, sería lógico pensar inicialmente que en los tantos días ya transcurridos han habido a lo mucho 16 personas que no han usa la IA un día entero.
-
-Ahora procedemos con la variable `tareas`, la cual representa la cantidad de tareas que la IA ha ayudado a resolver más rápidamente.
+Al analizar la variable `consultas` (cantidad de consultas realizadas a la IA durante un día), se puede ver que en los tantos días ya transcurridos han habido a lo mucho 16 personas que no han usa la IA un día entero.
 
 ```{r}
 sum(DFL$tareas == 0, na.rm = TRUE)
 ```
-
-Se podría razonar a primera vista que han habido a lo mucho 39 personas a las cuales la IA no les ha ayudado a resolver ni una sola tarea en un cierto día. Esto podría deberse a que la persona no usó IA ese día (conexión con el análisis anterior) o no consiguió los resultados que esperaba en la respuesta de la IA.
-
-Ahora analizamos la variable `estudio` (Horas efectivas de estudio en un día)
+En la variable `tareas` (cantidad de tareas que la IA ha ayudado a resolver más rápidamente) se nota que han habido a lo mucho 39 personas a las cuales la IA no les ha ayudado a resolver ni una sola tarea en un cierto día.
 
 ```{r}
 sum(DFL$estudio == 0, na.rm = TRUE)
 ```
-
-Considerando este dato aisladamente, no sería descabellado pensar que han habido a lo mucho 13 estudiantes que no han estudiado durante un día entero. Tal vez son alumnos de primer año.
-
-Pasemos con la variable `sueno`, la cual representa la cantidad de horas de sueño de la noche anterior al día del registro en el formulario
+En la variable `estudio` (Horas efectivas de estudio en un día) han habido a lo mucho 13 estudiantes que no han estudiado durante un día entero.
 
 ```{r}
 sum(DFL$sueno == 0, na.rm = TRUE)
 ```
-
-Se podría interpretar este dato argumentando que aún no han habido estudiantes que se han pasado despiertos desde la noche hasta la mañana del día siguiente.
-
-<!-- TODO: Interpretar si los ceros son respuestas válidas o posibles errores. -->
+En la variable `sueno` (cantidad de horas de sueño de la noche anterior al día del registro en el formulario) se ve que aún no han habido estudiantes que se han pasado despiertos desde la noche hasta la mañana del día siguiente.
 
 #### Análisis de cardinalidad
 
@@ -269,57 +250,49 @@ Se podría interpretar este dato argumentando que aún no han habido estudiantes
 length(unique(DFL$comprension))
 unique(DFL$comprension)
 ```
-
-Considerando que la variable `comprension` es una categórica ordinal de 5 niveles, es completamente normal que con el tiempo que ya ha transcurrido, haya tomado cada uno de los 5 valores por lo menos una vez.
+La variable categórica ordinal de 5 niveles `comprension` ya ha tomado cada uno de los 5 valores por lo menos una vez.
 
 ```{r}
 length(unique(DFL$sueno))
 unique(DFL$sueno)
 ```
-
-En cuanto a la variable `sueno`, se puede notar que ha tomado unos pocos valores considerando que se trata de una numérica continua. Esto podría deberse a la discretización de la variable y al hecho de que el rango de valores admisibles está tan solo en el intervalo \[0, 24\]
+La variable `sueno` ha tomado pocos valores debido a la discretización de la variable y al hecho de que el rango de valores admisibles está tan solo en el intervalo \[0, 24\]
 
 ```{r}
 length(unique(DFL$estudio))
 unique(DFL$estudio)
 ```
-
-Con variable numérica continua `estudio` se puede ver un fenómeno similar: discretización parcial en el intervalo \[0, 24\]. La cantidad de valores que está tomando no es realmente amplia para su naturaleza.
+La variable `estudio` ha tomado pocos valores debido a la discretización de la variable y al hecho de que el rango de valores admisibles está tan solo en el intervalo \[0, 24\]
 
 ```{r}
 length(unique(DFL$curso))
 unique(DFL$curso)
 ```
-
-En el caso de `curso` podemos ya notar una gran variabilidad en pocos datos. Era algo esperado debido a que la UTEC dicta varios cursos y los alumnos de Estadística provienen de varias carreras. También se pueden notar algunas representaciones de nulos tales como `-` o `ninguno`. Además, se puede ver que se han incluido cursos que no pertenecen a la universidad como el curso `Ingles fuera de la universidad`.
+En el caso de `curso`, esta ya presenta una gran variabilidad debido a que la UTEC dicta varios cursos y los alumnos de Estadística provienen de varias carreras.
 
 ```{r}
 length(unique(DFL$tareas))
 unique(DFL$tareas)
 ```
-
-En cuanto a la variable discreta `tareas`, se puede ver que toma una cantidad reducida de valores encerrados en el intervalo \[0, 15\], lo cual tiene sentido si consideramos la complejidad de las tareas universitarias y el corto tiempo libre que los estudiantes tienen para realizar las tareas, estén usando IA o no.
+En cuanto a la variable discreta `tareas`, ha tomado una cantidad reducida de valores encerrados en el intervalo \[0, 15\].
 
 ```{r}
 length(unique(DFL$satisfaccion))
 unique(DFL$satisfaccion)
 ```
-
-En el caso de la categórica ordinal `satisfaccion`, esta presentaba una escala con 5 valores posibles, por lo que es totalmente normal que haya tomado por lo menos uno de cada uno de los 5 valores.
+En el caso de la categórica ordinal `satisfaccion`, esta ya ha tomado cada uno de sus 5 valores posibles.
 
 ```{r}
 length(unique(DFL$uso))
 unique(DFL$uso)
 ```
-
-Hablando sobre la variable categórica nominal `uso` (la cual refleja el principal uso que se le dio a la IA en un cierto día), se puede ver que ya ha tomado varios valores, lo cual era de esperarse debido a su naturaleza. También se puede notar que hay distintos valores que representan un uso nulo de la IA.
+La variable categórica nominal `uso` (principal uso que se le dio a la IA en un cierto día) también presenta gran variabilidad.
 
 ```{r}
 length(unique(DFL$consultas))
 unique(DFL$consultas)
 ```
-
-En cuanto a la variable numérica discreta `consultas`, se puede ver la gran variabilidad que tiene en sus valores. Aunque habrá que ser cautelosos puesto que valores como el 68 dejan en duda si de verdad han sido llenados seriamente.
+En cuanto a la variable discreta `consultas`, se puede ver la gran variabilidad que tiene en sus valores.
 
 ### Paso 2: Normalización
 
@@ -732,17 +705,17 @@ boxplot(DF3$consultas)
 quantile(DF3$consultas, 0.5, na.rm = T, type = 3, )
 quantile(DF3$consultas, 0.75, na.rm = T, type = 3, )
 ```
-Se puede apreciar con la variable `consultas` que, en al menos la mitad de los registros, el estudiante hace 6 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta entre los estudiantes de UTEC. Esto se ve reforzado al notar que, en por lo menos un cuarto de los registros, los estudiante han hecho 21 o más consultas diarias a la IA.
+Se puede ver que en al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos un cuarto de los registros, los estudiante han hecho 25 o más consultas diarias a la IA.
 
 ```{r}
 barplot(table(DF3$consultas))
 ```
-Con el barplot se puede saber que si bien en la mayoría de registros el estudiante no hace un uso intensivo de la IA, este uso sí es constante en el tiempo.
+En el barplot se ve que si bien en la mayoría de registros el estudiante no hace un uso intensivo de la IA, este uso sí es constante en el tiempo.
 
 
 ## 3.2 Análisis univariado: comprension
 
-Ya que comprension es una variable cualitativa ordinal, usamos tablas de frecuencia, porcentajes y un gráfico de barras. No se calcula media ni desviación estándar porque las categorías no son números, pero como tienen orden sí se puede hallar la mediana.
+Ya que comprensión es una variable cualitativa ordinal, usamos tablas de frecuencia, porcentajes y un gráfico de barras. No se calcula media ni desviación estándar porque las categorías no son números, pero como tienen orden sí se puede hallar la mediana.
 
 ```{r}
 table(DF3$comprension)
@@ -801,7 +774,7 @@ El coeficiente de variación es `0.26`  por lo que tanto la media como la median
 ```{r}
 boxplot(consultas ~ satisfaccion, data = DF3)
 ```
-Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se puede notar un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción. Esto nos indica que podría haber una relación importante entre cuántas consultas se ha hecho a la IA y cuán satisfecho se está con el estudio de ese día.
+Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se puede notar un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción, donde se ve una disminución de la mediana). Esto nos indica que podría haber una relación importante entre cuántas consultas se ha hecho a la IA y cuán satisfecho se está con el estudio de ese día.
 Una explicación podría ser que la IA usada como herramienta de estudio ayuda al universitario en su proceso de aprendizaje, incrementando la satisfacción percibida por el estudiante conforme más consultas este hace a la IA para prepararse académicamente.
 
 ```{r}
@@ -809,15 +782,15 @@ quantile(DF3$consultas[DF3$satisfaccion == 3], 0.3, na.rm = T, type = 3)
 quantile(DF3$consultas[DF3$satisfaccion == 4], 0.3, na.rm = T, type = 3)
 quantile(DF3$consultas[DF3$satisfaccion == 5], 0.3, na.rm = T, type = 3)
 ```
-Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 5 o más consultas a la IA diarias.
+Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 5 o más consultas a la IA por día.
 
 
-### Objetivo 2: VARIABLE_C vs. VARIABLE_D
+### Objetivo 2: consultas vs. estudio
 
 ```{r}
 cor.test(DF3$consultas,DF3$estudio,method="spearman")
 ```
-Mediante los valores que se consigue de cor.test con el valor de p aprox 0.433 nos indica que existe una asociacion positiva y moderada y el p-value < 0.001 ayuda a saber que esta relacion no es producto del azar 
+Mediante los valores que se consigue de cor.test con el valor de p(rho) aprox 0.433 nos indica que existe una asociación positiva y moderada y el p-value < 0.001 ayuda a saber que esta relación no es producto del azar 
 
 Respecto a las advertencias se debe a la presencia de empates
 
@@ -832,7 +805,7 @@ ggplot(DF3, aes(x = consultas, y = estudio)) +
 ```
 
 
-### Objetivo 3: VARIABLE_E vs. VARIABLE_F
+### Objetivo 3:
 
 ### Objetivo 3a: curso vs. uso
 
@@ -858,7 +831,7 @@ barplot(t(tabla),
         beside = TRUE,
         legend.text = TRUE,
         main = "Uso de la IA según el curso",
-        xlab = "Curso",s
+        xlab = "Curso",
         ylab = "Frecuencia")
 ```
 
@@ -919,7 +892,7 @@ Revisando los datos, se aprecia que el 100% de quienes usan IA para Redactar rep
 Además se destaca que en donde más se utiliza la IA, es en Resolver ejercicios y Resumir, lo que refleja un impacto significativo por la gran cantidad de registros. Por otro lado, aunque Redactar tiene un 100% de éxito reportando tiempo ahorrado, al ser la categoría con menos consultas su impacto global en el grupo termina siendo menor.
 
 
-### Objetivo 4: VARIABLE_E vs. VARIABLE_F
+### Objetivo 4: comprension vs. sueno
 
 
 ```{r}
@@ -940,16 +913,18 @@ DF3%>%group_by(comprension)%>% summarise(n=n(),
                                          )
 ```
 
-Los quartiles separados con respecto a las categorias en el 25% nos muestra que las 3 categorias centrales tienen el mismo valor y despues en el 50% podemos ver que en Muy bajo teniendo el valor mas alto de 8 horas ademas de que en el 50% central se aprecia que en las 3 categorias centrales (Bajo, Moderado, Alto) las horas de sueño varian entre 6 a 8. 
+Los cuartiles separados con respecto a las categorías en el 25% nos muestra que las 3 categorías centrales tienen el mismo valor y después en el 50% podemos ver que en Muy bajo teniendo el valor mas alto de 8 horas ademas de que en el 50% central se aprecia que en las 3 categorías centrales (Bajo, Moderado, Alto) las horas de sueño varían entre 6 a 8. 
 
-Y mediante el CV que es menor a 0.3 que garantiza homogeneidad llegamos a la conclusion que la media es la mas representativa pero solo en Moderado y Alto debido a que tienen una mayor cantidad de datos. Teniendo en cuenta esto 
+Y mediante el CV que es menor a 0.3 que garantiza homogeneidad llegamos a la conclusión de que la media es la mas representativa pero solo en Moderado y Alto debido a que tienen una mayor cantidad de datos. Teniendo en cuenta esto 
  
-En conclusion se puede apreciar una disminucion leve entre la media de Moderado hacia Alto y en las categorias restantes podemos ver una mayor variabilidad correspondiente a Muy bajo ya que varia de 6.375 hasta 8.875 y demostrando que hay una ligera disminucion con respecto al sueño al pasar entre categorias
+En conclusión, se puede apreciar una disminución leve entre la media de Moderado hacia Alto y en las categorías restantes podemos ver una mayor variabilidad correspondiente a Muy bajo ya que varia de 6.375 hasta 8.875 y demostrando que hay una ligera disminución con respecto al sueño al pasar entre categorías
 # 4. Conclusiones
 
 ### Conclusión del Objetivo 1
 
-<!-- TODO -->
+Como se ha mencionado anteriormente, existe una relación positiva entre el número de consultas a la IA y el grado de satisfacción en el intervalo [1 : 4]. Se ha propuesto la explicación de que esta relación se podría deber a que un mayor número de consultas ayudan al estudiante a comprender mejor los temas que estudia. Esto derivaría en un mayor grado de satisfacción con el avance académico. Para el grado de satisfacción 5, si bien no sigue la tendencia previamente descrita, aún tiene una relación con la variable `consultas` pues se sabe que al menos el 70% de sus registros reportan por lo menos 5 consultas a la IA por día.
+
+Cabe aclarar que la propuesta de explicación presentada, la cual sigue un formato causa - consecuencia, es tan solo una hipótesis pues la existencia de una relación no implica causalidad.
 
 ### Conclusión del Objetivo 2
 
