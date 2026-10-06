@@ -776,8 +776,7 @@ Se puede notar que al menos el 70% de los registros de cada categoría de satisf
 ```{r}
 cor.test(DF3$consultas,DF3$estudio,method="spearman")
 ```
-Se uso el coeficiente de correlacion de Spearman debido a que resiste mejor la presencia de outliers el cual fue de 0.433 lo que confirma una asociacion positiva y moderada, ademas de que con el p-value<0.001 podemos asegurar significancia estadistica ya que indica que no es resultado de azar. En conclusion hay una tendencia de que a mayor cantidad de horas de estudio habra mas  consultas que se realizaron
-
+Se usó el coeficiente de correlación de Spearman debido a que resiste mejor la presencia de outliers, el cual fue de 0.433, lo que confirma una asociación positiva y moderada, además de que con el p-value < 0.001 podemos asegurar significancia estadística, ya que indica que no es resultado de azar. En conclusión, hay una tendencia de que a mayor cantidad de horas de estudio habrá más consultas que se realizaron.
 ```{r}
 ggplot(DF3, aes(x = consultas, y = estudio)) +
   geom_point(color = "navy", size = 2.5) +
@@ -895,9 +894,9 @@ DF3%>%group_by(comprension)%>% summarise(n=n(),
                                          )
 ```
 
-El 25% (Q1) en las 3 categorias intermedias tienen el mismo valor, mientras que en el 50% se alcanza el valor mas alto de 8 horas que pertenece a Muy bajo y el 50% central en las 3 categorias intermedias (Bajo, Moderado, Alto) las horas de sueño varian de 6 a 8. 
+l 25% (Q1) en las 3 categorías intermedias tiene el mismo valor, mientras que en el 50% se alcanza el valor más alto de 8 horas que pertenece a Muy bajo y, en el 50% central en las 3 categorías intermedias (Bajo, Moderado, Alto), las horas de sueño varían de 6 a 8. 
 
-Un CV menor a 0.3 garantiza la homogeneidad, por lo que concluimos que la media es mas representativa pero solo en Moderado y Alto por tener una mayor cantidad de datos. Por ello, se puede afirmar que hay una relación inversa donde a mayor comprensión de actividades las horas de sueño se reducen levemente
+Un CV menor a 0.3 garantiza la homogeneidad, por lo que concluimos que la media es más representativa, pero solo en Moderado y Alto por tener una mayor cantidad de datos. Por ello, se puede afirmar que hay una relación inversa donde, a mayor comprensión de actividades, las horas de sueño se reducen levemente.
 # 4. Conclusiones
 
 ### Conclusión del Objetivo 1
@@ -908,7 +907,7 @@ Cabe aclarar que la propuesta de explicación presentada, la cual sigue un forma
 
 ### Conclusión del Objetivo 2
 
-Se comprobó la asociación entre consultas y horas de estudio la cual es positiva y moderada. Esto demuestra que a mayor cantidad de horas de estudio hay mayor cantidad de consultas
+Se comprobó la asociación entre consultas y horas de estudio, la cual es positiva y moderada. Esto demuestra que a mayor cantidad de horas de estudio hay mayor cantidad de consultas.
 
 ### Conclusión del Objetivo 3
 
@@ -916,8 +915,7 @@ Se evidencia que el curso influye en el uso que se le da a la IA. El estudiante 
 
 ### Conclusión del Objetivo 4
 
-Sintetizando, se evidencia una relación inversa y leve entre las horas de sueño y la comprensión. Este comportamiento se puede observar mejor en la media de las categorías intermedias (Moderado, Alto) aunque pierde consistencia ya en los extremos debido a la cantidad de datos que las conforman
-
+Sintetizando, se evidencia una relación inversa y leve entre las horas de sueño y la comprensión. Este comportamiento se puede observar mejor en la media de las categorías intermedias (Moderado, Alto), aunque pierde consistencia ya en los extremos debido a la cantidad de datos que las conforman.
 ### Conclusión general del estudio
 
 Después de limpiar los datos, vimos que los estudiantes de Estadística sección 1 usan la IA casi todos los días y para cosas distintas según el curso. Los que hacen más consultas suelen estudiar más horas y sentirse más satisfechos con su avance. En cambio, las horas de sueño casi no cambian según el nivel de comprensión. Esto no prueba que una cosa cause la otra, solo que suelen darse juntas.
