@@ -563,6 +563,7 @@ DF3 <- diagnostico %>%
       motivo == "Curso fuera de formato" ~ "Sin código válido",
       TRUE                               ~ curso_orig
     ),
+      curso = factor(curso,levels=unique(curso)),
 
     # Cuantitativas continuas
     estudio = as.numeric(estudio),
@@ -916,6 +917,7 @@ Se evidencia que el curso influye en el uso que se le da a la IA. El estudiante 
 ### Conclusión del Objetivo 4
 
 Sintetizando, se evidencia una relación inversa y leve entre las horas de sueño y la comprensión. Este comportamiento se puede observar mejor en la media de las categorías intermedias (Moderado, Alto), aunque pierde consistencia ya en los extremos debido a la cantidad de datos que las conforman.
+
 ### Conclusión general del estudio
 
 Después de limpiar los datos, vimos que los estudiantes de Estadística sección 1 usan la IA casi todos los días y para cosas distintas según el curso. Los que hacen más consultas suelen estudiar más horas y sentirse más satisfechos con su avance. En cambio, las horas de sueño casi no cambian según el nivel de comprensión. Esto no prueba que una cosa cause la otra, solo que suelen darse juntas.
