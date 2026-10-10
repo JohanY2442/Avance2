@@ -216,29 +216,29 @@ Porcentaje de NA por columna:
 round(colSums(is.na(DFL)) / nrow(DFL) * 100, 2)
 ```
 
-Se puede ver que hay 2 valores faltantes en el dataframe. Esto es raro considerando que el formulario original tiene todas las preguntas marcadas como obligatorias.
+Se puede ver que hay 4 valores faltantes en el dataframe. Esto es raro considerando que el formulario original tiene todas las preguntas marcadas como obligatorias.
 
 #### Análisis de ceros
 
 ```{r}
 sum(DFL$consultas == 0, na.rm = TRUE)
 ```
-Al analizar la variable `consultas` (cantidad de consultas realizadas a la IA durante un día), se puede ver que en los tantos días ya transcurridos han habido a lo mucho 16 personas que no han usa la IA un día entero.
+Al analizar la variable `consultas` (cantidad de consultas realizadas a la IA durante un día), se puede ver que en los tantos días ya transcurridos han habido a lo mucho 26 personas que no han usa la IA un día entero.
 
 ```{r}
 sum(DFL$tareas == 0, na.rm = TRUE)
 ```
-En la variable `tareas` (cantidad de tareas que la IA ha ayudado a resolver más rápidamente) se nota que han habido a lo mucho 39 personas a las cuales la IA no les ha ayudado a resolver ni una sola tarea en un cierto día.
+En la variable `tareas` (cantidad de tareas que la IA ha ayudado a resolver más rápidamente) se nota que han habido a lo mucho 70 personas a las cuales la IA no les ha ayudado a resolver ni una sola tarea en un cierto día.
 
 ```{r}
 sum(DFL$estudio == 0, na.rm = TRUE)
 ```
-En la variable `estudio` (Horas efectivas de estudio en un día) han habido a lo mucho 13 estudiantes que no han estudiado durante un día entero.
+En la variable `estudio` (Horas efectivas de estudio en un día) han habido a lo mucho 21 estudiantes que no han estudiado durante un día entero.
 
 ```{r}
 sum(DFL$sueno == 0, na.rm = TRUE)
 ```
-En la variable `sueno` (cantidad de horas de sueño de la noche anterior al día del registro en el formulario) se ve que aún no han habido estudiantes que se han pasado despiertos desde la noche hasta la mañana del día siguiente.
+En la variable `sueno` (cantidad de horas de sueño de la noche anterior al día del registro en el formulario) se ve que ya han habido 3 estudiantes que se han pasado despiertos desde la noche hasta la mañana del día siguiente.
 
 #### Análisis de cardinalidad
 
@@ -252,13 +252,13 @@ La variable categórica ordinal de 5 niveles `comprension` ya ha tomado cada uno
 length(unique(DFL$sueno))
 unique(DFL$sueno)
 ```
-La variable `sueno` ha tomado pocos valores debido a la discretización de la variable y al hecho de que el rango de valores admisibles está confinado en el intervalo \[0, 24\]
+La variable `sueno` ha tomado varios valores a pesar de la discretización parcial de la variable y al hecho de que \[0, 24\] es el rango de valores admisibles.
 
 ```{r}
 length(unique(DFL$estudio))
 unique(DFL$estudio)
 ```
-La variable `estudio` ha tomado pocos valores debido a la discretización de la variable y al hecho de que el rango de valores admisibles está confinado en el intervalo \[0, 24\]
+La variable `estudio` ha tomado varios valores a pesar de la discretización parcial de la variable y al hecho de que \[0, 24\] es el rango de valores admisibles.
 
 ```{r}
 length(unique(DFL$curso))
@@ -270,19 +270,19 @@ En el caso de `curso`, esta ya presenta una gran variabilidad debido a que la UT
 length(unique(DFL$tareas))
 unique(DFL$tareas)
 ```
-En cuanto a la variable discreta `tareas`, ha tomado una cantidad reducida de valores encerrados en el intervalo \[0, 15\].
+La variable discreta `tareas` ha tomado una cantidad reducida de valores encerrados en el intervalo \[0, 15\].
 
 ```{r}
 length(unique(DFL$satisfaccion))
 unique(DFL$satisfaccion)
 ```
-En el caso de la categórica ordinal `satisfaccion`, esta ya ha tomado cada uno de sus 5 valores posibles.
+La categórica ordinal `satisfaccion` ya ha tomado cada uno de sus 5 valores posibles.
 
 ```{r}
 length(unique(DFL$uso))
 unique(DFL$uso)
 ```
-La variable categórica nominal `uso` (principal uso que se le dio a la IA en un cierto día) también presenta gran variabilidad.
+La variable categórica `uso` (principal uso que se le dio a la IA en un cierto día) también presenta gran variabilidad gracias a su naturaleza nominal.
 
 ```{r}
 length(unique(DFL$consultas))
@@ -690,16 +690,21 @@ En total, se conservaron 182 observaciones (78.45%). La decisión más important
 ## 3.1 Análisis univariado: consultas
 
 ```{r}
-boxplot(DF3$consultas)
+boxplot(DF3$consultas,
+        main = "Boxplot - Número de consultas a la IA",
+        ylab = "Cantidad de consultas")
 ```
 ```{r}
 quantile(DF3$consultas, 0.5, na.rm = T, type = 3, )
 quantile(DF3$consultas, 0.75, na.rm = T, type = 3, )
 ```
-Se puede ver que en al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos un cuarto de los registros, los estudiante han hecho 25 o más consultas diarias a la IA.
+Se puede ver que en al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos un cuarto de los registros, los estudiante han hecho 22 o más consultas diarias a la IA.
 
 ```{r}
-barplot(table(DF3$consultas))
+barplot(table(DF3$consultas),
+        main = "Diagrama de barras - Número de consultas a la IA",
+        xlab = "Cantidad de consultas",
+        ylab = "Frecuencia de cada cantidad")
 ```
 En el barplot se ve que si bien en la mayoría de registros el estudiante no hace un uso intensivo de la IA, este uso sí es constante en el tiempo.
 
@@ -759,10 +764,12 @@ El coeficiente de variación es `0.26`  por lo que tanto la media como la median
 ### Objetivo 1: consultas vs. satisfaccion
 
 ```{r}
-boxplot(consultas ~ satisfaccion, data = DF3)
+boxplot(consultas ~ satisfaccion, data = DF3,
+        main = "Nivel de satisfacción vs Número de consultas",
+        xlab = "Nivel de satisfacción",
+        ylab = "Cantidad de consultas")
 ```
 Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se puede notar un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción, donde se ve una disminución de la mediana). Esto nos indica que podría haber una relación importante entre cuántas consultas se ha hecho a la IA y cuán satisfecho se está con el estudio de ese día.
-Una explicación podría ser que la IA usada como herramienta de estudio ayuda al universitario en su proceso de aprendizaje, incrementando la satisfacción percibida por el estudiante conforme más consultas este hace a la IA para prepararse académicamente.
 
 ```{r}
 quantile(DF3$consultas[DF3$satisfaccion == 3], 0.3, na.rm = T, type = 3)
@@ -902,7 +909,7 @@ Un CV menor a 0.3 garantiza la homogeneidad, por lo que concluimos que la media 
 
 ### Conclusión del Objetivo 1
 
-Como se ha mencionado anteriormente, existe una relación positiva entre el número de consultas a la IA y el grado de satisfacción en el intervalo [1 : 4]. Se ha propuesto la explicación de que esta relación se podría deber a que un mayor número de consultas ayudan al estudiante a comprender mejor los temas que estudia. Esto derivaría en un mayor grado de satisfacción con el avance académico. Para el grado de satisfacción 5, si bien no sigue la tendencia previamente descrita, aún tiene una relación con la variable `consultas` pues se sabe que al menos el 70% de sus registros reportan por lo menos 5 consultas a la IA por día.
+Como se ha mencionado anteriormente, existe una relación positiva entre el número de consultas a la IA y el grado de satisfacción en el intervalo [1 : 4]. Se propone la explicación de que esta relación se podría deber a que un mayor número de consultas ayudan al estudiante a comprender mejor los temas que estudia. Esto derivaría en un mayor grado de satisfacción con el avance académico. Para el grado de satisfacción 5, si bien no sigue esta tendencia, aún tiene una relación con la variable `consultas` pues se sabe que al menos el 70% de sus registros reportan por lo menos 5 consultas a la IA por día.
 
 Cabe aclarar que la propuesta de explicación presentada, la cual sigue un formato causa - consecuencia, es tan solo una hipótesis pues la existencia de una relación no implica causalidad.
 
