@@ -784,7 +784,7 @@ Se puede notar que al menos el 70% de los registros de cada categoría de satisf
 ```{r}
 cor.test(DF3$consultas,DF3$estudio,method="spearman")
 ```
-Se usó el coeficiente de correlación de Spearman debido a que resiste mejor la presencia de outliers, el cual fue de 0.433, lo que confirma una asociación positiva y moderada, además de que con el p-value < 0.001 podemos asegurar significancia estadística, ya que indica que no es resultado de azar. En conclusión, hay una tendencia de que a mayor cantidad de horas de estudio habrá más consultas que se realizaron.
+Se usó el coeficiente de correlación de Spearman debido a que resiste mejor la presencia de outliers, el cual fue de 0.481, lo que confirma una asociación positiva y moderada, además de que con el p-value < 0.001 podemos asegurar significancia estadística, ya que indica que no es resultado de azar. En conclusión, hay una tendencia de que a mayor cantidad de horas de estudio habrá más consultas que se realizaron.
 ```{r}
 ggplot(DF3, aes(x = consultas, y = estudio)) +
   geom_point(color = "navy", size = 2.5) +
@@ -902,7 +902,7 @@ DF3%>%group_by(comprension)%>% summarise(n=n(),
                                          )
 ```
 
-l 25% (Q1) en las 3 categorías intermedias tiene el mismo valor, mientras que en el 50% se alcanza el valor más alto de 8 horas que pertenece a Muy bajo y, en el 50% central en las 3 categorías intermedias (Bajo, Moderado, Alto), las horas de sueño varían de 6 a 8. 
+El 25% (Q1) en las 3 categorías intermedias tiene el mismo valor, mientras que en el 50% se mantiene esto, en el 50% central en las 2 categorías intermedias (Moderado, Alto), las horas de sueño varían de 6 a 8. 
 
 Un CV menor a 0.3 garantiza la homogeneidad, por lo que concluimos que la media es más representativa, pero solo en Moderado y Alto por tener una mayor cantidad de datos. Por ello, se puede afirmar que hay una relación inversa donde, a mayor comprensión de actividades, las horas de sueño se reducen levemente.
 # 4. Conclusiones
