@@ -479,12 +479,10 @@ nrow(DF2)
 nrow(na.omit(DF2))
 round((1 - nrow(na.omit(DF2)) / nrow(DF2)) * 100, 2)
 ```
-
-La eliminación directa mediante `na.omit` descartaría el 15.93% de la muestra. Para evitarlo, se reconstruyen los criterios desde la base previa (`DFL1`) y se clasifica el origen de cada registro incompleto.
+La eliminación directa mediante `na.omit` descartaría el 14.48% de la muestra. Para evitarlo, se reconstruyen los criterios desde la base previa (`DFL1`) y se clasifica el origen de cada registro incompleto.
 
 ```{r}
-# DF2 sale de DFL1 sin filtrar filas, así que ambas bases están alineadas
-# podemos recuperar de DFL1 los valores que el Paso 3 convirtió a NA.
+# DF2 sale de DFL1 sin filtrar filas, recuperamos de DFL1 los valores que el Paso 3 convirtió a NA
 nrow(DFL1) == nrow(DF2)
 
 diagnostico <- DF2 %>%
@@ -502,6 +500,7 @@ diagnostico <- DF2 %>%
     motivo = case_when(
       !is.na(uso)     ~ "Completo",
       !hubo_actividad ~ "Sin uso de IA",
+      consultas_orig == 0 & is.na(uso_orig) ~ "Sin uso de IA",
       TRUE            ~ "Curso fuera de formato"
     )
   )
@@ -524,9 +523,9 @@ diagnostico %>%
   )
 ```
 
-**Sin uso de IA (13 registros).** El estudiante no usó la herramienta; el valor real del NA es cero.
+**Sin uso de IA (20 registros).** El estudiante no usó la herramienta; el valor real del NA es cero.
 
-**Curso fuera de formato (16 registros).** Sí usaron IA, pero el código del curso es inválido.
+**Curso fuera de formato (22 registros).** Sí usaron IA, pero el código del curso es inválido.
   
 Una política uniforme asignaría `consultas = 0` y `uso = "No usó IA"` a estudiantes con uso intensivo, sesgando las variables centrales de los objetivos 1 y 3. 
 
@@ -550,14 +549,12 @@ DF3 <- diagnostico %>%
     consultas= as.integer(consultas),
     tareas    = if_else(motivo == "Sin uso de IA", 0, tareas_orig),
     tareas= as.integer(tareas),
-
-    # Cualitativa nominal: asignamos una categoría propia
+    # Cualitativa nominal
     uso   = if_else(motivo == "Sin uso de IA", "No usó IA", uso_orig),
     uso = factor(uso,levels=unique(uso)),
     
 
-  # Si solo falló el curso, se conservan sus datos reales
-  # y únicamente el curso queda marcado como inválido
+  # Solo el curso se marca como inválido; el resto de datos se conserva
     curso = case_when(
       motivo == "Sin uso de IA"          ~ "No aplica",
       motivo == "Curso fuera de formato" ~ "Sin código válido",
@@ -569,14 +566,14 @@ DF3 <- diagnostico %>%
     estudio = as.numeric(estudio),
     sueno   = as.numeric(sueno),
 
-    # Ordinal, levels imponen el orden
+    # Ordinal con levels
     comprension = factor(comprension,
                          levels = c("Muy bajo", "Bajo", "Moderado", "Alto", "Muy alto"),
                          ordered = TRUE),
 
     satisfaccion = factor(satisfaccion, levels = 1:5, ordered = TRUE),
 
-    # Identificador: el promedio de un número de grupo no tendría interpretación
+    # Identificador
     Grupo = factor(Grupo)
   ) %>%
 # Se borran las columnas que solo sirvieron para el diagnóstico
@@ -608,7 +605,7 @@ trazabilidad$Retencion <- round(trazabilidad$Observaciones / nrow(DF) * 100, 2)
 trazabilidad
 ```
 
-La base retiene 182 observaciones (78.45%). La pérdida responde exclusivamente a los criterios de la ventana horaria de envío.
+La base retiene 290 observaciones (81.46%). La pérdida corresponde a los criterios de la ventana horaria de envío.
 
 ```{r}
 # Mismo diagnóstico del Paso 1, ahora sobre la base limpia.
@@ -631,7 +628,7 @@ sum(DF3$estudio == 0)
 sum(DF3$sueno == 0)
 ```
 
-La base final no presenta NAs. Los ceros corresponden a días sin uso de IA y a valores reales declarados. Las cualitativas conservan su formato de factor ordenado y nominal.
+La base final no presenta NAs. Los ceros representan días sin IA en `consultas` y `tareas`, jornadas sin estudio en `estudio`, y 0 horas declaradas en `sueno`. Las cualitativas mantienen su formato de factor ordenado y nominal.
 
 ```{r}
 # Verificamos que ninguna numérica se salga de los rangos del codebook.
@@ -658,7 +655,7 @@ DF3 %>%
   filter(n > 1)
 ```
 
-Se detectaron 2 registros duplicados. Al no poder determinar el válido, se documentan para futuras correcciones del instrumento.
+Se detectaron 2 registros duplicados por doble envío en un mismo día; se documentan para corrección del instrumento.
 
 ```{r}
 # Observaciones limpias que aportó cada grupo
@@ -679,11 +676,11 @@ DF3_grupo %>% count(email)
 n_distinct(DF3$email)
 ```
 
-Finalmente, el grupo aportó 44 observaciones limpias (33 de 45 estudiantes). Al ser un estudio longitudinal en curso, el volumen muestral crecerá acumulativamente hasta alcanzar el mínimo requerido (150) para permitir la generalización a la población objetivo.
+Finalmente, nuestro grupo de 5 integrantes aportó 64 observaciones limpias (34 de 45 estudiantes de la sección). Al ser longitudinal, la muestra crecerá hasta el mínimo requerido (150) para permitir la generalización a la población objetivo.
 
 **Conclusión de validación y limpieza**
 
-En total, se conservaron 182 observaciones (78.45%). La decisión más importante fue evitar el `na.omit` para no perder el 15.93% de la muestra, ya que esto habría sesgado el estudio eliminando injustamente a quienes más usaron IA. Al tratar los nulos según su origen, la base quedó sin faltantes, con los formatos correctos en cada columna y lista para analizar. Quedan como limitaciones pendientes revisar 2 registros duplicados y alcanzar el mínimo de 150 observaciones.
+En total, se conservaron 290 observaciones (81.46%). La decisión más importante fue evitar el `na.omit` para no perder el 14.48% de la muestra, evitando sesgar el estudio al descartar muestras válidas. Al tratar los nulos según su origen, la base quedó sin faltantes, con los formatos correctos en cada columna y lista para analizar. Quedan pendientes revisar 2 registros duplicados el mismo día y alcanzar el mínimo de 150 observaciones.
 
 # 3. Análisis descriptivo
 
@@ -732,7 +729,9 @@ Al ser `sueno` una variable cuantitativa continua, se eligieron boxplot e histog
 
 ### Gráfico
 ```{r}
-boxplot(DF3$sueno)
+boxplot(DF3$sueno,
+        main = "Horas de sueño",
+        ylab = "Horas")
 ```
 La variable `sueno` muestra un patrón equilibrado entre los estudiantes de UTEC: la mitad duerme 7 horas o menos, y el 50% central concentra su descanso entre las 6 y 8 horas.
 
@@ -742,6 +741,7 @@ hist(DF3$sueno,
      xlab = "Horas",
      col = "lightgray",
      ylab = "Frecuencia")
+axis(1, at = 0:ceiling(max(DF3$sueno)))
 ```
 
 El histograma confirma ese equilibrio, la mayoría de los estudiantes duerme un número similar de horas, y son pocos los que se alejan bastante del resto.
@@ -752,14 +752,14 @@ round(sd(DF3$sueno),2)
 IQR(DF3$sueno)
 round(sd(DF3$sueno) / mean(DF3$sueno),2) #CV
 ```
-El coeficiente de variación es `0.26`  por lo que tanto la media como la mediana representan bien el sueño de los estudiantes.
+El coeficiente de variación es `0.28`  por lo que tanto la media como la mediana representan bien el sueño de los estudiantes.
 
 ## 3.4 Análisis multivariado (cruces según objetivos)
 
 ### Objetivo 1: consultas vs. satisfaccion
 
 ```{r}
-boxplot(consultas ~ satisfaccion, data = DF3)
+boxplot(consultas ~ satisfaccion, data = DF3) 
 ```
 Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se puede notar un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción, donde se ve una disminución de la mediana). Esto nos indica que podría haber una relación importante entre cuántas consultas se ha hecho a la IA y cuán satisfecho se está con el estudio de ese día.
 Una explicación podría ser que la IA usada como herramienta de estudio ayuda al universitario en su proceso de aprendizaje, incrementando la satisfacción percibida por el estudiante conforme más consultas este hace a la IA para prepararse académicamente.
@@ -849,10 +849,10 @@ DF3 %>%
             main = "Proporción de tareas ahorradas según el uso de IA",
             ylab = "Cantidad de registros",
             xlab = "Uso principal",
-            col = c("steelblue", "gray80"))
+            col = c("snow4", "snow2"))
     legend("topleft",
            legend = c("Sin ahorro", "Con ahorro"),
-           fill = c("steelblue", "gray80"),
+           fill = c("snow4", "snow2"),
            cex = 0.8)
   }
 ```
@@ -866,12 +866,12 @@ DF3 %>%
   group_by(uso_g) %>%
   summarise(
     registros   = n(),
-    ta_ahorrada = round(mean(tareas > 0, na.rm = TRUE) * 100, 1)
+    ta_ahorrada = round(mean(tareas > 0, na.rm = TRUE) * 100,2)
   ) %>%
   rename(Uso = uso_g)
 ```
 
-Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades, existe una relación altamente favorable. El 100% de quienes usaron IA para 'Redactar' reportó ahorro de tiempo, seguidos por 'Resolver ejercicios' (96.5%), 'Resumir' (87%), 'Programar' (82.9%) y 'Otros' (73.3%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios' y 'Resumir', al concentrar la mayor cantidad de registros
+Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades, existe una relación favorable. El 100% de los registros con uso 'Redactar' reportó ahorro de tiempo, seguido por 'Resolver ejercicios' (92.55%), 'Resumir' (80%), 'Programar' (79.03%) y 'Otros' (76.19%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios', 'Resumir' y 'Programar', al concentrar la mayor cantidad de registros.
 
 
 ### Objetivo 4: comprension vs. sueno
@@ -912,7 +912,7 @@ Se comprobó la asociación entre consultas y horas de estudio, la cual es posit
 
 ### Conclusión del Objetivo 3
 
-Se evidencia que el curso influye en el uso que se le da a la IA. El estudiante adapta la herramienta a las exigencias de cada materia. A su vez, el tipo de uso se relaciona con el ahorro de tiempo, que fue más frecuente en las actividades de uso más común. Estos hallazgos son asociaciones y no implican causalidad, pues el ahorro reportado podría depender de otras variables de la rutina del estudiante.
+Se evidencia que el curso influye en el uso que se le da a la IA. El estudiante adapta la herramienta a las exigencias de cada materia. A su vez, el ahorro de tiempo superó el 75% en todos los usos, y el mayor impacto global corresponde a los más frecuentes. Estos hallazgos son asociaciones y no implican causalidad, pues el ahorro reportado podría depender de otras variables de la rutina del estudiante.
 
 ### Conclusión del Objetivo 4
 
