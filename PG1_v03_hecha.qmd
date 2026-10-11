@@ -764,14 +764,10 @@ El coeficiente de variación es `0.28`  por lo que tanto la media como la median
 ### Objetivo 1: consultas vs. satisfaccion
 
 ```{r}
-<<<<<<< HEAD
-boxplot(consultas ~ satisfaccion, data = DF3) 
-=======
 boxplot(consultas ~ satisfaccion, data = DF3,
         main = "Nivel de satisfacción vs Número de consultas",
         xlab = "Nivel de satisfacción",
         ylab = "Cantidad de consultas")
->>>>>>> origin/main
 ```
 Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se puede notar un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción, donde se ve una disminución de la mediana). Esto nos indica que podría haber una relación importante entre cuántas consultas se ha hecho a la IA y cuán satisfecho se está con el estudio de ese día.
 
