@@ -905,6 +905,7 @@ DF3%>%group_by(comprension)%>% summarise(n=n(),
 El 25% (Q1) en las 3 categorías intermedias tiene el mismo valor, mientras que en el 50% se mantiene esto, en el 50% central en las 2 categorías intermedias (Moderado, Alto), las horas de sueño varían de 6 a 8. 
 
 Un CV menor a 0.3 garantiza la homogeneidad, por lo que concluimos que la media es más representativa, pero solo en Moderado y Alto por tener una mayor cantidad de datos. Por ello, se puede afirmar que hay una relación inversa donde, a mayor comprensión de actividades, las horas de sueño se reducen levemente.
+
 # 4. Conclusiones
 
 ### Conclusión del Objetivo 1
