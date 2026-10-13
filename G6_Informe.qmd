@@ -809,7 +809,7 @@ Se puede notar que al menos el 70% de los registros de cada categoría de satisf
 ```{r}
 cor.test(DF3$consultas,DF3$estudio,method="spearman")
 ```
-Se usó el coeficiente de correlación de Spearman debido a que resiste mejor la presencia de outliers, el cual fue de 0.481, lo que confirma una asociación positiva y moderada, además de que con el p-value < 0.001 podemos asegurar significancia estadística, ya que indica que no es resultado de azar. En conclusión, hay una tendencia de que a mayor cantidad de horas de estudio habrá más consultas que se realizaron.
+Se usó el coeficiente de correlación de Spearman debido a que resiste mejor la presencia de outliers, el cual fue de 0.497, lo que confirma una asociación positiva y moderada, además de que con el p-value < 0.001 podemos asegurar significancia estadística, ya que indica que no es resultado de azar. En conclusión, hay una tendencia de que a mayor cantidad de horas de estudio habrá más consultas que se realizaron.
 ```{r}
 ggplot(DF3, aes(x = consultas, y = estudio)) +
   geom_point(color = "navy", size = 2.5) +
@@ -929,9 +929,9 @@ DF3%>%group_by(comprension)%>% summarise(n=n(),
                                          )
 ```
 
-El 25% (Q1) en las 3 categorías intermedias tiene el mismo valor, mientras que en el 50% se mantiene esto, en el 50% central en las 2 categorías intermedias (Moderado, Alto), las horas de sueño varían de 6 a 8. 
+El 25% (Q1) en las 2 categorías intermedias tiene el mismo valor, mientras que en el 50% se mantienen estos, en el 50% central en las 2 categorías intermedias (Moderado, Alto), las horas de sueño varían de 6 a 8. 
 
-El CV es menor a 0.3 en cuatro de los cinco niveles, lo que sugiere homogeneidad y hace representativa a la media, sobre todo en Moderado y Alto por su mayor número de datos. No se observa, sin embargo, ninguna tendencia: las medianas son prácticamente idénticas en los cinco niveles y la media más alta corresponde a Muy alto (7.32 h), no a Muy bajo.
+El CV es menor a 0.3 en tres de los cinco niveles, lo que sugiere homogeneidad y hace representativa a la media, sobre todo en Muy Alto y Alto por su mayor número de datos. No se observa, sin embargo, ninguna tendencia: las medianas son prácticamente idénticas en los cinco niveles y la media más alta corresponde a Bajo (7.54 h).
 
 # Conclusiones
 
