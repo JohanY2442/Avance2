@@ -355,3 +355,82 @@ Marca temporal,¿Cuántas consultas a una IA realizaste hoy?  ,¿Qué nivel de c
 5/10/2026 23:49:38,25,3,Redactar,6,3,1,3,Apuntes propios,2,Moderado,Indiferencia,1,CC1105,2,mathius.quispe@utec.edu.pe
 5/10/2026 23:51:30,4,4,Resolver ejercicios,9,2,1,2,Ninguno,1,Bajo,Alivio,0,-,0,cristobal.aranda@utec.edu.pe
 6/10/2026 0:10:02,0,3,Ninguno,8,1,3,1,Ninguno,0,Muy bajo,No usé IA ese día,0,Ninguno,0,david.jorquiera@utec.edu.pe
+6/10/2026 21:35:51,6,3,Resumir,6,3,2,3,Videos,2,Moderado,Alivio,4,CC1105,3,andre.merino@utec.edu.pe
+6/10/2026 21:49:38,1,5,Programar,7.17,5,0,5,Material del profesor,1.08,Muy alto,Confianza,0,CS2013,2.5,eduardo.vila@utec.edu.pe
+6/10/2026 22:03:24,16,1,Programar,8,4,1,3,Material del profesor,2,Muy alto,Confianza,2,CC1103,3,renzo.rivera.t@utec.edu.pe
+6/10/2026 22:09:39,1,5,Redactar,9,2,0,3,Material del profesor,1,Moderado,Confianza,1,CI2031,1,alejandro.soto@utec.edu.pe
+6/10/2026 22:14:24,7,3,Resolver ejercicios,8,3,1,3,Material del profesor,2,Moderado,Indiferencia,0,CS2031,2,walter.aquino@utec.edu.pe
+6/10/2026 22:29:58,13,4,Resumir,7,3,0,4,Videos,2,Alto,Confianza,1,CC2101,2.3,dervy.pillaca@utec.edu.pe
+6/10/2026 22:39:43,13,5,Resolver ejercicios,7,3,0,4,Videos,1,Alto,Alivio,1,CS2013,1,nicolas.trillo@utec.edu.pe
+6/10/2026 22:51:26,2,3,Resumir,4,4,0,4,Material del profesor,1,Moderado,Confianza,1,PI2102,2,adriana.solorzano@utec.edu.pe
+6/10/2026 23:14:24,4,4,Resumir,6,3,1,3,Videos,0,Moderado,Alivio,1,1114,2,diego.cardenas.q@utec.edu.pe
+6/10/2026 23:15:09,4,4,Resolver ejercicios,7,3,0,3,Material del profesor,0,Moderado,Alivio,0,CC2012,4,bryan.rivera.c@utec.edu.pe
+6/10/2026 23:16:03,1,3,Resolver ejercicios,5,3,1,4,Apuntes propios,4,Moderado,Alivio,1,CC1105,1,cristobal.aranda@utec.edu.pe
+6/10/2026 23:26:36,1,3,Resumir,8,3,0,3,Apuntes propios,1,Moderado,Confianza,1,CC1143,1,alvaro.pacheco@utec.edu.pe
+6/10/2026 23:28:19,3,3,Resumir,7,4,1,3,Apuntes propios,0,Alto,Confianza,3,CS2041,3,miguel.flores.c@utec.edu.pe
+6/10/2026 23:32:12,0,3,Ninguno,9,1,2,1,Ninguno,0,Bajo,No usé IA ese día,0,Ninguno,1,david.jorquiera@utec.edu.pe
+6/10/2026 23:48:56,28,3,Redactar,5,3,1,3,Material del profesor,2,Moderado,Indiferencia,1,CC2101,4,ariana.perez@utec.edu.pe
+7/10/2026 0:00:05,12,4,Resumir,9,2,0,2,Apuntes propios,0,Moderado,Indiferencia,0,cs2031,3,indira.yabar@utec.edu.pe
+7/10/2026 21:03:29,5,4,Resolver ejercicios,8,3,0,3,Material del profesor,1,Moderado,Confianza,1,CI2012,1,alvaro.pacheco@utec.edu.pe
+7/10/2026 21:04:23,0,3,Ninguno,7,1,1,1,Ninguno,0,Muy bajo,No usé IA ese día,0,Ninguno,0,david.jorquiera@utec.edu.pe
+7/10/2026 21:45:33,5,3,Programar,11,4,0,4,Ejercicios resueltos,0,Moderado,Confianza,4,CS6006,4,matias.caceres@utec.edu.pe
+7/10/2026 21:51:05,6,3,Resumir,7,2,0,4,Videos,2,Moderado,Indiferencia,3,CC1103,1,andre.merino@utec.edu.pe
+7/10/2026 22:59:55,4,4,Resumir,7,3,0,4,Apuntes propios,4,Moderado,Alivio,3,1101,4,diego.cardenas.q@utec.edu.pe
+7/10/2026 23:23:11,16,3,Resumir,5,4,0,3,Apuntes propios,0,Moderado,Indiferencia,1,CC2101,5,ariana.perez@utec.edu.pe
+7/10/2026 23:24:48,17,5,Programar,4,1,0,4,Ejercicios resueltos,5,Moderado,Confianza,2,CI3013,2,renzo.rivera.t@utec.edu.pe
+7/10/2026 23:26:33,3,3,Resolver ejercicios,7,3,0,3,Material del profesor,0,Moderado,Alivio,1,CC2012,3,bryan.rivera.c@utec.edu.pe
+7/10/2026 23:33:45,5,4,Resolver ejercicios,8,2,0,2,Apuntes propios,0,Moderado,Confianza,1,CS2013,1,nicolas.trillo@utec.edu.pe
+7/10/2026 23:36:25,11,3,Resolver ejercicios,7,4,0,4,Material del profesor,2.75,Alto,Confianza,0,CC2101,2.83,eduardo.vila@utec.edu.pe
+8/10/2026 12:14:58,12,5,Resumir,8,3,0,3,Apuntes propios,1,Moderado,Alivio,1,CS2013,2,pedro.chavez@utec.edu.pe
+8/10/2026 22:10:35,8,1,Resolver ejercicios,6,3,0,2,Ejercicios resueltos,2,Muy alto,No usé IA ese día,2,CI3013,2,renzo.rivera.t@utec.edu.pe
+8/10/2026 22:18:56,12,4,Resolver ejercicios,8,4,0,4,Material del profesor,1,Alto,Alivio,1,CI2012,2,alvaro.pacheco@utec.edu.pe
+8/10/2026 22:29:16,4,4,Investigar,9,2,0,1,informacion de internet,4.1,Moderado,Indiferencia,0,CS2041,2,indira.yabar@utec.edu.pe
+8/10/2026 22:29:45,7,5,Resolver ejercicios,9,5,0,5,Ejercicios resueltos,0,Muy alto,Alivio,4,CC2101,6,johan.huayta@utec.edu.pe
+8/10/2026 23:02:07,19,4,Programar,7.17,5,0,5,Material del profesor,6,Alto,Frustración,0,CS2013,5.83,eduardo.vila@utec.edu.pe
+8/10/2026 23:02:44,26,3,Programar,6,3,0,3,Videos,0,Moderado,Indiferencia,1,CC1105,5,ariana.perez@utec.edu.pe
+8/10/2026 23:13:05,0,3,Ninguno,14,1,0,1,Ninguno,0,Moderado,No usé IA ese día,0,Ninguno,0,david.jorquiera@utec.edu.pe
+8/10/2026 23:16:51,3,3,Resolver ejercicios,7,4,0,3,Ejercicios resueltos,0,Moderado,Alivio,1,CC2012,3,bryan.rivera.c@utec.edu.pe
+8/10/2026 23:44:27,0,4,Programar,7,4,0,4,Apuntes propios,2,Moderado,Alivio,1,123,1,diego.cardenas.q@utec.edu.pe
+9/10/2026 21:46:54,0,5,Ninguna,8,3,0,3,Apuntes propios,0,Moderado,No usé IA ese día,0,-,1,nicolas.trillo@utec.edu.pe
+9/10/2026 22:24:36,12,4,Resolver ejercicios,6,3,0,4,Ejercicios resueltos,2,Moderado,Alivio,2,Introducción a la mecánica ,2,galileo.huaynaccero@utec.edu.pe
+9/10/2026 22:25:57,3,4,Redactar,6,3,0,3,Videos,2,Moderado,Frustración,2,GI2101,2,marco.corimanya@utec.edu.pe
+9/10/2026 23:07:21,7,4,Resolver ejercicios,7,4,1,4,Ejercicios resueltos,6,Moderado,Alivio,4,110,5,diego.cardenas.q@utec.edu.pe
+9/10/2026 23:18:04,16,4,Programar,7.83,5,0,5,Material del profesor,0,Muy alto,Confianza,0,CS2031,5.33,eduardo.vila@utec.edu.pe
+9/10/2026 23:22:35,3,3,Resolver ejercicios,6,3,0,3,Material del profesor,0,Moderado,Alivio,1,CC2012,2,bryan.rivera.c@utec.edu.pe
+9/10/2026 23:38:43,8,4,Programar,6,4,1,3,Videos,0,Moderado,Indiferencia,1,CS2031,2,dervy.pillaca@utec.edu.pe
+9/10/2026 23:55:47,0,2,Ninguno ,9,1,0,2,Ninguno,0,Muy bajo,No usé IA ese día,0,-,0,cristobal.aranda@utec.edu.pe
+10/10/2026 0:04:24,29,3,Resumir,5,3,0,3,Material del profesor,0,Moderado,Indiferencia,1,CC1122 ,4,ariana.perez@utec.edu.pe
+10/10/2026 21:31:17,5,3,Redactar,6,4,0,3,Material del profesor,5,Alto,Alivio,4,CS6006,4,matias.caceres@utec.edu.pe
+10/10/2026 21:42:43,0,3,Ninguno,6,1,0,1,Ninguno,0,Moderado,No usé IA ese día,0,Ninguno,0,david.jorquiera@utec.edu.pe
+10/10/2026 21:51:51,20,3,Resolver ejercicios,7,3,0,3,Material del profesor,1,Moderado,Alivio,2,CI2012,2,alvaro.pacheco@utec.edu.pe
+10/10/2026 22:31:13,7,5,Programar,7.5,5,0,5,Material del profesor,1.25,Muy alto,Confianza,0,CC1105,3,eduardo.vila@utec.edu.pe
+10/10/2026 22:45:38,8,4,Programar,7,3,0,3,Videos,0,Moderado,Indiferencia,0,CS2041,2,dervy.pillaca@utec.edu.pe
+10/10/2026 23:04:09,35,5,Resumir,0,3,0,3,Resumen de la ia ,2,Moderado,Indiferencia,0,CS2031,4,indira.yabar@utec.edu.pe
+10/10/2026 23:19:32,15,3,Resumir,5,3,0,3,Apuntes propios,0,Moderado,Indiferencia,0,-,4,mathius.quispe@utec.edu.pe
+10/10/2026 23:22:52,1,5,Redactar,6,3,0,5,Material del profesor,2,Alto,Confianza,1,CI2031,1,alejandro.soto@utec.edu.pe
+10/10/2026 23:41:12,15,1,Redactar,10,2,0,1,Videos,1,Bajo,Indiferencia,3,CC103,2,renzo.rivera.t@utec.edu.pe
+10/10/2026 23:47:59,2,5,Investigar,7,1,0,1,No hubo,0,Muy bajo,Alivio,2,0,0,eden.paredes@utec.edu.pe
+11/10/2026 18:10:16,6,4,Resumir,8,3,0,3,Ejercicios resueltos,1,Moderado,Indiferencia,1,CS2041,1,pedro.chavez@utec.edu.pe
+11/10/2026 21:40:17,5,5,Redactar,7,3,0,3,Apuntes propios,4,Bajo,Confianza,1,2102,4,diego.cardenas.q@utec.edu.pe
+11/10/2026 21:47:35,7,4,Buscar informacion,7.5,4,0,5,Material del profesor,2,Muy alto,Confianza,0,PI2102,2,eduardo.vila@utec.edu.pe
+11/10/2026 21:49:08,37,3,Resolver ejercicios,6,3,0,3,Ejercicios resueltos,1,Moderado,Indiferencia,2,CC1122 ,5,ariana.perez@utec.edu.pe
+11/10/2026 21:57:02,3,4,Redactar,10,3,0,3,Material del profesor,2,Alto,Alivio,1,CI2031,3,david.jorquiera@utec.edu.pe
+11/10/2026 21:59:47,2,3,Redactar,7,3,0,3,Material del profesor,2,Alto,Indiferencia,3,CC1105,3,marco.corimanya@utec.edu.pe
+11/10/2026 22:07:46,14,4,Resumir,7,4,0,4,Material del profesor,1,Moderado,Alivio,1,CI2031,2,alvaro.pacheco@utec.edu.pe
+11/10/2026 22:11:39,8,4,Resolver ejercicios,7,3,0,3,Material del profesor,1,Moderado,Confianza,2,CC2012,4,bryan.rivera.c@utec.edu.pe
+11/10/2026 22:20:18,6,3,Programar,9,3,0,4,Videos,2,Moderado,Indiferencia,5,CC1103,1,andre.merino@utec.edu.pe
+11/10/2026 22:27:27,2,4,Resolver ejercicios,6,3,0,3,Material del profesor,1,Moderado,Alivio,2,CI2012,3,alejandro.soto@utec.edu.pe
+11/10/2026 23:04:54,6,4,Programar,7,1,0,2,Videos,3,Moderado,Indiferencia,1,CS2031,1,dervy.pillaca@utec.edu.pe
+11/10/2026 23:12:42,35,3,Resumir,5,3,0,3,Apuntes propios,2,Moderado,Indiferencia,0,CS2031,3,mathius.quispe@utec.edu.pe
+11/10/2026 23:19:16,8,5,Resolver ejercicios,10,3,0,3,IA,1,Moderado,Indiferencia,1,CS2041,1,cristobal.aranda@utec.edu.pe
+11/10/2026 23:23:27,24,3,Resolver ejercicios,5,3,0,3,Ejercicios resueltos,2,Moderado,Confianza,3,CS2031,3,camila.alfaro@utec.edu.pe
+11/10/2026 23:24:10,13,4,Redactar,8,2,0,2,Ejercicios resueltos,3,Bajo,Indiferencia,2,CC1143,1,renzo.rivera.t@utec.edu.pe
+11/10/2026 23:36:41,0,3,No use,5,3,0,3,Material del profesor,2,Moderado,No usé IA ese día,0,0,2,adriana.solorzano@utec.edu.pe
+11/10/2026 23:39:42,1,5,Investigar,9,1,0,1,Nada,0,Muy bajo,Confianza,0,0,0,eden.paredes@utec.edu.pe
+12/10/2026 15:08:50,7,3,Programar,8,2,0,2,Material del profesor,0,Moderado,Frustración,1,CS2013,1,pedro.chavez@utec.edu.pe
+12/10/2026 15:24:05,8,4,Resolver ejercicios,7,4,1,4,Material del profesor,2,Moderado,Alivio,1,CC2104,2,walter.aquino@utec.edu.pe
+12/10/2026 16:17:39,12,4,Programar,8,4,2,4,Ejercicios resueltos,12,Moderado,Indiferencia,4,C2143253,4,nestor.delacruz@utec.edu.pe
+12/10/2026 16:19:29,3,3,Redactar,4,4,3,3,Ejercicios resueltos,3,Moderado,Frustración,3,C3232,4,nestor.delacruz@utec.edu.pe
+12/10/2026 16:21:02,4,4,Redactar,4,4,1,4,Apuntes propios,5,Moderado,Alivio,3,C2121,4,nestor.delacruz@utec.edu.pe
+12/10/2026 16:21:34,4,3,Redactar,4,4,4,2,Material del profesor,3,Bajo,Frustración,4,2,3,nestor.delacruz@utec.edu.pe
+12/10/2026 16:23:07,3,2,Resolver ejercicios,3,2,4,1,Material del profesor,2,Bajo,Alivio,2,C2121,4,nestor.delacruz@utec.edu.pe
