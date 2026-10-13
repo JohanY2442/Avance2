@@ -26,7 +26,7 @@ execute:
 
 ## Relevancia
 
-Este tema es importante porque la mayoría de estudiantes usa la IA diariamente para sus actividades académicas. Analizar este uso nos ayuda a saber con qué frecuencia la utilizan, para qué lo usan y en qué cursos hacen más consultas. También nos ayuda a ver si el uso de estas herramientas realmente les ayuda a comprender mejor los temas o a ahorrar tiempo. Además, consideraremos otros factores asociados a hábitos de los estudiantes, como las horas de sueño y horas efectivas de estudio, para determinar su influencia en el rendimiento académico.
+Este tema es importante porque la mayoría de estudiantes usa la IA diariamente para sus actividades académicas. Analizar este uso nos ayuda a saber con qué frecuencia la utilizan, para qué la usan y en qué cursos hacen más consultas. También nos permite ver si el uso de esta herramienta realmente les ayuda a comprender mejor los temas o a ahorrar tiempo. Además, consideraremos otros factores asociados a hábitos de los estudiantes, como las horas de sueño y horas efectivas de estudio, para determinar su influencia en el rendimiento académico.
 
 ## Planificación
 
@@ -45,18 +45,18 @@ tareas <- data.frame(
     "Revisión final"
   ),
   inicio = as.Date(c(
-    "2026-09-12", "2026-10-18", "2026-10-21", "2026-10-24", "2026-10-28", "2026-10-30"
+    "2026-09-12", "2026-10-01", "2026-10-07", "2026-10-13", "2026-09-12", "2026-10-23"
   )),
   fin = as.Date(c(
-    "2026-10-18", "2026-10-21", "2026-10-24", "2026-10-28", "2026-10-30", "2026-11-02"
+    "2026-10-18", "2026-10-20", "2026-10-21", "2026-10-23", "2026-10-23", "2026-10-24"
   )),
   seccion = c(
     "Planificación",
     "Planificación",
     "Desarrollo",
     "Desarrollo",
-    "Cierre",
-    "Cierre"
+    "Informe",
+    "Informe"
   )
 )
 
@@ -230,22 +230,22 @@ Se puede ver que hay 4 valores faltantes en el dataframe. Esto es raro considera
 ```{r}
 sum(DFL$consultas == 0, na.rm = TRUE)
 ```
-Hay 26 registros en los que el estudiante no consultó la IA en todo el día.
+Hay 34 registros en los que el estudiante no consultó la IA en todo el día.
 
 ```{r}
 sum(DFL$tareas == 0, na.rm = TRUE)
 ```
-Hay 70 registros en los que la IA no ahorró tiempo en ninguna tarea.
+Hay 92 registros en los que la IA no ahorró tiempo en ninguna tarea.
 
 ```{r}
 sum(DFL$estudio == 0, na.rm = TRUE)
 ```
-Hay 21 registros sin ninguna hora de estudio.
+Hay 27 registros de personas que no estudiaron ni una hora durante 1 día.
 
 ```{r}
 sum(DFL$sueno == 0, na.rm = TRUE)
 ```
-Hay 3 registros con cero horas de sueño.
+Hay 4 registros de estudiantes que no durmieron ni 1 hora.
 
 #### Análisis de cardinalidad
 
@@ -259,7 +259,7 @@ La ordinal `comprension` ya tomó sus 5 niveles al menos una vez.
 length(unique(DFL$sueno))
 unique(DFL$sueno)
 ```
-Las variables `sueno` y `estudio` toman valores diversos pese a su discretización parcial y al rango admisible \[0, 24\].
+Las variables `sueno` y `estudio` toman valores diversos pese a su discretización parcial y al rango admisible reducido \[0, 24\].
 
 ```{r}
 length(unique(DFL$estudio))
@@ -268,13 +268,12 @@ unique(DFL$estudio)
 
 ```{r}
 length(unique(DFL$curso))
-unique(DFL$curso)
 ```
 `curso` varía mucho porque la UTEC dicta varios cursos y los alumnos vienen de distintas carreras.
 
 ```{r}
 length(unique(DFL$tareas))
-unique(DFL$tareas)
+sort(unique(DFL$tareas))
 ```
 La variable discreta `tareas` ha tomado una cantidad reducida de valores encerrados en el intervalo \[0, 15\].
 
@@ -292,9 +291,8 @@ La nominal `uso` presenta gran variabilidad, propia de su naturaleza.
 
 ```{r}
 length(unique(DFL$consultas))
-unique(DFL$consultas)
 ```
-La discreta `consultas` también presenta gran variabilidad.
+La discreta `consultas` también presenta una gran cantidad de valores únicos.
 
 ### Paso 2: Normalización
 
@@ -699,20 +697,20 @@ En total, se conservaron 290 observaciones (81.46%). La decisión más important
 ### Número de consultas a la IA
 
 ```{r}
+sd(DF3$consultas, na.rm = T) / abs(mean(DF3$consultas, na.rm = T))
+```
+Dado un CV > 0.6, preferiremos usar la mediana y los cuantiles para el análisis.
+
+```{r}
 boxplot(DF3$consultas,
         main = "Boxplot - Número de consultas a la IA",
         ylab = "Cantidad de consultas",
         col = "gray80")
-abline(h = mean(DF3$consultas, na.rm = TRUE), col = "firebrick", lwd = 2, lty = 2)
 legend("topright",
-       legend = paste("Media =", round(mean(DF3$consultas, na.rm = TRUE), 2)),
-       col = "firebrick", lty = 2, lwd = 2, bty = "n")
+       legend = paste("Mediana =", median(DF3$consultas, na.rm = TRUE), "\nQ3 =", quantile(DF3$consultas, 0.75, na.rm = T, type = 3)), bty = "n")
 ```
-```{r}
-quantile(DF3$consultas, 0.5, na.rm = T, type = 3, )
-quantile(DF3$consultas, 0.75, na.rm = T, type = 3, )
-```
-Se puede ver que en al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos un cuarto de los registros, los estudiantes han hecho 22 o más consultas diarias a la IA.
+
+Se puede ver que en al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos un cuarto de los registros, los estudiantes han hecho 20 o más consultas diarias a la IA.
 
 ```{r}
 barplot(table(DF3$consultas),
@@ -721,7 +719,7 @@ barplot(table(DF3$consultas),
         ylab = "Frecuencia de cada cantidad",
         col = "gray80")
 ```
-El barplot confirma que en la mayoría de registros el uso no es intensivo, aunque sí constante. Por eso la media (14.2) duplica a la mediana: unos pocos días de uso muy alto elevan el promedio.
+El barplot confirma que si bien el uso no es intensivo, este sí es constante en el tiempo.
 
 
 ### Nivel de comprensión
@@ -796,14 +794,14 @@ boxplot(consultas ~ satisfaccion, data = DF3,
         ylab = "Cantidad de consultas",
         col = c("gray92", "gray80", "gray66", "gray50", "gray35"))
 ```
-Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se puede notar un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción, donde se ve una disminución de la mediana). Esto nos indica que podría haber una relación importante entre cuántas consultas se ha hecho a la IA y cuán satisfecho se está con el estudio de ese día.
+Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se puede notar un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción, donde se ve una disminución de la mediana). Esto nos indica que podría haber una relación importante entre cuántas consultas se han hecho a la IA y cuán satisfecho se está con el estudio de ese día.
 
 ```{r}
 quantile(DF3$consultas[DF3$satisfaccion == 3], 0.3, na.rm = T, type = 3)
 quantile(DF3$consultas[DF3$satisfaccion == 4], 0.3, na.rm = T, type = 3)
 quantile(DF3$consultas[DF3$satisfaccion == 5], 0.3, na.rm = T, type = 3)
 ```
-Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 5 o más consultas a la IA por día.
+Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 5 o más consultas a la IA por día, reforzando la idea de una relación positiva entre `consultas` y `satisfacción`.
 
 
 ### Objetivo 2: consultas vs. estudio
@@ -939,9 +937,9 @@ El CV es menor a 0.3 en cuatro de los cinco niveles, lo que sugiere homogeneidad
 
 ## Conclusión del Objetivo 1
 
-Como se ha mencionado anteriormente, existe una relación positiva entre el número de consultas a la IA y el grado de satisfacción en el intervalo [1 : 4]. Se propone la explicación de que esta relación se podría deber a que un mayor número de consultas ayudan al estudiante a comprender mejor los temas que estudia. Esto derivaría en un mayor grado de satisfacción con el avance académico. Para el grado de satisfacción 5, si bien no sigue esta tendencia, aún tiene una relación con la variable `consultas` pues se sabe que al menos el 70% de sus registros reportan por lo menos 5 consultas a la IA por día.
+Como se ha mencionado anteriormente, existe una relación positiva entre el número de consultas a la IA y el grado de satisfacción en el intervalo [1, 4]. Se propone la explicación de que esta relación se podría deber a que un mayor número de consultas ayuda al estudiante a comprender mejor los temas que estudia. Esto derivaría en un mayor grado de satisfacción con el avance académico. Para el grado de satisfacción 5, si bien no sigue esta tendencia, aún tiene una relación con la variable `consultas` pues se sabe que al menos el 70% de sus registros reportan por lo menos 5 consultas a la IA por día.
 
-Cabe aclarar que la propuesta de explicación presentada, la cual sigue un formato causa - consecuencia, es tan solo una hipótesis pues la existencia de una relación no implica causalidad.
+Cabe aclarar que la propuesta de explicación presentada, la cual sigue un formato causa-consecuencia, es tan solo una hipótesis pues la existencia de una relación no implica causalidad.
 
 ## Conclusión del Objetivo 2
 
