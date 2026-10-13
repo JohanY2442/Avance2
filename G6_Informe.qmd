@@ -1,0 +1,960 @@
+---
+title: "Uso de IA, sueño y rendimiento académico en estudiantes de UTEC"
+subtitle: "PG1 — Informe | Estadística y Probabilidades, sección 01, ciclo 2026-2"
+author: "S1-G6"
+date: "`r Sys.Date()`"
+lang: es
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-depth: 3
+    toc-title: "Contenido"
+    number-sections: true
+    theme: flatly
+    code-fold: true
+    code-tools: true
+    fig-width: 8
+    fig-height: 5
+execute:
+  warning: false
+  message: false
+  echo: true
+---
+
+# Introducción
+
+## Relevancia
+
+Este tema es importante porque la mayoría de estudiantes usa la IA diariamente para sus actividades académicas. Analizar este uso nos ayuda a saber con qué frecuencia la utilizan, para qué lo usan y en qué cursos hacen más consultas. También nos ayuda a ver si el uso de estas herramientas realmente les ayuda a comprender mejor los temas o a ahorrar tiempo. Además, consideraremos otros factores asociados a hábitos de los estudiantes, como las horas de sueño y horas efectivas de estudio, para determinar su influencia en el rendimiento académico.
+
+## Planificación
+
+### Diagrama de Gantt
+
+```{r}
+library(ggplot2)
+
+tareas <- data.frame(
+  tarea = c(
+    "Recolección de datos",
+    "Limpieza de datos",
+    "Análisis exploratorio",
+    "Análisis estadístico",
+    "Redacción del informe",
+    "Revisión final"
+  ),
+  inicio = as.Date(c(
+    "2026-09-12", "2026-10-18", "2026-10-21", "2026-10-24", "2026-10-28", "2026-10-30"
+  )),
+  fin = as.Date(c(
+    "2026-10-18", "2026-10-21", "2026-10-24", "2026-10-28", "2026-10-30", "2026-11-02"
+  )),
+  seccion = c(
+    "Planificación",
+    "Planificación",
+    "Desarrollo",
+    "Desarrollo",
+    "Cierre",
+    "Cierre"
+  )
+)
+
+ggplot(tareas,
+       aes(x = inicio,
+           xend = fin,
+           y = tarea,
+           yend = tarea,
+           color = seccion)) +
+  geom_segment(linewidth = 8) +
+  labs(title = "Diagrama de Gantt",
+       x = "Fecha",
+       y = "Actividad") +
+  theme_minimal()
+```
+
+## Objetivos
+
+### Objetivo general
+
+Analizar el impacto de las horas de sueño y el uso de IA en el rendimiento académico de los estudiantes UTEC de Estadística sección 1 durante el ciclo 2026-2.
+
+### Objetivos específicos
+
+1)  Analizar la existencia de alguna relación entre la frecuencia diaria de consultas a la Inteligencia Artificial y el Nivel de satisfacción con el avance académico diario. Análisis bivariado: "N° consultas a IA realizada ese día" y "Nivel de satisfacción con el avance académico diario"
+2)  Analizar si existe alguna correlación entre el número de consultas a la IA en un cierto día y la cantidad de horas dedicadas al estudio. Se usarán las variables "N° de consultas a IA realizadas ese día" y "Suma de horas efectivas de estudio".
+3)  Identificar si el curso de mayor consulta influye en el principal uso que se le da a la Inteligencia Artificial ese día y determinar qué usos generan mayor número de tareas con tiempo ahorrado. Para este caso se usará doble análisis bivariado. ("curso sobre el cual se hicieron la mayoría de consultas de IA" vs "Principal uso de IA ese día") y ("Principal uso de IA ese día" vs "N° de tareas ese día en las que usar IA le ahorró tiempo")
+4)  Determinar si existe una relación entre las horas de sueño de la noche anterior y el nivel de comprensión de las actividades académicas realizadas durante el día. Se usará un análisis bivariado a las variables "Horas de sueño de la noche anterior" y "Nivel de comprensión de las actividades académicas realizadas ese día".
+
+# Datos
+
+## Población objetivo
+
+Estudiantes universitarios de UTEC durante el semestre 2026-2 que cursan la materia de Estadística y Probabilidades de la sección 01.
+
+### Unidad muestral
+
+Está conformada por los estudiantes universitarios evaluados de forma individual y diaria. A cada uno de ellos se le aplicará un registro de datos para medir su comportamiento diario, su rendimiento académico y su relación con el uso de Inteligencia Artificial (en la tabla principal).
+
+Además se contará con dos tablas externas: la "Tabla Exámenes", cuya unidad muestral es cada examen rendido, y la "Tabla Demográfica", con los datos invariantes del ciclo y cuya unidad muestral es cada estudiante.
+
+### Representatividad de la muestra
+
+Con la finalidad de que la muestra obtenida refleje a la población y se minimicen posibles sesgos, se plantean las siguientes medidas:
+
+Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario y así evitando el sesgo de no respuesta
+
+Medición al cierre del día: El cuestionario se realizará al final de cada día el cual permitirá registrar las variables diarias (como las horas de estudio o el uso de IA), atenuando el sesgo de memoria. El registro de un día se contará como válido si este se hace después de las 9:30 p.m. pero antes de la medianoche.
+
+## Tipo de muestreo
+
+Se utilizará un muestreo sistemático por conveniencia, estructurado bajo un diseño de recolección de datos de tipo longitudinal. Esta decisión responde a la exigencia del estudio, el cual requiere que los estudiantes reporten sus métricas académicas, de sueño y de uso de Inteligencia Artificial de forma diaria. El diseño longitudinal genera observaciones repetidas por estudiante, lo que permite capturar patrones de comportamiento en el tiempo.
+
+## Recolección de datos
+
+Se diseñaron 3 formularios en Google Forms: demográfico (una vez por estudiante), diario (una vez por día) y de exámenes (uno por examen). Enlaces: [formulario diario](https://docs.google.com/forms/d/e/1FAIpQLSf9LZ3tyLEgC4oDca7NH8S9Zh-StC2w6ukAMH6yRnJej6tVzQ/viewform), [formulario demográfico](https://docs.google.com/forms/d/e/1FAIpQLSeTo6X7RJB_Jq6qrQ4By-Qrbfe_6qafpZ0N9gP62h2pQwOmlA/viewform), [formulario de exámenes](https://docs.google.com/forms/d/e/1FAIpQLScOFYt4wl2XJGtB4w-PzHCnRUiT-wfdmIg2zGpAUDZ_R_GAIA/viewform).
+
+## Variables
+
+### Consideración de los tipos de variables
+
+| Variable | Tipo general | Subtipo |
+|------------------------|------------------------|------------------------|
+| N° de consultas a IA realizadas ese día | Cuantitativa | Discreta |
+| Principal uso de IA ese día | Cualitativa | Nominal |
+| Nivel de satisfacción con el avance académico diario | Cualitativa | Ordinal |
+| N° de tareas ese día en las que usar IA le ahorró tiempo | Cuantitativa | Discreta |
+| curso sobre el cual se hicieron la mayoría de consultas de IA | Cualitativa | Nominal |
+| Suma de horas efectivas de estudio | Cuantitativa | Continua |
+| Horas de sueño de la noche anterior | Cuantitativa | Continua |
+| Nivel de comprensión de las actividades académicas realizadas ese día | Cualitativa | Ordinal |
+
+### Libreta de códigos
+
+| Variable | Restricción / Rango o categorías válidas |
+|-----------------------------------|------------------------------------|
+| N° consultas a IA realizada ese día | x \>= 0 |
+| Nivel de satisfacción con el avance académico diario | Likert de 5 niveles, codificado de 1 a 5 |
+| Suma de horas efectivas de estudio | x \>= 0 |
+| curso sobre el cual se hicieron la mayoría de consultas de IA | Código de curso UTEC, formato XX#### |
+| Principal uso de IA ese día | resumir, resolver ejercicios, redactar, programar, otros |
+| N° de tareas ese día en las que usar IA le ahorró tiempo | x \>= 0 |
+| Horas de sueño de la noche anterior | 0 \<= x \<= 24 |
+| Nivel de comprensión de las actividades académicas realizadas ese día | Muy bajo, Bajo, Moderado, Alto, Muy alto |
+
+### Mediciones
+
+Cada variable va a ser registrada en el formulario de Google Forms, el cual contendrá todas las restricciones de valores que puede tomar la variable dependiendo de su tipo y de su naturaleza.
+
+## Limpieza
+
+### Paso 0: Obtener el conjunto de datos
+
+```{r}
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+
+DF <- read_csv("RespuestasDiario.csv")
+```
+
+```{r}
+names(DF)
+DFL <- DF
+```
+
+Renombramos las columnas que utilizaremos
+
+```{r}
+DFL %>% rename(hora = `Marca temporal`
+               , consultas = `¿Cuántas consultas a una IA realizaste hoy?`
+               , uso = `¿Cuál fue el uso principal que le diste a la IA hoy?`
+               , satisfaccion = `¿Qué nivel de satisfacción tienes con tu avance académico de hoy?`
+               , tareas = `¿En cuántas tareas de hoy el uso de la IA te ahorró tiempo?`
+               , curso = `¿Cuál es el código del curso sobre el que hiciste la mayoría de tus consultas a la IA hoy?`
+               , estudio = `¿Cuántas horas efectivas de estudio acumulaste el día de hoy?`
+               , sueno = `¿Cuántas horas dormiste la noche pasada?`
+               , comprension = `¿Qué nivel de comprensión tuviste de las actividades académicas que realizaste hoy?`
+               , email = `Dirección de correo electrónico`) -> DFL
+```
+
+Nos quedamos con las columnas de nuestros objetivos específicos.
+
+```{r}
+DFL <- DFL[, c("hora", "consultas", "uso", "satisfaccion", "tareas", "curso", "estudio", "sueno", "comprension", "email")]
+names(DFL)
+```
+
+Obtenemos los grupos que han aportado en base a los correos que tenemos y en base a una tabla auxiliar
+
+```{r}
+DFAuxiliar <- read_csv("CorreosGrupo.csv")
+```
+
+Realizamos un inner join para relacionar `email` con el grupo correspondiente
+
+```{r}
+DFL <- inner_join(DFL, DFAuxiliar, by = "email")
+```
+```{r}
+head(DFL[c("hora", "email", "Grupo")])
+```
+
+### Vista del subset final
+
+```{r}
+dim(DFL)
+head(DFL)
+sapply(DFL, class)
+```
+
+### Paso 1: Radiografía de la base
+
+Cantidad de NA por columna:
+
+```{r}
+colSums(is.na(DFL))
+```
+
+Porcentaje de NA por columna:
+
+```{r}
+round(colSums(is.na(DFL)) / nrow(DFL) * 100, 2)
+```
+
+Se puede ver que hay 4 valores faltantes en el dataframe. Esto es raro considerando que el formulario original tiene todas las preguntas marcadas como obligatorias.
+
+#### Análisis de ceros
+
+```{r}
+sum(DFL$consultas == 0, na.rm = TRUE)
+```
+Hay 26 registros en los que el estudiante no consultó la IA en todo el día.
+
+```{r}
+sum(DFL$tareas == 0, na.rm = TRUE)
+```
+Hay 70 registros en los que la IA no ahorró tiempo en ninguna tarea.
+
+```{r}
+sum(DFL$estudio == 0, na.rm = TRUE)
+```
+Hay 21 registros sin ninguna hora de estudio.
+
+```{r}
+sum(DFL$sueno == 0, na.rm = TRUE)
+```
+Hay 3 registros con cero horas de sueño.
+
+#### Análisis de cardinalidad
+
+```{r}
+length(unique(DFL$comprension))
+unique(DFL$comprension)
+```
+La ordinal `comprension` ya tomó sus 5 niveles al menos una vez.
+
+```{r}
+length(unique(DFL$sueno))
+unique(DFL$sueno)
+```
+Las variables `sueno` y `estudio` toman valores diversos pese a su discretización parcial y al rango admisible \[0, 24\].
+
+```{r}
+length(unique(DFL$estudio))
+unique(DFL$estudio)
+```
+
+```{r}
+length(unique(DFL$curso))
+unique(DFL$curso)
+```
+`curso` varía mucho porque la UTEC dicta varios cursos y los alumnos vienen de distintas carreras.
+
+```{r}
+length(unique(DFL$tareas))
+unique(DFL$tareas)
+```
+La variable discreta `tareas` ha tomado una cantidad reducida de valores encerrados en el intervalo \[0, 15\].
+
+```{r}
+length(unique(DFL$satisfaccion))
+unique(DFL$satisfaccion)
+```
+La ordinal `satisfaccion` también tomó sus 5 niveles.
+
+```{r}
+length(unique(DFL$uso))
+unique(DFL$uso)
+```
+La nominal `uso` presenta gran variabilidad, propia de su naturaleza.
+
+```{r}
+length(unique(DFL$consultas))
+unique(DFL$consultas)
+```
+La discreta `consultas` también presenta gran variabilidad.
+
+### Paso 2: Normalización
+
+Se filtrará con base en el plazo de tiempo para el envío del formulario. Además, se tendrán en cuenta los valores que pudieron evadir las restricciones iniciales, por lo que se aplicarán verificaciones de valores vacíos en las columnas de consultas, tareas, estudio y sueno, junto con la validación de valores enteros.
+
+```{r}
+
+#Se hace el filtrado por horas teniendo en cuenta que se guarda en el formato de 24 horas por lo que solo acotamos desde 21.5 osea 9:30 
+
+DFL1<-DFL%>%filter(!(((hour(dmy_hms(hora)) + minute(dmy_hms(hora))/60) < 21.5))) %>% 
+
+# en caso de superesswarnings es para evitar que arroje errores en consultas debido a que permite ingreso de datos vacios por lo que se trata de convertir a numero y de ahi vemos si es NA e inviertiendo mediante ! para quedarnos con los que si cumplan eso  
+  
+filter(!is.na(suppressWarnings(as.numeric(consultas))), 
+
+# Repetimos el mismo tipo de filtrado con respecto a la variable tareas, sueno y estudio 
+
+!is.na(suppressWarnings(as.numeric(tareas))),                                   
+!is.na(suppressWarnings(as.numeric(estudio))),                           !is.na(suppressWarnings(as.numeric(sueno))))%>% 
+  
+#verificamos que las consultas y tareas sean numeros enteros 
+
+filter(as.numeric(consultas)%%1==0, 
+       as.numeric(tareas)%%1==0)
+
+```
+
+### Paso 3: Aplicación de criterios (validación de rangos)
+
+Como la respuesta cualitativa (uso) se relaciona con variables cuantitativas (consultas y tareas), para evitar la pérdida de la fila debido a los datos contradictorios, los valores no válidos se reasignarán con NA.
+
+```{r}
+  DF2<-DFL1%>%mutate(
+  
+  # se arma el primer filtro para normalizar uso
+  uso_= chartr("áéíóúÁÉÍÓÚ", "aeiouAEIOU", tolower(uso)),
+  
+  # el segundo filtro para la busqueda de palabras clave 
+  usoC= str_detect(uso_,regex("\\b(ia|no|use|ningun[oa])\\b",ignore_case = TRUE)),
+  
+  # el tercer filtro ayuda a buscar datos no validos y validar los mismos
+  cursoC = is.na(curso) | str_detect(curso, "^[ -]*$") | 
+  str_detect(curso, "^[A-Za-z]{2}\\d{4}$"),
+  
+  # el cuarto filtro verifica las consultas y une con validacion de curso
+  filtro=!usoC&cursoC&(as.numeric(consultas)>0|as.numeric(tareas)>0),
+  
+  # se aplica el filtro para cada dato relacionado
+  uso = if_else(filtro, uso,NA_character_),
+  
+  consultas=if_else(filtro,consultas,NA_integer_),   
+  
+  tareas= if_else(filtro,tareas,NA_integer_),
+  
+  curso = if_else(filtro,curso,NA_character_)
+  ) %>% select(-filtro, -usoC,-cursoC,-uso_)  
+# despues se borra las columnas auxiliares     
+```
+
+### Paso 4: Datos atípicos
+
+Para identificar posibles valores atípicos utilizamos boxplots en las variables numéricas.
+
+```{r}
+# Número de consultas a IA
+boxplot(DF2$consultas,
+        main = "Boxplot - Consultas a IA",
+        ylab = "Consultas",
+        col = "gray80")
+
+boxplot.stats(DF2$consultas)$out
+```
+
+```{r}
+# Número de tareas donde la IA ahorró tiempo
+boxplot(DF2$tareas,
+        main = "Boxplot - Tareas",
+        ylab = "Tareas",
+        col = "gray80")
+
+boxplot.stats(DF2$tareas)$out
+```
+
+```{r}
+# Horas efectivas de estudio
+boxplot(DF2$estudio,
+        main = "Boxplot - Horas de estudio",
+        ylab = "Horas",
+        col = "gray80")
+        
+boxplot.stats(DF2$estudio)$out
+```
+
+```{r}
+# Horas de sueño
+boxplot(DF2$sueno,
+        main = "Boxplot - Horas de sueño",
+        ylab = "Horas",
+        col = "gray80")
+
+boxplot.stats(DF2$sueno)$out
+```
+
+Los atípicos son 60 y 68 en consultas; 7, 8, 11, 12 y 15 en tareas; 10 en estudio; y 0, 2, 13 y 14 en sueño. Se conservan porque son valores posibles: dormir 2 horas o estudiar 10 en un día es inusual, no imposible, y los extremos de consultas y tareas reflejan jornadas de uso intensivo. Ninguno se trata como error.
+
+### Paso 5: Variabilidad
+
+Para cada una de las variables numéricas calculamos el rango, la varianza, la desviación estándar y el IQR.
+
+```{r}
+# Variabilidad de las consultas
+range(DF2$consultas, na.rm = TRUE)
+var(DF2$consultas, na.rm = TRUE)
+sd(DF2$consultas, na.rm = TRUE)
+IQR(DF2$consultas, na.rm = TRUE)
+```
+
+En consultas los valores van de 1 a 68, con desviación estándar 14.63 e IQR 21.25: la dispersión es alta y el máximo de 68 la aumenta.
+
+```{r}
+# Variabilidad de las tareas
+range(DF2$tareas, na.rm = TRUE)
+var(DF2$tareas, na.rm = TRUE)
+sd(DF2$tareas, na.rm = TRUE)
+IQR(DF2$tareas, na.rm = TRUE)
+```
+
+En tareas los valores van de 0 a 15, con IQR 2 y desviación estándar 2.00: la mitad central se concentra en un intervalo estrecho, aunque los atípicos muestran días con mucho más ahorro.
+
+```{r}
+# Variabilidad de las horas de estudio
+range(DF2$estudio, na.rm = TRUE)
+var(DF2$estudio, na.rm = TRUE)
+sd(DF2$estudio, na.rm = TRUE)
+IQR(DF2$estudio, na.rm = TRUE)
+```
+
+En estudio los valores van de 0 a 10 horas, con desviación estándar 1.94 e IQR 3. El valor de 10 horas es atípico pero posible, por lo que se conservó.
+
+```{r}
+# Variabilidad de las horas de sueño
+range(DF2$sueno, na.rm = TRUE)
+var(DF2$sueno, na.rm = TRUE)
+sd(DF2$sueno, na.rm = TRUE)
+IQR(DF2$sueno, na.rm = TRUE)
+```
+
+En sueño los valores van de 0 a 14 horas, con desviación estándar 1.94 e IQR 2. Los atípicos de 0, 2, 13 y 14 horas corresponden a noches muy alejadas del descanso habitual.
+
+```{r}
+# Frecuencia del principal uso de IA
+table(DF2$uso)
+prop.table(table(DF2$uso)) * 100
+```
+
+En uso, los más frecuentes son resolver ejercicios (85 registros, 34.27%), resumir (70, 28.23%) y programar (61, 24.60%); redactar reúne 14 (5.65%) y el resto son categorías marginales.
+
+```{r}
+# Frecuencia del nivel de satisfacción
+table(DF2$satisfaccion)
+prop.table(table(DF2$satisfaccion)) * 100
+```
+
+En satisfacción domina el nivel 3 con 135 registros (46.55%), seguido del 4 con 96 (33.10%); los niveles extremos 1 y 5 reúnen 19 y 14 registros.
+
+```{r}
+# Frecuencia del nivel de comprensión
+table(DF2$comprension)
+prop.table(table(DF2$comprension)) * 100
+```
+
+En comprensión la categoría más frecuente es "Moderado" con 159 registros (54.83%), seguida de "Alto" con 84 (28.97%); "Bajo", "Muy alto" y "Muy bajo" reúnen 17, 20 y 10.
+
+### Paso 6: Gestión de nulos
+
+Tras los filtros iniciales, los valores nulos (NA) se concentran en cuatro variables sobre IA. A continuación, se evalúa el impacto de una eliminación directa.
+
+```{r}
+tabla_NA <- data.frame(
+  Variable = names(DF2),
+  Cantidad_NA = colSums(is.na(DF2)),
+  Porcentaje_NA = round(colSums(is.na(DF2)) / nrow(DF2) * 100, 2),
+  row.names = NULL
+)
+tabla_NA
+```
+```{r}
+#Revisamos si los NAs están en una mismo registro
+table(rowSums(is.na(DF2)))
+#Impacto si eliminamos los NAs
+nrow(DF2)
+nrow(na.omit(DF2))
+round((1 - nrow(na.omit(DF2)) / nrow(DF2)) * 100, 2)
+```
+La eliminación directa mediante `na.omit` descartaría el 14.48% de la muestra. Para evitarlo, se reconstruyen los criterios desde la base previa (`DFL1`) y se clasifica el origen de cada registro incompleto.
+
+```{r}
+# DF2 sale de DFL1 sin filtrar filas, recuperamos de DFL1 los valores que el Paso 3 convirtió a NA
+nrow(DFL1) == nrow(DF2)
+
+diagnostico <- DF2 %>%
+  mutate(
+    # Valores originales, antes del Paso 3
+    consultas_orig = as.numeric(DFL1$consultas),
+    tareas_orig    = as.numeric(DFL1$tareas),
+    uso_orig       = as.character(DFL1$uso),
+    curso_orig     = as.character(DFL1$curso),
+
+    # ¿El estudiante declaró alguna actividad con IA ese día?
+    hubo_actividad = consultas_orig > 0 | tareas_orig > 0,
+
+    # Motivo por el que el registro quedó incompleto
+    motivo = case_when(
+      !is.na(uso)     ~ "Completo",
+      !hubo_actividad ~ "Sin uso de IA",
+      consultas_orig == 0 & is.na(uso_orig) ~ "Sin uso de IA",
+      TRUE            ~ "Curso fuera de formato"
+    )
+  )
+
+table(diagnostico$motivo)
+```
+
+Se identificaron dos mecanismos que exigen un tratamiento diferenciado para no sesgar los datos:
+
+```{r}
+# Perfil de cada grupo según las consultas que realmente declararon
+diagnostico %>%
+  filter(motivo != "Completo") %>%
+  group_by(motivo) %>%
+  summarise(
+    n = n(),
+    consultas_min   = min(consultas_orig),
+    consultas_max   = max(consultas_orig),
+    consultas_media = round(mean(consultas_orig), 1)
+  )
+```
+
+**Sin uso de IA (20 registros).** El estudiante no usó la herramienta; el valor real del NA es cero.
+
+**Curso fuera de formato (22 registros).** Sí usaron IA, pero el código del curso es inválido.
+  
+Una política uniforme asignaría `consultas = 0` y `uso = "No usó IA"` a estudiantes con uso intensivo, sesgando las variables centrales de los objetivos 1 y 3. 
+
+  
+| Motivo | Tratamiento | Justificación |
+|------------------|------------------|------------------------------------|
+| Sin uso de IA | `consultas` y `tareas` → 0; `uso` → "No usó IA"; `curso` → "No aplica" | El valor real del conteo es cero y la ausencia es una respuesta lógica |
+| Curso fuera de formato | Se conservan `consultas`, `tareas` y `uso`; solo `curso` → "Sin código válido" | El uso de IA sí ocurrió; lo único inválido es el código del curso |
+  
+Se agrega `uso_ia` para que los objetivos 1 y 3 puedan filtrar los días sin uso sin eliminarlos. También se codifican las variables ordinales como factor y los identificadores como nominales.
+
+```{r}
+DF3 <- diagnostico %>%
+  mutate(
+    # Marca si de verdad usó IA, según el motivo y no según si había NA
+    uso_ia = motivo != "Sin uso de IA",
+
+    # Si no usó IA, el valor verdadero es 0 
+    # Cuantitativas discretas: 
+    consultas = if_else(motivo == "Sin uso de IA", 0, consultas_orig),
+    consultas= as.integer(consultas),
+    tareas    = if_else(motivo == "Sin uso de IA", 0, tareas_orig),
+    tareas= as.integer(tareas),
+    # Cualitativa nominal
+    uso   = if_else(motivo == "Sin uso de IA", "No usó IA", uso_orig),
+    uso = factor(uso,levels=unique(uso)),
+    
+
+  # Solo el curso se marca como inválido; el resto de datos se conserva
+    curso = case_when(
+      motivo == "Sin uso de IA"          ~ "No aplica",
+      motivo == "Curso fuera de formato" ~ "Sin código válido",
+      TRUE                               ~ curso_orig
+    ),
+      curso = factor(curso,levels=unique(curso)),
+
+    # Cuantitativas continuas
+    estudio = as.numeric(estudio),
+    sueno   = as.numeric(sueno),
+
+    # Ordinal con levels
+    comprension = factor(comprension,
+                         levels = c("Muy bajo", "Bajo", "Moderado", "Alto", "Muy alto"),
+                         ordered = TRUE),
+
+    satisfaccion = factor(satisfaccion, levels = 1:5, ordered = TRUE),
+
+    # Identificador
+    Grupo = factor(Grupo)
+  ) %>%
+# Se borran las columnas que solo sirvieron para el diagnóstico
+  select(-consultas_orig, -tareas_orig, -uso_orig, -curso_orig,
+         -hubo_actividad, -motivo)
+```
+
+```{r}
+# Verificamos que no quede ningún NA ni se hayan perdido filas
+sum(is.na(DF3))
+nrow(DF3)
+table(DF3$uso_ia)
+```
+
+La base queda sin faltantes y sin pérdida de observaciones, con cada faltante tratado según el mecanismo que lo originó.
+
+
+### Paso 7: Radiografía final
+
+```{r}
+# Cuántas observaciones sobreviven a cada etapa del proceso
+trazabilidad <- data.frame(
+  Etapa = c("Base cruda (DF)", "Subset y join (DFL)", "Normalización (DFL1)",
+            "Criterios (DF2)", "Gestión de nulos (DF3)"),
+  Observaciones = c(nrow(DF), nrow(DFL), nrow(DFL1), nrow(DF2), nrow(DF3))
+)
+# Qué porcentaje de la base original representa cada etapa
+trazabilidad$Retencion <- round(trazabilidad$Observaciones / nrow(DF) * 100, 2)
+trazabilidad
+```
+
+La base retiene 290 observaciones (81.46%). La pérdida corresponde a los criterios de la ventana horaria de envío.
+
+```{r}
+# Mismo diagnóstico del Paso 1, ahora sobre la base limpia.
+radiografia <- data.frame(
+  Variable = names(DF3),
+  Tipo = sapply(DF3, function(x) class(x)[1]),
+  NA_total = colSums(is.na(DF3)),
+  Porcentaje_NA = round(colSums(is.na(DF3)) / nrow(DF3) * 100, 2),
+  Unicos = sapply(DF3, function(x) length(unique(x))),
+  row.names = NULL
+)
+radiografia
+```
+
+```{r}
+# Conteo de ceros en cada numérica
+sum(DF3$consultas == 0)
+sum(DF3$tareas == 0)
+sum(DF3$estudio == 0)
+sum(DF3$sueno == 0)
+```
+
+La base final no presenta NAs. Los ceros representan días sin IA en `consultas` y `tareas`, jornadas sin estudio en `estudio`, y 0 horas declaradas en `sueno`. Las cualitativas mantienen su formato de factor ordenado y nominal.
+
+```{r}
+# Verificamos que ninguna numérica se salga de los rangos del codebook.
+
+data.frame(
+  Variable = c("consultas", "tareas", "estudio", "sueno"),
+  Restriccion = c("x >= 0", "x >= 0", "x >= 0", "0 <= x <= 24"),
+  Minimo = c(min(DF3$consultas), min(DF3$tareas), min(DF3$estudio), min(DF3$sueno)),
+  Maximo = c(max(DF3$consultas), max(DF3$tareas), max(DF3$estudio), max(DF3$sueno)),
+  Cumple = c(all(DF3$consultas >= 0), all(DF3$tareas >= 0), all(DF3$estudio >= 0),
+             all(DF3$sueno >= 0 & DF3$sueno <= 24))
+)
+```
+
+Todas las variables cumplen los rangos del codebook. Los valores extremos corresponden a los atípicos validados en el Paso 4.
+
+```{r}
+# Filas idénticas en todas sus columnas
+sum(duplicated(DF3))
+# El diseño es longitudinal, cada estudiante debe tener un solo registro por día.
+DF3 %>%
+  mutate(fecha = substr(hora, 1, 10)) %>%
+  count(email, fecha) %>%
+  filter(n > 1)
+```
+
+Se detectaron 2 registros duplicados por doble envío en un mismo día; se documentan para corrección del instrumento.
+
+```{r}
+# Observaciones limpias que aportó cada grupo
+DF3 %>% count(Grupo)
+```
+
+```{r}
+# Filtro sobre nuestro grupo
+GRUPO <- 6
+DF3_grupo <- DF3 %>% filter(Grupo == GRUPO)
+
+nrow(DF3_grupo)
+DF3_grupo %>% count(email)
+```
+
+
+```{r}
+n_distinct(DF3$email)
+```
+
+La cuota exigida es de 200 muestras aportadas y 150 limpias por grupo. El Grupo 6 ha aportado 66 registros, de los cuales 64 superan los criterios: una retención del 97%, la más alta de la sección, cuyo promedio es 81%. Con los cinco integrantes registrando a diario, la cuota se completa hacia el 8 de noviembre, dentro del plazo del PG2. En la sección respondieron 34 de 45 estudiantes.
+
+**Conclusión de validación y limpieza**
+
+En total, se conservaron 290 observaciones (81.46%). La decisión más importante fue evitar el `na.omit` para no perder el 14.48% de la muestra, evitando sesgar el estudio al descartar muestras válidas. Al tratar los nulos según su origen, la base quedó sin faltantes, con los formatos correctos en cada columna y lista para analizar. Quedan pendientes revisar los 2 registros duplicados y completar la cuota de 200 muestras del grupo.
+
+# Análisis descriptivo
+
+## Análisis univariado
+
+### Número de consultas a la IA
+
+```{r}
+boxplot(DF3$consultas,
+        main = "Boxplot - Número de consultas a la IA",
+        ylab = "Cantidad de consultas",
+        col = "gray80")
+abline(h = mean(DF3$consultas, na.rm = TRUE), col = "firebrick", lwd = 2, lty = 2)
+legend("topright",
+       legend = paste("Media =", round(mean(DF3$consultas, na.rm = TRUE), 2)),
+       col = "firebrick", lty = 2, lwd = 2, bty = "n")
+```
+```{r}
+quantile(DF3$consultas, 0.5, na.rm = T, type = 3, )
+quantile(DF3$consultas, 0.75, na.rm = T, type = 3, )
+```
+Se puede ver que en al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos un cuarto de los registros, los estudiantes han hecho 22 o más consultas diarias a la IA.
+
+```{r}
+barplot(table(DF3$consultas),
+        main = "Diagrama de barras - Número de consultas a la IA",
+        xlab = "Cantidad de consultas",
+        ylab = "Frecuencia de cada cantidad",
+        col = "gray80")
+```
+El barplot confirma que en la mayoría de registros el uso no es intensivo, aunque sí constante. Por eso la media (14.2) duplica a la mediana: unos pocos días de uso muy alto elevan el promedio.
+
+
+### Nivel de comprensión
+
+Al ser ordinal, usamos frecuencias, porcentajes y barras. No hay media ni desviación porque no son números, pero sí mediana porque tienen orden.
+
+```{r}
+table(DF3$comprension)
+round(prop.table(table(DF3$comprension)) * 100, 2)
+round(cumsum(prop.table(table(DF3$comprension))) * 100, 2)
+```
+
+La moda y la mediana son Moderado (54.83%; el acumulado pasa el 50% ahí con 64.14%). El 35.87% tuvo comprensión alta o muy alta y solo el 9.31% baja o muy baja.
+
+```{r}
+DF3 %>%
+  count(comprension) %>%
+  mutate(p = n / sum(n) * 100) %>%
+  ggplot(aes(x = comprension, y = p, fill = comprension)) +
+  geom_col(color = "black", width = 0.75) +
+  geom_text(aes(label = paste0(round(p, 2), "%")), vjust = -0.5, size = 3.5) +
+  scale_fill_manual(values = c("gray92", "gray80", "gray66", "gray50", "gray35")) +
+  labs(title = "Proporción de registros según nivel de comprensión",
+       x = "Nivel de comprensión", y = "Porcentaje de registros (%)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+### Horas de sueño
+
+Al ser `sueno` una variable cuantitativa continua, se eligieron boxplot e histograma para describirla.
+
+```{r}
+boxplot(DF3$sueno,
+        main = "Horas de sueño",
+        ylab = "Horas",
+        col = "gray80")
+```
+La variable `sueno` muestra un patrón equilibrado entre los estudiantes de UTEC: la mitad duerme 7 horas o menos, y el 50% central concentra su descanso entre las 6 y 8 horas.
+
+```{r}
+hist(DF3$sueno,
+     main = "Horas de sueño",
+     xlab = "Horas",
+     col = "gray80",
+     ylab = "Frecuencia")
+axis(1, at = 0:ceiling(max(DF3$sueno)))
+abline(v = mean(DF3$sueno, na.rm = TRUE), col = "firebrick", lwd = 2, lty = 2)
+legend("topright",
+       legend = paste("Media =", round(mean(DF3$sueno, na.rm = TRUE), 2)),
+       col = "firebrick", lty = 2, lwd = 2, bty = "n")
+```
+
+El histograma confirma ese equilibrio, la mayoría de los estudiantes duerme un número similar de horas, y son pocos los que se alejan bastante del resto.
+
+```{r}
+summary(DF3$sueno)
+round(sd(DF3$sueno),2)
+IQR(DF3$sueno)
+round(sd(DF3$sueno) / mean(DF3$sueno),2) #CV
+```
+El coeficiente de variación es `0.28`  por lo que tanto la media como la mediana representan bien el sueño de los estudiantes.
+
+## Análisis de interacción
+
+### Objetivo 1: consultas vs. satisfaccion
+
+```{r}
+boxplot(consultas ~ satisfaccion, data = DF3,
+        main = "Nivel de satisfacción vs Número de consultas",
+        xlab = "Nivel de satisfacción",
+        ylab = "Cantidad de consultas",
+        col = c("gray92", "gray80", "gray66", "gray50", "gray35"))
+```
+Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se puede notar un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción, donde se ve una disminución de la mediana). Esto nos indica que podría haber una relación importante entre cuántas consultas se ha hecho a la IA y cuán satisfecho se está con el estudio de ese día.
+
+```{r}
+quantile(DF3$consultas[DF3$satisfaccion == 3], 0.3, na.rm = T, type = 3)
+quantile(DF3$consultas[DF3$satisfaccion == 4], 0.3, na.rm = T, type = 3)
+quantile(DF3$consultas[DF3$satisfaccion == 5], 0.3, na.rm = T, type = 3)
+```
+Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 5 o más consultas a la IA por día.
+
+
+### Objetivo 2: consultas vs. estudio
+
+```{r}
+cor.test(DF3$consultas,DF3$estudio,method="spearman")
+```
+Se usó el coeficiente de correlación de Spearman debido a que resiste mejor la presencia de outliers, el cual fue de 0.481, lo que confirma una asociación positiva y moderada, además de que con el p-value < 0.001 podemos asegurar significancia estadística, ya que indica que no es resultado de azar. En conclusión, hay una tendencia de que a mayor cantidad de horas de estudio habrá más consultas que se realizaron.
+```{r}
+ggplot(DF3, aes(x = consultas, y = estudio)) +
+  geom_point(color = "navy", size = 2.5) +
+  labs(
+    title = "Consultas vs. horas de estudio",
+    x = "Consultas a la IA",
+    y = "Horas de estudio"
+  )
+```
+
+
+### Objetivo 3a: curso vs. uso
+
+Al ser ambas nominales, usamos tabla cruzada, porcentajes por curso y barras apiladas al 100%. Quitamos los días sin uso de IA y dejamos los 4 cursos y 4 usos más frecuentes.
+
+```{r}
+DFC <- DF3[DF3$uso_ia == TRUE, ]
+DFC$curso <- toupper(DFC$curso)
+DFC$uso <- as.character(DFC$uso)
+DFC <- DFC[DFC$curso %in% c("CC1105", "CS2031", "CC2101", "CS2013"), ]
+DFC <- DFC[DFC$uso %in% c("Resolver ejercicios", "Resumir", "Programar", "Redactar"), ]
+nrow(DFC)
+```
+
+```{r}
+tabla <- table(DFC$curso, DFC$uso)
+tabla
+round(prop.table(tabla, 1) * 100, 2)
+```
+
+```{r}
+DFC %>%
+  count(curso, uso) %>%
+  group_by(curso) %>%
+  mutate(p = n / sum(n) * 100) %>%
+  ggplot(aes(x = curso, y = p, fill = uso)) +
+  geom_col(width = 0.75) +
+  geom_text(aes(label = paste0(round(p, 1), "%")),
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_fill_manual(values = c("gray92", "gray78", "gray64", "gray50")) +
+  labs(title = "Proporción de usos de la IA según el curso",
+       x = "Curso", y = "Porcentaje de registros (%)", fill = "Uso principal") +
+  theme_minimal()
+```
+
+Con 116 registros, en CS2031 predomina programar (50%), en CC2101 resolver ejercicios (68.75%) y en CC1105 programar (40%), mientras que en CS2013 programar y resumir empatan (40% cada uno). Es decir, el uso de la IA cambia según el curso.
+
+### Objetivo 3b: uso vs. tareas
+
+```{r}
+DF3 %>%
+  filter(uso_ia) %>%
+  mutate(
+    uso_g = if_else(uso %in% c("Resolver ejercicios", "Resumir",
+                                "Programar", "Redactar", "No usó IA"),
+                     as.character(uso), "Otros"),
+    ahorro = if_else(tareas == 0, "Sin tareas ahorradas", "Con tareas ahorradas")
+  ) %>%
+  count(uso_g, ahorro) %>%
+  tidyr::pivot_wider(names_from = ahorro, values_from = n, values_fill = 0) %>%
+  {
+    tabla <- .[, c("uso_g", "Sin tareas ahorradas", "Con tareas ahorradas")]
+    m <- t(as.matrix(tabla[, -1]))
+    colnames(m) <- tabla$uso_g
+    barplot(m,
+            main = "Proporción de tareas ahorradas según el uso de IA",
+            ylab = "Cantidad de registros",
+            xlab = "Uso principal",
+            col = c("gray85", "gray45"))
+    legend("topleft",
+           legend = c("Sin ahorro", "Con ahorro"),
+           fill = c("gray85", "gray45"),
+           cex = 0.8)
+  }
+```
+
+```{r}
+DF3 %>%
+  filter(uso_ia) %>%
+  mutate(uso_g = if_else(uso %in% c("Resolver ejercicios", "Resumir",
+                                     "Programar", "Redactar", "No usó IA"),
+                          as.character(uso), "Otros")) %>%
+  group_by(uso_g) %>%
+  summarise(
+    registros   = n(),
+    ta_ahorrada = round(mean(tareas > 0, na.rm = TRUE) * 100,2)
+  ) %>%
+  rename(Uso = uso_g)
+```
+
+Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades, existe una relación favorable. El 100% de los registros con uso 'Redactar' reportó ahorro de tiempo, seguido por 'Resolver ejercicios' (92.55%), 'Resumir' (80%), 'Programar' (79.03%) y 'Otros' (76.19%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios', 'Resumir' y 'Programar', al concentrar la mayor cantidad de registros.
+
+
+### Objetivo 4: comprension vs. sueno
+
+
+```{r}
+boxplot(sueno ~ comprension, data = DF3,
+        main = "Sueño según comprensión",
+        xlab = "Comprensión",
+        ylab = "Horas de sueño",
+        col = c("gray92", "gray80", "gray66", "gray50", "gray35"))
+abline(h = mean(DF3$sueno, na.rm = TRUE), col = "firebrick", lwd = 2, lty = 2)
+legend("topright",
+       legend = paste("Media =", round(mean(DF3$sueno, na.rm = TRUE), 2)),
+       col = "firebrick", lty = 2, lwd = 2, bty = "n")
+```
+
+```{r}
+DF3%>%group_by(comprension)%>% summarise(n=n(),
+    Q1= quantile(sueno, 0.25, na.rm = TRUE),
+    Mediana = quantile(sueno, 0.5 ,na.rm = TRUE),
+    Q3= quantile(sueno, 0.75, na.rm = TRUE),
+    RIC     = IQR(sueno, na.rm = TRUE),
+    Media = mean(sueno,na.rm=TRUE),
+    CV = (sd(sueno,na.rm=TRUE)/mean(sueno,na.rm=TRUE))
+                                         )
+```
+
+El 25% (Q1) en las 3 categorías intermedias tiene el mismo valor, mientras que en el 50% se mantiene esto, en el 50% central en las 2 categorías intermedias (Moderado, Alto), las horas de sueño varían de 6 a 8. 
+
+El CV es menor a 0.3 en cuatro de los cinco niveles, lo que sugiere homogeneidad y hace representativa a la media, sobre todo en Moderado y Alto por su mayor número de datos. No se observa, sin embargo, ninguna tendencia: las medianas son prácticamente idénticas en los cinco niveles y la media más alta corresponde a Muy alto (7.32 h), no a Muy bajo.
+
+# Conclusiones
+
+## Conclusión del Objetivo 1
+
+Como se ha mencionado anteriormente, existe una relación positiva entre el número de consultas a la IA y el grado de satisfacción en el intervalo [1 : 4]. Se propone la explicación de que esta relación se podría deber a que un mayor número de consultas ayudan al estudiante a comprender mejor los temas que estudia. Esto derivaría en un mayor grado de satisfacción con el avance académico. Para el grado de satisfacción 5, si bien no sigue esta tendencia, aún tiene una relación con la variable `consultas` pues se sabe que al menos el 70% de sus registros reportan por lo menos 5 consultas a la IA por día.
+
+Cabe aclarar que la propuesta de explicación presentada, la cual sigue un formato causa - consecuencia, es tan solo una hipótesis pues la existencia de una relación no implica causalidad.
+
+## Conclusión del Objetivo 2
+
+Se comprobó la asociación entre consultas y horas de estudio, la cual es positiva y moderada. Esto demuestra que a mayor cantidad de horas de estudio hay mayor cantidad de consultas.
+
+## Conclusión del Objetivo 3
+
+Se evidencia que el curso influye en el uso que se le da a la IA. El estudiante adapta la herramienta a las exigencias de cada materia. A su vez, el ahorro de tiempo superó el 75% en todos los usos, y el mayor impacto global corresponde a los más frecuentes. Estos hallazgos son asociaciones y no implican causalidad, pues el ahorro reportado podría depender de otras variables de la rutina del estudiante.
+
+## Conclusión del Objetivo 4
+
+No se evidencia relación entre las horas de sueño y el nivel de comprensión: las medianas coinciden en los cinco niveles y las medias oscilan sin dirección entre 6.65 y 7.32 horas. El resultado es informativo en sí mismo, pues descarta una asociación que el planteamiento inicial consideraba plausible.
+
+## Conclusión general del estudio
+
+Después de limpiar los datos, vimos que los estudiantes de Estadística sección 1 usan la IA casi todos los días y para cosas distintas según el curso. Los que hacen más consultas suelen estudiar más horas y sentirse más satisfechos con su avance. En cambio, las horas de sueño casi no cambian según el nivel de comprensión. Esto no prueba que una cosa cause la otra, solo que suelen darse juntas.
