@@ -396,11 +396,11 @@ boxplot(DF2$sueno,
 boxplot.stats(DF2$sueno)$out
 ```
 
-Los atípicos son 60 y 68 en consultas; 7, 8, 11, 12 y 15 en tareas; 10 en estudio; y 0, 2, 13 y 14 en sueño. Se conservan porque son valores posibles: dormir 2 horas o estudiar 10 en un día es inusual, no imposible, y los extremos de consultas y tareas reflejan jornadas de uso intensivo. Ninguno se trata como error.
+Los atípicos son 54, 56, 57, 60 y 68 en consultas; 7, 8, 11, 12 y 15 en tareas; 8, 9 y 10 en estudio; y 0, 2, 13 y 14 en sueño. Se conservan porque son valores posibles: dormir 2 horas o estudiar 10 en un día es inusual, no imposible, y los extremos de consultas y tareas reflejan jornadas de uso intensivo. Ninguno se trata como error.
 
 ### Paso 5: Variabilidad
 
-Para cada una de las variables numéricas calculamos el rango, la varianza, la desviación estándar y el IQR.
+Para cada una de las variables numéricas calculamos el rango, la varianza, la desviación estándar, el IQR y el coeficiente de variación (CV). Si el CV es mayor a 0.6 usamos la mediana como medida central; si no, la media.
 
 ```{r}
 # Variabilidad de las consultas
@@ -408,9 +408,10 @@ range(DF2$consultas, na.rm = TRUE)
 var(DF2$consultas, na.rm = TRUE)
 sd(DF2$consultas, na.rm = TRUE)
 IQR(DF2$consultas, na.rm = TRUE)
+sd(DF2$consultas, na.rm = TRUE) / mean(DF2$consultas, na.rm = TRUE)
 ```
 
-En consultas los valores van de 1 a 68, con desviación estándar 14.63 e IQR 21.25: la dispersión es alta y el máximo de 68 la aumenta.
+En consultas los valores van de 1 a 68, con desviación estándar 14.02 e IQR 19.5: la dispersión es alta y el máximo de 68 la aumenta. Como el CV es 0.93, usamos la mediana (8 consultas).
 
 ```{r}
 # Variabilidad de las tareas
@@ -418,9 +419,10 @@ range(DF2$tareas, na.rm = TRUE)
 var(DF2$tareas, na.rm = TRUE)
 sd(DF2$tareas, na.rm = TRUE)
 IQR(DF2$tareas, na.rm = TRUE)
+sd(DF2$tareas, na.rm = TRUE) / mean(DF2$tareas, na.rm = TRUE)
 ```
 
-En tareas los valores van de 0 a 15, con IQR 2 y desviación estándar 2.00: la mitad central se concentra en un intervalo estrecho, aunque los atípicos muestran días con mucho más ahorro.
+En tareas los valores van de 0 a 15, con IQR 2 y desviación estándar 1.91: la mitad central se concentra en un intervalo estrecho, aunque los atípicos muestran días con mucho más ahorro. Como el CV es 0.99, usamos la mediana (1 tarea).
 
 ```{r}
 # Variabilidad de las horas de estudio
@@ -428,9 +430,10 @@ range(DF2$estudio, na.rm = TRUE)
 var(DF2$estudio, na.rm = TRUE)
 sd(DF2$estudio, na.rm = TRUE)
 IQR(DF2$estudio, na.rm = TRUE)
+sd(DF2$estudio, na.rm = TRUE) / mean(DF2$estudio, na.rm = TRUE)
 ```
 
-En estudio los valores van de 0 a 10 horas, con desviación estándar 1.94 e IQR 3. El valor de 10 horas es atípico pero posible, por lo que se conservó.
+En estudio los valores van de 0 a 10 horas, con desviación estándar 1.89 e IQR 2. Los valores de 8 a 10 horas son atípicos pero posibles, por lo que se conservaron. Como el CV es 0.61, usamos la mediana (3 horas).
 
 ```{r}
 # Variabilidad de las horas de sueño
@@ -438,17 +441,19 @@ range(DF2$sueno, na.rm = TRUE)
 var(DF2$sueno, na.rm = TRUE)
 sd(DF2$sueno, na.rm = TRUE)
 IQR(DF2$sueno, na.rm = TRUE)
+sd(DF2$sueno, na.rm = TRUE) / mean(DF2$sueno, na.rm = TRUE)
 ```
 
-En sueño los valores van de 0 a 14 horas, con desviación estándar 1.94 e IQR 2. Los atípicos de 0, 2, 13 y 14 horas corresponden a noches muy alejadas del descanso habitual.
+En sueño los valores van de 0 a 14 horas, con desviación estándar 1.94 e IQR 2. Los atípicos de 0, 2, 13 y 14 horas corresponden a noches muy alejadas del descanso habitual. Como el CV es 0.28, la media (6.9 horas) sí es representativa.
 
 ```{r}
-# Frecuencia del principal uso de IA
-table(DF2$uso)
-prop.table(table(DF2$uso)) * 100
+# Frecuencia del principal uso de IA (de mayor a menor)
+length(unique(na.omit(DF2$uso)))
+head(sort(table(DF2$uso), decreasing = TRUE), 4)
+round(head(sort(prop.table(table(DF2$uso)), decreasing = TRUE), 4) * 100, 2)
 ```
 
-En uso, los más frecuentes son resolver ejercicios (85 registros, 34.27%), resumir (70, 28.23%) y programar (61, 24.60%); redactar reúne 14 (5.65%) y el resto son categorías marginales.
+En uso hay 19 categorías distintas, pero solo 4 reúnen el 93.31% de las respuestas: resolver ejercicios (103 registros, 34.45%), resumir (81, 27.09%), programar (73, 24.41%) y redactar (22, 7.36%). Las demás son respuestas aisladas.
 
 ```{r}
 # Frecuencia del nivel de satisfacción
@@ -456,15 +461,16 @@ table(DF2$satisfaccion)
 prop.table(table(DF2$satisfaccion)) * 100
 ```
 
-En satisfacción domina el nivel 3 con 135 registros (46.55%), seguido del 4 con 96 (33.10%); los niveles extremos 1 y 5 reúnen 19 y 14 registros.
+En satisfacción domina el nivel 3 con 167 registros (46.91%), seguido del 4 con 111 (31.18%); los niveles extremos 1 y 5 reúnen 26 y 21 registros.
 
 ```{r}
-# Frecuencia del nivel de comprensión
-table(DF2$comprension)
-prop.table(table(DF2$comprension)) * 100
+# Frecuencia del nivel de comprensión (en su orden natural)
+niveles <- c("Muy bajo", "Bajo", "Moderado", "Alto", "Muy alto")
+table(factor(DF2$comprension, levels = niveles))
+prop.table(table(factor(DF2$comprension, levels = niveles))) * 100
 ```
 
-En comprensión la categoría más frecuente es "Moderado" con 159 registros (54.83%), seguida de "Alto" con 84 (28.97%); "Bajo", "Muy alto" y "Muy bajo" reúnen 17, 20 y 10.
+En comprensión, ordenada de Muy bajo a Muy alto, la categoría más frecuente es Moderado con 201 registros (56.46%), seguida de Alto con 94 (26.40%); Muy bajo, Bajo y Muy alto reúnen 13, 21 y 27.
 
 ### Paso 6: Gestión de nulos
 
@@ -746,7 +752,7 @@ round(prop.table(table(DF3$comprension)) * 100, 2)
 round(cumsum(prop.table(table(DF3$comprension))) * 100, 2)
 ```
 
-La moda y la mediana son Moderado (54.83%; el acumulado pasa el 50% ahí con 64.14%). El 35.87% tuvo comprensión alta o muy alta y solo el 9.31% baja o muy baja.
+La moda y la mediana son Moderado (56.46%; el acumulado pasa el 50% ahí con 66.01%). El 33.98% tuvo comprensión alta o muy alta y solo el 9.55% baja o muy baja.
 
 ```{r}
 DF3 %>%
@@ -870,7 +876,7 @@ DFC %>%
   theme_minimal()
 ```
 
-Con 116 registros, en CS2031 predomina programar (50%), en CC2101 resolver ejercicios (68.75%) y en CC1105 programar (40%), mientras que en CS2013 programar y resumir empatan (40% cada uno). Es decir, el uso de la IA cambia según el curso.
+Con 137 registros, en CC2101 predomina resolver ejercicios (61.90%), mientras que en CS2031, CS2013 y CC1105 predomina programar (48.65%, 41.67% y 40%), aunque en CS2031 resumir también es alto (40.54%). Es decir, el uso de la IA cambia según el curso.
 
 ### Objetivo 3b: uso vs. tareas
 
