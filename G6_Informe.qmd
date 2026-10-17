@@ -753,7 +753,7 @@ barplot(table(DF3$consultas),
         col = "gray80")
 ```
 
-El gráfico muestra que el 60% de los registros tiene 10 consultas o menos, llegando a un máximo de 68 consultas.
+El gráfico de barras confirma que si bien el uso no es intensivo, este sí es constante en el tiempo.
 
 ### Nivel de comprensión
 
