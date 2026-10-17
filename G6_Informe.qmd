@@ -1,6 +1,6 @@
 ---
 title: "Uso de IA, sueño y rendimiento académico en estudiantes de UTEC"
-subtitle: "PG1 — Informe | Estadística y Probabilidades, sección 01, ciclo 2026-2"
+subtitle: "PG2 — Informe | Estadística y Probabilidades, sección 01, ciclo 2026-2"
 author: "S1-G6"
 date: "`r Sys.Date()`"
 lang: es
@@ -197,7 +197,6 @@ Realizamos un inner join para relacionar `email` con el grupo correspondiente
 ```{r}
 DFL <- inner_join(DFL, DFAuxiliar, by = "email")
 ```
-
 ```{r}
 head(DFL[c("hora", "email", "Grupo")])
 ```
@@ -231,25 +230,21 @@ Se puede ver que hay 4 valores faltantes en el dataframe. Esto es raro considera
 ```{r}
 sum(DFL$consultas == 0, na.rm = TRUE)
 ```
-
 Hay 34 registros en los que el estudiante no consultó la IA en todo el día.
 
 ```{r}
 sum(DFL$tareas == 0, na.rm = TRUE)
 ```
-
 Hay 92 registros en los que la IA no ahorró tiempo en ninguna tarea.
 
 ```{r}
 sum(DFL$estudio == 0, na.rm = TRUE)
 ```
-
 Hay 27 registros de personas que no estudiaron ni una hora durante 1 día.
 
 ```{r}
 sum(DFL$sueno == 0, na.rm = TRUE)
 ```
-
 Hay 4 registros de estudiantes que no durmieron ni 1 hora.
 
 #### Análisis de cardinalidad
@@ -258,14 +253,12 @@ Hay 4 registros de estudiantes que no durmieron ni 1 hora.
 length(unique(DFL$comprension))
 unique(DFL$comprension)
 ```
-
 La ordinal `comprension` ya tomó sus 5 niveles al menos una vez.
 
 ```{r}
 length(unique(DFL$sueno))
 unique(DFL$sueno)
 ```
-
 Las variables `sueno` y `estudio` toman valores diversos pese a su discretización parcial y al rango admisible reducido \[0, 24\].
 
 ```{r}
@@ -276,34 +269,29 @@ unique(DFL$estudio)
 ```{r}
 length(unique(DFL$curso))
 ```
-
 `curso` varía mucho porque la UTEC dicta varios cursos y los alumnos vienen de distintas carreras.
 
 ```{r}
 length(unique(DFL$tareas))
 sort(unique(DFL$tareas))
 ```
-
 La variable discreta `tareas` ha tomado una cantidad reducida de valores encerrados en el intervalo \[0, 15\].
 
 ```{r}
 length(unique(DFL$satisfaccion))
 unique(DFL$satisfaccion)
 ```
-
 La ordinal `satisfaccion` también tomó sus 5 niveles.
 
 ```{r}
 length(unique(DFL$uso))
 unique(DFL$uso)
 ```
-
 La nominal `uso` presenta gran variabilidad, propia de su naturaleza.
 
 ```{r}
 length(unique(DFL$consultas))
 ```
-
 La discreta `consultas` también presenta una gran cantidad de valores únicos.
 
 ### Paso 2: Normalización
@@ -312,11 +300,11 @@ Se filtrará con base en el plazo de tiempo para el envío del formulario. Adem�
 
 ```{r}
 
-#Se hace el filtrado por horas teniendo en cuenta que se guarda en el formato de 24 horas por lo que solo acotamos desde 21.5 o sea 9:30 
+#Se hace el filtrado por horas teniendo en cuenta que se guarda en el formato de 24 horas por lo que solo acotamos desde 21.5 osea 9:30 
 
 DFL1<-DFL%>%filter(!(((hour(dmy_hms(hora)) + minute(dmy_hms(hora))/60) < 21.5))) %>% 
 
-# en caso de superesswarnings es para evitar que arroje errores en consultas debido a que permite ingreso de datos vacíos por lo que se trata de convertir a numero y de ahí vemos si es NA e invirtiendo mediante ! para quedarnos con los que si cumplan eso  
+# en caso de superesswarnings es para evitar que arroje errores en consultas debido a que permite ingreso de datos vacios por lo que se trata de convertir a numero y de ahi vemos si es NA e inviertiendo mediante ! para quedarnos con los que si cumplan eso  
   
 filter(!is.na(suppressWarnings(as.numeric(consultas))), 
 
@@ -325,7 +313,7 @@ filter(!is.na(suppressWarnings(as.numeric(consultas))),
 !is.na(suppressWarnings(as.numeric(tareas))),                                   
 !is.na(suppressWarnings(as.numeric(estudio))),                           !is.na(suppressWarnings(as.numeric(sueno))))%>% 
   
-#verificamos que las consultas y tareas sean números enteros 
+#verificamos que las consultas y tareas sean numeros enteros 
 
 filter(as.numeric(consultas)%%1==0, 
        as.numeric(tareas)%%1==0)
@@ -342,7 +330,7 @@ Como la respuesta cualitativa (uso) se relaciona con variables cuantitativas (co
   # se arma el primer filtro para normalizar uso
   uso_= chartr("áéíóúÁÉÍÓÚ", "aeiouAEIOU", tolower(uso)),
   
-  # el segundo filtro para la búsqueda de palabras clave 
+  # el segundo filtro para la busqueda de palabras clave 
   usoC= str_detect(uso_,regex("\\b(ia|no|use|ningun[oa])\\b",ignore_case = TRUE)),
   
   # el tercer filtro ayuda a buscar datos no validos y validar los mismos
@@ -361,7 +349,7 @@ Como la respuesta cualitativa (uso) se relaciona con variables cuantitativas (co
   
   curso = if_else(filtro,curso,NA_character_)
   ) %>% select(-filtro, -usoC,-cursoC,-uso_)  
-# después se borra las columnas auxiliares     
+# despues se borra las columnas auxiliares     
 ```
 
 ### Paso 4: Datos atípicos
@@ -497,7 +485,6 @@ tabla_NA <- data.frame(
 )
 tabla_NA
 ```
-
 ```{r}
 #Revisamos si los NAs están en una mismo registro
 table(rowSums(is.na(DF2)))
@@ -506,7 +493,6 @@ nrow(DF2)
 nrow(na.omit(DF2))
 round((1 - nrow(na.omit(DF2)) / nrow(DF2)) * 100, 2)
 ```
-
 La eliminación directa mediante `na.omit` descartaría el 16.01% de la muestra. Para evitarlo, se reconstruyen los criterios desde la base previa (`DFL1`) y se clasifica el origen de cada registro incompleto.
 
 ```{r}
@@ -554,14 +540,15 @@ diagnostico %>%
 **Sin uso de IA (26 registros).** El estudiante no usó la herramienta; el valor real del NA es cero.
 
 **Curso fuera de formato (31 registros).** Sí usaron IA, pero el código del curso es inválido.
+  
+Una política uniforme asignaría `consultas = 0` y `uso = "No usó IA"` a estudiantes con uso intensivo, sesgando las variables centrales de los objetivos 1 y 3. 
 
-Una política uniforme asignaría `consultas = 0` y `uso = "No usó IA"` a estudiantes con uso intensivo, sesgando las variables centrales de los objetivos 1 y 3.
-
+  
 | Motivo | Tratamiento | Justificación |
-|------------------|------------------|-----------------------------------|
+|------------------|------------------|------------------------------------|
 | Sin uso de IA | `consultas` y `tareas` → 0; `uso` → "No usó IA"; `curso` → "No aplica" | El valor real del conteo es cero y la ausencia es una respuesta lógica |
 | Curso fuera de formato | Se conservan `consultas`, `tareas` y `uso`; solo `curso` → "Sin código válido" | El uso de IA sí ocurrió; lo único inválido es el código del curso |
-
+  
 Se agrega `uso_ia` para que los objetivos 1 y 3 puedan filtrar los días sin uso sin eliminarlos. También se codifican las variables ordinales como factor y los identificadores como nominales.
 
 ```{r}
@@ -712,6 +699,7 @@ nrow(DF3_grupo)
 DF3_grupo %>% count(email)
 ```
 
+
 ```{r}
 n_distinct(DF_GesNulos$email)
 ```
@@ -720,7 +708,7 @@ Finalmente, el Grupo 6 ha aportado 79 observaciones limpias sobre el total de 35
 
 **Conclusión de validación y limpieza**
 
-En total, se conservaron 356 observaciones (81.84%). La decisión más importante fue evitar el `na.omit` para no perder el 16.01% de la muestra, evitando sesgar el estudio al descartar muestras válidas. Al tratar los nulos según su origen, la base quedó sin faltantes, con los formatos correctos en cada columna y lista para analizar. Quedan pendientes revisar los 2 registros duplicados y completar la cuota de 150 observaciones limpias del grupo.
+En total, se conservaron 356 observaciones (81.84%). La decisión más importante fue evitar el `na.omit` para no perder el 16.01% de la muestra, evitando sesgar el estudio al descartar muestras válidas. Al tratar los nulos según su origen, la base quedó sin faltantes, con los formatos correctos en cada columna y lista para analizar. Quedan pendientes revisar los 2 registros duplicados y completar la cuota de 150 muestras limpias del grupo.
 
 # Análisis descriptivo
 
@@ -731,8 +719,7 @@ En total, se conservaron 356 observaciones (81.84%). La decisión más important
 ```{r}
 sd(DF3$consultas, na.rm = T) / abs(mean(DF3$consultas, na.rm = T))
 ```
-
-Dado un CV \> 0.6, preferiremos usar la mediana y los cuantiles para el análisis.
+Dado un CV > 0.6, preferiremos usar la mediana y los cuantiles para el análisis.
 
 ```{r}
 boxplot(DF3$consultas,
@@ -752,8 +739,8 @@ barplot(table(DF3$consultas),
         ylab = "Frecuencia de cada cantidad",
         col = "gray80")
 ```
+El barplot confirma que si bien el uso no es intensivo, este sí es constante en el tiempo.
 
-El gráfico de barras confirma que si bien el uso no es intensivo, este sí es constante en el tiempo.
 
 ### Nivel de comprensión
 
@@ -790,7 +777,7 @@ IQR(DF3$sueno)
 round(sd(DF3$sueno) / mean(DF3$sueno),2) #CV
 ```
 
-El coeficiente de variación es `0.28` por lo que tanto la media como la mediana representan bien el sueño de los estudiantes y al ser `sueno` una variable cuantitativa continua, se eligieron boxplot e histograma para describirla.
+El coeficiente de variación es `0.28`  por lo que tanto la media como la mediana representan bien el sueño de los estudiantes y al ser `sueno` una variable cuantitativa continua, se eligieron boxplot e histograma para describirla.
 
 ```{r}
 boxplot(DF3$sueno,
@@ -798,7 +785,6 @@ boxplot(DF3$sueno,
         ylab = "Horas",
         col = "gray80")
 ```
-
 La variable `sueno` muestra un patrón equilibrado entre los estudiantes de UTEC: la mitad duerme 7 horas o menos, y el 50% central concentra su descanso entre las 6 y 8 horas.
 
 ```{r}
@@ -816,9 +802,11 @@ legend("topright",
 
 El histograma confirma ese equilibrio, la mayoría de los estudiantes duerme un número similar de horas, y son pocos los que se alejan bastante del resto.
 
+
+
 ## Análisis de interacción
 
-### Objetivo 1: consultas vs. satisfacción
+### Objetivo 1: consultas vs. satisfaccion
 
 ```{r}
 boxplot(consultas ~ satisfaccion, data = DF3,
@@ -827,7 +815,6 @@ boxplot(consultas ~ satisfaccion, data = DF3,
         ylab = "Cantidad de consultas",
         col = c("gray92", "gray80", "gray66", "gray50", "gray35"))
 ```
-
 Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se puede notar un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción, donde se ve una disminución de la mediana). Esto nos indica que podría haber una relación importante entre cuántas consultas se han hecho a la IA y cuán satisfecho se está con el estudio de ese día.
 
 ```{r}
@@ -835,17 +822,15 @@ quantile(DF3$consultas[DF3$satisfaccion == 3], 0.3, na.rm = T, type = 3)
 quantile(DF3$consultas[DF3$satisfaccion == 4], 0.3, na.rm = T, type = 3)
 quantile(DF3$consultas[DF3$satisfaccion == 5], 0.3, na.rm = T, type = 3)
 ```
+Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 5 o más consultas a la IA por día, reforzando la idea de una relación positiva entre `consultas` y `satisfacción`.
 
-Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 4 o más consultas a la IA por día, reforzando la idea de una relación positiva entre `consultas` y `satisfacción`.
 
 ### Objetivo 2: consultas vs. estudio
 
 ```{r}
 cor.test(DF3$consultas,DF3$estudio,method="spearman")
 ```
-
-Se usó el coeficiente de correlación de Spearman debido a que resiste mejor la presencia de outliers, el cual fue de 0.497, lo que confirma una asociación positiva y moderada, además de que con el p-value \< 0.001 podemos asegurar significancia estadística, ya que indica que no es resultado de azar. En conclusión, hay una tendencia de que a mayor cantidad de horas de estudio habrá más consultas que se realizaron.
-
+Se usó el coeficiente de correlación de Spearman debido a que resiste mejor la presencia de outliers, el cual fue de 0.497, lo que confirma una asociación positiva y moderada, además de que con el p-value < 0.001 podemos asegurar significancia estadística, ya que indica que no es resultado de azar. En conclusión, hay una tendencia de que a mayor cantidad de horas de estudio habrá más consultas que se realizaron.
 ```{r}
 ggplot(DF3, aes(x = consultas, y = estudio)) +
   geom_point(color = "navy", size = 2.5) +
@@ -855,6 +840,7 @@ ggplot(DF3, aes(x = consultas, y = estudio)) +
     y = "Horas de estudio"
   )
 ```
+
 
 ### Objetivo 3a: curso vs. uso
 
@@ -938,7 +924,9 @@ DF3 %>%
 
 Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades, existe una relación favorable. El 100% de los registros con uso 'Redactar' reportó ahorro de tiempo, seguido por 'Resolver ejercicios' (91.23%), 'Resumir' (79.55%), 'Programar' (76%) y 'Otros' (68%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios', 'Resumir' y 'Programar', al concentrar la mayor cantidad de registros.
 
-### Objetivo 4: comprensión vs. sueño
+
+### Objetivo 4: comprension vs. sueno
+
 
 ```{r}
 boxplot(sueno ~ comprension, data = DF3,
@@ -963,29 +951,96 @@ DF3%>%group_by(comprension)%>% summarise(n=n(),
                                          )
 ```
 
-En Moderado y Alto, que reúnen la mayoría de los registros, el Q1 es 6, la mediana 7 y el Q3 8 horas, es decir, el 50% central duerme entre 6 y 8 horas.
+El 25% (Q1) en las 2 categorías intermedias tiene el mismo valor, mientras que en el 50% se mantienen estos, en el 50% central en las 2 categorías intermedias (Moderado, Alto), las horas de sueño varían de 6 a 8. 
 
-El CV se ubica entre 0.20 y 0.30 en todos los niveles, por lo que la media representa bien el sueño de cada grupo. No se observa una tendencia clara: las medias van de 6.71 h (Alto) a 7.55 h (Bajo) sin seguir el orden de la comprensión.
+El CV es menor a 0.3 en tres de los cinco niveles, lo que sugiere homogeneidad y hace representativa a la media, sobre todo en Muy Alto y Alto por su mayor número de datos. No se observa, sin embargo, ninguna tendencia: las medianas son prácticamente idénticas en los cinco niveles y la media más alta corresponde a Bajo (7.54 h).
+
+# Análisis Probabilístico
+
+<!-- no se olviden de al final borrar todos los comentarios -->
+
+## Probabilidad empírica
+
+### Observaciones limpias del grupo
+
+<!-- filtrar a nuestro grupo, osea el Grupo 6 solo para mostrar cuantas observaciones limpias aportamos (recuerden que piden 151 por grupo) y despues debemos quitar el filtro. recuerden que el codigo lo habiamos hecho en el paso 7 -->
+
+### Variable 1: consultas
+
+<!-- consultas tiene muchos valores distintos asi que hay que agruparla en intervalos-->
+
+**1. Experimento aleatorio:** 
+
+**2. Espacio de resultados:** 
+
+**3. Eventos atómicos:** 
+
+**4. Cálculo de probabilidades:** 
+
+**5. Validación:** 
+
+**Interpretación:** <!-- 1 o 2 líneas + una tabla o gráfico de barras -->
+
+### Variable 2: satisfacción
+
+**1. Experimento aleatorio:** 
+
+**2. Espacio de resultados:** 
+
+**3. Eventos atómicos:** 
+
+**4. Cálculo de probabilidades:** 
+
+**5. Validación:** 
+
+**Interpretación:** <!-- 1 o 2 líneas + una tabla o gráfico de barras -->
+
+## Probabilidad condicional
+
+### Eventos de interés
+
+<!-- debemos aqui definir dos eventos (simples o compuestos), uno de comprensión y otro de consultas, escritos como lo hizo el asesor que era "seleccionar un registro al azar que etc etc". Tambien debemos incluir P(E1), P(E2), P(E1 ∩ E2) y los complementos, dando tambien los conteos en una o dos frases y sin tabla -->
+
+
+### Validación de independencia
+
+<!-- debemos comparar P(E1 ∩ E2) con P(E1)P(E2) y decir con cuántos decimales se hace la comparación -->
+
+### Probabilidad condicional y propiedades
+
+<!-- P(E1 | E2) frente a P(E1) y las propiedades vistas en clase como la de union, la de complemento, etc etc. -->
+
+### Teorema de Bayes
+
+<!-- calcular P(E2 | E1) con Bayes y debemos comprobar que coincide con el cálculo directo -->
+
+### Interpretación en el contexto del estudio
+
+<!-- qué significan los resultados para el uso de la ia y la comprensión (hay que hacer como una asociacion-->
 
 # Conclusiones
 
 ## Conclusión del Objetivo 1
 
-Como se ha mencionado anteriormente, existe una relación positiva entre el número de consultas a la IA y el grado de satisfacción en el intervalo \[1, 4\]. Se propone la explicación de que esta relación se podría deber a que un mayor número de consultas ayuda al estudiante a comprender mejor los temas que estudia. Esto derivaría en un mayor grado de satisfacción con el avance académico. Para el grado de satisfacción 5, si bien no sigue esta tendencia, aún tiene una relación con la variable `consultas` pues se sabe que al menos el 70% de sus registros reportan por lo menos 5 consultas a la IA por día.
+Como se ha mencionado anteriormente, existe una relación positiva entre el número de consultas a la IA y el grado de satisfacción en el intervalo [1, 4]. Se propone la explicación de que esta relación se podría deber a que un mayor número de consultas ayuda al estudiante a comprender mejor los temas que estudia. Esto derivaría en un mayor grado de satisfacción con el avance académico. Para el grado de satisfacción 5, si bien no sigue esta tendencia, aún tiene una relación con la variable `consultas` pues se sabe que al menos el 70% de sus registros reportan por lo menos 5 consultas a la IA por día.
 
 Cabe aclarar que la propuesta de explicación presentada, la cual sigue un formato causa-consecuencia, es tan solo una hipótesis pues la existencia de una relación no implica causalidad.
 
 ## Conclusión del Objetivo 2
 
-Se comprobó la asociación entre consultas y horas de estudio, la cual es positiva y moderada. Esto sugiere que los días con más horas de estudio tienden a tener más consultas, sin que ello implique causalidad.
+Se comprobó la asociación entre consultas y horas de estudio, la cual es positiva y moderada. Esto demuestra que a mayor cantidad de horas de estudio hay mayor cantidad de consultas.
 
 ## Conclusión del Objetivo 3
 
-Se evidencia que el curso influye en el uso que se le da a la IA. El estudiante adapta la herramienta a las exigencias de cada materia. A su vez, el ahorro de tiempo fue de al menos 68% en todos los usos, y el mayor impacto global corresponde a los más frecuentes. Estos hallazgos son asociaciones y no implican causalidad, pues el ahorro reportado podría depender de otras variables de la rutina del estudiante. 
+Se evidencia que el curso influye en el uso que se le da a la IA. El estudiante adapta la herramienta a las exigencias de cada materia. A su vez, el ahorro de tiempo superó el 68% en todos los usos, y el mayor impacto global corresponde a los más frecuentes. Estos hallazgos son asociaciones y no implican causalidad, pues el ahorro reportado podría depender de otras variables de la rutina del estudiante.
 
 ## Conclusión del Objetivo 4
 
-No se observa una relación clara entre las horas de sueño y el nivel de comprensión. Las medianas se mantienen entre 7 y 8 horas y las medias entre 6.71 y 7.55, sin seguir el orden de los niveles, por lo que con estos datos no se puede afirmar que el sueño se asocie con la comprensión.
+No se evidencia relación entre las horas de sueño y el nivel de comprensión: las medianas coinciden en los cinco niveles y las medias oscilan sin dirección entre 6.65 y 7.32 horas. El resultado es informativo en sí mismo, pues descarta una asociación que el planteamiento inicial consideraba plausible.
+
+## Conclusión de probabilidad
+
+<!-- TODOO -->
 
 ## Conclusión general del estudio
 
