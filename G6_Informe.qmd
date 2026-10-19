@@ -983,17 +983,43 @@ El CV se ubica entre 0.20 y 0.30 en todos los niveles, por lo que la media repre
 
 ### Variable 2: satisfacción
 
-**1. Experimento aleatorio:** 
+**1. Experimento aleatorio:** $EA_2$: seleccionar al azar un registro de la muestra efectiva y observar su nivel de satisfacción con el avance académico del día.
 
-**2. Espacio de resultados:** 
+**2. Espacio de resultados:** $\Omega_{EA_2} = \{1, 2, 3, 4, 5\}$, donde 1 es muy baja y 5 muy alta.
 
-**3. Eventos atómicos:** 
+**3. Eventos atómicos:** $S_i$: seleccionar un registro al azar cuyo nivel de satisfacción sea $i$, con $i = 1, 2, 3, 4, 5$.
 
-**4. Cálculo de probabilidades:** 
+**4. Cálculo de probabilidades:**
 
-**5. Validación:** 
+```{r}
+frec_sat <- table(DF3$satisfaccion)
+prob_sat <- prop.table(frec_sat)
+frec_sat
+round(prob_sat, 4)
+```
 
-**Interpretación:** <!-- 1 o 2 líneas + una tabla o gráfico de barras -->
+$P(S_1) = 30/416 = 0.0721$; $P(S_2) = 35/416 = 0.0841$; $P(S_3) = 194/416 = 0.4663$; $P(S_4) = 125/416 = 0.3005$; $P(S_5) = 32/416 = 0.0769$.
+
+**5. Validación:**
+
+```{r}
+sum(prob_sat)
+```
+
+$0.0721 + 0.0841 + 0.4663 + 0.3005 + 0.0769 = 1$
+
+**Interpretación:**
+
+```{r}
+barplot(prob_sat,
+        main = "Probabilidad empírica de la satisfacción",
+        xlab = "Nivel de satisfacción (1 = muy baja, 5 = muy alta)",
+        ylab = "Probabilidad",
+        col = "gray70",
+        ylim = c(0, 0.6))
+```
+
+El nivel más probable es 3, con 0.4663. La probabilidad de una satisfacción alta (4 o 5) es 0.3774, casi el doble que la de una baja (1 o 2), que es 0.1562.
 
 ## Probabilidad condicional
 
