@@ -350,6 +350,8 @@ Como la respuesta cualitativa (uso) se relaciona con variables cuantitativas (co
   curso = if_else(filtro,curso,NA_character_)
   ) %>% select(-filtro, -usoC,-cursoC,-uso_)  
 # después se borra las columnas auxiliares     
+DF2$curso<-toupper(DF2$curso)
+DF2$uso<-tolower(DF2$uso)
 ```
 
 ### Paso 4: Datos atípicos
