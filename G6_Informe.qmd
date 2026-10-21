@@ -1001,7 +1001,7 @@ El CV se ubica entre 0.20 y 0.30 en todos los niveles, por lo que la media repre
 
 <!-- debemos incluir P(E1), P(E2), P(E1 ∩ E2) y los complementos, dando tambien los conteos en una o dos frases y sin tabla -->
 
-Vamos a ver la probabilidad del evento B dado evento A
+Vamos a ver la probabilidad del evento A dado el evento B
 
 Evento A : Seleccionar un registro al azar cuyo nivel de comprensión sea de `Alto`.
 Evento B : Seleccionar un registro al azar cuyo número de consultas a la IA esté en el rango [5, 15]
