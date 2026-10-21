@@ -999,10 +999,38 @@ El CV se ubica entre 0.20 y 0.30 en todos los niveles, por lo que la media repre
 
 ### Eventos de interés
 
-<!-- debemos aqui definir dos eventos (simples o compuestos), uno de comprensión y otro de consultas, escritos como lo hizo el asesor que era "seleccionar un registro al azar que etc etc". Tambien debemos incluir P(E1), P(E2), P(E1 ∩ E2) y los complementos, dando tambien los conteos en una o dos frases y sin tabla -->
+<!-- debemos incluir P(E1), P(E2), P(E1 ∩ E2) y los complementos, dando tambien los conteos en una o dos frases y sin tabla -->
+
+Vamos a ver la probabilidad del evento B dado evento A
+
+Evento A : Seleccionar un registro al azar cuyo nivel de comprensión sea de `Alto`.
+Evento B : Seleccionar un registro al azar cuyo número de consultas a la IA esté en el rango [5, 15]
+
+```{r}
+P_A = nrow(DF3 %>% filter(comprension == "Alto")) / nrow(DF3)
+paste("Probabilidad de A:", P_A)
+```
+
+```{r}
+P_B = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15)) / nrow(DF3)
+paste("Probabilidad de B:", P_B)
+```
+
+```{r}
+# Estas graficas son solo referenciales (quitarlas antes de entregar el trabajo)
+barplot(table(DF3$comprension))
+hist(DF3$consultas, breaks = 10)
+```
+
 
 
 ### Validación de independencia
+
+```{r}
+P_A_dado_B = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(5 <= consultas & consultas <= 15))
+
+P_A_dado_B
+```
 
 <!-- debemos comparar P(E1 ∩ E2) con P(E1)P(E2) y decir con cuántos decimales se hace la comparación -->
 
@@ -1012,11 +1040,40 @@ El CV se ubica entre 0.20 y 0.30 en todos los niveles, por lo que la media repre
 
 ### Teorema de Bayes
 
-<!-- calcular P(E2 | E1) con Bayes y debemos comprobar que coincide con el cálculo directo -->
+
+```{r}
+P_A_dado_noB = nrow(DF3 %>% filter((consultas < 5 | 15 < consultas) & comprension == "Alto")) / nrow(DF3 %>% filter(consultas < 5 | 15 < consultas))
+
+P_A_dado_noB
+```
+
+```{r}
+P_noB = 1 - P_B
+P_noB
+```
+
+Entonces, el valor obtenido por medio del Teorema de Bayes es:
+```{r}
+( P_A_dado_B * P_B ) / ( P_A_dado_B * P_B + P_A_dado_noB * P_noB )
+```
+Mientras que el resultado del cálculo directo es:
+```{r}
+directo <- nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(comprension == "Alto"))
+directo
+```
+
+Vemos que los cálculos se realizaron adecuadamente, pues los resultados coinciden.
 
 ### Interpretación en el contexto del estudio
 
 <!-- qué significan los resultados para el uso de la ia y la comprensión (hay que hacer como una asociacion-->
+
+De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de 30.77%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en este rango.
+
+```{r}
+round(directo * 100, 2)
+```
+
 
 # Conclusiones
 
