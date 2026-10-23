@@ -1094,9 +1094,29 @@ P_A_dado_B
 
 <!-- debemos comparar P(E1 ∩ E2) con P(E1)P(E2) y decir con cuántos decimales se hace la comparación -->
 
+```{r}
+P_A_inter_B<- nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3)
+round(P_A_inter_B,2) == round(P_A* P_B,2)
+round(P_A_inter_B,3) == round(P_A* P_B,3)
+
+P_A_dado_B==P_A
+
+```
 ### Probabilidad condicional y propiedades
 
 <!-- P(E1 | E2) frente a P(E1) y las propiedades vistas en clase como la de union, la de complemento, etc etc. -->
+
+```{r}
+
+#propiedades de probabilidad se deberia poner cada uno visto en clase 
+
+P_A_U_B<-P_A+P_B-P_A_inter_B
+P_A_comp<-1-P_A
+P_B_comp<-1-P_B
+#leyes de morgan
+P_A_U_B_comp<-1-P_A_U_B
+P_A_inter_B_comp<-1-P_A_inter_B
+```
 
 ### Teorema de Bayes
 
