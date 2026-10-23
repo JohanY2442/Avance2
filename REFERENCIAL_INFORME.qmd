@@ -1,0 +1,934 @@
+---
+title: "Condiciones físicas y ambientales de los ambientes de estudio de UTEC durante el ciclo 2026-1"
+author: "S1-G7"
+date: "2026-06-26"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    embed-resources: true
+    theme: cosmo
+    html-math-method: mathjax
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{=html}
+<style>
+body {font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.55;}
+a {color: #4d4d4d;}
+h1, h2, h3 {font-weight: 650; color: #3d3d3d;}
+.g7-table {border-collapse: collapse; width: 78%; margin: 0.6rem auto 1.1rem auto; font-size: 0.86rem;}
+.g7-table caption {caption-side: top; text-align: center; font-weight: 650; color: #4a4a4a; padding-bottom: 0.35rem;}
+.g7-table th {background-color: #d9d9d9; color: #1f1f1f; border-top: 1px solid #808080; border-bottom: 1px solid #808080; padding: 6px; text-align: center;}
+.g7-table td {border-bottom: 1px solid #cccccc; padding: 6px;}
+.g7-table tr:nth-child(even) {background-color: #f2f2f2;}
+.eqbox {background-color: #f5f5f5; border-left: 4px solid #777777; padding: 0.7rem 1rem; margin: 0.9rem 0;}
+.small-note {font-size: 0.94rem; color: #444444;}
+</style>
+```
+
+```{r}
+DF <- read.csv("Data_final_limpieza.csv", check.names = FALSE, stringsAsFactors = FALSE)
+```
+
+```{r}
+redondear <- function(x, d = 4) round(x, digits = d)
+porcentaje <- function(x) paste0(format(round(100 * x, 1), nsmall = 1), "%")
+
+ tabla_html <- function(datos, titulo) {
+  datos[] <- lapply(datos, as.character)
+  cat("<table class='g7-table'>")
+  cat(paste0("<caption>", titulo, "</caption>"))
+  cat("<thead><tr>")
+  cat(paste0("<th>", names(datos), "</th>", collapse = ""))
+  cat("</tr></thead><tbody>")
+  apply(datos, 1, function(fila) {
+    cat("<tr>")
+    cat(paste0("<td>", fila, "</td>", collapse = ""))
+    cat("</tr>")
+  })
+  cat("</tbody></table>")
+}
+
+ambiente <- tolower(trimws(as.character(DF$ambiente_de_estudio)))
+turno <- tolower(trimws(as.character(DF$turno)))
+ventilacion <- tolower(trimws(as.character(DF$ventilacion)))
+iluminacion_natural <- tolower(trimws(as.character(DF$iluminacion_natural)))
+limpieza <- tolower(trimws(as.character(DF$limpieza)))
+reverberacion <- tolower(trimws(as.character(DF$reverberacion)))
+
+temperatura <- as.numeric(DF[["Temperatura del ambiente (°C)"]])
+humedad <- as.numeric(DF[["Humedad relativa (%)"]])
+iluminacion <- as.numeric(DF[["Nivel de iluminación (lx)"]])
+piso <- as.numeric(DF$piso)
+estudiantes <- as.numeric(DF$numero_estudiantes)
+tomacorrientes <- as.numeric(DF$numero_tomacorrientes)
+
+grupo7 <- tolower(trimws(as.character(DF$grupo))) == "grupo 7"
+
+datos_prob <- complete.cases(estudiantes, limpieza)
+estudiantes_prob <- estudiantes[datos_prob]
+limpieza_prob <- limpieza[datos_prob]
+
+afluencia <- cut(estudiantes_prob,
+                 breaks = c(-Inf, 0, 2, 5, Inf),
+                 labels = c("sin estudiantes", "baja", "media", "alta"),
+                 right = TRUE)
+
+limpieza_factor <- factor(limpieza_prob,
+                          levels = c("sucio", "parcialmente limpio", "limpio"))
+vent_factor <- factor(ventilacion, levels = c("artificial", "natural"))
+```
+
+# I. Introducción
+
+## I.1 Relevancia
+
+Los ambientes de estudio son espacios clave para el trabajo académico fuera de clase. Este estudio analiza las condiciones físicas y ambientales de los ambientes de UTEC, como ventilación, temperatura, iluminación y limpieza, para evaluar su relación con la comodidad y el uso adecuado de estos espacios.
+
+## I.2 Objetivos
+
+### I.2.1 Objetivo general
+
+Identificar los factores que garantizan las condiciones físicas y ambientales adecuadas para los ambientes de estudio de UTEC donde no se realiza el dictado de clases, durante el periodo comprendido entre mediados de abril y mediados de mayo del ciclo académico 2026-1.
+
+### I.2.2 Objetivos específicos
+
+1.  Analizar la relación entre el tipo de ventilación y la temperatura ambiental en los ambientes de estudio de UTEC donde no se realiza el dictado de clases, durante el periodo comprendido entre mediados de abril y mediados de mayo del ciclo académico 2026-1.
+2.  Determinar la relación entre el nivel de iluminación y el número de piso en los ambientes de estudio de UTEC donde no se realiza el dictado de clases, durante el periodo comprendido entre mediados de abril y mediados de mayo del ciclo académico 2026-1.
+3.  Evaluar la relación entre el nivel de limpieza y el número de estudiantes que usan los ambientes de estudio de UTEC donde no se realiza el dictado de clases, durante el periodo comprendido entre mediados de abril y mediados de mayo del ciclo académico 2026-1.
+
+# II. Contexto
+
+## II.1 Población objetivo
+
+La población objetivo está conformada por los ambientes de estudio de UTEC donde no se dicta clase durante el ciclo 2026-1. La unidad muestral corresponde a cada ambiente observado en una fecha, turno y rango horario específicos.
+
+## II.2 Tipo de muestreo
+
+Se empleó un muestreo no probabilístico por conveniencia, debido a que los registros dependieron del acceso de los estudiantes a los ambientes y horarios disponibles.
+
+## II.3 Recolección de datos
+
+La información proviene de una **fuente primaria**, ya que los datos fueron recolectados directamente por la sección mediante un formulario. Se registraron mediciones ambientales y características observables de cada ambiente, como temperatura, iluminación, limpieza, ventilación, piso y cantidad de estudiantes.
+
+## II.4 Variables
+
+Con el fin de cumplir con los objetivos del estudio, se escogieron las siguientes variables del DataFrame. Estas se clasifican según su naturaleza, tipo en R y restricciones, para seleccionar descriptores adecuados en el análisis descriptivo y probabilístico.
+
+### II.4.1 Variables cuantitativas
+
+| Variable | Tipo de variable | Tipo en R | Restricciones |
+|----|----|----|----|
+| Temperatura del ambiente (°C) | Continua | numeric | Medición en °C con termómetro digital |
+| Nivel de iluminación (lx) | Continua | numeric | Medición positiva registrada con luxómetro |
+| numero_estudiantes | Discreta | integer | Conteo directo de estudiantes presentes |
+
+### II.4.2 Variables cualitativas
+
+| Variable | Tipo de variable | Tipo en R | Restricciones |
+|----|----|----|----|
+| ambiente_de_estudio | Nominal | factor | Biblioteca, sala de estudio, sala SUM o zona de descanso |
+| ventilacion | Nominal | factor | Natural o artificial |
+| limpieza | Ordinal | ordered factor | Sucio, parcialmente limpio o limpio |
+| piso | Ordinal | ordered factor / integer | Piso del ambiente observado, del 1° al 11° |
+| turno | Ordinal | ordered factor | Mañana, tarde o noche; variable contextual de recolección |
+
+## II.5 Muestra efectiva
+
+El análisis se realizó con la base limpia de la sección, conformada por **1799 observaciones**. Sin embargo, para el análisis de probabilidad empírica y condicional entre **limpieza** y **afluencia**, se trabajó con **1762 observaciones**, ya que solo se consideran los registros que tienen información completa en ambas variables.
+
+# III. Análisis descriptivo
+
+El análisis descriptivo resume el comportamiento inicial de las variables que orientan el análisis probabilístico. Se priorizan variables vinculadas con los objetivos del estudio. Además, se incluyen variables de distinto tipo para describir correctamente la base: cuantitativas continuas, cuantitativas discretas, cualitativas nominales y cualitativas ordinales.
+
+## III.1 Análisis univariado
+
+Se emplean descriptores de posición, como la media y la mediana, y descriptores de dispersión, como la desviación estándar y el coeficiente de variación. Además, se incorporan tablas y un gráfico de densidad.
+
+```{r results='asis'}
+descriptores <- data.frame(
+  Variable = c("Temperatura (°C)", "Iluminación (lx)", "Estudiantes", "Piso"),
+  Media = format(round(c(mean(temperatura, na.rm = TRUE), mean(iluminacion, na.rm = TRUE),
+                         mean(estudiantes, na.rm = TRUE), mean(piso, na.rm = TRUE)), 2), nsmall = 2),
+  Mediana = format(round(c(median(temperatura, na.rm = TRUE), median(iluminacion, na.rm = TRUE),
+                           median(estudiantes, na.rm = TRUE), median(piso, na.rm = TRUE)), 2), nsmall = 2),
+  DE = format(round(c(sd(temperatura, na.rm = TRUE), sd(iluminacion, na.rm = TRUE),
+                     sd(estudiantes, na.rm = TRUE), sd(piso, na.rm = TRUE)), 2), nsmall = 2),
+  CV = format(round(c(sd(temperatura, na.rm = TRUE) / mean(temperatura, na.rm = TRUE),
+                      sd(iluminacion, na.rm = TRUE) / mean(iluminacion, na.rm = TRUE),
+                      sd(estudiantes, na.rm = TRUE) / mean(estudiantes, na.rm = TRUE),
+                      sd(piso, na.rm = TRUE) / mean(piso, na.rm = TRUE)), 2), nsmall = 2),
+  Mínimo = format(round(c(min(temperatura, na.rm = TRUE), min(iluminacion, na.rm = TRUE),
+                          min(estudiantes, na.rm = TRUE), min(piso, na.rm = TRUE)), 2), nsmall = 2),
+  Máximo = format(round(c(max(temperatura, na.rm = TRUE), max(iluminacion, na.rm = TRUE),
+                          max(estudiantes, na.rm = TRUE), max(piso, na.rm = TRUE)), 2), nsmall = 2),
+  check.names = FALSE
+)
+tabla_html(descriptores, "Tabla 2. Descriptores numéricos")
+```
+
+La temperatura presenta un comportamiento homogéneo, con media de **22.02 °C**, mediana de **22.00 °C**, desviación estándar de **1.94 °C** y CV de **0.09**. Estos valores evidencian baja dispersión relativa y justifican observar su forma mediante una curva de densidad, ya que esta variable se utilizará posteriormente como variable continua.
+
+```{r fig.width=7, fig.height=4}
+dens_temp_desc <- density(temperatura, na.rm = TRUE)
+plot(dens_temp_desc, lwd = 3, col = "#4d4d4d",
+     main = "Densidad empírica de la temperatura ambiental",
+     xlab = "Temperatura del ambiente (°C)", ylab = "Densidad")
+abline(v = mean(temperatura, na.rm = TRUE), col = "#b2182b", lwd = 2, lty = 2)
+abline(v = median(temperatura, na.rm = TRUE), col = "#238b45", lwd = 2, lty = 3)
+legend("topright", legend = c("Densidad empírica", "Media", "Mediana"),
+       col = c("#4d4d4d", "#b2182b", "#238b45"), lwd = c(3, 2, 2),
+       lty = c(1, 2, 3), bty = "n")
+grid()
+```
+
+La curva de densidad confirma que la mayor parte de temperaturas se concentra alrededor de **22 °C**. Además, la media y la mediana aparecen casi superpuestas, lo que refuerza la idea de una distribución aproximadamente simétrica. Esta gráfica se incluye porque sustenta directamente el modelo continuo usado más adelante; las demás variables se interpretan mediante sus descriptores y los cruces de interacción posteriores.
+
+En contraste, la iluminación muestra alta variabilidad: su mediana es **400 lx**, su media **611.51 lx** y su CV **6.69**, reflejando valores extremos altos. El número de estudiantes también presenta fuerte dispersión, con mediana de **4**, media de **25.07** y CV de **2.22**; por ello, se agrupa en niveles de afluencia para analizar su relación con la limpieza. El piso presenta media de **5.88** y mediana de **6.00**, lo que indica concentración alrededor de pisos intermedios y permite evaluar si la iluminación varía según la ubicación del ambiente.
+
+```{r results='asis'}
+conteo_categoricas <- data.frame(
+  Variable = c(rep("Ambiente de estudio", 4), rep("Ventilación", 2), rep("Limpieza", 3), rep("Turno", 3)),
+  Categoría = c(names(table(factor(ambiente, levels = c("biblioteca", "sala de estudio", "sala sum", "zona de descanso")))),
+                names(table(factor(ventilacion, levels = c("artificial", "natural")))),
+                names(table(factor(limpieza, levels = c("sucio", "parcialmente limpio", "limpio")))),
+                names(table(factor(turno, levels = c("mañana", "tarde", "noche"))))),
+  Frecuencia = c(as.numeric(table(factor(ambiente, levels = c("biblioteca", "sala de estudio", "sala sum", "zona de descanso")))),
+                 as.numeric(table(factor(ventilacion, levels = c("artificial", "natural")))),
+                 as.numeric(table(factor(limpieza, levels = c("sucio", "parcialmente limpio", "limpio")))),
+                 as.numeric(table(factor(turno, levels = c("mañana", "tarde", "noche"))))),
+  check.names = FALSE
+)
+conteo_categoricas$Porcentaje <- porcentaje(conteo_categoricas$Frecuencia / c(rep(length(ambiente), 4), rep(length(ventilacion), 2), rep(length(limpieza), 3), rep(length(turno), 3)))
+tabla_html(conteo_categoricas, "Tabla 3. Distribución de variables categóricas")
+```
+
+En las variables categóricas, la sala de estudio concentra **62.5%** de los registros, por lo que el ambiente de estudio contextualiza dónde se realizaron principalmente las observaciones. La ventilación natural representa **61.5%** y la artificial **38.5%**, lo que justifica comparar su relación con la temperatura. En limpieza, aunque la categoría limpio alcanza **54.2%**, el **40.9%** parcialmente limpio evidencia que la limpieza completa no es constante. El número de estudiantes se retoma como niveles de afluencia para evaluar si una mayor presencia de usuarios se asocia con menores condiciones de limpieza. Por ello, limpieza y afluencia son centrales en probabilidad. El turno se considera contextual porque ubica los registros dentro de la jornada de recolección.
+
+## III.2 Análisis de interacción
+
+En esta sección se presentan interacciones entre variables seleccionadas según los objetivos del estudio. Se incluyen una relación entre variable categórica y numérica, una relación entre dos variables categóricas y una relación entre variables registradas en escala numérica u ordenada.
+
+```{r results='asis'}
+temp_vent <- aggregate(temperatura, by = list(ventilacion), FUN = mean, na.rm = TRUE)
+temp_vent$Mediana <- aggregate(temperatura, by = list(ventilacion), FUN = median, na.rm = TRUE)[, 2]
+names(temp_vent) <- c("Ventilación", "Temperatura media", "Temperatura mediana")
+temp_vent$`Temperatura media` <- format(round(temp_vent$`Temperatura media`, 2), nsmall = 2)
+temp_vent$`Temperatura mediana` <- format(round(temp_vent$`Temperatura mediana`, 2), nsmall = 2)
+tabla_html(temp_vent, "Tabla 4. Temperatura según tipo de ventilación")
+```
+
+```{r fig.width=7, fig.height=4}
+boxplot(temperatura ~ vent_factor,
+        names = c("Artificial", "Natural"),
+        col = c("gray85", "gray70"),
+        xlab = "Tipo de ventilación",
+        ylab = "Temperatura del ambiente (°C)",
+        main = "Temperatura ambiental según tipo de ventilación")
+grid()
+```
+
+La temperatura media con ventilación artificial es **22.08 °C**, mientras que con ventilación natural es **21.98 °C**. La diferencia es reducida y las medianas son iguales a **22.00 °C**, por lo que la ventilación no parece generar un cambio térmico fuerte en la muestra observada. Esta comparación responde al objetivo vinculado con ventilación y temperatura.
+
+```{r results='asis'}
+cruce <- table(afluencia, limpieza_factor)
+cruce_prop <- round(100 * prop.table(cruce, margin = 1), 1)
+cruce_tabla <- data.frame(
+  Afluencia = rownames(cruce_prop),
+  Sucio = paste0(cruce[, "sucio"], " (", cruce_prop[, "sucio"], "%)"),
+  `Parcialmente limpio` = paste0(cruce[, "parcialmente limpio"], " (", cruce_prop[, "parcialmente limpio"], "%)"),
+  Limpio = paste0(cruce[, "limpio"], " (", cruce_prop[, "limpio"], "%)"),
+  check.names = FALSE
+)
+tabla_html(cruce_tabla, "Tabla 5. Limpieza según nivel de afluencia")
+```
+
+```{r fig.width=8, fig.height=4.8}
+prop_limp_af <- prop.table(cruce, margin = 1) * 100
+op <- par(mar = c(5.2, 5.2, 4.2, 8.5), xpd = TRUE)
+barplot(t(prop_limp_af),
+        col = c("gray90", "gray65", "gray35"),
+        border = "gray35",
+        xlab = "Nivel de afluencia",
+        ylab = "Porcentaje (%) dentro del nivel de afluencia",
+        main = "Distribución porcentual de limpieza según nivel de afluencia",
+        ylim = c(0, 100),
+        names.arg = c("Sin estudiantes", "Baja", "Media", "Alta"),
+        las = 1,
+        cex.names = 0.9)
+abline(h = seq(0, 100, 20), col = "gray85", lty = 3)
+legend("topright", inset = c(-0.28, 0),
+       legend = c("Sucio", "Parcialmente limpio", "Limpio"),
+       fill = c("gray90", "gray65", "gray35"),
+       border = "gray35", bty = "n", cex = 0.85,
+       title = "Nivel de limpieza")
+par(op)
+```
+
+En afluencia baja, la proporción de ambientes limpios es **61.8%**; en afluencia alta baja a **47.6%**. Al mismo tiempo, la categoría parcialmente limpio aumenta hasta **47.0%** en afluencia alta. Este patrón sugiere que una mayor presencia de estudiantes se asocia con menor limpieza completa, por lo que esta interacción motiva el análisis probabilístico posterior entre ocupación y limpieza.
+
+```{r fig.width=7, fig.height=4}
+ilum_piso <- aggregate(iluminacion, by = list(piso), FUN = median, na.rm = TRUE)
+plot(ilum_piso[, 1], ilum_piso[, 2], type = "b", pch = 19, lwd = 2,
+     col = "#4d4d4d", xlab = "Piso", ylab = "Mediana de iluminación (lx)",
+     main = "Iluminación mediana por piso")
+grid()
+```
+
+La relación entre piso e iluminación no presenta un crecimiento uniforme. La gráfica usa la mediana de iluminación por piso para reducir el efecto de valores extremos altos en lux. Como contraste numérico, la correlación de Pearson entre piso e iluminación en los registros individuales es **-0.0021**, un valor prácticamente nulo. Por ello, la iluminación parece depender más de la ubicación específica del ambiente, la presencia de ventanas y el horario de observación que del número de piso por sí solo. Esta evidencia descriptiva orienta el análisis posterior de iluminación como variable continua con alta dispersión.
+
+# IV. Análisis probabilístico
+
+Esta sección estima probabilidades a partir de la muestra efectiva y las compara, más adelante, con modelos teóricos adecuados. En la probabilidad empírica, cada resultado se calcula a partir de frecuencias observadas; por ello, para cualquier evento $E$ se utiliza:
+
+$$
+\widehat{P}(E)=\frac{n(E)}{n(\Omega)}.
+$$
+
+Para los eventos asociados con limpieza y afluencia se trabaja con el conjunto $\Omega_{AB}$, formado por las observaciones que registran simultáneamente número de estudiantes y nivel de limpieza. Por tanto:
+
+$$
+n(\Omega_{AB})=1762.
+$$
+
+En esta parte se distinguen variables y eventos. Una variable describe una característica observada del ambiente; un evento corresponde a una condición definida a partir de dicha variable. Esta distinción es necesaria para construir correctamente los eventos atómicos y las probabilidades empíricas.
+
+## IV.1 Probabilidad empírica
+
+Se seleccionan dos variables directamente vinculadas con el objetivo sobre limpieza y uso de los ambientes: **nivel de limpieza** y **nivel de afluencia**. La primera permite evaluar la condición de higiene del espacio; la segunda resume la cantidad de estudiantes presentes en el ambiente.
+
+### IV.1.1 Variable 1: nivel de limpieza
+
+La variable $X$ representa el **nivel de limpieza** del ambiente observado. Es una variable cualitativa ordinal, porque sus categorías tienen un orden asociado a la condición de higiene.
+
+**Experimento aleatorio.**\
+$EA_1$: seleccionar al azar una observación válida de la muestra efectiva y registrar el nivel de limpieza del ambiente.
+
+El espacio muestral de la variable es:
+
+$$
+S_X=\{\mathrm{sucio},\ \mathrm{parcialmente\ limpio},\ \mathrm{limpio}\}.
+$$
+
+**Eventos atómicos.**
+
+$$
+E_1=\{X=\mathrm{sucio}\}
+$$
+
+$$
+E_2=\{X=\mathrm{parcialmente\ limpio}\}
+$$
+
+$$
+E_3=\{X=\mathrm{limpio}\}
+$$
+
+La función de probabilidad empírica para esta variable se define como:
+
+$$
+\widehat{P}(X=x_i)=\frac{n_i}{1762}.
+$$
+
+```{r results='asis'}
+frecuencia_limpieza <- table(limpieza_factor)
+prob_limpieza <- prop.table(frecuencia_limpieza)
+tabla_limpieza <- data.frame(
+  Evento = c("E1: X = sucio", "E2: X = parcialmente limpio", "E3: X = limpio"),
+  Frecuencia = as.numeric(frecuencia_limpieza),
+  Probabilidad = format(round(as.numeric(prob_limpieza), 4), nsmall = 4),
+  check.names = FALSE
+)
+tabla_html(tabla_limpieza, "Tabla 6. Función de probabilidad empírica de limpieza")
+```
+
+De manera explícita:
+
+$$
+\widehat{P}(X=\mathrm{sucio})=\frac{n(E_1)}{n(\Omega_{AB})}=\frac{89}{1762}=0.0505,
+$$
+
+$$
+\widehat{P}(X=\mathrm{parcialmente\ limpio})=\frac{n(E_2)}{n(\Omega_{AB})}=\frac{717}{1762}=0.4069,
+$$
+
+$$
+\widehat{P}(X=\mathrm{limpio})=\frac{n(E_3)}{n(\Omega_{AB})}=\frac{956}{1762}=0.5426.
+$$
+
+La validación de la función de probabilidad es:
+
+$$
+0.0505+0.4069+0.5426=1.0000.
+$$
+
+La categoría con mayor probabilidad es **limpio**, con $0.5426$. Sin embargo, la suma de ambientes sucios y parcialmente limpios alcanza $0.4574$, lo que muestra que la limpieza completa no es una condición constante en la muestra. Este resultado justifica estudiar la limpieza como evento central en el análisis condicional.
+
+```{r fig.width=7, fig.height=4}
+plot(seq_along(prob_limpieza), as.numeric(prob_limpieza), type = "b", pch = 19,
+     lwd = 3, col = "#4d4d4d", xaxt = "n",
+     xlab = "Nivel de limpieza", ylab = "Probabilidad empírica",
+     main = "Función de probabilidad empírica del nivel de limpieza",
+     ylim = c(0, 0.65))
+axis(1, at = seq_along(prob_limpieza), labels = names(prob_limpieza))
+grid()
+```
+
+El gráfico permite observar que la probabilidad se concentra en la categoría **limpio**, pero la proporción acumulada de ambientes **sucios** y **parcialmente limpios** sigue siendo relevante. Por ello, la limpieza se mantiene como variable clave para el análisis condicional posterior.
+
+### IV.1.2 Variable 2: nivel de afluencia
+
+La variable $Z$ representa el **nivel de afluencia** del ambiente. Se construye a partir del número de estudiantes presentes, agrupando los registros en categorías para facilitar la interpretación probabilística.
+
+**Experimento aleatorio.**\
+$EA_2$: seleccionar al azar una observación válida de la muestra efectiva y registrar el nivel de afluencia del ambiente.
+
+Las categorías utilizadas son: sin estudiantes ($0$), baja ($1$ a $2$ estudiantes), media ($3$ a $5$ estudiantes) y alta ($6$ o más estudiantes). Por tanto, el espacio muestral es:
+
+$$
+S_Z=\{\mathrm{sin\ estudiantes},\ \mathrm{baja},\ \mathrm{media},\ \mathrm{alta}\}.
+$$
+
+**Eventos atómicos.**
+
+$$
+F_1=\{Z=\mathrm{sin\ estudiantes}\}
+$$
+
+$$
+F_2=\{Z=\mathrm{baja}\}
+$$
+
+$$
+F_3=\{Z=\mathrm{media}\}
+$$
+
+$$
+F_4=\{Z=\mathrm{alta}\}
+$$
+
+La función de probabilidad empírica para esta variable se define como:
+
+$$
+\widehat{P}(Z=z_i)=\frac{n_i}{1762}.
+$$
+
+```{r results='asis'}
+frecuencia_afluencia <- table(afluencia)
+prob_afluencia <- prop.table(frecuencia_afluencia)
+tabla_afluencia <- data.frame(
+  Evento = c("F1: Z = sin estudiantes", "F2: Z = baja", "F3: Z = media", "F4: Z = alta"),
+  Frecuencia = as.numeric(frecuencia_afluencia),
+  Probabilidad = format(round(as.numeric(prob_afluencia), 4), nsmall = 4),
+  check.names = FALSE
+)
+tabla_html(tabla_afluencia, "Tabla 7. Función de probabilidad empírica de afluencia")
+```
+
+Las probabilidades atómicas son:
+
+$$
+\widehat{P}(Z=\mathrm{sin\ estudiantes})=\frac{112}{1762}=0.0636,
+$$
+
+$$
+\widehat{P}(Z=\mathrm{baja})=\frac{414}{1762}=0.2350,
+$$
+
+$$
+\widehat{P}(Z=\mathrm{media})=\frac{576}{1762}=0.3269,
+$$
+
+$$
+\widehat{P}(Z=\mathrm{alta})=\frac{660}{1762}=0.3746.
+$$
+
+La validación de la función de probabilidad es:
+
+$$
+0.0636+0.2350+0.3269+0.3746=1.0001\approx 1.
+$$
+
+La categoría más probable es **afluencia alta**, con $0.3746$. Esto indica que una parte importante de los registros corresponde a ambientes con seis o más estudiantes, por lo que resulta pertinente evaluar si una mayor presencia de usuarios se relaciona con una menor probabilidad de encontrar ambientes limpios.
+
+```{r fig.width=7, fig.height=4}
+plot(seq_along(prob_afluencia), as.numeric(prob_afluencia), type = "b", pch = 19,
+     lwd = 3, col = "#636363", xaxt = "n",
+     xlab = "Nivel de afluencia", ylab = "Probabilidad empírica",
+     main = "Función de probabilidad empírica del nivel de afluencia",
+     ylim = c(0, 0.45))
+axis(1, at = seq_along(prob_afluencia), labels = names(prob_afluencia))
+grid()
+```
+
+El gráfico muestra que las mayores probabilidades se encuentran en los niveles **medio** y **alto** de afluencia. Esto respalda el uso de la afluencia como evento de interés para evaluar su relación con la limpieza.
+
+## IV.2 Probabilidad condicional
+
+En esta sección se analiza el vínculo entre **afluencia alta** y **limpieza completa**, debido a que este par de eventos responde al objetivo de evaluar si la cantidad de estudiantes se relaciona con las condiciones de limpieza del ambiente. Para ello, se trabaja con la muestra efectiva de $n(\Omega_{AB})=1762$ observaciones válidas.
+
+### IV.2.1 Eventos de interés
+
+Se definen los siguientes eventos:
+
+-   $A$: seleccionar al azar un ambiente de estudio observado con **afluencia alta**.
+-   $B$: seleccionar al azar un ambiente de estudio observado cuyo nivel de limpieza sea **limpio**.
+
+En notación de conjuntos:
+
+$$
+A=\{Z=\mathrm{alta}\}, \qquad B=\{X=\mathrm{limpio}\}.
+$$
+
+A partir de la muestra efectiva se obtiene:
+
+$$
+\widehat{P}(A)=\frac{660}{1762}=0.3746,
+$$
+
+$$
+\widehat{P}(B)=\frac{956}{1762}=0.5426,
+$$
+
+$$
+\widehat{P}(A\cap B)=\frac{314}{1762}=0.1782.
+$$
+
+```{r results='asis'}
+A <- afluencia == "alta"
+B <- limpieza_factor == "limpio"
+PA <- mean(A)
+PB <- mean(B)
+PAB <- mean(A & B)
+PAUB <- mean(A | B)
+PBgA <- mean(B[A])
+PBgAc <- mean(B[!A])
+PAgB <- mean(A[B])
+PAc <- mean(!A)
+PBc <- mean(!B)
+
+prob_basicas <- data.frame(
+  Probabilidad = c("P(A)", "P(B)", "P(A ∩ B)", "P(A ∪ B)", "P(Aᶜ)", "P(Bᶜ)"),
+  Conteo = c("660/1762", "956/1762", "314/1762", "1302/1762", "1102/1762", "806/1762"),
+  Valor = format(round(c(PA, PB, PAB, PAUB, PAc, PBc), 4), nsmall = 4),
+  check.names = FALSE
+)
+tabla_html(prob_basicas, "Tabla 8. Probabilidades de los eventos A y B")
+```
+
+La unión representa los ambientes que tienen afluencia alta, limpieza completa o ambas condiciones:
+
+$$
+\widehat{P}(A\cup B)=\widehat{P}(A)+\widehat{P}(B)-\widehat{P}(A\cap B)
+$$
+
+$$
+\widehat{P}(A\cup B)=0.3746+0.5426-0.1782=0.7389.
+$$
+
+### IV.2.2 Distribución conjunta
+
+```{r results='asis'}
+conjunta <- data.frame(
+  Condición = c("A: afluencia alta", "Aᶜ: no alta", "Total"),
+  `B: limpio` = c("314 (0.1782)", "642 (0.3644)", "956 (0.5426)"),
+  `Bᶜ: no limpio` = c("346 (0.1964)", "460 (0.2611)", "806 (0.4574)"),
+  Total = c("660 (0.3746)", "1102 (0.6254)", "1762 (1.0000)"),
+  check.names = FALSE
+)
+tabla_html(conjunta, "Tabla 9. Distribución conjunta de A y B")
+```
+
+La tabla conjunta permite identificar los conteos usados en las operaciones. La celda $A\cap B$ contiene **314 observaciones**, que corresponden a ambientes con afluencia alta y limpieza completa; mientras que $A^c\cap B^c$ contiene **460 observaciones**, es decir, ambientes sin afluencia alta y sin limpieza completa.
+
+```{r fig.width=7.2, fig.height=4.4}
+par(mar = c(2.6, 4.2, 4.3, 1.2))
+plot(c(-0.18, 2.08), c(-0.05, 2.18), type = "n", axes = FALSE, xlab = "", ylab = "",
+     main = "Distribución conjunta de los eventos A y B")
+rect(0, 1, 1, 2, col = "#bdbdbd", border = "white")
+rect(1, 1, 2, 2, col = "#d9d9d9", border = "white")
+rect(0, 0, 1, 1, col = "#efefef", border = "white")
+rect(1, 0, 2, 1, col = "#cfcfcf", border = "white")
+text(0.5, 1.65, "A ∩ B", cex = 1.05, font = 2)
+text(0.5, 1.35, "314 obs.", cex = 0.95)
+text(0.5, 1.12, "0.1782", cex = 0.95)
+text(1.5, 1.65, "Aᶜ ∩ B", cex = 1.05, font = 2)
+text(1.5, 1.35, "642 obs.", cex = 0.95)
+text(1.5, 1.12, "0.3644", cex = 0.95)
+text(0.5, 0.65, "A ∩ Bᶜ", cex = 1.05, font = 2)
+text(0.5, 0.35, "346 obs.", cex = 0.95)
+text(0.5, 0.12, "0.1964", cex = 0.95)
+text(1.5, 0.65, "Aᶜ ∩ Bᶜ", cex = 1.05, font = 2)
+text(1.5, 0.35, "460 obs.", cex = 0.95)
+text(1.5, 0.12, "0.2611", cex = 0.95)
+text(1, 2.08, "B: ambiente limpio", cex = 0.95, font = 2)
+text(-0.12, 1, "A: afluencia alta", srt = 90, cex = 0.95, font = 2)
+box()
+```
+
+El gráfico resume visualmente la distribución conjunta. La mayor proporción se ubica en $A^c\cap B$, con **0.3644**, mientras que la intersección de interés $A\cap B$ representa **0.1782** de la muestra.
+
+### IV.2.3 Validación de independencia
+
+Dos eventos son independientes cuando se cumple:
+
+$$
+P(A\cap B)=P(A)P(B).
+$$
+
+En la muestra:
+
+$$
+\widehat{P}(A)\widehat{P}(B)=0.3746\times 0.5426=0.2032,
+$$
+
+$$
+\widehat{P}(A\cap B)=0.1782.
+$$
+
+Como $0.1782\neq 0.2032$, los eventos $A$ y $B$ **no son independientes**. Esto significa que la probabilidad de limpieza completa cambia cuando se considera la condición de afluencia alta.
+
+### IV.2.4 Análisis condicional: limpieza dado afluencia alta
+
+La pregunta condicional es: si un ambiente observado tiene **afluencia alta**, ¿cuál es la probabilidad de que esté **limpio**?
+
+La probabilidad condicional se define como:
+
+$$
+P(B\mid A)=\frac{P(A\cap B)}{P(A)}, \qquad P(A)>0.
+$$
+
+Con los datos:
+
+$$
+\widehat{P}(B\mid A)=\frac{314}{660}=0.4758.
+$$
+
+La probabilidad general de limpieza es:
+
+$$
+\widehat{P}(B)=\frac{956}{1762}=0.5426.
+$$
+
+Se define el factor de cambio como:
+
+$$
+F=\frac{\widehat{P}(B\mid A)}{\widehat{P}(B)}.
+$$
+
+Sustituyendo:
+
+$$
+F=\frac{0.4758}{0.5426}=0.8769.
+$$
+
+Como $F<1$, la afluencia alta reduce la probabilidad de encontrar un ambiente limpio en aproximadamente **12.31%** respecto de la probabilidad general. En la muestra, la limpieza completa pasa de **54.26%** en general a **47.58%** cuando la afluencia es alta.
+
+```{r results='asis'}
+condicionales <- data.frame(
+  Probabilidad = c("P(B | A)", "P(B | Aᶜ)", "P(A | B)", "F = P(B | A) / P(B)"),
+  Conteo = c("314/660", "642/1102", "314/956", "0.4758/0.5426"),
+  Valor = format(round(c(PBgA, PBgAc, PAgB, PBgA / PB), 4), nsmall = 4),
+  check.names = FALSE
+)
+tabla_html(condicionales, "Tabla 10. Probabilidades condicionales")
+```
+
+```{r fig.width=7, fig.height=4}
+prob_limpio_af <- prop.table(table(afluencia, limpieza_factor), margin = 1)[, "limpio"]
+plot(seq_along(prob_limpio_af), as.numeric(prob_limpio_af), type = "b", pch = 19,
+     lwd = 3, col = "#4d4d4d", xaxt = "n",
+     xlab = "Nivel de afluencia", ylab = "P(ambiente limpio | afluencia)",
+     main = "Probabilidad condicional de limpieza según afluencia",
+     ylim = c(0, 0.70))
+axis(1, at = seq_along(prob_limpio_af), labels = names(prob_limpio_af))
+abline(h = PB, col = "#b2182b", lwd = 2, lty = 2)
+legend("topright", legend = c("P(limpio | afluencia)", "P(limpio) general"),
+       col = c("#4d4d4d", "#b2182b"), lwd = c(3, 2), lty = c(1, 2), bty = "n")
+grid()
+```
+
+El gráfico permite comparar cada nivel de afluencia con la probabilidad general de limpieza. La caída en afluencia alta confirma visualmente que la limpieza completa es menos probable cuando el ambiente tiene mayor ocupación.
+
+### IV.2.5 Teorema de Bayes: afluencia alta dado ambiente limpio
+
+El Teorema de Bayes permite invertir la condición y calcular la probabilidad de afluencia alta sabiendo que el ambiente está limpio:
+
+$$
+P(A\mid B)=\frac{P(B\mid A)P(A)}{P(B\mid A)P(A)+P(B\mid A^c)P(A^c)}.
+$$
+
+Sustituyendo los valores empíricos:
+
+$$
+P(A\mid B)=\frac{0.4758(0.3746)}{0.4758(0.3746)+0.5826(0.6254)}=0.3285.
+$$
+
+El resultado coincide con el cálculo directo:
+
+$$
+\widehat{P}(A\mid B)=\frac{n(A\cap B)}{n(B)}=\frac{314}{956}=0.3285.
+$$
+
+Por tanto, dado que un ambiente está limpio, la probabilidad de que además tenga afluencia alta es **32.85%**. Esto refuerza que la limpieza completa se presenta con mayor frecuencia fuera de la afluencia alta, resultado consistente con la caída observada en $P(B\mid A)$.
+
+## IV.3 Variables aleatorias
+
+En esta sección se construyen cuatro variables aleatorias vinculadas con los objetivos del proyecto: dos discretas y dos continuas. Cada modelo se plantea a partir de un evento o medición relevante de la base limpia, se estiman sus parámetros con la muestra y se interpreta su utilidad para el análisis de condiciones físicas y ambientales.
+
+### IV.3.1 Variable aleatoria discreta 1: observaciones hasta encontrar ventilación natural
+
+La primera variable aleatoria se relaciona con el objetivo de estudiar la ventilación. Se define el éxito como encontrar una observación con **ventilación natural**.
+
+**Variable:** $N=$ número de observaciones necesarias hasta encontrar la primera observación con ventilación natural.
+
+**Parámetro empírico:**
+
+$$
+p=\frac{1107}{1799}=0.6153.
+$$
+
+**Modelo propuesto:**
+
+$$
+N\sim Geom(p=0.6153).
+$$
+
+Este modelo es adecuado porque se cuenta el número de observaciones necesarias hasta obtener el primer éxito, manteniendo una probabilidad de éxito constante estimada desde la muestra.
+
+**Función de probabilidad:**
+
+$$
+P(N=k)=(1-p)^{k-1}p, \qquad k=1,2,3,\ldots
+$$
+
+**Parámetros teóricos:**
+
+$$
+E(N)=\frac{1}{p}=1.6251,
+$$
+
+$$
+Var(N)=\frac{1-p}{p^2}=1.0159, \qquad DE(N)=1.0079.
+$$
+
+**Pregunta de interés:** ¿cuál es la probabilidad de encontrar ventilación natural dentro de las tres primeras observaciones?
+
+$$
+P(N\leq 3)=1-(1-p)^3=0.9431.
+$$
+
+El resultado indica que existe una probabilidad de **94.31%** de encontrar ventilación natural dentro de los tres primeros registros. Esto es coherente con la distribución observada, donde la ventilación natural representa la mayoría de los ambientes registrados.
+
+```{r fig.width=7, fig.height=4}
+p_nat <- mean(ventilacion == "natural")
+k_geom <- 1:10
+pmf_geom <- dgeom(k_geom - 1, prob = p_nat)
+plot(k_geom, pmf_geom, type = "o", pch = 19, lwd = 3, col = "#4d4d4d",
+     xlab = "Número de observaciones hasta el primer éxito",
+     ylab = "P(N = k)", main = "Distribución geométrica: ventilación natural",
+     ylim = c(0, max(pmf_geom) * 1.12))
+points(k_geom[k_geom <= 3], pmf_geom[k_geom <= 3], pch = 19, col = "#b2182b", cex = 1.25)
+abline(v = 1 / p_nat, col = "#b2182b", lwd = 2, lty = 2)
+legend("topright", legend = c("P(N = k)", "N ≤ 3", "E(N)"),
+       col = c("#4d4d4d", "#b2182b", "#b2182b"), lwd = c(3, 0, 2),
+       pch = c(19, 19, NA), lty = c(1, NA, 2), bty = "n")
+grid()
+```
+
+La gráfica muestra que la probabilidad es mayor en los primeros valores de $N$, especialmente en $N=1$. Por ello, el modelo refuerza que la ventilación natural aparece con alta frecuencia en la muestra.
+
+### IV.3.2 Variable aleatoria discreta 2: ambientes limpios en 20 observaciones
+
+La segunda variable aleatoria se vincula con el objetivo sobre limpieza y afluencia. Se define como éxito seleccionar una observación cuyo ambiente esté **limpio**.
+
+**Variable:** $M=$ número de ambientes limpios en una muestra hipotética de 20 observaciones válidas.
+
+**Parámetro empírico:**
+
+$$
+p=\widehat{P}(\text{limpio})=\frac{956}{1762}=0.5426.
+$$
+
+**Modelo propuesto:**
+
+$$
+M\sim Bin(n=20,p=0.5426).
+$$
+
+La distribución binomial es adecuada porque se fija un número de observaciones $(n=20)$ y cada una puede clasificarse como éxito o no éxito respecto a la limpieza completa.
+
+**Función de probabilidad:**
+
+$$
+P(M=k)=\binom{20}{k}p^k(1-p)^{20-k}, \qquad k=0,1,2,\ldots,20.
+$$
+
+**Parámetros teóricos:**
+
+$$
+E(M)=np=20(0.5426)=10.8513,
+$$
+
+$$
+Var(M)=np(1-p)=4.9638, \qquad DE(M)=2.2280.
+$$
+
+**Pregunta de interés:** ¿cuál es la probabilidad de encontrar al menos 12 ambientes limpios en 20 observaciones?
+
+$$
+P(M\geq 12)=1-P(M\leq 11)=0.3882.
+$$
+
+El valor esperado es cercano a **11 ambientes limpios** de cada 20, pero la probabilidad de encontrar **12 o más** ambientes limpios es **38.82%**. Por tanto, la limpieza completa es frecuente, aunque no lo suficientemente estable como para considerarla garantizada.
+
+```{r fig.width=7, fig.height=4}
+p_limpio <- mean(limpieza_factor == "limpio")
+k_binom <- 0:20
+pmf_binom <- dbinom(k_binom, size = 20, prob = p_limpio)
+plot(k_binom, pmf_binom, type = "o", pch = 19, lwd = 3, col = "#4d4d4d",
+     xlab = "Número de ambientes limpios en 20 observaciones",
+     ylab = "P(M = k)", main = "Distribución binomial: ambientes limpios",
+     ylim = c(0, max(pmf_binom) * 1.15))
+points(k_binom[k_binom >= 12], pmf_binom[k_binom >= 12], pch = 19, col = "#b2182b", cex = 1.15)
+abline(v = 20 * p_limpio, col = "#b2182b", lwd = 2, lty = 2)
+legend("topright", legend = c("P(M = k)", "M ≥ 12", "E(M)"),
+       col = c("#4d4d4d", "#b2182b", "#b2182b"), lwd = c(3, 0, 2),
+       pch = c(19, 19, NA), lty = c(1, NA, 2), bty = "n")
+grid()
+```
+
+La gráfica concentra la mayor probabilidad alrededor del valor esperado. La zona destacada muestra que superar 12 ambientes limpios es posible, pero no corresponde al escenario más probable.
+
+### IV.3.3 Variable aleatoria continua 1: temperatura ambiental
+
+La primera variable continua se relaciona con las condiciones térmicas de los ambientes de estudio.
+
+**Variable:** $T=$ temperatura ambiental del ambiente observado, medida en °C.
+
+La temperatura es cuantitativa continua y presenta baja dispersión relativa: media **22.0176 °C**, desviación estándar **1.9430 °C** y coeficiente de variación **0.0882**. Además, la media y la mediana son muy cercanas, lo que sugiere una forma aproximadamente simétrica. Por ello, se propone una distribución normal como modelo de referencia para su comportamiento central.
+
+**Modelo propuesto:**
+
+$$
+T\sim N(\mu=22.0176,\sigma=1.9430).
+$$
+
+**Función de densidad:**
+
+$$
+f_T(t)=\frac{1}{\sigma\sqrt{2\pi}}\exp\left[-\frac{1}{2}\left(\frac{t-\mu}{\sigma}\right)^2\right].
+$$
+
+**Pregunta de interés:** ¿cuál es la probabilidad de que un ambiente tenga una temperatura entre 20 °C y 24 °C?
+
+Bajo el modelo normal:
+
+$$
+P(20\leq T\leq 24)=\Phi\left(\frac{24-22.0176}{1.9430}\right)-\Phi\left(\frac{20-22.0176}{1.9430}\right)=0.6967.
+$$
+
+En la muestra:
+
+$$
+\widehat{P}(20\leq T\leq 24)=\frac{1579}{1799}=0.8777.
+$$
+
+La probabilidad empírica es mayor que la teórica, lo que muestra que muchas temperaturas se concentran en un rango estrecho. Por ello, la normal se usa como aproximación simétrica del centro de la distribución, aunque no reproduce completamente la concentración observada.
+
+```{r fig.width=7, fig.height=4}
+mu_temp <- mean(temperatura, na.rm = TRUE)
+sd_temp <- sd(temperatura, na.rm = TRUE)
+dens_temp <- density(temperatura, na.rm = TRUE)
+x_temp <- seq(min(temperatura, na.rm = TRUE), max(temperatura, na.rm = TRUE), length.out = 500)
+plot(dens_temp, lwd = 3, col = "#4d4d4d",
+     main = "Temperatura: densidad empírica y curva normal teórica",
+     xlab = "Temperatura del ambiente (°C)", ylab = "Densidad")
+lines(x_temp, dnorm(x_temp, mean = mu_temp, sd = sd_temp), col = "#b2182b", lwd = 3, lty = 2)
+abline(v = c(20, 24), col = "#737373", lwd = 2, lty = 3)
+legend("topright", legend = c("Densidad empírica", "Normal teórica", "20 °C y 24 °C"),
+       col = c("#4d4d4d", "#b2182b", "#737373"), lwd = c(3, 3, 2),
+       lty = c(1, 2, 3), bty = "n")
+grid()
+```
+
+La figura muestra que la temperatura se concentra cerca de **22 °C**. La curva normal permite comparar esa concentración con un modelo teórico simétrico y evidencia que el ajuste es razonable en el centro, aunque menos preciso en los extremos.
+
+### IV.3.4 Variable aleatoria continua 2: nivel de iluminación
+
+La segunda variable continua se vincula con el objetivo de estudiar la iluminación en los ambientes de estudio.
+
+**Variable:** $L=$ nivel de iluminación del ambiente observado, medido en lux.
+
+La iluminación es positiva, presenta alta dispersión y una cola derecha pronunciada. Su media es **611.5134 lx**, su mediana **400 lx** y su coeficiente de variación **6.6923**. Debido a esta asimetría positiva, se propone una distribución lognormal.
+
+**Modelo propuesto:**
+
+$$
+L\sim Lognormal(\mu_{\log}=5.6174,\sigma_{\log}=1.2456).
+$$
+
+**Función de densidad:**
+
+$$
+f_L(l)=\frac{1}{l\sigma_{\log}\sqrt{2\pi}}
+\exp\left[-\frac{(\log(l)-\mu_{\log})^2}{2\sigma_{\log}^2}\right], \qquad l>0.
+$$
+
+**Pregunta de interés:** ¿cuál es la probabilidad de que un ambiente registre al menos 500 lx?
+
+En la muestra:
+
+$$
+\widehat{P}(L\geq 500)=\frac{544}{1799}=0.3024.
+$$
+
+Bajo el modelo lognormal:
+
+$$
+P(L\geq 500)=1-F_L(500)=0.3158.
+$$
+
+La cercanía entre la probabilidad empírica y la teórica respalda el uso de la lognormal para aproximar umbrales de iluminación. Además, este modelo es coherente con la presencia de pocos registros extremadamente altos.
+
+```{r fig.width=7, fig.height=4}
+ilum_pos <- iluminacion[iluminacion > 0]
+meanlog_lux <- mean(log(ilum_pos), na.rm = TRUE)
+sdlog_lux <- sd(log(ilum_pos), na.rm = TRUE)
+dens_lux <- density(ilum_pos, na.rm = TRUE)
+limite_lux <- as.numeric(quantile(ilum_pos, 0.98, na.rm = TRUE))
+x_lux <- seq(min(ilum_pos, na.rm = TRUE), limite_lux, length.out = 500)
+plot(dens_lux, lwd = 3, col = "#4d4d4d", xlim = c(0, limite_lux),
+     main = "Iluminación: densidad empírica y curva lognormal teórica",
+     xlab = "Nivel de iluminación (lx)", ylab = "Densidad")
+lines(x_lux, dlnorm(x_lux, meanlog = meanlog_lux, sdlog = sdlog_lux),
+      col = "#238b45", lwd = 3, lty = 2)
+abline(v = 500, col = "#b2182b", lwd = 2, lty = 3)
+legend("topright", legend = c("Densidad empírica", "Lognormal teórica", "500 lx"),
+       col = c("#4d4d4d", "#238b45", "#b2182b"), lwd = c(3, 3, 2),
+       lty = c(1, 2, 3), bty = "n")
+grid()
+```
+
+La gráfica usa una escala limitada al percentil 98 para evitar que los valores extremos oculten la forma principal de la distribución. Se observa una cola derecha marcada, por lo que la lognormal resulta más apropiada que un modelo simétrico para representar la iluminación.
+
+# V. Conclusiones
+
+-   Los ambientes de estudio presentan condiciones térmicas estables, ya que la temperatura se mantiene alrededor de **22 °C** y la diferencia entre ventilación artificial (**22.08 °C**) y natural (**21.98 °C**) es mínima. Por ello, en la muestra analizada, la ventilación no parece generar cambios importantes en la temperatura.
+
+<!-- -->
+
+-   La iluminación muestra un comportamiento más variable que la temperatura. La ausencia de una relación lineal clara con el piso, junto con una correlación de Pearson prácticamente nula (**-0.0021**), sugiere que la iluminación depende más de características propias de cada ambiente, como ubicación, ventanas u horario.
+
+<!-- -->
+
+-   El resultado más relevante se observa en la relación entre limpieza y afluencia. La probabilidad general de encontrar un ambiente limpio es **0.5426**, pero disminuye a **0.4758** cuando la afluencia es alta, lo que indica que una mayor ocupación se asocia con menor probabilidad de limpieza completa.
+
+<!-- -->
+
+-   En síntesis, las condiciones adecuadas de estudio no dependen de un solo factor. La temperatura se mantiene estable, pero la iluminación debe revisarse por ambiente y la limpieza requiere mayor atención en espacios con alta afluencia.
