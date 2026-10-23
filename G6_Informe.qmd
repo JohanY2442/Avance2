@@ -1101,7 +1101,7 @@ P_A_dado_B==P_A
 ```
 
 $P(A \cap B)=0.0769$ y $P(A)\cdot P(B)=0.0895$
-Como $P(A \cap B) \neq P(A) \cdot P(B)$, tanto para la aproximacion de 2 y 3 decimales por lo cual los eventos son dependientes.
+$P(A \cap B) \neq P(A) \cdot P(B)$ para la aproximación de 2 y 3 decimales, por lo cual decimos que los eventos son dependientes.
 
 ### Probabilidad condicional y propiedades
 
