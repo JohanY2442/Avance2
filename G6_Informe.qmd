@@ -1057,7 +1057,7 @@ El nivel más probable es 3, con 0.4663. La probabilidad de una satisfacción al
 ### Eventos de interés
 
 <!-- debemos incluir P(E1), P(E2), P(E1 ∩ E2) y los complementos, dando tambien los conteos en una o dos frases y sin tabla -->
-Se eligió el rango [5,15] ya que se evita la alta frecuencia que  hay en [0,5] y ademas priorizando una buena cantidad de datos 
+Se eligió el rango [5,15] ya que se evita la alta frecuencia que  hay en [0,5] y además priorizando una buena cantidad de datos 
 
 Vamos a ver la probabilidad del evento A dado el evento B
 
