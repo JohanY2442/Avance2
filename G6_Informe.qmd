@@ -957,8 +957,6 @@ El CV se ubica entre 0.20 y 0.30 en todos los niveles, por lo que la media repre
 
 # Análisis Probabilístico
 
-<!-- no se olviden de al final borrar todos los comentarios -->
-
 ## Probabilidad empírica
 
 ### Observaciones limpias del grupo
@@ -968,16 +966,15 @@ GRUPO <- 6
 DF3_grupo <- DF_GesNulos %>% filter(Grupo == GRUPO)
 nrow(DF3_grupo)
 ```
-<!-- filtrar a nuestro grupo, osea el Grupo 6 solo para mostrar cuantas observaciones limpias aportamos (recuerden que piden 151 por grupo) y despues debemos quitar el filtro. recuerden que el codigo lo habiamos hecho en el paso 7 -->
+El Grupo 6 aportó 99 observaciones limpias sobre las 416 de la muestra efectiva de la sección.
 
 ### Variable 1: consultas
 
-<!-- consultas tiene muchos valores distintos asi que hay que agruparla en intervalos-->
+Se agrupó esta variable en 5 intervalos por los amplios valores que puede tomar, y estos son sin uso, bajo, moderado, frecuente y muy frecuente, donde sin uso corresponde a cero consultas y muy frecuente no tiene límite superior.
 
 **1. Experimento aleatorio:**  $EA_1$: seleccionar al azar un registro de la muestra efectiva y observar el nivel de uso de IA según el número de consultas realizadas ese día.
 
-**2. Espacio de resultados:** **2. Espacio de resultados:** $\Omega_{EA_1} = \{\text{Sin uso}, \text{Bajo}, \text{Moderado}, \text{Frecuente}, \text{Muy frecuente}\}$, donde Sin uso $= 0$, Bajo $= [1;10]$, Moderado $= [11;20]$, Frecuente $= [21;30]$ y Muy frecuente $= [31;+\infty\rangle$ consultas.
-
+**2. Espacio de resultados:** $\Omega_{EA_1} = \{\text{Sin uso}, \text{Bajo}, \text{Moderado}, \text{Frecuente}, \text{Muy frecuente}\}$, donde Sin uso $= 0$, Bajo $= [1;10]$, Moderado $= [11;20]$, Frecuente $= [21;30]$ y Muy frecuente $= [31;+\infty\rangle$ consultas.
 
 **3. Eventos atómicos:** 
 
@@ -998,15 +995,17 @@ frec_con
 round(prob_con, 4)
 ```
 
-**5. Validación:** 
-
 $P(C_1) = 34/416 = 0.0817$; $P(C_2) = 216/416 = 0.5192$; $P(C_3) = 71/416 = 0.1707$; $P(C_4) = 42/416 = 0.1010$; $P(C_5) = 53/416 = 0.1274$.
+
+**5. Validación:** 
 
 ```{r}
 sum(prob_con)
 ```
 
-**Interpretación:** <!-- 1 o 2 líneas + una tabla o gráfico de barras -->
+$0.0817 + 0.5192 + 0.1707 + 0.1010 + 0.1274 = 1$
+
+**Interpretación:**
 
 ```{r}
 barplot(prob_con,
@@ -1017,9 +1016,7 @@ barplot(prob_con,
         ylim = c(0, 0.6))
 ```
 
-**Interpretación:**
-
-El nivel más probable es el bajo, con 0.5192. Las categorías moderado (0.1707), frecuente (0.1010) y muy frecuente (0.1274) se mantienen por debajo de 0.2, y sin uso tiene 0.0817 que correspondiente a días sin ninguna consulta a la IA.
+El nivel más probable es el bajo, con 0.5192. Las categorías moderado (0.1707), frecuente (0.1010) y muy frecuente (0.1274) se mantienen por debajo de 0.2, y sin uso tiene 0.0817, que corresponde a días sin ninguna consulta a la IA.
 
 ### Variable 2: satisfacción
 
