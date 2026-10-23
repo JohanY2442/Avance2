@@ -1057,7 +1057,7 @@ El nivel más probable es 3, con 0.4663. La probabilidad de una satisfacción al
 ### Eventos de interés
 
 <!-- debemos incluir P(E1), P(E2), P(E1 ∩ E2) y los complementos, dando tambien los conteos en una o dos frases y sin tabla -->
-Se eligio el rango [5,15] ya que se evita la alta frecuencia que  hay en [0,5] y ademas priorizando una buena cantidad de datos 
+Se eligió el rango [5,15] ya que se evita la alta frecuencia que  hay en [0,5] y ademas priorizando una buena cantidad de datos 
 
 Vamos a ver la probabilidad del evento A dado el evento B
 
@@ -1136,24 +1136,27 @@ $P(A ∩ B)^C=0.923$
 ### Teorema de Bayes
 
 ```{r}
-P_A_dado_noB = nrow(DF3 %>% filter((consultas < 5 | 15 < consultas) & comprension == "Alto")) / nrow(DF3 %>% filter(consultas < 5 | 15 < consultas))
+P_B_dado_A = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(comprension == "Alto"))
 
-P_A_dado_noB
+P_B_dado_A
 ```
 
 ```{r}
-P_noB = 1 - P_B
-P_noB
+P_B_dado_noA = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension != "Alto")) / nrow(DF3 %>% filter(comprension != "Alto"))
+
+P_B_dado_noA
 ```
 
-Entonces, el valor obtenido por medio del Teorema de Bayes es:
+Entonces, el valor obtenido por medio del Teorema de Bayes expandido es:
+
 ```{r}
-( P_A_dado_B * P_B ) / ( P_A_dado_B * P_B + P_A_dado_noB * P_noB )
+( P_B_dado_A * P_A ) / ( P_B_dado_A * P_A + P_B_dado_noA * P_A_comp)
 ```
+
 Mientras que el resultado del cálculo directo es:
+
 ```{r}
-directo <- nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(comprension == "Alto"))
-directo
+P_A_dado_B
 ```
 
 Vemos que los cálculos se realizaron adecuadamente, pues los resultados coinciden.
@@ -1162,10 +1165,10 @@ Vemos que los cálculos se realizaron adecuadamente, pues los resultados coincid
 
 <!-- qué significan los resultados para el uso de la ia y la comprensión (hay que hacer como una asociacion-->
 
-De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de 30.77%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en este rango.
+De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de 21.48%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango [5, 15].
 
 ```{r}
-# round(directo * 100, 2)
+# round(P_A_dado_B * 100, 2)
 ```
 
 
