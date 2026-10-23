@@ -81,10 +81,10 @@ Analizar el impacto de las horas de sueño y el uso de IA en el rendimiento acad
 
 ### Objetivos específicos
 
-1)  Analizar la existencia de alguna relación entre la frecuencia diaria de consultas a la Inteligencia Artificial y el Nivel de satisfacción con el avance académico diario. Análisis bivariado: "N° consultas a IA realizada ese día" y "Nivel de satisfacción con el avance académico diario"
-2)  Analizar si existe alguna correlación entre el número de consultas a la IA en un cierto día y la cantidad de horas dedicadas al estudio. Se usarán las variables "N° de consultas a IA realizadas ese día" y "Suma de horas efectivas de estudio".
-3)  Identificar si el curso de mayor consulta influye en el principal uso que se le da a la Inteligencia Artificial ese día y determinar qué usos generan mayor número de tareas con tiempo ahorrado. Para este caso se usará doble análisis bivariado. ("curso sobre el cual se hicieron la mayoría de consultas de IA" vs "Principal uso de IA ese día") y ("Principal uso de IA ese día" vs "N° de tareas ese día en las que usar IA le ahorró tiempo")
-4)  Determinar si existe una relación entre las horas de sueño de la noche anterior y el nivel de comprensión de las actividades académicas realizadas durante el día. Se usará un análisis bivariado a las variables "Horas de sueño de la noche anterior" y "Nivel de comprensión de las actividades académicas realizadas ese día".
+1)  Analizar la existencia de alguna relación entre la frecuencia diaria de consultas a la IA y el Nivel de satisfacción con el avance académico diario.
+2)  Analizar si existe alguna correlación entre el número de consultas a la IA en un cierto día y la cantidad de horas dedicadas al estudio.
+3)  Identificar si el curso de mayor consulta influye en el principal uso que se le da a la Inteligencia Artificial ese día y determinar qué usos generan mayor número de tareas con tiempo ahorrado.
+4)  Determinar si existe una relación entre las horas de sueño de la noche anterior y el nivel de comprensión de las actividades académicas realizadas durante el día.
 
 # Datos
 
@@ -94,7 +94,7 @@ Estudiantes universitarios de UTEC durante el semestre 2026-2 que cursan la mate
 
 ### Unidad muestral
 
-Está conformada por los estudiantes universitarios evaluados de forma individual y diaria. A cada uno de ellos se le aplicará un registro de datos para medir su comportamiento diario, su rendimiento académico y su relación con el uso de Inteligencia Artificial (en la tabla principal).
+Conformada por los estudiantes universitarios evaluados de forma individual y diaria. A cada uno de ellos se le aplicará un registro de datos para medir su comportamiento diario, su rendimiento académico y su relación con el uso de IA (en la tabla principal).
 
 Además se contará con dos tablas externas: la "Tabla Exámenes", cuya unidad muestral es cada examen rendido, y la "Tabla Demográfica", con los datos invariantes del ciclo y cuya unidad muestral es cada estudiante.
 
@@ -164,7 +164,7 @@ names(DF)
 DFL <- DF
 ```
 
-Renombramos las columnas que utilizaremos
+Renombramos las columnas de interés y las filtramos del resto de columnas.
 
 ```{r}
 DFL %>% rename(hora = `Marca temporal`
@@ -178,8 +178,6 @@ DFL %>% rename(hora = `Marca temporal`
                , comprension = `¿Qué nivel de comprensión tuviste de las actividades académicas que realizaste hoy?`
                , email = `Dirección de correo electrónico`) -> DFL
 ```
-
-Nos quedamos con las columnas de nuestros objetivos específicos.
 
 ```{r}
 DFL <- DFL[, c("hora", "consultas", "uso", "satisfaccion", "tareas", "curso", "estudio", "sueno", "comprension", "email")]
@@ -196,9 +194,6 @@ Realizamos un inner join para relacionar `email` con el grupo correspondiente
 
 ```{r}
 DFL <- inner_join(DFL, DFAuxiliar, by = "email")
-```
-```{r}
-head(DFL[c("hora", "email", "Grupo")])
 ```
 
 ### Vista del subset final
@@ -230,27 +225,26 @@ Se puede ver que hay 4 valores faltantes en el dataframe. Esto es raro considera
 ```{r}
 sum(DFL$consultas == 0, na.rm = TRUE)
 ```
-Hay 34 registros en los que el estudiante no consultó la IA en todo el día.
+Hay 39 registros en los que el estudiante no consultó la IA en todo el día.
 
 ```{r}
 sum(DFL$tareas == 0, na.rm = TRUE)
 ```
-Hay 92 registros en los que la IA no ahorró tiempo en ninguna tarea.
+Hay 109 registros en los que la IA no ahorró tiempo en ninguna tarea.
 
 ```{r}
 sum(DFL$estudio == 0, na.rm = TRUE)
 ```
-Hay 27 registros de personas que no estudiaron ni una hora durante 1 día.
+Hay 32 registros de personas que no estudiaron ni una hora durante 1 día.
 
 ```{r}
 sum(DFL$sueno == 0, na.rm = TRUE)
 ```
-Hay 4 registros de estudiantes que no durmieron ni 1 hora.
+Hay 7 registros de estudiantes que no durmieron ni 1 hora.
 
 #### Análisis de cardinalidad
 
 ```{r}
-length(unique(DFL$comprension))
 unique(DFL$comprension)
 ```
 La ordinal `comprension` ya tomó sus 5 niveles al menos una vez.
@@ -278,7 +272,6 @@ sort(unique(DFL$tareas))
 La variable discreta `tareas` ha tomado una cantidad reducida de valores encerrados en el intervalo \[0, 15\].
 
 ```{r}
-length(unique(DFL$satisfaccion))
 unique(DFL$satisfaccion)
 ```
 La ordinal `satisfaccion` también tomó sus 5 niveles.
@@ -350,6 +343,8 @@ Como la respuesta cualitativa (uso) se relaciona con variables cuantitativas (co
   curso = if_else(filtro,curso,NA_character_)
   ) %>% select(-filtro, -usoC,-cursoC,-uso_)  
 # después se borra las columnas auxiliares     
+DF2$curso<-toupper(DF2$curso)
+DF2$uso<-tolower(DF2$uso)
 ```
 
 ### Paso 4: Datos atípicos
@@ -719,7 +714,7 @@ En total, se conservaron 356 observaciones (81.84%). La decisión más important
 ```{r}
 sd(DF3$consultas, na.rm = T) / abs(mean(DF3$consultas, na.rm = T))
 ```
-Dado un CV \> 0.6, preferiremos usar la mediana y los cuantiles para el análisis.
+Dado un CV \> 0.6, usaremos la mediana y los cuantiles para el análisis.
 
 ```{r}
 boxplot(DF3$consultas,
@@ -812,10 +807,9 @@ El histograma confirma ese equilibrio, la mayoría de los estudiantes duerme un 
 boxplot(consultas ~ satisfaccion, data = DF3,
         main = "Nivel de satisfacción vs Número de consultas",
         xlab = "Nivel de satisfacción",
-        ylab = "Cantidad de consultas",
-        col = c("gray92", "gray80", "gray66", "gray50", "gray35"))
+        ylab = "Cantidad de consultas")
 ```
-Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se puede notar un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción, donde se ve una disminución de la mediana). Esto nos indica que podría haber una relación importante entre cuántas consultas se han hecho a la IA y cuán satisfecho se está con el estudio de ese día.
+Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se nota un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción, donde se ve una disminución de la mediana). Esto nos indica que podría haber una relación importante entre cuántas consultas se han hecho a la IA y cuán satisfecho se está con el estudio de ese día.
 
 ```{r}
 quantile(DF3$consultas[DF3$satisfaccion == 3], 0.3, na.rm = T, type = 3)
@@ -957,29 +951,66 @@ El CV se ubica entre 0.20 y 0.30 en todos los niveles, por lo que la media repre
 
 # Análisis Probabilístico
 
-<!-- no se olviden de al final borrar todos los comentarios -->
-
 ## Probabilidad empírica
 
 ### Observaciones limpias del grupo
 
-<!-- filtrar a nuestro grupo, osea el Grupo 6 solo para mostrar cuantas observaciones limpias aportamos (recuerden que piden 151 por grupo) y despues debemos quitar el filtro. recuerden que el codigo lo habiamos hecho en el paso 7 -->
+```{r}
+GRUPO <- 6
+DF3_grupo <- DF_GesNulos %>% filter(Grupo == GRUPO)
+nrow(DF3_grupo)
+```
+El Grupo 6 aportó 99 observaciones limpias sobre las 416 de la muestra efectiva de la sección.
 
 ### Variable 1: consultas
 
-<!-- consultas tiene muchos valores distintos asi que hay que agruparla en intervalos-->
+Se agrupó esta variable en 5 intervalos por los amplios valores que puede tomar, y estos son sin uso, bajo, moderado, frecuente y muy frecuente, donde sin uso corresponde a cero consultas y muy frecuente no tiene límite superior.
 
-**1. Experimento aleatorio:** 
+**1. Experimento aleatorio:**  $EA_1$: seleccionar al azar un registro de la muestra efectiva y observar el nivel de uso de IA según el número de consultas realizadas ese día.
 
-**2. Espacio de resultados:** 
+**2. Espacio de resultados:** $\Omega_{EA_1} = \{\text{Sin uso}, \text{Bajo}, \text{Moderado}, \text{Frecuente}, \text{Muy frecuente}\}$, donde Sin uso $= 0$, Bajo $= [1;10]$, Moderado $= [11;20]$, Frecuente $= [21;30]$ y Muy frecuente $= [31;+\infty\rangle$ consultas.
 
 **3. Eventos atómicos:** 
 
+$C_i$: seleccionar un registro al azar cuyo nivel de uso de IA sea el $i$-ésimo de $\Omega_{EA_1}$, con $i = 1, 2, 3, 4, 5$.
+
 **4. Cálculo de probabilidades:** 
+
+```{r}
+consultas_cat <- cut(DF3$consultas,
+                     breaks = c(0, 1, 11, 21, 31, Inf),
+                     right = FALSE,
+                     labels = c("Sin uso", "Bajo", "Moderado",
+                                "Frecuente", "Muy frecuente"))
+
+frec_con <- table(consultas_cat)
+prob_con <- prop.table(frec_con)
+frec_con
+round(prob_con, 4)
+```
+
+$P(C_1) = 34/416 = 0.0817$; $P(C_2) = 216/416 = 0.5192$; $P(C_3) = 71/416 = 0.1707$; $P(C_4) = 42/416 = 0.1010$; $P(C_5) = 53/416 = 0.1274$.
 
 **5. Validación:** 
 
-**Interpretación:** <!-- 1 o 2 líneas + una tabla o gráfico de barras -->
+```{r}
+sum(prob_con)
+```
+
+$0.0817 + 0.5192 + 0.1707 + 0.1010 + 0.1274 = 1$
+
+**Interpretación:**
+
+```{r}
+barplot(prob_con,
+        main = "Probabilidad empírica del nivel de uso de IA",
+        xlab = "Nivel de uso (según número de consultas)",
+        ylab = "Probabilidad",
+        col = "gray70",
+        ylim = c(0, 0.6))
+```
+
+El nivel más probable es el bajo, con 0.5192. Las categorías moderado (0.1707), frecuente (0.1010) y muy frecuente (0.1274) se mantienen por debajo de 0.2, y sin uso tiene 0.0817, que corresponde a días sin ninguna consulta a la IA.
 
 ### Variable 2: satisfacción
 
@@ -1025,32 +1056,130 @@ El nivel más probable es 3, con 0.4663. La probabilidad de una satisfacción al
 
 ### Eventos de interés
 
-<!-- debemos aqui definir dos eventos (simples o compuestos), uno de comprensión y otro de consultas, escritos como lo hizo el asesor que era "seleccionar un registro al azar que etc etc". Tambien debemos incluir P(E1), P(E2), P(E1 ∩ E2) y los complementos, dando tambien los conteos en una o dos frases y sin tabla -->
+<!-- debemos incluir P(E1), P(E2), P(E1 ∩ E2) y los complementos, dando tambien los conteos en una o dos frases y sin tabla -->
+Se eligió el rango [5,15] ya que se evita la alta frecuencia que  hay en [0,5] y además priorizando una buena cantidad de datos 
+
+Vamos a ver la probabilidad del evento A dado el evento B
+
+Evento A : Seleccionar un registro al azar cuyo nivel de comprensión sea de `Alto`.
+
+Evento B : Seleccionar un registro al azar cuyo número de consultas a la IA esté en el rango [5, 15]
+
+```{r}
+P_A = nrow(DF3 %>% filter(comprension == "Alto")) / nrow(DF3)
+paste("Probabilidad de A:", P_A)
+```
+
+```{r}
+P_B = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15)) / nrow(DF3)
+paste("Probabilidad de B:", P_B)
+```
+
+```{r}
+# Estas graficas son solo referenciales (quitarlas antes de entregar el trabajo)
+# barplot(table(DF3$comprension))
+# hist(DF3$consultas, breaks = 10)
+```
+
 
 
 ### Validación de independencia
 
+```{r}
+P_A_dado_B = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(5 <= consultas & consultas <= 15))
+
+P_A_dado_B
+```
+
 <!-- debemos comparar P(E1 ∩ E2) con P(E1)P(E2) y decir con cuántos decimales se hace la comparación -->
+
+```{r}
+P_A_inter_B<- nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3)
+round(P_A_inter_B,2) == round(P_A* P_B,2)
+round(P_A_inter_B,3) == round(P_A* P_B,3)
+P_A_dado_B==P_A
+```
+
+$P(A \cap B)=0.0769$ y $P(A)\cdot P(B)=0.0895$
+$P(A \cap B) \neq P(A) \cdot P(B)$ para la aproximación de 2 y 3 decimales, por lo cual decimos que los eventos son dependientes.
 
 ### Probabilidad condicional y propiedades
 
 <!-- P(E1 | E2) frente a P(E1) y las propiedades vistas en clase como la de union, la de complemento, etc etc. -->
 
+```{r}
+
+P_A_U_B<-P_A+P_B-P_A_inter_B
+P_A_comp<-1-P_A
+P_B_comp<-1-P_B
+
+#leyes de morgan
+
+P_A_U_B_comp<-1-P_A_U_B
+P_A_inter_B_comp<-1-P_A_inter_B
+P_A_U_B
+P_A_comp
+P_B_comp
+P_A_U_B_comp
+P_A_inter_B_comp
+```
+Los eventos compuestos son en este caso A union B, interseccion con complemento y union con complemento y ademas tambien se considera A compelmento y B complemento a diferencia de A y B que serian simples 
+
+$P(A ∪ B)=0.5312  $
+$P(A^C)=0.75$
+$P(B^C)=0.6418 $
+$P((A ∪ B)^C)=0.4687 $
+$P(A ∩ B)^C=0.923$
+
+
+
 ### Teorema de Bayes
 
-<!-- calcular P(E2 | E1) con Bayes y debemos comprobar que coincide con el cálculo directo -->
+```{r}
+P_B_dado_A = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(comprension == "Alto"))
+
+P_B_dado_A
+```
+
+```{r}
+P_B_dado_noA = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension != "Alto")) / nrow(DF3 %>% filter(comprension != "Alto"))
+
+P_B_dado_noA
+```
+
+Entonces, el valor obtenido por medio del Teorema de Bayes expandido es:
+
+```{r}
+( P_B_dado_A * P_A ) / ( P_B_dado_A * P_A + P_B_dado_noA * P_A_comp)
+```
+
+Mientras que el resultado del cálculo directo es:
+
+```{r}
+P_A_dado_B
+```
+
+Vemos que los cálculos se realizaron adecuadamente, pues los resultados coinciden.
 
 ### Interpretación en el contexto del estudio
 
 <!-- qué significan los resultados para el uso de la ia y la comprensión (hay que hacer como una asociacion-->
 
+De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de 21.48%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango [5, 15].
+
+```{r}
+# round(P_A_dado_B * 100, 2)
+```
+
+
 # Conclusiones
 
 ## Conclusión del Objetivo 1
 
-Como se ha mencionado anteriormente, existe una relación positiva entre el número de consultas a la IA y el grado de satisfacción en el intervalo \[1, 4\]. Se propone la explicación de que esta relación se podría deber a que un mayor número de consultas ayuda al estudiante a comprender mejor los temas que estudia. Esto derivaría en un mayor grado de satisfacción con el avance académico. Para el grado de satisfacción 5, si bien no sigue esta tendencia, aún tiene una relación con la variable `consultas` pues se sabe que al menos el 70% de sus registros reportan por lo menos 5 consultas a la IA por día.
+Como se ha mencionado anteriormente, existe una relación positiva entre el número de consultas a la IA y el grado de satisfacción en el intervalo \[1, 4\]. Se propone la explicación de que esta relación se podría deber a que un mayor número de consultas ayuda al estudiante a comprender mejor los temas que estudia. Esto derivaría en un mayor grado de satisfacción con el avance académico. Considerando los resultados de la probabilidad condicional calculada, se podría especular que esta mejora en el nivel de comprensión, aunque presente, no sería suficiente para que el estudiante perciba un nivel de comprensión `Alto` en sus estudios.
+Para el grado de satisfacción 5, si bien no sigue la tendencia de mediana creciente, aún tiene una relación con la variable `consultas` pues al menos el 70% de sus registros reportan por lo menos 5 consultas a la IA por día.
 
-Cabe aclarar que la propuesta de explicación presentada, la cual sigue un formato causa-consecuencia, es tan solo una hipótesis pues la existencia de una relación no implica causalidad.
+Cabe aclarar que la propuesta de explicación presentada, la cual sigue un formato causa-consecuencia, es solo una hipótesis pues una relación entre variables no implica causalidad.
 
 ## Conclusión del Objetivo 2
 
