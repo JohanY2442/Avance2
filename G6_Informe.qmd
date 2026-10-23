@@ -1057,10 +1057,12 @@ El nivel más probable es 3, con 0.4663. La probabilidad de una satisfacción al
 ### Eventos de interés
 
 <!-- debemos incluir P(E1), P(E2), P(E1 ∩ E2) y los complementos, dando tambien los conteos en una o dos frases y sin tabla -->
+Se eligio el rango [5,15] ya que se evita la alta frecuencia que  hay en [0,5] y ademas priorizando una buena cantidad de datos 
 
 Vamos a ver la probabilidad del evento A dado el evento B
 
 Evento A : Seleccionar un registro al azar cuyo nivel de comprensión sea de `Alto`.
+
 Evento B : Seleccionar un registro al azar cuyo número de consultas a la IA esté en el rango [5, 15]
 
 ```{r}
@@ -1095,10 +1097,11 @@ P_A_dado_B
 P_A_inter_B<- nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3)
 round(P_A_inter_B,2) == round(P_A* P_B,2)
 round(P_A_inter_B,3) == round(P_A* P_B,3)
-
 P_A_dado_B==P_A
-
 ```
+
+$P(A \cap B)=0.0769$ y $P(A)\cdot P(B)=0.0895$
+Como $P(A \cap B) \neq P(A) \cdot P(B)$, tanto para la aproximacion de 2 y 3 decimales por lo cual los eventos son dependientes.
 
 ### Probabilidad condicional y propiedades
 
@@ -1106,18 +1109,31 @@ P_A_dado_B==P_A
 
 ```{r}
 
-#propiedades de probabilidad se deberia poner cada uno visto en clase 
-
 P_A_U_B<-P_A+P_B-P_A_inter_B
 P_A_comp<-1-P_A
 P_B_comp<-1-P_B
+
 #leyes de morgan
+
 P_A_U_B_comp<-1-P_A_U_B
 P_A_inter_B_comp<-1-P_A_inter_B
+P_A_U_B
+P_A_comp
+P_B_comp
+P_A_U_B_comp
+P_A_inter_B_comp
 ```
+Los eventos compuestos son en este caso A union B, interseccion con complemento y union con complemento y ademas tambien se considera A compelmento y B complemento a diferencia de A y B que serian simples 
+
+$P(A ∪ B)=0.5312  $
+$P(A^C)=0.75$
+$P(B^C)=0.6418 $
+$P((A ∪ B)^C)=0.4687 $
+$P(A ∩ B)^C=0.923$
+
+
 
 ### Teorema de Bayes
-
 
 ```{r}
 P_A_dado_noB = nrow(DF3 %>% filter((consultas < 5 | 15 < consultas) & comprension == "Alto")) / nrow(DF3 %>% filter(consultas < 5 | 15 < consultas))
