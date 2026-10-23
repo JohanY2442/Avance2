@@ -1012,7 +1012,7 @@ $0.0721 + 0.0841 + 0.4663 + 0.3005 + 0.0769 = 1$
 
 ```{r}
 barplot(prob_sat,
-        main = "Probabilidad empírica de la satisfacción",
+        main = "Probabilidad empírica de la variable satisfacción",
         xlab = "Nivel de satisfacción (1 = muy baja, 5 = muy alta)",
         ylab = "Probabilidad",
         col = "gray70",
