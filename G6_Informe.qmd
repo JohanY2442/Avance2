@@ -1078,8 +1078,8 @@ paste("Probabilidad de B:", P_B)
 
 ```{r}
 # Estas graficas son solo referenciales (quitarlas antes de entregar el trabajo)
-barplot(table(DF3$comprension))
-hist(DF3$consultas, breaks = 10)
+# barplot(table(DF3$comprension))
+# hist(DF3$consultas, breaks = 10)
 ```
 
 
@@ -1102,6 +1102,7 @@ round(P_A_inter_B,3) == round(P_A* P_B,3)
 P_A_dado_B==P_A
 
 ```
+
 ### Probabilidad condicional y propiedades
 
 <!-- P(E1 | E2) frente a P(E1) y las propiedades vistas en clase como la de union, la de complemento, etc etc. -->
@@ -1151,7 +1152,7 @@ Vemos que los cálculos se realizaron adecuadamente, pues los resultados coincid
 De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de 30.77%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en este rango.
 
 ```{r}
-round(directo * 100, 2)
+# round(directo * 100, 2)
 ```
 
 
