@@ -1225,9 +1225,61 @@ De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el 
 
 <!-- caso 1 con horas de estudio, no se ajusta a ninguna distribucion y se supone una exponencial con lambda = 1/media -->
 
-**1. Variable de estudio:** <!-- pendiente -->
+**1. Variable de estudio:** `Horas de estudio`
 
-**2. Validación de la distribución:** <!-- pendiente -->
+**2. Validación de la distribución:**
+
+```{r}
+estudio <- DF3$estudio
+
+media_estudio <- mean(estudio, na.rm = TRUE)
+min_estudio <- min(estudio, na.rm = TRUE)
+max_estudio <- max(estudio, na.rm = TRUE)
+dens_estudio <- density(estudio, na.rm = TRUE)
+
+x_estudio <- seq(min_estudio, max_estudio, length.out = 400)
+
+plot(dens_estudio, lwd = 3,
+     main = "Distribución Normal VS Densidad Real",
+     xlab = "Cantidad de horas diarias de estudio", ylab = "Densidad")
+
+
+lines(x_estudio, dnorm(x_estudio, mean = mu_estudio, sd = sd(estudio, na.rm = TRUE)), col = "cyan3", lwd = 3, lty = 2)
+
+legend("topright", legend = c("Datos empíricos", "Distribución Normal"),
+       col = c("black", "cyan3"), lwd = c(3, 3), lty = c(1, 2))
+```
+
+```{r}
+plot(dens_estudio, lwd = 3,
+     main = "Distribución Uniforme VS Densidad Real",
+     xlab = "Número de horas diarias de estudio", ylab = "Densidad")
+
+
+lines(x_estudio, dunif(x_estudio, min_estudio, max_estudio), col = "cyan3", lwd = 3, lty = 2)
+
+legend("topright", legend = c("Datos empíricos", "Distribución Uniforme"),
+       col = c("black", "cyan3"), lwd = c(3, 3), lty = c(1, 2))
+```
+
+```{r}
+plot(dens_estudio, lwd = 3,
+     main = "Distribución Exponencial VS Densidad Real",
+     xlab = "Número de horas diarias de estudio", ylab = "Densidad")
+
+
+lines(x_estudio, dexp(x_estudio, rate = 0.5), col = "cyan3", lwd = 3, lty = 2)
+
+legend("topright", legend = c("Datos empíricos", "Distribución Exponencial"),
+       col = c("black", "cyan3"), lwd = c(3, 3), lty = c(1, 2))
+grid()
+```
+
+```{r}
+barplot(table(estudio))
+plot(density(estudio, na.rm = TRUE))
+```
+
 
 **3. Propiedades:** <!-- pendiente -->
 
