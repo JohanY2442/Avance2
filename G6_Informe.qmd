@@ -90,29 +90,27 @@ Analizar el impacto de las horas de sueño y el uso de IA en el rendimiento acad
 
 ## Población objetivo
 
-Estudiantes universitarios de UTEC durante el semestre 2026-2 que cursan la materia de Estadística y Probabilidades de la sección 01.
+Estudiantes universitarios de UTEC durante el semestre 2026-2 que cursan Estadística y Probabilidades de la sección 01.
 
 ### Unidad muestral
 
 Conformada por los estudiantes universitarios evaluados de forma individual y diaria. A cada uno de ellos se le aplicará un registro de datos para medir su comportamiento diario, su rendimiento académico y su relación con el uso de IA (en la tabla principal).
 
-Además se contará con dos tablas externas: la "Tabla Exámenes", cuya unidad muestral es cada examen rendido, y la "Tabla Demográfica", con los datos invariantes del ciclo y cuya unidad muestral es cada estudiante.
-
 ### Representatividad de la muestra
 
 Con la finalidad de que la muestra obtenida refleje a la población y se minimicen posibles sesgos, se plantean las siguientes medidas:
 
-Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario y así evitando el sesgo de no respuesta
+Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario, evitando el sesgo de no respuesta
 
-Medición al cierre del día: El cuestionario se realizará al final de cada día el cual permitirá registrar las variables diarias (como las horas de estudio o el uso de IA), atenuando el sesgo de memoria. El registro de un día se contará como válido si este se hace después de las 9:30 p.m. pero antes de la medianoche.
+Medición al cierre del día: El cuestionario se realizará al final de cada día, lo cual permitirá registrar las variables diarias atenuando el sesgo de memoria. El registro de un día se contará como válido si este se hace después de las 9:30 p.m. pero antes de la medianoche.
 
 ## Tipo de muestreo
 
-Se utilizará un muestreo sistemático por conveniencia, estructurado bajo un diseño de recolección de datos de tipo longitudinal. Esta decisión responde a la exigencia del estudio, el cual requiere que los estudiantes reporten sus métricas académicas, de sueño y de uso de Inteligencia Artificial de forma diaria. El diseño longitudinal genera observaciones repetidas por estudiante, lo que permite capturar patrones de comportamiento en el tiempo.
+Se utilizará un muestreo sistemático por conveniencia, estructurado bajo un diseño de recolección de datos de tipo longitudinal. Esta decisión responde a la exigencia del estudio, el cual requiere que los estudiantes reporten sus métricas académicas, de sueño y de uso de IA de forma diaria. El diseño longitudinal genera observaciones repetidas por estudiante, lo que permite capturar patrones de comportamiento en el tiempo.
 
 ## Recolección de datos
 
-Se diseñaron 3 formularios en Google Forms: demográfico (una vez por estudiante), diario (una vez por día) y de exámenes (uno por examen). Enlaces: [formulario diario](https://docs.google.com/forms/d/e/1FAIpQLSf9LZ3tyLEgC4oDca7NH8S9Zh-StC2w6ukAMH6yRnJej6tVzQ/viewform), [formulario demográfico](https://docs.google.com/forms/d/e/1FAIpQLSeTo6X7RJB_Jq6qrQ4By-Qrbfe_6qafpZ0N9gP62h2pQwOmlA/viewform), [formulario de exámenes](https://docs.google.com/forms/d/e/1FAIpQLScOFYt4wl2XJGtB4w-PzHCnRUiT-wfdmIg2zGpAUDZ_R_GAIA/viewform).
+Se recolecta la información desde un formulario diario en Google Forms. Enlace: [formulario diario](https://docs.google.com/forms/d/e/1FAIpQLSf9LZ3tyLEgC4oDca7NH8S9Zh-StC2w6ukAMH6yRnJej6tVzQ/viewform).
 
 ## Variables
 
@@ -144,7 +142,7 @@ Se diseñaron 3 formularios en Google Forms: demográfico (una vez por estudiant
 
 ### Mediciones
 
-Cada variable va a ser registrada en el formulario de Google Forms, el cual contendrá todas las restricciones de valores que puede tomar la variable dependiendo de su tipo y de su naturaleza.
+Cada variable va a ser registrada en el formulario de Google Forms, el cual contendrá todas las restricciones de valores que puede tomar la variable dependiendo de su tipo y naturaleza.
 
 ## Limpieza
 
@@ -164,7 +162,7 @@ names(DF)
 DFL <- DF
 ```
 
-Renombramos las columnas de interés y las filtramos del resto de columnas.
+Renombramos y filtramos las columnas de interés.
 
 ```{r}
 DFL %>% rename(hora = `Marca temporal`
@@ -189,8 +187,6 @@ Obtenemos los grupos que han aportado en base a los correos que tenemos y en bas
 ```{r}
 DFAuxiliar <- read_csv("CorreosGrupo.csv")
 ```
-
-Realizamos un inner join para relacionar `email` con el grupo correspondiente
 
 ```{r}
 DFL <- inner_join(DFL, DFAuxiliar, by = "email")
@@ -218,36 +214,36 @@ Porcentaje de NA por columna:
 round(colSums(is.na(DFL)) / nrow(DFL) * 100, 2)
 ```
 
-Se puede ver que hay 4 valores faltantes en el dataframe. Esto es raro considerando que el formulario original tiene todas las preguntas marcadas como obligatorias.
+Hay 4 valores faltantes en el dataframe. Esto es raro considerando que el formulario original tiene todas las preguntas marcadas como obligatorias.
 
 #### Análisis de ceros
 
 ```{r}
 sum(DFL$consultas == 0, na.rm = TRUE)
 ```
-Hay 39 registros en los que el estudiante no consultó la IA en todo el día.
+Hay 62 registros en los que el estudiante no consultó la IA en todo el día.
 
 ```{r}
 sum(DFL$tareas == 0, na.rm = TRUE)
 ```
-Hay 109 registros en los que la IA no ahorró tiempo en ninguna tarea.
+Hay 162 registros en los que la IA no ahorró tiempo en ninguna tarea.
 
 ```{r}
 sum(DFL$estudio == 0, na.rm = TRUE)
 ```
-Hay 32 registros de personas que no estudiaron ni una hora durante 1 día.
+Hay 54 registros de personas que no estudiaron ni una hora durante 1 día.
 
 ```{r}
 sum(DFL$sueno == 0, na.rm = TRUE)
 ```
-Hay 7 registros de estudiantes que no durmieron ni 1 hora.
+Hay 9 registros de estudiantes que no durmieron ni 1 hora.
 
 #### Análisis de cardinalidad
 
 ```{r}
 unique(DFL$comprension)
 ```
-La ordinal `comprension` ya tomó sus 5 niveles al menos una vez.
+La ordinal `comprension` ya tomó cada uno de sus 5 niveles.
 
 ```{r}
 length(unique(DFL$sueno))
@@ -725,7 +721,7 @@ legend("topright",
        legend = paste("Mediana =", median(DF3$consultas, na.rm = TRUE), "\nQ3 =", quantile(DF3$consultas, 0.75, na.rm = T, type = 3)), bty = "n")
 ```
 
-Se puede ver que en al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos un cuarto de los registros, los estudiantes han hecho 20 o más consultas diarias a la IA.
+Se ver que en al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos 25% de los registros, los estudiantes han hecho 19 o más consultas diarias a la IA.
 
 ```{r}
 barplot(table(DF3$consultas),
@@ -809,14 +805,14 @@ boxplot(consultas ~ satisfaccion, data = DF3,
         xlab = "Nivel de satisfacción",
         ylab = "Cantidad de consultas")
 ```
-Al comparar el nivel de satisfacción de estudio diario con la cantidad de consultas realizadas a la IA, se nota un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción, donde se ve una disminución de la mediana). Esto nos indica que podría haber una relación importante entre cuántas consultas se han hecho a la IA y cuán satisfecho se está con el estudio de ese día.
+Se nota un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción). Esto indica que podría haber una relación importante entre el número de consultas a la IA y cuán satisfecho se está con el estudio de ese día.
 
 ```{r}
 quantile(DF3$consultas[DF3$satisfaccion == 3], 0.3, na.rm = T, type = 3)
 quantile(DF3$consultas[DF3$satisfaccion == 4], 0.3, na.rm = T, type = 3)
 quantile(DF3$consultas[DF3$satisfaccion == 5], 0.3, na.rm = T, type = 3)
 ```
-Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 4 o más consultas a la IA por día, reforzando la idea de una relación positiva entre `consultas` y `satisfacción`.
+Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 5 o más consultas a la IA por día, reforzando la idea de una relación positiva entre `consultas` y `satisfacción`.
 
 
 ### Objetivo 2: consultas vs. estudio
@@ -1056,7 +1052,7 @@ El nivel más probable es 3, con 0.4663. La probabilidad de una satisfacción al
 
 ### Eventos de interés
 
-Se eligió el rango [5,15] ya que se evita la alta frecuencia que  hay en [0,5] y además priorizando una buena cantidad de datos 
+Se eligió el rango [5,15] ya que se evita la alta frecuencia que  hay en [0,5] y se prioriza una buena cantidad de datos.
 
 Vamos a ver la probabilidad del evento A dado el evento B
 
@@ -1129,7 +1125,7 @@ Estos resultados indican que el $53.13\%$ de los registros de la jornada present
 ### Teorema de Bayes
 Aplicando el Teorema de Bayes para calcular la probabilidad del nivel de comprensión `Alto` ($A$) dado que las consultas están en el rango $[5, 15]$ ($B$):
 
-$$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c)} = \frac{0.3077 \times 0.2500}{(0.3077 \times 0.2500) + (0.3750 \times 0.7500)} = 0.2148$$
+$$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c)} = 0.2197309$$
 
 ```{r}
 P_B_dado_A = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(comprension == "Alto"))
@@ -1159,8 +1155,7 @@ Vemos que los cálculos se realizaron adecuadamente, pues los resultados coincid
 
 ### Interpretación en el contexto del estudio
 
-
-De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de 21.48%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango [5, 15].
+De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de 21.97%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango [5, 15].
 
 ```{r}
 # round(P_A_dado_B * 100, 2)
@@ -1223,24 +1218,127 @@ De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el 
 
 ### Variable aleatoria continua 2
 
-<!-- caso 1 con horas de estudio, no se ajusta a ninguna distribucion y se supone una exponencial con lambda = 1/media -->
+**1. Variable de estudio:** `Horas de estudio`
 
-**1. Variable de estudio:** <!-- pendiente -->
+**2. Validación de la distribución:**
 
-**2. Validación de la distribución:** <!-- pendiente -->
+```{r}
+estudio <- DF3$estudio
 
-**3. Propiedades:** <!-- pendiente -->
+media_estudio <- mean(estudio, na.rm = TRUE)
+min_estudio <- min(estudio, na.rm = TRUE)
+max_estudio <- max(estudio, na.rm = TRUE)
+dens_estudio <- density(estudio, na.rm = TRUE)
 
-**4. Ejemplo:** <!-- pendiente -->
+x_estudio <- seq(min_estudio, max_estudio, length.out = 400)
+
+prom_estudio <- mean(estudio, na.rm = TRUE)
+std_estudio <- sd(estudio, na.rm = TRUE)
+
+
+plot(dens_estudio, lwd = 3,
+     main = "Distribución Uniforme VS Densidad Real",
+     xlab = "Número de horas diarias de estudio", ylab = "Densidad")
+
+
+lines(x_estudio, dunif(x_estudio, min_estudio, max_estudio), col = "cyan3", lwd = 3, lty = 2)
+
+legend("topright", legend = c("Datos empíricos", "Distribución Uniforme"),
+       col = c("black", "cyan3"), lwd = c(3, 3), lty = c(1, 2))
+```
+
+```{r}
+paste("Promedio Uniforme:", (min_estudio + max_estudio) / 2)
+paste("Promedio Muestral:", prom_estudio)
+```
+```{r}
+paste("Varianza Uniforme:", (max_estudio - min_estudio)^2 / 12)
+paste("Varianza Muestral:", std_estudio^2)
+```
+
+Tanto el promedio como la varianza difieren enormemente entre los predicho por la distribución teórica y lo obtenido en la muestra. Por lo tanto, descartamos la distribución uniforme como aproximación.
+
+
+```{r}
+lambda <- 0.5
+
+plot(dens_estudio, lwd = 3,
+     main = "Distribución Exponencial VS Densidad Real",
+     xlab = "Número de horas diarias de estudio", ylab = "Densidad")
+
+
+lines(x_estudio, dexp(x_estudio, rate = lambda), col = "cyan3", lwd = 3, lty = 2)
+
+legend("topright", legend = c("Datos empíricos", "Distribución Exponencial"),
+       col = c("black", "cyan3"), lwd = c(3, 3), lty = c(1, 2))
+grid()
+```
+
+```{r}
+paste("Promedio Exponencial:", 1 / lambda)
+paste("Promedio Muestral:", prom_estudio)
+```
+```{r}
+paste("Varianza Exponencial:", 1 / lambda^2)
+paste("Varianza Muestral:", std_estudio^2)
+```
+
+Aunque el promedio y la varianza del modelo se acercan en buena medida a las de la muestra, en la gráfica se ve que el diagrama de densidad no refleja el comportamiento no creciente de la exponencial debido a las crestas que tiene. Por lo tanto, descartamos la distribución exponencial como aproximación.
+
+```{r}
+# Uso la propiedad de perdida de memoria?
+```
+
+
+```{r}
+plot(dens_estudio, lwd = 3,
+     main = "Distribución Normal VS Densidad Real",
+     xlab = "Cantidad de horas diarias de estudio", ylab = "Densidad")
+
+
+lines(x_estudio, dnorm(x_estudio, mean = prom_estudio, sd = std_estudio), col = "cyan3", lwd = 3, lty = 2)
+
+legend("topright", legend = c("Datos empíricos", "Distribución Normal"),
+       col = c("black", "cyan3"), lwd = c(3, 3), lty = c(1, 2))
+```
+```{r}
+median(estudio, na.rm = T)
+prom_estudio
+```
+La media y la mediana de la muestra se acercan bastante. Si bien la gráfica hace evidente un sesgo a la derecha, la distribución normal es la que mejor describe a la muestra entre los 3 modelos revisados debido a su elevación central característica que le da un comportamiento creciente y decreciente más cercano al que tiene la variable.
+Por este motivo, supondremos la siguiente distribución `estudio ~ Normal(2.915753, 3.361033)`
+
+
+```{r}
+# Quitar esto para la entrega final
+# hist(estudio)
+# plot(density(estudio, na.rm = TRUE))
+```
+
+**3. Propiedades:**
+
+$$
+E(estudio) = 2.915753\\
+V(estudio) = 3.361033\\
+SD(estudio) = 1.833312\\
+CV(estudio) = 0.6287612
+$$
+<!-- No recuerdo que haya más propiedades -->
+
+**4. Ejemplo:**
+¿Cuál es la probabilidad de que un registro reporte por lo menos 5 horas de estudio y a lo mucho 8 horas?
+
+```{r}
+pnorm(8, prom_estudio, std_estudio) - pnorm(5, prom_estudio, std_estudio)
+```
+```{r}
+nrow(DF3 %>% filter(5 <= estudio & estudio <= 8)) / nrow(DF3)
+```
+
+Comparando la respuesta obtenida desde el modelo normal y aquella obtenida directamente desde la muestra, se nota que la elección del modelo ha sido más o menos acertada considerando que las respuestas tienen una diferencia de `0.0656152`.
+
 
 # Conclusiones
-
-## Conclusión del Objetivo 1
-
-Como se ha mencionado anteriormente, existe una relación positiva entre el número de consultas a la IA y el grado de satisfacción en el intervalo \[1, 4\]. Se propone la explicación de que esta relación se podría deber a que un mayor número de consultas ayuda al estudiante a comprender mejor los temas que estudia. Esto derivaría en un mayor grado de satisfacción con el avance académico. Considerando los resultados de la probabilidad condicional calculada, se podría especular que esta mejora en el nivel de comprensión, aunque presente, no sería suficiente para que el estudiante perciba un nivel de comprensión `Alto` en sus estudios.
-Para el grado de satisfacción 5, si bien no sigue la tendencia de mediana creciente, aún tiene una relación con la variable `consultas` pues al menos el 70% de sus registros reportan por lo menos 5 consultas a la IA por día.
-
-Cabe aclarar que la propuesta de explicación presentada, la cual sigue un formato causa-consecuencia, es solo una hipótesis pues una relación entre variables no implica causalidad.
 
 ## Conclusión del Objetivo 2
 
