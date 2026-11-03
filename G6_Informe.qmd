@@ -1168,21 +1168,81 @@ De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el 
 
 ### Variable aleatoria discreta 1
 
-<!-- geometrica con consultas, exito si consultas > 20 y p calculada con los datos -->
+```{r}
+exito <- DF3$consultas > 20
+p <- mean(exito)
+q <- 1 - p
+```
 
-**1. Caso:** <!-- pendiente -->
+**1. Caso:** Se revisan registros de la muestra efectiva al azar, uno tras otro. Un éxito es un registro con más de 20 consultas a la IA. ¿Cuál es la probabilidad de que el primer éxito sea exactamente el quinto registro?
 
-**2. Distribución teórica:** <!-- pendiente -->
+**2. Distribución teórica:** Sea $X$ el número de registros revisados hasta encontrar el primero con más de 20 consultas a la IA. Entonces $X\sim Geom(p)$ con soporte $\{1,2,3,\dots\}$, donde $p$ es la probabilidad de seleccionar un registro con más de 20 consultas. Con los datos, $p=$ `r sum(exito)`$/$`r length(exito)` $=$ `r round(p,4)`.
 
-**3. Descripción de la distribución:** <!-- pendiente -->
+**3. Descripción de la distribución:** $P(X=k)=(1-p)^{k-1}p$. Es estrictamente decreciente para todo $k\ge1$, por lo que la moda es siempre $k=1$. Como $p<0.5$, la probabilidad se dispersa hacia la derecha con cola larga y el valor esperado supera 2.
 
-**4. Propiedades:** <!-- pendiente -->
+**4. Propiedades:**
 
-**5. Respuesta del caso:** <!-- pendiente -->
+* $E(X)=\frac{1}{p}=$ `r round(1/p,2)` registros.
+* $Var(X)=\frac{1-p}{p^2}=$ `r round(q/p^2,2)` y $\sigma=$ `r round(sqrt(q)/p,2)`.
+* $CV=\frac{\sigma}{E(X)}=\sqrt{1-p}=$ `r round(sqrt(q),4)`.
+* Falta de memoria: $P(X>m+n\mid X>m)=P(X>n)$.
 
-**6. Distribución acumulada:** <!-- pendiente -->
+**5. Respuesta del caso:** $P(X=5)=$ `r round(dgeom(x = 4, prob = p), 4)`. Hay una probabilidad de `r round(dgeom(x = 4, prob = p)*100, 2)`% de que el primer registro con más de 20 consultas sea el quinto.
 
-**Evidencia con los datos:** <!-- grafico de la distribucion y una comparacion numerica con los datos -->
+**6. Distribución acumulada:** $F(k)=1-(1-p)^k$. Por ejemplo, ¿cuál es la probabilidad de que baste revisar 5 registros o menos para encontrar el primer éxito? $P(X\le5)=$ `r round(pgeom(q = 4, prob = p), 4)`, es decir, `r round(pgeom(q = 4, prob = p)*100, 2)`% de los casos.
+
+**Evidencia con los datos:**
+
+```{r}
+N <- length(exito)
+k_all <- 1:N
+pmf <- dgeom(k_all - 1, p)
+cdf_izq <- pgeom(k_all - 1, p)        # P(X <= k)
+cdf_der <- q^(k_all - 1)              # P(X >= k)
+sum(pmf)                              # validación: ≈ 1
+
+espera <- diff(c(0, which(exito)))
+ks <- 1:10
+emp <- sapply(ks, function(i) mean(espera == i))
+
+par(mfrow = c(1, 2))
+
+# Distribución completa (1 a N)
+plot(k_all, pmf, type = "h", xlab = "k", ylab = "P(X = k)",
+     main = "Distribución completa (1 a N)")
+
+# Zoom: teórica vs. empírica
+plot(ks, pmf[ks], type = "h", lwd = 3, xlab = "k", ylab = "P(X = k)",
+     ylim = c(0, max(pmf[ks], emp)),
+     main = "Zoom: teórica vs. empírica")
+points(ks, emp, pch = 16, col = "firebrick")
+abline(v = 1/p, lty = 2, col = "gray40")
+legend("topright", legend = c("Teórica", "Empírica", "E(X)"),
+       lty = c(1, NA, 2), pch = c(NA, 16, NA),
+       col = c("black", "firebrick", "gray40"), bty = "n")
+
+par(mfrow = c(1, 1))
+```
+
+```{r}
+# Acumulada hacia la izquierda
+plot(ks, cdf_izq[ks], type = "s", xlab = "k", ylab = "P(X <= k)",
+     main = "Acumulada hacia la izquierda")
+```
+
+```{r}
+# Acumulada hacia la derecha
+plot(ks, cdf_der[ks], type = "s", xlab = "k", ylab = "P(X >= k)",
+     main = "Acumulada hacia la derecha")
+```
+
+```{r}
+data.frame(k = ks, `P(X=k)` = round(pmf[ks], 4), empirica = round(emp, 4),
+           `P(X<=k)` = round(cdf_izq[ks], 4), `P(X>=k)` = round(cdf_der[ks], 4),
+           check.names = FALSE)
+```
+
+Las esperas observadas entre registros con más de 20 consultas tienen media `r round(mean(espera),2)`, frente a $E(X)=$ `r round(1/p,2)`.
 
 ### Variable aleatoria discreta 2
 
