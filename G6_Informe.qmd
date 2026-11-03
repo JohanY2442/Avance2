@@ -1186,21 +1186,85 @@ De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el 
 
 ### Variable aleatoria discreta 2
 
-<!-- binomial con tareas, exito si tareas >= 3, n = 10 y p calculada con los datos -->
+**1. Caso:** Se desea conocer la probabilidad de que, al seleccionar al azar 10 registros del estudio, exactamente 3 correspondan a días en los que la IA ahorró tiempo en 3 o más tareas. Elegimos este éxito porque la mayoría de registros tiene entre 0 y 2 tareas, así que 3 o más representa un día de uso intensivo de la IA.
 
-**1. Caso:** <!-- pendiente -->
+**2. Distribución teórica:**
 
-**2. Distribución teórica:** <!-- pendiente -->
+```{r}
+n_tar <- 10
+p_tar <- mean(DF3$tareas >= 3)
+p_tar
+```
 
-**3. Descripción de la distribución:** <!-- pendiente -->
+X: número de registros, de 10 seleccionados al azar, en los que la IA ahorró tiempo en 3 o más tareas.
 
-**4. Propiedades:** <!-- pendiente -->
+$X \sim Bin(n = 10,\ p = `r round(p_tar, 4)`)$, donde p = P(seleccionar un registro con 3 o más tareas en las que la IA ahorró tiempo).
 
-**5. Respuesta del caso:** <!-- pendiente -->
+**3. Descripción de la distribución:**
 
-**6. Distribución acumulada:** <!-- pendiente -->
+P(X = 0): probabilidad de que ninguno de los 10 registros tenga 3 o más tareas con ahorro de tiempo.
 
-**Evidencia con los datos:** <!-- grafico de la distribucion y una comparacion numerica con los datos -->
+P(X = 1): probabilidad de que exactamente 1 de los 10 registros tenga 3 o más tareas con ahorro de tiempo.
+
+…
+
+P(X = 10): probabilidad de que los 10 registros tengan 3 o más tareas con ahorro de tiempo.
+
+**4. Propiedades:**
+
+```{r}
+E_tar <- n_tar * p_tar
+V_tar <- n_tar * p_tar * (1 - p_tar)
+SD_tar <- sqrt(V_tar)
+CV_tar <- SD_tar / E_tar
+```
+
+$E(X) = np = `r round(E_tar, 2)`$, $V(X) = np(1-p) = `r round(V_tar, 2)`$, $SD(X) = `r round(SD_tar, 2)`$ y $CV(X) = `r round(CV_tar, 2)`$. Es decir, de cada 10 registros se esperan unos `r round(E_tar)` con 3 o más tareas con ahorro de tiempo.
+
+**5. Respuesta del caso:**
+
+```{r}
+dbinom(3, n_tar, p_tar)
+```
+
+$P(X = 3) = `r round(dbinom(3, n_tar, p_tar), 4)`$: hay un `r round(dbinom(3, n_tar, p_tar) * 100, 2)`% de probabilidad de que exactamente 3 de los 10 registros tengan 3 o más tareas con ahorro de tiempo.
+
+**6. Distribución acumulada:**
+
+P(X ≤ 2): probabilidad de que, de 10 registros, como máximo 2 tengan 3 o más tareas con ahorro de tiempo.
+
+```{r}
+pbinom(2, n_tar, p_tar)
+```
+
+$P(X \leq 2) = `r round(pbinom(2, n_tar, p_tar), 4)`$, por lo que en más de la mitad de los casos habrá como máximo 2 días de uso intensivo entre 10 registros.
+
+**Evidencia con los datos:** mezclamos los registros al azar, formamos grupos de 10 y contamos en cada grupo cuántos tienen 3 o más tareas, para compararlo con el modelo.
+
+```{r}
+set.seed(6)
+mezcla <- sample(DF3$tareas)
+n_grupos <- floor(length(mezcla) / 10)
+grupos <- matrix(mezcla[1:(n_grupos * 10)] >= 3, nrow = 10)
+exitos <- colSums(grupos)
+mean(exitos)
+```
+
+```{r}
+teorica <- dbinom(0:10, n_tar, p_tar)
+empirica <- table(factor(exitos, levels = 0:10)) / length(exitos)
+
+barplot(rbind(teorica, empirica),
+        beside = TRUE,
+        names.arg = 0:10,
+        col = c("gray40", "gray80"),
+        legend.text = c("Binomial", "Datos"),
+        main = "Binomial vs. datos",
+        xlab = "Número de registros con 3 o más tareas (de 10)",
+        ylab = "Probabilidad")
+```
+
+En `r n_grupos` grupos de 10 registros, el promedio real de éxitos es `r round(mean(exitos), 2)`, muy cerca del valor esperado del modelo (`r round(E_tar, 2)`). Además, las barras del modelo y de los datos tienen la misma forma, por lo que la binomial representa bien este caso.
 
 ## Variables aleatorias continuas
 
