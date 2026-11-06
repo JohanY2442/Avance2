@@ -1,675 +1,675 @@
-consultas,uso,satisfaccion,tareas,curso,estudio,sueno,comprension,uso_ia
-13,Resumir,3,1,CS4054,3,9,Alto,Usó IA
-2,Investigar,4,1,CS2031,4,8.33,Muy alto,Usó IA
-4,Resumir,3,1,GI3101,1,8,Moderado,Usó IA
-32,Resumir,3,0,CS2041,7,7,Moderado,Usó IA
-2,Agendara recordatorio,1,2,CC1105,2,8,Alto,Usó IA
-2,Resumir,4,1,EL3012,3,8,Moderado,Usó IA
-20,Revisar conceptos,3,0,CS2031,7,5,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0,10,Bajo,No usó IA
-0,No usó IA,1,0,No aplica,0,8,Muy alto,No usó IA
-5,Programar,5,0,CS2031,3.7,8.16,Alto,Usó IA
-0,No usó IA,2,0,No aplica,0,6,Moderado,No usó IA
-68,Programar,3,1,CS2013,9,9,Moderado,Usó IA
-2,Resolver ejercicios,3,2,CI2012,4,9,Moderado,Usó IA
-15,profundizar conceptos,3,2,CS2031,7,5,Moderado,Usó IA
-12,Resumir,3,3,CS1015,5,9,Alto,Usó IA
-4,Resolver ejercicios,2,2,CC1105,2,9,Moderado,Usó IA
-26,Programar,4,1,CS2031,1.2,9,Moderado,Usó IA
-5,Resolver ejercicios,3,3,CC1103,2,5,Bajo,Usó IA
-6,Resolver ejercicios,3,2,CI2012,4,7,Moderado,Usó IA
-3,Resumir,3,2,Sin código válido,3,6,Moderado,Usó IA
-50,Resolver ejercicios,1,2,CC6201,6,4,Bajo,Usó IA
-12,Resolver ejercicios,3,2,GI2101,2,7,Alto,Usó IA
-40,Resumir,3,3,CS2031,5,3,Alto,Usó IA
-4,Resumir,3,4,CC1103,2,8,Moderado,Usó IA
-2,Consultar,5,1,CC1105,2,7,Alto,Usó IA
-2,Programar,3,2,CS2023,1,9,Moderado,Usó IA
-6,Redactar,2,4,cc2101,2,8,Alto,Usó IA
-6,Resumir,3,3,HH2102,2,7.5,Moderado,Usó IA
-29,Resolver ejercicios,4,2,Sin código válido,1.5,7,Alto,Usó IA
-12,Investigar,5,0,CS2031,0.66,7.66,Muy alto,Usó IA
-10,Resolver ejercicios,4,3,CS2013,4,4,Moderado,Usó IA
-27,Resolver ejercicios,4,2,CC1122,6,6,Moderado,Usó IA
-8,Resumir,3,5,CC1103,2,8,Moderado,Usó IA
-3,Resolver ejercicios,3,1,CI2012,4,5,Moderado,Usó IA
-1,Resumir,3,1,DS2011,2,7,Moderado,Usó IA
-2,Resolver ejercicios,4,1,CC2101,3,6,Alto,Usó IA
-33,Programar,3,1,CC1105,4,5,Alto,Usó IA
-5,Resumir,3,3,-,4,9,Moderado,Usó IA
-7,Resolver ejercicios,4,1,CC1105,1.5,6,Moderado,Usó IA
-30,Programar,4,4,Sin código válido,6,8,Moderado,Usó IA
-5,Programar,3,0,CC1105,0,6.66,Muy alto,Usó IA
-10,Traducir y entender idiomas,2,2,Sin código válido,3,5,Moderado,Usó IA
-50,investigar temas,3,1,CS2031,5,4,Moderado,Usó IA
-9,Resumir,3,3,CC1143,4,3,Moderado,Usó IA
-35,Resolver ejercicios,4,2,CC2101,3,5,Moderado,Usó IA
-14,Resolver ejercicios,3,1,CS2041,2,6,Alto,Usó IA
-1,Redactar,4,1,CI2031,1,6,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0,7.5,Muy bajo,No usó IA
-4,Buscar herramientas,4,0,CS2041,2.83,6.5,Alto,Usó IA
-2,Programar,3,2,CS2023,0,8,Moderado,Usó IA
-10,Resolver ejercicios,3,15,PI2102,2,6,Alto,Usó IA
-6,Programar,3,5,CS6006,4,9,Alto,Usó IA
-42,Programar,4,1,CC1105,3,6,Alto,Usó IA
-20,Programar,4,5,CC2101,5,8,Alto,Usó IA
-19,Resolver ejercicios,3,4,GI2101,3,7,Moderado,Usó IA
-20,Resolver ejercicios,4,2,Sin código válido,2,5,Alto,Usó IA
-54,Resumir,2,0,CS2031,3,8,Bajo,Usó IA
-4,Ayudarme a encontrar errores,5,3,CI3014,5,6,Alto,Usó IA
-37,revisar conceptos,3,0,CC1105,3,3,Moderado,Usó IA
-4,Resumir,2,2,CC1103,2,8,Alto,Usó IA
-1,Resolver ejercicios,1,2,Sin código válido,4,4,Muy bajo,Usó IA
-20,Resolver ejercicios,4,2,CC2101,5,5,Alto,Usó IA
-8,Programar,4,5,EL3014,5,7,Moderado,Usó IA
-10,Resumir,4,2,GI3113,3,9,Alto,Usó IA
-0,No usó IA,3,0,No aplica,1,6,Moderado,No usó IA
-28,Programar,4,2,CS2031,2,4,Alto,Usó IA
-3,Resumir,3,2,CC1105,5,8,Moderado,Usó IA
-3,Resumir,3,4,Sin código válido,4,6,Moderado,Usó IA
-3,Resolver ejercicios,1,0,GI3101,2,10,Moderado,Usó IA
-3,Resolver ejercicios,3,2,CC6201,5,6,Moderado,Usó IA
-5,Resolver ejercicios,4,3,CC1105,4,7,Moderado,Usó IA
-10,Resumir,4,1,CC1105,3,4,Moderado,Usó IA
-8,Programar,3,1,CC1105,1,8,Moderado,Usó IA
-3,Resumir,4,2,cc2101,3,6,Alto,Usó IA
-25,Programar,3,6,CS2031,6,6,Moderado,Usó IA
-20,Programar,4,0,CS2041,1.58,6.5,Alto,Usó IA
-6,Resolver ejercicios,4,2,CC1105,2,7,Moderado,Usó IA
-6,Resolver ejercicios,3,2,CC2104,2,7,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0,10,Moderado,No usó IA
-0,No usó IA,3,0,No aplica,5,8,Alto,No usó IA
-12,Programar,3,1,CC1105,2,8,Moderado,Usó IA
-7,Resumir,3,7,CC1103,3,8,Moderado,Usó IA
-48,Resumir,3,4,CS2031,3,6,Alto,Usó IA
-4,Resolver ejercicios,4,0,CC2101,2.42,7,Alto,Usó IA
-2,Resumir,4,1,PI2102,4,6,Alto,Usó IA
-31,Resumir,3,0,CS2013,3,7,Moderado,Usó IA
-6,Resumir,3,3,GI3101,3,6,Alto,Usó IA
-3,Investigar,3,1,BI4013,0.5,8,Bajo,Usó IA
-5,Resolver ejercicios,4,5,EL2082,5,8,Moderado,Usó IA
-0,No usó IA,3,0,No aplica,0,9,Moderado,No usó IA
-4,Resumir,3,3,CC1103,2,8,Moderado,Usó IA
-11,Programar,5,1,CC1105,7,7,Muy alto,Usó IA
-21,Programar,5,11,CS2031,5,5,Alto,Usó IA
-27,Resumir,3,0,CS2031,3,6,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0,6,Muy bajo,No usó IA
-56,Resolver ejercicios,4,3,CC2101,5,6,Alto,Usó IA
-1,Programar,3,1,CC1105,4,9,Moderado,Usó IA
-7,Redactar,3,4,CC1105,3,7,Moderado,Usó IA
-4,Resolver ejercicios,3,4,CC1103,2,8,Moderado,Usó IA
-22,Programar,4,0,CC1105,5.2,9,Alto,Usó IA
-42,Programar,4,3,CC1105,4,3.5,Alto,Usó IA
-3,Resolver ejercicios,3,2,Sin código válido,2,7,Moderado,Usó IA
-33,Programar,4,2,CC1105,4,7,Moderado,Usó IA
-18,Programar,4,2,CS2013,3.5,6,Moderado,Usó IA
-41,Resumir,3,1,CC1105,4,4,Moderado,Usó IA
-5,Resolver ejercicios,3,1,CS2023,1,7,Alto,Usó IA
-43,Resolver ejercicios,3,1,CC1105,4,13,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0.5,8.5,Muy bajo,No usó IA
-45,Programar,5,6,CS2031,5,9,Moderado,Usó IA
-2,Redactar,3,1,Sin código válido,2,8,Moderado,Usó IA
-17,Programar,4,1,CC1105,5,6,Muy alto,Usó IA
-7,Programar,3,0,CS2031,2.33,8,Moderado,Usó IA
-2,Resumir,2,1,CC1105,2,4,Moderado,Usó IA
-0,No usó IA,2,0,No aplica,1,6,Moderado,No usó IA
-7,Resolver ejercicios,3,5,CC1105,3,8,Moderado,Usó IA
-0,No usó IA,3,0,No aplica,1,7,Moderado,No usó IA
-27,Resolver ejercicios,5,1,CC2101,5,6,Alto,Usó IA
-3,Redactar,3,1,CC1105,6,2,Moderado,Usó IA
-15,Resolver ejercicios,1,1,CC1105,1,9,Muy bajo,Usó IA
-42,repasar,2,1,CC1105,3,8.45,Bajo,Usó IA
-40,Resolver ejercicios,4,1,CC1143,5,7,Bajo,Usó IA
-6,Redactar,3,2,Sin código válido,5,7,Moderado,Usó IA
-16,Programar,3,6,GI2101,2,8,Moderado,Usó IA
-27,Resumir,3,0,CS2031,3,3,Moderado,Usó IA
-6,Resolver ejercicios,4,3,CC1105,3,6,Moderado,Usó IA
-50,Resolver ejercicios,3,3,CS2041,6,2,Alto,Usó IA
-5,Resolver ejercicios,3,4,CC1105,3,9,Moderado,Usó IA
-0,No usó IA,2,0,No aplica,1.5,8,Bajo,No usó IA
-5,Resolver ejercicios,3,1,CC2101,3,6,Moderado,Usó IA
-2,Resumir,3,1,CC1143,4,9,Alto,Usó IA
-9,Resumir,4,5,CC1105,4,8,Moderado,Usó IA
-40,Resumir,4,2,CC1122,4,4,Moderado,Usó IA
-5,Programar,1,1,CS2013,0,8,Alto,Usó IA
-10,Resumir,4,4,CC2101,4,7,Moderado,Usó IA
-18,Resumir,2,1,CC2101,2,11,Moderado,Usó IA
-25,Resolver ejercicios,4,2,CC1105,1.5,6.5,Alto,Usó IA
-15,Resolver ejercicios,3,3,CI3014,4,6,Alto,Usó IA
-32,Programar,3,2,CS2013,3,5,Moderado,Usó IA
-4,Ayudar a aprender,2,4,Sin código válido,2,8,Alto,Usó IA
-36,Resumir,3,2,CS2013,3,8,Alto,Usó IA
-26,Resumir,3,2,CS2013,4,4,Moderado,Usó IA
-4,Redactar,4,2,Sin código válido,2,7,Moderado,Usó IA
-1,Programar,4,1,CI2003,2,9,Alto,Usó IA
-5,Resolver ejercicios,3,2,CS2013,2,6,Alto,Usó IA
-13,Programar,3,4,CS2041,2,9,Moderado,Usó IA
-5,Resolver ejercicios,3,4,CC1103,1,8,Moderado,Usó IA
-5,Resumir,3,2,Sin código válido,3,6,Moderado,Usó IA
-34,Resolver ejercicios,4,1,CC1143,3,6,Moderado,Usó IA
-21,Resolver ejercicios,3,1,CC1122,5,5,Alto,Usó IA
-5,Resumir,3,3,CI3032,4,6,Alto,Usó IA
-5,Programar,3,0,-,6,6,Bajo,Usó IA
-30,Resumir,3,1,CS2041,5,7.6555,Moderado,Usó IA
-20,Resolver ejercicios,3,2,CI3013,3,8,Moderado,Usó IA
-27,Programar,4,2,CS2031,6,6,Alto,Usó IA
-5,Consultar,3,3,Cc2101,2,6,Moderado,Usó IA
-40,Resumir,3,0,CS2031,3,4,Moderado,Usó IA
-28,Programar,5,1,CS2031,2.33,8,Muy alto,Usó IA
-18,Resumir,4,1,CS2013,0.5,7,Moderado,Usó IA
-5,Resolver ejercicios,3,2,CI2012,5,7,Moderado,Usó IA
-11,Programar,4,5,CS2041,4,9,Moderado,Usó IA
-3,Programar,2,2,CC1105,2,8,Moderado,Usó IA
-5,Redactar,4,2,HH2101,2,7,Alto,Usó IA
-2,Redactar,3,1,Sin código válido,1,6,Alto,Usó IA
-13,Resolver ejercicios,4,1,CC1143,6,10,Muy alto,Usó IA
-25,Resolver ejercicios,4,1,CC1143,3,7,Alto,Usó IA
-30,Resumir,3,1,CS2013,3,5,Moderado,Usó IA
-38,Resolver ejercicios,4,2,CC2101,5,4,Moderado,Usó IA
-0,Resumir,2,2,Sin código válido,2,6,Bajo,Usó IA
-6,Resolver ejercicios,3,4,CC1105,2,8,Moderado,Usó IA
-13,Programar,4,0,PI2102,1.17,4.17,Muy alto,Usó IA
-7,Programar,4,4,CS6006,2,6,Moderado,Usó IA
-4,Resolver ejercicios,4,1,CC2101,1,6,Moderado,Usó IA
-15,Redactar,3,2,GI2101,3,9,Moderado,Usó IA
-3,Programar,4,3,CS2031,4,8,Alto,Usó IA
-34,Resolver ejercicios,4,1,CC1122,5,7,Muy alto,Usó IA
-6,Resolver ejercicios,3,4,CC1105,1,8,Moderado,Usó IA
-4,Resolver ejercicios,2,5,CC1143,1,10,Muy bajo,Usó IA
-21,Resolver ejercicios,4,1,CC1143,5,9,Alto,Usó IA
-3,Resolver ejercicios,2,3,Sin código válido,5,2,Moderado,Usó IA
-57,Programar,3,2,CS2031,2,6,Moderado,Usó IA
-37,Resumir,3,1,CS2013,2,6,Moderado,Usó IA
-25,Resumir,4,3,CS2031,4,7,Muy alto,Usó IA
-1,Redactar,1,1,CC1105,1,7,Muy bajo,Usó IA
-5,Resolver ejercicios,3,4,CC1103,2,8,Moderado,Usó IA
-2,Resumir,3,1,Cc1103,3,5,Moderado,Usó IA
-34,Resolver ejercicios,4,2,CC1122,5,6,Moderado,Usó IA
-52,Programar,2,0,CS2031,6,9,Bajo,Usó IA
-3,Programar,5,0,CC1105,2,7,Muy alto,Usó IA
-7,Programar,3,2,CS2013,2,7,Alto,Usó IA
-5,Resolver ejercicios,3,3,CI2012,4,6,Moderado,Usó IA
-5,Resumir,4,2,PI2102,2,6,Moderado,Usó IA
-45,Resumir,3,1,CS2041,2,7,Moderado,Usó IA
-4,Resolver ejercicios,3,2,CC1103,1,8,Moderado,Usó IA
-4,Resolver ejercicios,3,1,CS2013,1,7,Bajo,Usó IA
-2,Resolver ejercicios,4,1,Sin código válido,2,9,Moderado,Usó IA
-17,Programar,3,1,CC1105,2,9,Moderado,Usó IA
-47,Resumir,4,3,GI3101,8,6,Alto,Usó IA
-6,Resolver ejercicios,4,1,CC1143,2,5,Muy alto,Usó IA
-8,Resolver ejercicios,4,0,Sin código válido,6,7,Moderado,Usó IA
-5,Programar,3,2,CS2013,2,7,Alto,Usó IA
-33,Resolver ejercicios,4,1,GI3101,6,5,Alto,Usó IA
-17,Programar,5,0,CS2031,2.83,6,Alto,Usó IA
-15,Resumir,4,3,CS2031,5,9,Moderado,Usó IA
-15,Resumir,4,4,CI3032,5,4.5,Muy alto,Usó IA
-23,Redactar,3,4,CS2031,5,8,Alto,Usó IA
-2,Resumir,2,0,-,0.5,8.5,Moderado,Usó IA
-6,Resolver ejercicios,5,2,CI2012,8,9,Muy alto,Usó IA
-60,Resolver ejercicios,4,1,CI2012,5,7,Alto,Usó IA
-1,Resolver ejercicios,3,3,Sin código válido,8,6,Muy bajo,Usó IA
-35,Programar,3,12,CS2031,8,9,Muy alto,Usó IA
-2,Resolver ejercicios,4,0,CI2012,7,2,Moderado,Usó IA
-26,Resolver ejercicios,4,1,CI2012,3,8,Alto,Usó IA
-4,Resolver ejercicios,3,1,CC1103,2,6,Moderado,Usó IA
-13,Resumir,4,3,CS2041,5,8,Moderado,Usó IA
-30,Resumir,5,5,CI3032,5,3,Alto,Usó IA
-20,Resolver ejercicios,3,0,CS2031,5,9.8,Moderado,Usó IA
-12,Resolver ejercicios,4,1,CI2012,5,9,Alto,Usó IA
-4,Resumir,4,0,-,2.5,9,Moderado,Usó IA
-10,Programar,3,1,CS2013,3,7,Moderado,Usó IA
-33,Resumir,3,0,CS2013,8,0,Moderado,Usó IA
-17,Redactar,3,2,CC2104,2,9,Moderado,Usó IA
-20,Redactar,2,2,CC1105,3,8,Muy alto,Usó IA
-7,Programar,5,11,HH6002,9,7,Alto,Usó IA
-17,Resumir,3,3,CC2104,5,6,Alto,Usó IA
-21,Resolver ejercicios,4,1,CC2101,6,4,Alto,Usó IA
-12,Resolver ejercicios,3,0,CC2101,4,7,Alto,Usó IA
-7,Explicar temas,4,1,PI2102,3,6,Alto,Usó IA
-3,Redactar,4,2,El2013,4,4,Moderado,Usó IA
-4,Resolver ejercicios,3,2,CC1103,3,8,Moderado,Usó IA
-1,Resumir,3,0,GI2101,3,9,Moderado,Usó IA
-5,Programar,3,2,-,3,7,Moderado,Usó IA
-21,Resolver ejercicios,4,3,CC1143,7,10,Muy alto,Usó IA
-30,Programar,4,1,CC1105,6,8,Alto,Usó IA
-6,Resolver ejercicios,4,2,Cc2012,4,7,Moderado,Usó IA
-0,No usó IA,3,0,No aplica,4,7,Moderado,No usó IA
-27,Resumir,3,1,CS2013,3,7,Moderado,Usó IA
-14,Resumir,3,1,CS2031,4,9.4,Moderado,Usó IA
-5,Resumir,3,0,CS2041,1.5,8,Moderado,Usó IA
-2,Programar,2,2,GI3101,3,3,Muy bajo,Usó IA
-3,Resolver ejercicios,3,4,CC1103,2,7,Moderado,Usó IA
-3,Resolver ejercicios,4,3,CI3013,1,7,Alto,Usó IA
-34,Programar,4,1,CC1105,6,5,Moderado,Usó IA
-47,Resumir,4,1,CS2031,7,8.2,Alto,Usó IA
-8,Resolver ejercicios,4,4,Sin código válido,5,6,Moderado,Usó IA
-45,Resolver ejercicios,4,1,CC1143,6,8,Alto,Usó IA
-6,Programar,3,0,CC2012,5,6,Moderado,Usó IA
-4,Resumir,2,1,GI2101,4,10,Alto,Usó IA
-20,Resolver ejercicios,3,3,CC1105,10,0,Alto,Usó IA
-5,Resolver ejercicios,3,2,CS2013,2,7,Moderado,Usó IA
-14,Resolver ejercicios,4,3,CI3051,5,8.5,Alto,Usó IA
-20,Resolver ejercicios,3,4,CC1105,6,5,Moderado,Usó IA
-33,Resumir,3,0,CS2031,3,0,Moderado,Usó IA
-8,Programar,4,8,-,5,6,Moderado,Usó IA
-6,Resolver ejercicios,4,2,CC1105,5,9,Alto,Usó IA
-6,Programar,4,6,CS2031,4,9,Alto,Usó IA
-4,Resolver ejercicios,4,2,CC2012,5,7,Moderado,Usó IA
-1,Traducir,4,1,CC1105,3,3,Alto,Usó IA
-20,Resolver ejercicios,4,1,CC1105,4,6,Moderado,Usó IA
-6,Resumir,4,3,CC1105,2,6,Moderado,Usó IA
-29,Programar,4,0,CC1105,4,7,Alto,Usó IA
-29,Resumir,3,0,CS2031,7,5,Moderado,Usó IA
-22,Resumir,3,0,CS2031,4,6,Moderado,Usó IA
-0,No usó IA,3,0,No aplica,1,8,Alto,No usó IA
-4,Resumir,4,2,CC1103,1,8,Alto,Usó IA
-34,Aprender inglés,4,2,CC2101,4,6,Alto,Usó IA
-0,No usó IA,1,0,No aplica,0,10.5,Muy bajo,No usó IA
-20,preguntas de conceptos,3,0,CC1105,0,7,Moderado,Usó IA
-9,Resumir,3,3,CS2041,4,6,Muy alto,Usó IA
-10,Redactar,1,1,CI3091,1,10,Moderado,Usó IA
-1,Dudas cotidianas,3,1,Sin código válido,1,4,Alto,Usó IA
-0,Resumir,1,1,Sin código válido,1,5,Bajo,Usó IA
-1,Programar,2,0,CC1105,0,7,Bajo,Usó IA
-0,No usó IA,3,0,No aplica,1,9,Moderado,No usó IA
-4,Resolver ejercicios,3,3,CC1105,1,8,Moderado,Usó IA
-27,Resumir,4,1,GI3101,4,7,Moderado,Usó IA
-0,No usó IA,2,0,No aplica,0,10,Bajo,No usó IA
-0,No usó IA,1,0,No aplica,0,9,Moderado,No usó IA
-4,Resolver ejercicios,2,1,CC2012,3,7,Moderado,Usó IA
-28,Resumir,3,0,-,3,7,Moderado,Usó IA
-6,Redactar,1,1,CC1105,1,7,Bajo,Usó IA
-6,Programar,3,3,CC1105,5,6,Moderado,Usó IA
-4,Resumir,3,3,CS2041,3,8,Muy alto,Usó IA
-4,Resumir,2,3,CC1103,2,8,Moderado,Usó IA
-35,Programar,3,1,CC1105,4,4,Moderado,Usó IA
-1,Traducir,4,1,PI2102,2,6,Moderado,Usó IA
-4,Resolver ejercicios,4,3,cc1105,3,5,Alto,Usó IA
-0,No usó IA,1,0,No aplica,1,14,Moderado,No usó IA
-30,Programar,3,1,CS2013,1,7,Moderado,Usó IA
-25,Redactar,3,1,CC1105,2,6,Moderado,Usó IA
-4,Resolver ejercicios,2,0,-,0,9,Bajo,Usó IA
-6,Resumir,3,4,CC1105,3,6,Moderado,Usó IA
-1,Programar,5,0,CS2013,2.5,7.17,Muy alto,Usó IA
-16,Programar,3,2,CC1103,3,8,Muy alto,Usó IA
-1,Redactar,3,1,CI2031,1,9,Moderado,Usó IA
-7,Resolver ejercicios,3,0,CS2031,2,8,Moderado,Usó IA
-13,Resumir,4,1,CC2101,2.3,7,Alto,Usó IA
-13,Resolver ejercicios,4,1,CS2013,1,7,Alto,Usó IA
-2,Resumir,4,1,PI2102,2,4,Moderado,Usó IA
-4,Resumir,3,1,Sin código válido,2,6,Moderado,Usó IA
-4,Resolver ejercicios,3,0,CC2012,4,7,Moderado,Usó IA
-1,Resolver ejercicios,4,1,CC1105,1,5,Moderado,Usó IA
-1,Resumir,3,1,CC1143,1,8,Moderado,Usó IA
-3,Resumir,3,3,CS2041,3,7,Alto,Usó IA
-0,No usó IA,1,0,No aplica,1,9,Bajo,No usó IA
-28,Redactar,3,1,CC2101,4,5,Moderado,Usó IA
-5,Programar,4,4,CS6006,4,11,Moderado,Usó IA
-6,Resumir,4,3,CC1103,1,7,Moderado,Usó IA
-4,Resumir,4,3,Sin código válido,4,7,Moderado,Usó IA
-16,Resumir,3,1,CC2101,5,5,Moderado,Usó IA
-17,Programar,4,2,CI3013,2,4,Moderado,Usó IA
-3,Resolver ejercicios,3,1,CC2012,3,7,Moderado,Usó IA
-5,Resolver ejercicios,2,1,CS2013,1,8,Moderado,Usó IA
-11,Resolver ejercicios,4,0,CC2101,2.83,7,Alto,Usó IA
-8,Resolver ejercicios,2,2,CI3013,2,6,Muy alto,Usó IA
-12,Resolver ejercicios,4,1,CI2012,2,8,Alto,Usó IA
-4,Investigar,1,0,CS2041,2,9,Moderado,Usó IA
-7,Resolver ejercicios,5,4,CC2101,6,9,Muy alto,Usó IA
-19,Programar,5,0,CS2013,5.83,7.17,Alto,Usó IA
-26,Programar,3,1,CC1105,5,6,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0,14,Moderado,No usó IA
-3,Resolver ejercicios,3,1,CC2012,3,7,Moderado,Usó IA
-0,Programar,4,1,Sin código válido,1,7,Moderado,Usó IA
-0,No usó IA,3,0,No aplica,1,8,Moderado,No usó IA
-12,Resolver ejercicios,4,2,Sin código válido,2,6,Moderado,Usó IA
-3,Redactar,3,2,GI2101,2,6,Moderado,Usó IA
-7,Resolver ejercicios,4,4,Sin código válido,5,7,Moderado,Usó IA
-16,Programar,5,0,CS2031,5.33,7.83,Muy alto,Usó IA
-3,Resolver ejercicios,3,1,CC2012,2,6,Moderado,Usó IA
-8,Programar,3,1,CS2031,2,6,Moderado,Usó IA
-0,No usó IA,2,0,No aplica,0,9,Muy bajo,No usó IA
-5,Redactar,3,4,CS6006,4,6,Alto,Usó IA
-0,No usó IA,1,0,No aplica,0,6,Moderado,No usó IA
-20,Resolver ejercicios,3,2,CI2012,2,7,Moderado,Usó IA
-7,Programar,5,0,CC1105,3,7.5,Muy alto,Usó IA
-8,Programar,3,0,CS2041,2,7,Moderado,Usó IA
-35,Resumir,3,0,CS2031,4,0,Moderado,Usó IA
-15,Resumir,3,0,-,4,5,Moderado,Usó IA
-1,Redactar,5,1,CI2031,1,6,Alto,Usó IA
-15,Redactar,1,3,Sin código válido,2,10,Bajo,Usó IA
-2,Investigar,1,2,Sin código válido,0,7,Muy bajo,Usó IA
-5,Redactar,3,1,Sin código válido,4,7,Bajo,Usó IA
-7,Buscar informacion,5,0,PI2102,2,7.5,Muy alto,Usó IA
-37,Resolver ejercicios,3,2,CC1122,5,6,Moderado,Usó IA
-3,Redactar,3,1,CI2031,3,10,Alto,Usó IA
-2,Redactar,3,3,CC1105,3,7,Alto,Usó IA
-14,Resumir,4,1,CI2031,2,7,Moderado,Usó IA
-8,Resolver ejercicios,3,2,CC2012,4,7,Moderado,Usó IA
-6,Programar,4,5,CC1103,1,9,Moderado,Usó IA
-2,Resolver ejercicios,3,2,CI2012,3,6,Moderado,Usó IA
-6,Programar,2,1,CS2031,1,7,Moderado,Usó IA
-35,Resumir,3,0,CS2031,3,5,Moderado,Usó IA
-8,Resolver ejercicios,3,1,CS2041,1,10,Moderado,Usó IA
-24,Resolver ejercicios,3,3,CS2031,3,5,Moderado,Usó IA
-13,Redactar,2,2,CC1143,1,8,Bajo,Usó IA
-0,No usó IA,3,0,No aplica,2,5,Moderado,No usó IA
-1,Investigar,1,0,Sin código válido,0,9,Muy bajo,Usó IA
-2,Resolver ejercicios,3,1,CI2012,3,6,Moderado,Usó IA
-2,Resumir,3,1,PI2102,1,5,Moderado,Usó IA
-4,Resolver ejercicios,3,2,CC2012,5,7,Moderado,Usó IA
-13,Programar,5,0,CS2041,4.33,7.17,Alto,Usó IA
-34,investigar,4,0,CS2041,4,0,Alto,Usó IA
-3,Redactar,3,2,CC1105,2,6,Moderado,Usó IA
-8,Resolver ejercicios,3,1,CC2101,2,4,Moderado,Usó IA
-20,Programar,5,4,CS2031,8,7,Muy alto,Usó IA
-36,Resumir,4,1,CC1122,5,5,Alto,Usó IA
-27,Resumir,4,4,CC1303,2,5,Bajo,Usó IA
-9,Programar,4,6,-,5,8,Moderado,Usó IA
-6,Programar,5,0,CC1105,4.33,6.5,Muy alto,Usó IA
-0,No usó IA,3,0,No aplica,0,6,Moderado,No usó IA
-44,Resumir,3,1,CC2101,6,3,Moderado,Usó IA
-10,Resolver ejercicios,3,1,CS2041,0,8,Moderado,Usó IA
-14,Programar,4,2,CS2041,2,6,Moderado,Usó IA
-3,Resumir,5,2,Sin código válido,3,5,Moderado,Usó IA
-8,Resolver ejercicios,3,3,CC2012,5,7,Moderado,Usó IA
-5,Resolver ejercicios,2,1,CI2012,1,7,Bajo,Usó IA
-0,No usó IA,4,0,No aplica,2,7,Alto,No usó IA
-6,Programar,2,1,CS2041,2,7,Bajo,Usó IA
-17,Resolver ejercicios,4,3,CC2101,4,6,Alto,Usó IA
-28,Resumir,3,0,CC2101,4,0,Moderado,Usó IA
-19,Resumir,5,4,CI3013,3,5,Bajo,Usó IA
-54,Resolver ejercicios,4,4,CC2101,3,7,Alto,Usó IA
-5,Resumir,3,1,CI2003,1,7,Moderado,Usó IA
-3,Resolver ejercicios,5,0,CC2101,4,6.5,Muy alto,Usó IA
-8,Redactar,3,8,-,2,6,Moderado,Usó IA
-21,Resolver ejercicios,3,0,CC2101,4,9.6,Moderado,Usó IA
-5,Resumir,3,0,-,1,8,Moderado,Usó IA
-35,Resumir,4,1,CC1122,5,5,Alto,Usó IA
-10,Resolver ejercicios,4,1,Sin código válido,5,5,Moderado,Usó IA
-7,Resolver ejercicios,3,1,CC2101,2,7,Moderado,Usó IA
-17,Resumir,5,2,CS2031,3,5,Alto,Usó IA
-3,Resumir,4,1,PI2102,2,3,Alto,Usó IA
-6,Resolver ejercicios,4,1,CC2104,2,6,Moderado,Usó IA
-13,Redactar,1,2,CI3091,2,8,Muy bajo,Usó IA
-1,Resumir,1,1,CI2031,0.5,10,Bajo,Usó IA
-1,Redactar,3,1,CI2031,1,7,Moderado,Usó IA
-0,No usó IA,2,0,No aplica,0,7,Muy bajo,No usó IA
-9,Programar,5,1,CS2031,5.08,7,Muy alto,Usó IA
-17,Resolver ejercicios,4,3,CS2041,5,5,Moderado,Usó IA
-13,Resumir,1,0,CS2041,2,0,Moderado,Usó IA
-21,Resumir,3,0,CC1122,3,6,Moderado,Usó IA
-0,No usó IA,2,0,No aplica,0,6,Moderado,No usó IA
-10,Resolver ejercicios,3,1,CI2003,1,7,Moderado,Usó IA
-6,Resolver ejercicios,3,1,CS2041,2,6,Bajo,Usó IA
-5,Programar,3,0,CS2013,1,8,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0,6,Muy bajo,No usó IA
-6,Resolver ejercicios,5,1,Sin código válido,3,4,Moderado,Usó IA
-7,Programar,3,4,Ci3091,3,6,Moderado,Usó IA
-5,Resolver ejercicios,5,2,CS2013,3,9,Alto,Usó IA
-3,Redactar,3,3,CC2104,2,7,Moderado,Usó IA
-36,Resumir,4,0,CC1122,4,5,Moderado,Usó IA
-13,Programar,5,0,CS2031,3,7,Muy alto,Usó IA
-7,Resolver ejercicios,3,5,CC2012,4,7,Moderado,Usó IA
-10,Resolver ejercicios,3,2,CS2041,2,6,Moderado,Usó IA
-10,Resumir,3,1,CI2003,1,7,Moderado,Usó IA
-20,Resumir,3,2,CS2013,3,6,Moderado,Usó IA
-12,Programar,3,1,CS2013,3,6,Moderado,Usó IA
-3,Organizar avances de proyecto,5,0,CS2031,2.83,7.42,Muy alto,Usó IA
-13,Resolver ejercicios,5,5,CC1105,3,3,Muy bajo,Usó IA
-10,Resolver ejercicios,2,2,CC2012,4,7,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0,9,Moderado,No usó IA
-6,Resolver ejercicios,4,1,Sin código válido,4,5,Alto,Usó IA
-10,Resumir,3,0,PI6002,2,6,Moderado,Usó IA
-5,Resolver ejercicios,2,0,-,1,10,Moderado,Usó IA
-0,No usó IA,3,0,No aplica,2,5,Moderado,No usó IA
-6,indagar,1,0,CS2013,1.2,0,Bajo,Usó IA
-0,No usó IA,1,0,No aplica,0,7,Muy bajo,No usó IA
-3,Resumir,2,1,PI6002,1,8,Bajo,Usó IA
-9,Resolver ejercicios,3,3,CC2012,5,6,Alto,Usó IA
-8,Programar,5,0,CS2031,1.97,7.83,Muy alto,Usó IA
-3,Resolver ejercicios,5,2,Sin código válido,2,6,Moderado,Usó IA
-23,Resolver ejercicios,3,1,CC2101,4,7,Moderado,Usó IA
-2,Resolver ejercicios,3,1,CC2104,1,9,Bajo,Usó IA
-6,Resolver ejercicios,5,4,CS6006,4,6,Muy alto,Usó IA
-7,Redactar,3,1,CS2101,2,7,Moderado,Usó IA
-32,Resumir,4,3,CC1403,3,4,Moderado,Usó IA
-8,Programar,3,1,CS2023,1,8,Alto,Usó IA
-3,Redactar,4,2,CC2104,2,6,Moderado,Usó IA
-0,No usó IA,2,0,No aplica,1,3,Moderado,No usó IA
-10,Resumir,3,0,CC1105,2,5,Moderado,Usó IA
-10,Resolver ejercicios,3,2,CC2012,5,7,Moderado,Usó IA
-3,Redactar,3,2,Cl2013,3,6,Moderado,Usó IA
-0,No usó IA,5,0,No aplica,5.5,7.5,Muy alto,No usó IA
-61,Resolver ejercicios,3,1,CC2101,5,4,Alto,Usó IA
-39,Resolver ejercicios,4,0,CC2101,5,6,Alto,Usó IA
-6,Resolver ejercicios,3,1,CC1143,1,7,Moderado,Usó IA
-15,Programar,3,5,GI3101,4,4,Muy bajo,Usó IA
-0,No usó IA,4,0,No aplica,3,6,Moderado,No usó IA
-2,Resumir,3,1,CI2031,4,9,Moderado,Usó IA
-2,Resumir,3,1,CS2013,1,7,Moderado,Usó IA
-1,Resolver ejercicios,2,1,CC2101,0,7,Moderado,Usó IA
-23,Resolver ejercicios,2,1,CS1105,2,9.67,Moderado,Usó IA
-20,Resumir,3,0,CC1105,2,5,Moderado,Usó IA
-13,Programar,4,3,CS2031,7,4,Bajo,Usó IA
-3,Redactar,4,2,CC2104,2,6,Moderado,Usó IA
-10,Resumir,3,2,CC2012,5,7,Alto,Usó IA
-2,Resumir,3,3,Cl2013,2,5,Moderado,Usó IA
-0,No usó IA,5,0,No aplica,2.92,6.5,Alto,No usó IA
-14,Resolver ejercicios,3,5,CC1103,3,5,Moderado,Usó IA
-9,Redactar,4,1,CI2031,1,7,Moderado,Usó IA
-3,Programar,3,2,CC2104,3,7,Moderado,Usó IA
-4,Resolver ejercicios,4,2,Sin código válido,4,8,Alto,Usó IA
-8,Resolver ejercicios,2,2,CC2101,2,8,Moderado,Usó IA
-6,Redactar,4,1,Sin código válido,2,5,Moderado,Usó IA
-22,Resolver ejercicios,4,1,CS2041,3,8,Moderado,Usó IA
-3,Resolver ejercicios,1,0,CC1105,0,4,Moderado,Usó IA
-41,Resolver ejercicios,4,1,CC1122,5,5,Alto,Usó IA
-24,Resumir,3,0,CS2013,2,5,Moderado,Usó IA
-13,Resolver ejercicios,3,2,CS2013,5,7,Moderado,Usó IA
-12,Resolver ejercicios,4,1,CC2101,4.6,9.63,Alto,Usó IA
-6,Resumir,3,3,CC1154,2,7,Moderado,Usó IA
-15,Programar,2,4,CC1105,3,6,Bajo,Usó IA
-1,Resumir,2,3,Cl2013,2,3,Bajo,Usó IA
-1,Resumir,1,0,-,1,7,Bajo,Usó IA
-2,Resolver ejercicios,5,0,CC2101,1.08,6.5,Muy alto,Usó IA
-10,Resolver ejercicios,3,2,CC2012,4,7,Moderado,Usó IA
-42,Programar,3,1,CC1105,3,3,Alto,Usó IA
-22,Resolver ejercicios,3,1,CC2101,3,8,Moderado,Usó IA
-13,Programar,4,2,CS2041,4,5,Bajo,Usó IA
-2,Resumir,4,1,CC2104,2,8,Moderado,Usó IA
-24,Resumir,3,0,CC2101,3,3,Moderado,Usó IA
-23,Resumir,4,1,CS2031,1,5,Alto,Usó IA
-8,Resolver ejercicios,4,1,CI2012,1,7,Alto,Usó IA
-37,Programar,3,1,CC1105,3,4,Moderado,Usó IA
-3,Redactar,4,1,PI2102,2,4,Moderado,Usó IA
-15,Programar,5,1,CS2041,3.25,6.33,Alto,Usó IA
-5,Resumir,4,4,CC1143,5,8,Alto,Usó IA
-6,Resolver ejercicios,1,0,CS2041,1.2,9.9,Bajo,Usó IA
-5,Resolver ejercicios,4,6,CC1101,5,6,Moderado,Usó IA
-0,No usó IA,3,0,No aplica,3,7,Bajo,No usó IA
-16,Programar,3,1,CS2013,3,8,Moderado,Usó IA
-2,Resolver ejercicios,3,2,GI2101,1,6,Moderado,Usó IA
-12,Resumir,5,3,CS2031,6,5,Alto,Usó IA
-7,Resolver ejercicios,3,3,CC2012,5,6,Moderado,Usó IA
-7,Programar,5,0,CS2031,1.75,7.08,Alto,Usó IA
-0,No usó IA,1,0,No aplica,0,10,Muy bajo,No usó IA
-8,Resumir,3,0,-,1,6,Moderado,Usó IA
-4,Programar,3,0,CS2013,1,8,Moderado,Usó IA
-8,Programar,3,2,CC1105,2,9,Moderado,Usó IA
-20,Resolver ejercicios,3,1,CC1122,3,5,Alto,Usó IA
-8,Redactar,3,2,GI2101,2,6,Moderado,Usó IA
-8,Resumir,3,1,CS2041,3,7,Moderado,Usó IA
-14,Programar,5,2,CS2031,9,8,Alto,Usó IA
-15,Programar,5,1,CS2013,3.67,7,Muy alto,Usó IA
-20,Resolver ejercicios,4,1,CI2012,1,6,Moderado,Usó IA
-17,Resumir,5,5,CC1105,3,6,Bajo,Usó IA
-47,Resolver ejercicios,3,1,CC2101,3,6,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0,5,Muy bajo,No usó IA
-4,Redactar,3,2,CC1105,2,6,Moderado,Usó IA
-10,Resolver ejercicios,3,2,CC2012,5,7,Bajo,Usó IA
-2,Verificar respuestas,4,1,CS2013,1,9,Moderado,Usó IA
-75,Programar,3,2,Sin código válido,2,0,Moderado,Usó IA
-9,Resolver ejercicios,3,1,CS2023,1,8,Moderado,Usó IA
-24,Resumir,3,1,CC2101,4,5,Moderado,Usó IA
-5,Redactar,3,1,GI2101,2,7,Moderado,Usó IA
-6,indagar,1,0,Sin código válido,1.23,10.47,Moderado,Usó IA
-25,Resumir,3,0,CC2101,2,5,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0,5,Muy bajo,No usó IA
-18,Resolver ejercicios,4,1,CI2012,2,6,Alto,Usó IA
-7,Explicar conceptos,4,1,CI2031,6,7,Alto,Usó IA
-33,Programar,5,0,CS2031,2.58,8,Muy alto,Usó IA
-2,Resolver ejercicios,2,1,CC1256,1,2,Bajo,Usó IA
-13,Resolver ejercicios,3,2,CC2012,7,8,Moderado,Usó IA
-3,Resumir,3,2,Cl2013,3,5,Moderado,Usó IA
-1,Investigar,1,0,Sin código válido,0,6,Muy bajo,Usó IA
-0,No usó IA,2,0,No aplica,0,9,Moderado,No usó IA
-48,Resumir,3,2,CC1105,5,6,Moderado,Usó IA
-5,Resumir,4,1,CS2041,0,10,Moderado,Usó IA
-5,Resumir,2,2,-,2,7,Bajo,Usó IA
-39,Resumir,1,5,CC1105,3,8,Alto,Usó IA
-26,Resumir,3,1,CC2101,2,5,Moderado,Usó IA
-9,Programar,2,4,GI3015,3,8,Moderado,Usó IA
-2,Resolver ejercicios,3,2,CI2012,3,3,Moderado,Usó IA
-10,Programar,2,1,CS2031,1,8,Bajo,Usó IA
-27,Programar,5,0,CS2031,3.62,7,Muy alto,Usó IA
-0,No usó IA,4,0,No aplica,2,6,Moderado,No usó IA
-5,Resolver ejercicios,4,2,ME2013,4,8,Alto,Usó IA
-7,Buscar información,2,2,Sin código válido,3,5,Moderado,Usó IA
-7,Redactar,3,3,Cl2013,2,5,Moderado,Usó IA
-2,Resolver ejercicios,4,2,CC1182,2,7,Moderado,Usó IA
-1,Resolver ejercicios,3,1,CC1105,0.5,7,Moderado,Usó IA
-13,Resolver ejercicios,4,2,CC2012,5,7,Moderado,Usó IA
-18,Programar,1,1,CS2031,1.89,9.2365,Moderado,Usó IA
-30,Resumir,3,0,CS2031,3,2,Moderado,Usó IA
-43,Resolver ejercicios,3,1,CC1122,4,5,Moderado,Usó IA
-1,Investigar,1,1,Sin código válido,0,8,Moderado,Usó IA
-6,Programar,5,1,CS2013,2.08,6.5,Muy alto,Usó IA
-1,Resolver ejercicios,3,0,CI2012,4,7,Moderado,Usó IA
-0,No usó IA,2,0,No aplica,0,8,Moderado,No usó IA
-12,Resumir,5,3,CS2013,6,8,Muy alto,Usó IA
-13,Resolver ejercicios,4,1,CC2104,4,8,Alto,Usó IA
-47,Resolver ejercicios,4,2,CS2013,1,5,Alto,Usó IA
-10,Programar,4,5,-,3,6,Moderado,Usó IA
-12,Resumir,2,0,CS2041,1.13,10.23,Moderado,Usó IA
-25,Resolver ejercicios,3,1,CC2101,4,6,Moderado,Usó IA
-1,Redactar,4,1,PI2102,3,5,Moderado,Usó IA
-4,Programar,2,3,Cl2013,3,4,Moderado,Usó IA
-25,Resolver ejercicios,3,6,CC1143,2,9,Moderado,Usó IA
-8,Resolver ejercicios,3,2,CI2012,4,8,Moderado,Usó IA
-46,Resumir,3,2,Gl3101,4,5,Moderado,Usó IA
-0,No usó IA,3,0,No aplica,1,6,Moderado,No usó IA
-5,Programar,3,1,CS2031,1,6,Moderado,Usó IA
-3,Redactar,3,3,PI6002,0,5,Alto,Usó IA
-1,Programar,3,1,GI2101,1,7,Moderado,Usó IA
-3,Resumir,4,2,Sin código válido,2,5,Moderado,Usó IA
-37,Resumir,3,0,GI3101,4,6,Alto,Usó IA
-1,Resolver ejercicios,2,2,Cl2013,2,3,Moderado,Usó IA
-8,Programar,3,1,CS2013,1,8,Moderado,Usó IA
-0,No usó IA,2,0,No aplica,0,8,Bajo,No usó IA
-11,Programar,5,1,CS2041,4,6.67,Alto,Usó IA
-7,Redactar,4,2,CS2101,1,6,Bajo,Usó IA
-27,Programar,3,2,PI6002,2,6,Moderado,Usó IA
-2,Resolver ejercicios,3,1,CC1143,4,5,Moderado,Usó IA
-4,Programar,2,2,-,2,5,Moderado,Usó IA
-4,Programar,3,0,CS2013,1,8,Moderado,Usó IA
-2,Redactar,4,1,PI6002,3,3,Alto,Usó IA
-3,Redactar,3,2,Cc1103,3,5,Moderado,Usó IA
-5,Resolver ejercicios,4,5,CC1143,5,7,Alto,Usó IA
-0,No usó IA,2,0,No aplica,2,8,Moderado,No usó IA
-14,Resolver ejercicios,4,3,CC1105,4,6,Muy alto,Usó IA
-5,Programar,5,0,CS2041,1.17,5.83,Muy alto,Usó IA
-3,Resolver ejercicios,4,2,CC2104,2,7,Moderado,Usó IA
-13,Resolver ejercicios,2,1,CS2031,2,6,Bajo,Usó IA
-6,Programar,3,4,CS6006,7,7,Moderado,Usó IA
-32,Resolver ejercicios,4,1,CS4054,3,8,Alto,Usó IA
-5,Resolver ejercicios,4,5,CC1143,4,7,Alto,Usó IA
-5,Redactar,3,3,CS2023,1,7,Bajo,Usó IA
-2,Resolver ejercicios,2,1,CC1102,1,4,Moderado,Usó IA
-54,Programar,5,2,CS2013,7.27,7.08,Muy alto,Usó IA
-19,Resolver ejercicios,4,3,CC2101,6,4,Moderado,Usó IA
-23,Resumir,5,0,CS2013,5.4,8.2,Alto,Usó IA
-15,Programar,3,2,CS2013,2,8,Moderado,Usó IA
-0,No usó IA,2,0,No aplica,0,7,Moderado,No usó IA
-2,Programar,4,1,PI6002,3,4,Alto,Usó IA
-10,Programar,3,1,CS2031,1,8,Moderado,Usó IA
-36,Resumir,3,1,GI3101,3,6,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0,5,Muy bajo,No usó IA
-28,Resolver ejercicios,4,1,CC1105,3,7,Moderado,Usó IA
-16,Resumir,4,3,CC1143,4,9,Moderado,Usó IA
-11,Redactar,3,5,CS6006,4,8,Moderado,Usó IA
-43,Resumir,3,1,GI3101,4,5,Moderado,Usó IA
-5,Programar,5,0,CC1105,3,7.08,Muy alto,Usó IA
-12,Resolver ejercicios,5,3,CC1105,5,9,Alto,Usó IA
-23,Resumir,3,1,CS2013,2,4,Moderado,Usó IA
-2,Redactar,4,2,CC2104,1,7,Moderado,Usó IA
-0,No usó IA,2,0,No aplica,2,4,Moderado,No usó IA
-0,No usó IA,3,0,No aplica,2,4,Moderado,No usó IA
-2,Programar,3,2,cc1103,3,5,Alto,Usó IA
-1,Resumir,1,1,CS2041,0,9,Bajo,Usó IA
-8,Programar,4,3,CC1105,5,9,Alto,Usó IA
-48,Programar,3,2,CC1105,6,6,Alto,Usó IA
-5,Resolver ejercicios,3,5,CC1105,1,6,Moderado,Usó IA
-1,Redactar,3,1,CI2003,1,9,Moderado,Usó IA
-5,Resolver ejercicios,3,0,CC1105,3,8,Bajo,Usó IA
-9,Resolver ejercicios,2,1,CS2023,1,6,Bajo,Usó IA
-6,Resolver ejercicios,5,0,CC1105,5.92,7.75,Muy alto,Usó IA
-0,No usó IA,1,0,No aplica,0,3,Muy bajo,No usó IA
-0,No usó IA,3,0,No aplica,2,4,Moderado,No usó IA
-3,Resolver ejercicios,3,1,CC2101,0,7,Muy bajo,Usó IA
-34,Programar,3,1,CS2013,4.5,11.4,Moderado,Usó IA
-12,Resumir,5,3,CS2042,5,10,Alto,Usó IA
-27,Resumir,3,2,CS2013,2,5,Moderado,Usó IA
-6,Resolver ejercicios,3,2,-,2,6,Moderado,Usó IA
-7,Redactar,2,3,Cc1103,5,4,Bajo,Usó IA
-1,Programar,3,0,CC1105,1,5,Moderado,Usó IA
-2,Redactar,3,1,Sin código válido,3,5,Moderado,Usó IA
-22,Programar,4,0,CC2101,0,6.83,Muy alto,Usó IA
-26,Resumir,3,0,CC1105,2,0,Moderado,Usó IA
-9,Programar,4,1,CS2031,5,8,Alto,Usó IA
-19,Resolver ejercicios,4,5,CC2011,4,10,Bajo,Usó IA
-19,Resolver ejercicios,3,1,CI2031,1,7,Moderado,Usó IA
-7,Resolver ejercicios,2,2,AM6102,3,7,Moderado,Usó IA
-5,Resolver ejercicios,2,0,CC2104,1,6,Bajo,Usó IA
-0,No usó IA,3,0,No aplica,5,5,Alto,No usó IA
-8,Programar,2,1,CS2013,1,8,Moderado,Usó IA
-0,No usó IA,1,0,No aplica,0,8,Muy bajo,No usó IA
-29,Resumir,3,0,CC1105,4.6,7.3,Moderado,Usó IA
-5,Redactar,4,0,CS6006,5,5,Bajo,Usó IA
-2,Resolver ejercicios,5,0,CC2101,0.75,6.08,Muy alto,Usó IA
-4,Resumir,3,2,Cc1103,3,4,Moderado,Usó IA
-1,Resolver ejercicios,2,1,CC1105,1,9,Moderado,Usó IA
-0,No usó IA,3,0,No aplica,3,6,Alto,No usó IA
-10,Programar,3,1,CS2031,1,7,Moderado,Usó IA
-10,Armado de chasis,3,10,PI6002,3,5,Moderado,Usó IA
-45,Resolver ejercicios,3,1,CC1105,4,4,Moderado,Usó IA
-26,Resolver ejercicios,4,1,CC2101,4.5,5.4,Alto,Usó IA
-5,Resolver ejercicios,2,2,CC2101,1,8,Moderado,Usó IA
-12,Resumir,5,4,CC2101,10,9,Muy alto,Usó IA
-14,Programar,4,1,HH6002,4,8,Moderado,Usó IA
-10,Resumir,4,6,CC1103,3,7,Alto,Usó IA
-2,Traducir,4,1,Sin código válido,2,2,Moderado,Usó IA
-6,Programar,4,1,CC1105,2.5,6,Moderado,Usó IA
-3,Programar,4,1,PI6002,3,4,Alto,Usó IA
-5,Resolver ejercicios,2,1,CS2013,2,8,Bajo,Usó IA
-24,Programar,5,0,CS2031,3.5,6.58,Muy alto,Usó IA
-1,Resumir,3,1,CI2031,1,5,Moderado,Usó IA
-3,Redactar,3,2,CC2104,1,5,Moderado,Usó IA
-20,Resolver ejercicios,4,1,CI2003,2,7,Moderado,Usó IA
-9,Resolver ejercicios,4,3,-,2,8,Bajo,Usó IA
-52,Programar,3,2,CC1105,4,5,Alto,Usó IA
-0,Programar,2,1,-,1,8,Bajo,Usó IA
-5,Resolver ejercicios,3,4,CC1105,2,5,Moderado,Usó IA
-3,Redactar,2,2,Cc1103,2,3,Moderado,Usó IA
-1,Investigar,1,1,Sin código válido,0,6,Muy bajo,Usó IA
-8,Resumir,3,5,CC1105,3,8,Moderado,Usó IA
-3,Programar,3,3,Cc1103,3,5,Moderado,Usó IA
-42,Resumir,4,2,GI3101,5,5,Alto,Usó IA
-2,Programar,3,1,PI6002,2,2,Moderado,Usó IA
-7,Resolver ejercicios,3,0,CS2013,1,8,Moderado,Usó IA
-1,Programar,4,1,GI2101,1,5,Moderado,Usó IA
-13,Resolver ejercicios,5,4,CS2013,7,5,Muy alto,Usó IA
-12,Programar,3,1,CS2013,3,8,Moderado,Usó IA
-22,Resolver ejercicios,3,0,CS2041,3.2,3.2,Moderado,Usó IA
-20,Resumir,3,0,CS2013,3,6,Moderado,Usó IA
-13,Programar,5,1,PI6002,1.42,5.5,Muy alto,Usó IA
+"","consultas","uso","satisfaccion","tareas","curso","estudio","sueno","comprension","uso_ia","email","Grupo"
+"1",13,"Resumir","3",1,"CS4054",3,9,"Alto","Usó IA","camila.alfaro@utec.edu.pe","5"
+"2",2,"Investigar","4",1,"CS2031",4,8.33,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"3",4,"Resumir","3",1,"GI3101",1,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"4",32,"Resumir","3",0,"CS2041",7,7,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"5",2,"Agendara recordatorio","1",2,"CC1105",2,8,"Alto","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"6",2,"Resumir","4",1,"EL3012",3,8,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"7",20,"Revisar conceptos","3",0,"CS2031",7,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"8",0,"No usó IA","1",0,"No aplica",0,10,"Bajo","No usó IA","cristobal.aranda@utec.edu.pe","7"
+"9",0,"No usó IA","1",0,"No aplica",0,8,"Muy alto","No usó IA","miguel.flores.c@utec.edu.pe","9"
+"10",5,"Programar","5",0,"CS2031",3.7,8.16,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"11",0,"No usó IA","2",0,"No aplica",0,6,"Moderado","No usó IA","frank.yauri@utec.edu.pe","5"
+"12",68,"Programar","3",1,"CS2013",9,9,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"13",2,"Resolver ejercicios","3",2,"CI2012",4,9,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"14",15,"profundizar conceptos","3",2,"CS2031",7,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"15",12,"Resumir","3",3,"CS1015",5,9,"Alto","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"16",4,"Resolver ejercicios","2",2,"CC1105",2,9,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"17",26,"Programar","4",1,"CS2031",1.2,9,"Moderado","Usó IA","camila.alfaro@utec.edu.pe","5"
+"18",5,"Resolver ejercicios","3",3,"CC1103",2,5,"Bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"19",6,"Resolver ejercicios","3",2,"CI2012",4,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"20",3,"Resumir","3",2,"Sin código válido",3,6,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"21",50,"Resolver ejercicios","1",2,"CC6201",6,4,"Bajo","Usó IA","laura.silva@utec.edu.pe","1"
+"22",12,"Resolver ejercicios","3",2,"GI2101",2,7,"Alto","Usó IA","marco.corimanya@utec.edu.pe","1"
+"23",40,"Resumir","3",3,"CS2031",5,3,"Alto","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"24",4,"Resumir","3",4,"CC1103",2,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"25",2,"Consultar","5",1,"CC1105",2,7,"Alto","Usó IA","bryan.luis@utec.edu.pe","1"
+"26",2,"Programar","3",2,"CS2023",1,9,"Moderado","Usó IA","jorge.cuevas@utec.edu.pe","9"
+"27",6,"Redactar","2",4,"cc2101",2,8,"Alto","Usó IA","gabriel.vaccaro@utec.edu.pe","9"
+"28",6,"Resumir","3",3,"HH2102",2,7.5,"Moderado","Usó IA","juan.fernandez.s@utec.edu.pe","5"
+"29",29,"Resolver ejercicios","4",2,"Sin código válido",1.5,7,"Alto","Usó IA","camila.alfaro@utec.edu.pe","5"
+"30",12,"Investigar","5",0,"CS2031",0.66,7.66,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"31",10,"Resolver ejercicios","4",3,"CS2013",4,4,"Moderado","Usó IA","johan.huayta@utec.edu.pe","6"
+"32",27,"Resolver ejercicios","4",2,"CC1122",6,6,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"33",8,"Resumir","3",5,"CC1103",2,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"34",3,"Resolver ejercicios","3",1,"CI2012",4,5,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"35",1,"Resumir","3",1,"DS2011",2,7,"Moderado","Usó IA","jorge.cuevas@utec.edu.pe","9"
+"36",2,"Resolver ejercicios","4",1,"CC2101",3,6,"Alto","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"37",33,"Programar","3",1,"CC1105",4,5,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"38",5,"Resumir","3",3,"-",4,9,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"39",7,"Resolver ejercicios","4",1,"CC1105",1.5,6,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"40",30,"Programar","4",4,"Sin código válido",6,8,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"41",5,"Programar","3",0,"CC1105",0,6.66,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"42",10,"Traducir y entender idiomas","2",2,"Sin código válido",3,5,"Moderado","Usó IA","juan.fernandez.s@utec.edu.pe","5"
+"43",50,"investigar temas","3",1,"CS2031",5,4,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"44",9,"Resumir","3",3,"CC1143",4,3,"Moderado","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"45",35,"Resolver ejercicios","4",2,"CC2101",3,5,"Moderado","Usó IA","camila.alfaro@utec.edu.pe","5"
+"46",14,"Resolver ejercicios","3",1,"CS2041",2,6,"Alto","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"47",1,"Redactar","4",1,"CI2031",1,6,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"48",0,"No usó IA","1",0,"No aplica",0,7.5,"Muy bajo","No usó IA","eden.paredes@utec.edu.pe","4"
+"49",4,"Buscar herramientas","4",0,"CS2041",2.83,6.5,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"50",2,"Programar","3",2,"CS2023",0,8,"Moderado","Usó IA","jorge.cuevas@utec.edu.pe","9"
+"51",10,"Resolver ejercicios","3",15,"PI2102",2,6,"Alto","Usó IA","martin.armas@utec.edu.pe","2"
+"52",6,"Programar","3",5,"CS6006",4,9,"Alto","Usó IA","matias.caceres@utec.edu.pe","4"
+"53",42,"Programar","4",1,"CC1105",3,6,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"54",20,"Programar","4",5,"CC2101",5,8,"Alto","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"55",19,"Resolver ejercicios","3",4,"GI2101",3,7,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"56",20,"Resolver ejercicios","4",2,"Sin código válido",2,5,"Alto","Usó IA","leyrin.aguilar@utec.edu.pe","4"
+"57",54,"Resumir","2",0,"CS2031",3,8,"Bajo","Usó IA","indira.yabar@utec.edu.pe","6"
+"58",4,"Ayudarme a encontrar errores","5",3,"CI3014",5,6,"Alto","Usó IA","juan.fernandez.s@utec.edu.pe","5"
+"59",37,"revisar conceptos","3",0,"CC1105",3,3,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"60",4,"Resumir","2",2,"CC1103",2,8,"Alto","Usó IA","gabriel.vaccaro@utec.edu.pe","9"
+"61",1,"Resolver ejercicios","1",2,"Sin código válido",4,4,"Muy bajo","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"62",20,"Resolver ejercicios","4",2,"CC2101",5,5,"Alto","Usó IA","pedro.chavez@utec.edu.pe","7"
+"63",8,"Programar","4",5,"EL3014",5,7,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"64",10,"Resumir","4",2,"GI3113",3,9,"Alto","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"65",0,"No usó IA","3",0,"No aplica",1,6,"Moderado","No usó IA","cristobal.aranda@utec.edu.pe","7"
+"66",28,"Programar","4",2,"CS2031",2,4,"Alto","Usó IA","camila.alfaro@utec.edu.pe","5"
+"67",3,"Resumir","3",2,"CC1105",5,8,"Moderado","Usó IA","samuel.abril@utec.edu.pe","5"
+"68",3,"Resumir","3",4,"Sin código válido",4,6,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"69",3,"Resolver ejercicios","1",0,"GI3101",2,10,"Moderado","Usó IA","joaquin.temoche@utec.edu.pe","7"
+"70",3,"Resolver ejercicios","3",2,"CC6201",5,6,"Moderado","Usó IA","samuel.abril@utec.edu.pe","5"
+"71",5,"Resolver ejercicios","4",3,"CC1105",4,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"72",10,"Resumir","4",1,"CC1105",3,4,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"73",8,"Programar","3",1,"CC1105",1,8,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"74",3,"Resumir","4",2,"cc2101",3,6,"Alto","Usó IA","bryan.luis@utec.edu.pe","1"
+"75",25,"Programar","3",6,"CS2031",6,6,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"76",20,"Programar","4",0,"CS2041",1.58,6.5,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"77",6,"Resolver ejercicios","4",2,"CC1105",2,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"78",6,"Resolver ejercicios","3",2,"CC2104",2,7,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"79",0,"No usó IA","1",0,"No aplica",0,10,"Moderado","No usó IA","david.jorquiera@utec.edu.pe","3"
+"80",0,"No usó IA","3",0,"No aplica",5,8,"Alto","No usó IA","jorge.cuevas@utec.edu.pe","9"
+"81",12,"Programar","3",1,"CC1105",2,8,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"82",7,"Resumir","3",7,"CC1103",3,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"83",48,"Resumir","3",4,"CS2031",3,6,"Alto","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"84",4,"Resolver ejercicios","4",0,"CC2101",2.42,7,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"85",2,"Resumir","4",1,"PI2102",4,6,"Alto","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"86",31,"Resumir","3",0,"CS2013",3,7,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"87",6,"Resumir","3",3,"GI3101",3,6,"Alto","Usó IA","juan.fernandez.s@utec.edu.pe","5"
+"88",3,"Investigar","3",1,"BI4013",0.5,8,"Bajo","Usó IA","eden.paredes@utec.edu.pe","4"
+"89",5,"Resolver ejercicios","4",5,"EL2082",5,8,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"90",0,"No usó IA","3",0,"No aplica",0,9,"Moderado","No usó IA","alejandro.soto@utec.edu.pe","2"
+"91",4,"Resumir","3",3,"CC1103",2,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"92",11,"Programar","5",1,"CC1105",7,7,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"93",21,"Programar","5",11,"CS2031",5,5,"Alto","Usó IA","matias.caceres@utec.edu.pe","4"
+"94",27,"Resumir","3",0,"CS2031",3,6,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"95",0,"No usó IA","1",0,"No aplica",0,6,"Muy bajo","No usó IA","eden.paredes@utec.edu.pe","4"
+"96",56,"Resolver ejercicios","4",3,"CC2101",5,6,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"97",1,"Programar","3",1,"CC1105",4,9,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"98",7,"Redactar","3",4,"CC1105",3,7,"Moderado","Usó IA","matias.caceres@utec.edu.pe","4"
+"99",4,"Resolver ejercicios","3",4,"CC1103",2,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"100",22,"Programar","4",0,"CC1105",5.2,9,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"101",42,"Programar","4",3,"CC1105",4,3.5,"Alto","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"102",3,"Resolver ejercicios","3",2,"Sin código válido",2,7,"Moderado","Usó IA","francisco.artiles@utec.edu.pe","4"
+"103",33,"Programar","4",2,"CC1105",4,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"104",18,"Programar","4",2,"CS2013",3.5,6,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"105",41,"Resumir","3",1,"CC1105",4,4,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"106",5,"Resolver ejercicios","3",1,"CS2023",1,7,"Alto","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"107",43,"Resolver ejercicios","3",1,"CC1105",4,13,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"108",0,"No usó IA","1",0,"No aplica",0.5,8.5,"Muy bajo","No usó IA","eden.paredes@utec.edu.pe","4"
+"109",45,"Programar","5",6,"CS2031",5,9,"Moderado","Usó IA","matias.caceres@utec.edu.pe","4"
+"110",2,"Redactar","3",1,"Sin código válido",2,8,"Moderado","Usó IA","francisco.artiles@utec.edu.pe","4"
+"111",17,"Programar","4",1,"CC1105",5,6,"Muy alto","Usó IA","david.jorquiera@utec.edu.pe","3"
+"112",7,"Programar","3",0,"CS2031",2.33,8,"Moderado","Usó IA","eduardo.vila@utec.edu.pe","6"
+"113",2,"Resumir","2",1,"CC1105",2,4,"Moderado","Usó IA","jorge.cuevas@utec.edu.pe","9"
+"114",0,"No usó IA","2",0,"No aplica",1,6,"Moderado","No usó IA","nicolas.trillo@utec.edu.pe","8"
+"115",7,"Resolver ejercicios","3",5,"CC1105",3,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"116",0,"No usó IA","3",0,"No aplica",1,7,"Moderado","No usó IA","cristobal.aranda@utec.edu.pe","7"
+"117",27,"Resolver ejercicios","5",1,"CC2101",5,6,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"118",3,"Redactar","3",1,"CC1105",6,2,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"119",15,"Resolver ejercicios","1",1,"CC1105",1,9,"Muy bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"120",42,"repasar","2",1,"CC1105",3,8.45,"Bajo","Usó IA","indira.yabar@utec.edu.pe","6"
+"121",40,"Resolver ejercicios","4",1,"CC1143",5,7,"Bajo","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"122",6,"Redactar","3",2,"Sin código válido",5,7,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"123",16,"Programar","3",6,"GI2101",2,8,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"124",27,"Resumir","3",0,"CS2031",3,3,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"125",6,"Resolver ejercicios","4",3,"CC1105",3,6,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"126",50,"Resolver ejercicios","3",3,"CS2041",6,2,"Alto","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"127",5,"Resolver ejercicios","3",4,"CC1105",3,9,"Moderado","Usó IA","matias.caceres@utec.edu.pe","4"
+"128",0,"No usó IA","2",0,"No aplica",1.5,8,"Bajo","No usó IA","jorge.cuevas@utec.edu.pe","9"
+"129",5,"Resolver ejercicios","3",1,"CC2101",3,6,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"130",2,"Resumir","3",1,"CC1143",4,9,"Alto","Usó IA","david.jorquiera@utec.edu.pe","3"
+"131",9,"Resumir","4",5,"CC1105",4,8,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"132",40,"Resumir","4",2,"CC1122",4,4,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"133",5,"Programar","1",1,"CS2013",0,8,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"134",10,"Resumir","4",4,"CC2101",4,7,"Moderado","Usó IA","johan.huayta@utec.edu.pe","6"
+"135",18,"Resumir","2",1,"CC2101",2,11,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"136",25,"Resolver ejercicios","4",2,"CC1105",1.5,6.5,"Alto","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"137",15,"Resolver ejercicios","3",3,"CI3014",4,6,"Alto","Usó IA","juan.fernandez.s@utec.edu.pe","5"
+"138",32,"Programar","3",2,"CS2013",3,5,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"139",4,"Ayudar a aprender","2",4,"Sin código válido",2,8,"Alto","Usó IA","gabriel.vaccaro@utec.edu.pe","9"
+"140",36,"Resumir","3",2,"CS2013",3,8,"Alto","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"141",26,"Resumir","3",2,"CS2013",4,4,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"142",4,"Redactar","4",2,"Sin código válido",2,7,"Moderado","Usó IA","francisco.artiles@utec.edu.pe","4"
+"143",1,"Programar","4",1,"CI2003",2,9,"Alto","Usó IA","alejandro.soto@utec.edu.pe","2"
+"144",5,"Resolver ejercicios","3",2,"CS2013",2,6,"Alto","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"145",13,"Programar","3",4,"CS2041",2,9,"Moderado","Usó IA","matias.caceres@utec.edu.pe","4"
+"146",5,"Resolver ejercicios","3",4,"CC1103",1,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"147",5,"Resumir","3",2,"Sin código válido",3,6,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"148",34,"Resolver ejercicios","4",1,"CC1143",3,6,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"149",21,"Resolver ejercicios","3",1,"CC1122",5,5,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"150",5,"Resumir","3",3,"CI3032",4,6,"Alto","Usó IA","juan.fernandez.s@utec.edu.pe","5"
+"151",5,"Programar","3",0,"-",6,6,"Bajo","Usó IA","frank.yauri@utec.edu.pe","5"
+"152",30,"Resumir","3",1,"CS2041",5,7.6555,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"153",20,"Resolver ejercicios","3",2,"CI3013",3,8,"Moderado","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"154",27,"Programar","4",2,"CS2031",6,6,"Alto","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"155",5,"Consultar","3",3,"Cc2101",2,6,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"156",40,"Resumir","3",0,"CS2031",3,4,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"157",28,"Programar","5",1,"CS2031",2.33,8,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"158",18,"Resumir","4",1,"CS2013",0.5,7,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"159",5,"Resolver ejercicios","3",2,"CI2012",5,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"160",11,"Programar","4",5,"CS2041",4,9,"Moderado","Usó IA","matias.caceres@utec.edu.pe","4"
+"161",3,"Programar","2",2,"CC1105",2,8,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"162",5,"Redactar","4",2,"HH2101",2,7,"Alto","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"163",2,"Redactar","3",1,"Sin código válido",1,6,"Alto","Usó IA","francisco.artiles@utec.edu.pe","4"
+"164",13,"Resolver ejercicios","4",1,"CC1143",6,10,"Muy alto","Usó IA","david.jorquiera@utec.edu.pe","3"
+"165",25,"Resolver ejercicios","4",1,"CC1143",3,7,"Alto","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"166",30,"Resumir","3",1,"CS2013",3,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"167",38,"Resolver ejercicios","4",2,"CC2101",5,4,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"168",0,"Resumir","2",2,"Sin código válido",2,6,"Bajo","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"169",6,"Resolver ejercicios","3",4,"CC1105",2,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"170",13,"Programar","4",0,"PI2102",1.17,4.17,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"171",7,"Programar","4",4,"CS6006",2,6,"Moderado","Usó IA","matias.caceres@utec.edu.pe","4"
+"172",4,"Resolver ejercicios","4",1,"CC2101",1,6,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"173",15,"Redactar","3",2,"GI2101",3,9,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"174",3,"Programar","4",3,"CS2031",4,8,"Alto","Usó IA","jorge.cuevas@utec.edu.pe","9"
+"175",34,"Resolver ejercicios","4",1,"CC1122",5,7,"Muy alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"176",6,"Resolver ejercicios","3",4,"CC1105",1,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"177",4,"Resolver ejercicios","2",5,"CC1143",1,10,"Muy bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"178",21,"Resolver ejercicios","4",1,"CC1143",5,9,"Alto","Usó IA","david.jorquiera@utec.edu.pe","3"
+"179",3,"Resolver ejercicios","2",3,"Sin código válido",5,2,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"180",57,"Programar","3",2,"CS2031",2,6,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"181",37,"Resumir","3",1,"CS2013",2,6,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"182",25,"Resumir","4",3,"CS2031",4,7,"Muy alto","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"183",1,"Redactar","1",1,"CC1105",1,7,"Muy bajo","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"184",5,"Resolver ejercicios","3",4,"CC1103",2,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"185",2,"Resumir","3",1,"Cc1103",3,5,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"186",34,"Resolver ejercicios","4",2,"CC1122",5,6,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"187",52,"Programar","2",0,"CS2031",6,9,"Bajo","Usó IA","indira.yabar@utec.edu.pe","6"
+"188",3,"Programar","5",0,"CC1105",2,7,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"189",7,"Programar","3",2,"CS2013",2,7,"Alto","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"190",5,"Resolver ejercicios","3",3,"CI2012",4,6,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"191",5,"Resumir","4",2,"PI2102",2,6,"Moderado","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"192",45,"Resumir","3",1,"CS2041",2,7,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"193",4,"Resolver ejercicios","3",2,"CC1103",1,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"194",4,"Resolver ejercicios","3",1,"CS2013",1,7,"Bajo","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"195",2,"Resolver ejercicios","4",1,"Sin código válido",2,9,"Moderado","Usó IA","francisco.artiles@utec.edu.pe","4"
+"196",17,"Programar","3",1,"CC1105",2,9,"Moderado","Usó IA","david.jorquiera@utec.edu.pe","3"
+"197",47,"Resumir","4",3,"GI3101",8,6,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"198",6,"Resolver ejercicios","4",1,"CC1143",2,5,"Muy alto","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"199",8,"Resolver ejercicios","4",0,"Sin código válido",6,7,"Moderado","Usó IA","galileo.huaynaccero@utec.edu.pe","8"
+"200",5,"Programar","3",2,"CS2013",2,7,"Alto","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"201",33,"Resolver ejercicios","4",1,"GI3101",6,5,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"202",17,"Programar","5",0,"CS2031",2.83,6,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"203",15,"Resumir","4",3,"CS2031",5,9,"Moderado","Usó IA","johan.huayta@utec.edu.pe","6"
+"204",15,"Resumir","4",4,"CI3032",5,4.5,"Muy alto","Usó IA","juan.fernandez.s@utec.edu.pe","5"
+"205",23,"Redactar","3",4,"CS2031",5,8,"Alto","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"206",2,"Resumir","2",0,"-",0.5,8.5,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"207",6,"Resolver ejercicios","5",2,"CI2012",8,9,"Muy alto","Usó IA","david.jorquiera@utec.edu.pe","3"
+"208",60,"Resolver ejercicios","4",1,"CI2012",5,7,"Alto","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"209",1,"Resolver ejercicios","3",3,"Sin código válido",8,6,"Muy bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"210",35,"Programar","3",12,"CS2031",8,9,"Muy alto","Usó IA","matias.caceres@utec.edu.pe","4"
+"211",2,"Resolver ejercicios","4",0,"CI2012",7,2,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"212",26,"Resolver ejercicios","4",1,"CI2012",3,8,"Alto","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"213",4,"Resolver ejercicios","3",1,"CC1103",2,6,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"214",13,"Resumir","4",3,"CS2041",5,8,"Moderado","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"215",30,"Resumir","5",5,"CI3032",5,3,"Alto","Usó IA","juan.fernandez.s@utec.edu.pe","5"
+"216",20,"Resolver ejercicios","3",0,"CS2031",5,9.8,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"217",12,"Resolver ejercicios","4",1,"CI2012",5,9,"Alto","Usó IA","david.jorquiera@utec.edu.pe","3"
+"218",4,"Resumir","4",0,"-",2.5,9,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"219",10,"Programar","3",1,"CS2013",3,7,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"220",33,"Resumir","3",0,"CS2013",8,0,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"221",17,"Redactar","3",2,"CC2104",2,9,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"222",20,"Redactar","2",2,"CC1105",3,8,"Muy alto","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"223",7,"Programar","5",11,"HH6002",9,7,"Alto","Usó IA","matias.caceres@utec.edu.pe","4"
+"224",17,"Resumir","3",3,"CC2104",5,6,"Alto","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"225",21,"Resolver ejercicios","4",1,"CC2101",6,4,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"226",12,"Resolver ejercicios","3",0,"CC2101",4,7,"Alto","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"227",7,"Explicar temas","4",1,"PI2102",3,6,"Alto","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"228",3,"Redactar","4",2,"El2013",4,4,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"229",4,"Resolver ejercicios","3",2,"CC1103",3,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"230",1,"Resumir","3",0,"GI2101",3,9,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"231",5,"Programar","3",2,"-",3,7,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"232",21,"Resolver ejercicios","4",3,"CC1143",7,10,"Muy alto","Usó IA","david.jorquiera@utec.edu.pe","3"
+"233",30,"Programar","4",1,"CC1105",6,8,"Alto","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"234",6,"Resolver ejercicios","4",2,"Cc2012",4,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"235",0,"No usó IA","3",0,"No aplica",4,7,"Moderado","No usó IA","diego.cardenas.q@utec.edu.pe","3"
+"236",27,"Resumir","3",1,"CS2013",3,7,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"237",14,"Resumir","3",1,"CS2031",4,9.4,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"238",5,"Resumir","3",0,"CS2041",1.5,8,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"239",2,"Programar","2",2,"GI3101",3,3,"Muy bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"240",3,"Resolver ejercicios","3",4,"CC1103",2,7,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"241",3,"Resolver ejercicios","4",3,"CI3013",1,7,"Alto","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"242",34,"Programar","4",1,"CC1105",6,5,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"243",47,"Resumir","4",1,"CS2031",7,8.2,"Alto","Usó IA","indira.yabar@utec.edu.pe","6"
+"244",8,"Resolver ejercicios","4",4,"Sin código válido",5,6,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"245",45,"Resolver ejercicios","4",1,"CC1143",6,8,"Alto","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"246",6,"Programar","3",0,"CC2012",5,6,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"247",4,"Resumir","2",1,"GI2101",4,10,"Alto","Usó IA","david.jorquiera@utec.edu.pe","3"
+"248",20,"Resolver ejercicios","3",3,"CC1105",10,0,"Alto","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"249",5,"Resolver ejercicios","3",2,"CS2013",2,7,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"250",14,"Resolver ejercicios","4",3,"CI3051",5,8.5,"Alto","Usó IA","juan.fernandez.s@utec.edu.pe","5"
+"251",20,"Resolver ejercicios","3",4,"CC1105",6,5,"Moderado","Usó IA","johan.huayta@utec.edu.pe","6"
+"252",33,"Resumir","3",0,"CS2031",3,0,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"253",8,"Programar","4",8,"-",5,6,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"254",6,"Resolver ejercicios","4",2,"CC1105",5,9,"Alto","Usó IA","david.jorquiera@utec.edu.pe","3"
+"255",6,"Programar","4",6,"CS2031",4,9,"Alto","Usó IA","matias.caceres@utec.edu.pe","4"
+"256",4,"Resolver ejercicios","4",2,"CC2012",5,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"257",1,"Traducir","4",1,"CC1105",3,3,"Alto","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"258",20,"Resolver ejercicios","4",1,"CC1105",4,6,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"259",6,"Resumir","4",3,"CC1105",2,6,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"260",29,"Programar","4",0,"CC1105",4,7,"Alto","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"261",29,"Resumir","3",0,"CS2031",7,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"262",22,"Resumir","3",0,"CS2031",4,6,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"263",0,"No usó IA","3",0,"No aplica",1,8,"Alto","No usó IA","nicolas.trillo@utec.edu.pe","8"
+"264",4,"Resumir","4",2,"CC1103",1,8,"Alto","Usó IA","andre.merino@utec.edu.pe","9"
+"265",34,"Aprender inglés","4",2,"CC2101",4,6,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"266",0,"No usó IA","1",0,"No aplica",0,10.5,"Muy bajo","No usó IA","indira.yabar@utec.edu.pe","6"
+"267",20,"preguntas de conceptos","3",0,"CC1105",0,7,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"268",9,"Resumir","3",3,"CS2041",4,6,"Muy alto","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"269",10,"Redactar","1",1,"CI3091",1,10,"Moderado","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"270",1,"Dudas cotidianas","3",1,"Sin código válido",1,4,"Alto","Usó IA","gabriel.vaccaro@utec.edu.pe","9"
+"271",0,"Resumir","1",1,"Sin código válido",1,5,"Bajo","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"272",1,"Programar","2",0,"CC1105",0,7,"Bajo","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"273",0,"No usó IA","3",0,"No aplica",1,9,"Moderado","No usó IA","alejandro.soto@utec.edu.pe","2"
+"274",4,"Resolver ejercicios","3",3,"CC1105",1,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"275",27,"Resumir","4",1,"GI3101",4,7,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"276",0,"No usó IA","2",0,"No aplica",0,10,"Bajo","No usó IA","cristobal.aranda@utec.edu.pe","7"
+"277",0,"No usó IA","1",0,"No aplica",0,9,"Moderado","No usó IA","david.jorquiera@utec.edu.pe","3"
+"278",4,"Resolver ejercicios","2",1,"CC2012",3,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"279",28,"Resumir","3",0,"-",3,7,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"280",6,"Redactar","1",1,"CC1105",1,7,"Bajo","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"281",6,"Programar","3",3,"CC1105",5,6,"Moderado","Usó IA","matias.caceres@utec.edu.pe","4"
+"282",4,"Resumir","3",3,"CS2041",3,8,"Muy alto","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"283",4,"Resumir","2",3,"CC1103",2,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"284",35,"Programar","3",1,"CC1105",4,4,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"285",1,"Traducir","4",1,"PI2102",2,6,"Moderado","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"286",4,"Resolver ejercicios","4",3,"cc1105",3,5,"Alto","Usó IA","bryan.luis@utec.edu.pe","1"
+"287",0,"No usó IA","1",0,"No aplica",1,14,"Moderado","No usó IA","indira.yabar@utec.edu.pe","6"
+"288",30,"Programar","3",1,"CS2013",1,7,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"289",25,"Redactar","3",1,"CC1105",2,6,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"290",4,"Resolver ejercicios","2",0,"-",0,9,"Bajo","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"291",6,"Resumir","3",4,"CC1105",3,6,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"292",1,"Programar","5",0,"CS2013",2.5,7.17,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"293",16,"Programar","3",2,"CC1103",3,8,"Muy alto","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"294",1,"Redactar","3",1,"CI2031",1,9,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"295",7,"Resolver ejercicios","3",0,"CS2031",2,8,"Moderado","Usó IA","walter.aquino@utec.edu.pe","2"
+"296",13,"Resumir","4",1,"CC2101",2.3,7,"Alto","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"297",13,"Resolver ejercicios","4",1,"CS2013",1,7,"Alto","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"298",2,"Resumir","4",1,"PI2102",2,4,"Moderado","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"299",4,"Resumir","3",1,"Sin código válido",2,6,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"300",4,"Resolver ejercicios","3",0,"CC2012",4,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"301",1,"Resolver ejercicios","4",1,"CC1105",1,5,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"302",1,"Resumir","3",1,"CC1143",1,8,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"303",3,"Resumir","3",3,"CS2041",3,7,"Alto","Usó IA","miguel.flores.c@utec.edu.pe","9"
+"304",0,"No usó IA","1",0,"No aplica",1,9,"Bajo","No usó IA","david.jorquiera@utec.edu.pe","3"
+"305",28,"Redactar","3",1,"CC2101",4,5,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"306",5,"Programar","4",4,"CS6006",4,11,"Moderado","Usó IA","matias.caceres@utec.edu.pe","4"
+"307",6,"Resumir","4",3,"CC1103",1,7,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"308",4,"Resumir","4",3,"Sin código válido",4,7,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"309",16,"Resumir","3",1,"CC2101",5,5,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"310",17,"Programar","4",2,"CI3013",2,4,"Moderado","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"311",3,"Resolver ejercicios","3",1,"CC2012",3,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"312",5,"Resolver ejercicios","2",1,"CS2013",1,8,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"313",11,"Resolver ejercicios","4",0,"CC2101",2.83,7,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"314",8,"Resolver ejercicios","2",2,"CI3013",2,6,"Muy alto","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"315",12,"Resolver ejercicios","4",1,"CI2012",2,8,"Alto","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"316",4,"Investigar","1",0,"CS2041",2,9,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"317",7,"Resolver ejercicios","5",4,"CC2101",6,9,"Muy alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"318",19,"Programar","5",0,"CS2013",5.83,7.17,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"319",26,"Programar","3",1,"CC1105",5,6,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"320",0,"No usó IA","1",0,"No aplica",0,14,"Moderado","No usó IA","david.jorquiera@utec.edu.pe","3"
+"321",3,"Resolver ejercicios","3",1,"CC2012",3,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"322",0,"Programar","4",1,"Sin código válido",1,7,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"323",0,"No usó IA","3",0,"No aplica",1,8,"Moderado","No usó IA","nicolas.trillo@utec.edu.pe","8"
+"324",12,"Resolver ejercicios","4",2,"Sin código válido",2,6,"Moderado","Usó IA","galileo.huaynaccero@utec.edu.pe","8"
+"325",3,"Redactar","3",2,"GI2101",2,6,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"326",7,"Resolver ejercicios","4",4,"Sin código válido",5,7,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"327",16,"Programar","5",0,"CS2031",5.33,7.83,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"328",3,"Resolver ejercicios","3",1,"CC2012",2,6,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"329",8,"Programar","3",1,"CS2031",2,6,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"330",0,"No usó IA","2",0,"No aplica",0,9,"Muy bajo","No usó IA","cristobal.aranda@utec.edu.pe","7"
+"331",5,"Redactar","3",4,"CS6006",4,6,"Alto","Usó IA","matias.caceres@utec.edu.pe","4"
+"332",0,"No usó IA","1",0,"No aplica",0,6,"Moderado","No usó IA","david.jorquiera@utec.edu.pe","3"
+"333",20,"Resolver ejercicios","3",2,"CI2012",2,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"334",7,"Programar","5",0,"CC1105",3,7.5,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"335",8,"Programar","3",0,"CS2041",2,7,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"336",35,"Resumir","3",0,"CS2031",4,0,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"337",15,"Resumir","3",0,"-",4,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"338",1,"Redactar","5",1,"CI2031",1,6,"Alto","Usó IA","alejandro.soto@utec.edu.pe","2"
+"339",15,"Redactar","1",3,"Sin código válido",2,10,"Bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"340",2,"Investigar","1",2,"Sin código válido",0,7,"Muy bajo","Usó IA","eden.paredes@utec.edu.pe","4"
+"341",5,"Redactar","3",1,"Sin código válido",4,7,"Bajo","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"342",7,"Buscar informacion","5",0,"PI2102",2,7.5,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"343",37,"Resolver ejercicios","3",2,"CC1122",5,6,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"344",3,"Redactar","3",1,"CI2031",3,10,"Alto","Usó IA","david.jorquiera@utec.edu.pe","3"
+"345",2,"Redactar","3",3,"CC1105",3,7,"Alto","Usó IA","marco.corimanya@utec.edu.pe","1"
+"346",14,"Resumir","4",1,"CI2031",2,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"347",8,"Resolver ejercicios","3",2,"CC2012",4,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"348",6,"Programar","4",5,"CC1103",1,9,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"349",2,"Resolver ejercicios","3",2,"CI2012",3,6,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"350",6,"Programar","2",1,"CS2031",1,7,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"351",35,"Resumir","3",0,"CS2031",3,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"352",8,"Resolver ejercicios","3",1,"CS2041",1,10,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"353",24,"Resolver ejercicios","3",3,"CS2031",3,5,"Moderado","Usó IA","camila.alfaro@utec.edu.pe","5"
+"354",13,"Redactar","2",2,"CC1143",1,8,"Bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"355",0,"No usó IA","3",0,"No aplica",2,5,"Moderado","No usó IA","adriana.solorzano@utec.edu.pe","2"
+"356",1,"Investigar","1",0,"Sin código válido",0,9,"Muy bajo","Usó IA","eden.paredes@utec.edu.pe","4"
+"357",2,"Resolver ejercicios","3",1,"CI2012",3,6,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"358",2,"Resumir","3",1,"PI2102",1,5,"Moderado","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"359",4,"Resolver ejercicios","3",2,"CC2012",5,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"360",13,"Programar","5",0,"CS2041",4.33,7.17,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"361",34,"investigar","4",0,"CS2041",4,0,"Alto","Usó IA","indira.yabar@utec.edu.pe","6"
+"362",3,"Redactar","3",2,"CC1105",2,6,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"363",8,"Resolver ejercicios","3",1,"CC2101",2,4,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"364",20,"Programar","5",4,"CS2031",8,7,"Muy alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"365",36,"Resumir","4",1,"CC1122",5,5,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"366",27,"Resumir","4",4,"CC1303",2,5,"Bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"367",9,"Programar","4",6,"-",5,8,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"368",6,"Programar","5",0,"CC1105",4.33,6.5,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"369",0,"No usó IA","3",0,"No aplica",0,6,"Moderado","No usó IA","david.jorquiera@utec.edu.pe","3"
+"370",44,"Resumir","3",1,"CC2101",6,3,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"371",10,"Resolver ejercicios","3",1,"CS2041",0,8,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"372",14,"Programar","4",2,"CS2041",2,6,"Moderado","Usó IA","pedro.chavez@utec.edu.pe","7"
+"373",3,"Resumir","5",2,"Sin código válido",3,5,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"374",8,"Resolver ejercicios","3",3,"CC2012",5,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"375",5,"Resolver ejercicios","2",1,"CI2012",1,7,"Bajo","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"376",0,"No usó IA","4",0,"No aplica",2,7,"Alto","No usó IA","nicolas.trillo@utec.edu.pe","8"
+"377",6,"Programar","2",1,"CS2041",2,7,"Bajo","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"378",17,"Resolver ejercicios","4",3,"CC2101",4,6,"Alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"379",28,"Resumir","3",0,"CC2101",4,0,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"380",19,"Resumir","5",4,"CI3013",3,5,"Bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"381",54,"Resolver ejercicios","4",4,"CC2101",3,7,"Alto","Usó IA","camila.alfaro@utec.edu.pe","5"
+"382",5,"Resumir","3",1,"CI2003",1,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"383",3,"Resolver ejercicios","5",0,"CC2101",4,6.5,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"384",8,"Redactar","3",8,"-",2,6,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"385",21,"Resolver ejercicios","3",0,"CC2101",4,9.6,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"386",5,"Resumir","3",0,"-",1,8,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"387",35,"Resumir","4",1,"CC1122",5,5,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"388",10,"Resolver ejercicios","4",1,"Sin código válido",5,5,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"389",7,"Resolver ejercicios","3",1,"CC2101",2,7,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"390",17,"Resumir","5",2,"CS2031",3,5,"Alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"391",3,"Resumir","4",1,"PI2102",2,3,"Alto","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"392",6,"Resolver ejercicios","4",1,"CC2104",2,6,"Moderado","Usó IA","walter.aquino@utec.edu.pe","2"
+"393",13,"Redactar","1",2,"CI3091",2,8,"Muy bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"394",1,"Resumir","1",1,"CI2031",0.5,10,"Bajo","Usó IA","david.jorquiera@utec.edu.pe","3"
+"395",1,"Redactar","3",1,"CI2031",1,7,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"396",0,"No usó IA","2",0,"No aplica",0,7,"Muy bajo","No usó IA","david.jorquiera@utec.edu.pe","3"
+"397",9,"Programar","5",1,"CS2031",5.08,7,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"398",17,"Resolver ejercicios","4",3,"CS2041",5,5,"Moderado","Usó IA","johan.huayta@utec.edu.pe","6"
+"399",13,"Resumir","1",0,"CS2041",2,0,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"400",21,"Resumir","3",0,"CC1122",3,6,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"401",0,"No usó IA","2",0,"No aplica",0,6,"Moderado","No usó IA","cristobal.aranda@utec.edu.pe","7"
+"402",10,"Resolver ejercicios","3",1,"CI2003",1,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"403",6,"Resolver ejercicios","3",1,"CS2041",2,6,"Bajo","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"404",5,"Programar","3",0,"CS2013",1,8,"Moderado","Usó IA","walter.aquino@utec.edu.pe","2"
+"405",0,"No usó IA","1",0,"No aplica",0,6,"Muy bajo","No usó IA","eden.paredes@utec.edu.pe","4"
+"406",6,"Resolver ejercicios","5",1,"Sin código válido",3,4,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"407",7,"Programar","3",4,"Ci3091",3,6,"Moderado","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"408",5,"Resolver ejercicios","5",2,"CS2013",3,9,"Alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"409",3,"Redactar","3",3,"CC2104",2,7,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"410",36,"Resumir","4",0,"CC1122",4,5,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"411",13,"Programar","5",0,"CS2031",3,7,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"412",7,"Resolver ejercicios","3",5,"CC2012",4,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"413",10,"Resolver ejercicios","3",2,"CS2041",2,6,"Moderado","Usó IA","pedro.chavez@utec.edu.pe","7"
+"414",10,"Resumir","3",1,"CI2003",1,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"415",20,"Resumir","3",2,"CS2013",3,6,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"416",12,"Programar","3",1,"CS2013",3,6,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"417",3,"Organizar avances de proyecto","5",0,"CS2031",2.83,7.42,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"418",13,"Resolver ejercicios","5",5,"CC1105",3,3,"Muy bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"419",10,"Resolver ejercicios","2",2,"CC2012",4,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"420",0,"No usó IA","1",0,"No aplica",0,9,"Moderado","No usó IA","david.jorquiera@utec.edu.pe","3"
+"421",6,"Resolver ejercicios","4",1,"Sin código válido",4,5,"Alto","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"422",10,"Resumir","3",0,"PI6002",2,6,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"423",5,"Resolver ejercicios","2",0,"-",1,10,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"424",0,"No usó IA","3",0,"No aplica",2,5,"Moderado","No usó IA","adriana.solorzano@utec.edu.pe","2"
+"425",6,"indagar","1",0,"CS2013",1.2,0,"Bajo","Usó IA","indira.yabar@utec.edu.pe","6"
+"426",0,"No usó IA","1",0,"No aplica",0,7,"Muy bajo","No usó IA","eden.paredes@utec.edu.pe","4"
+"427",3,"Resumir","2",1,"PI6002",1,8,"Bajo","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"428",9,"Resolver ejercicios","3",3,"CC2012",5,6,"Alto","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"429",8,"Programar","5",0,"CS2031",1.97,7.83,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"430",3,"Resolver ejercicios","5",2,"Sin código válido",2,6,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"431",23,"Resolver ejercicios","3",1,"CC2101",4,7,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"432",2,"Resolver ejercicios","3",1,"CC2104",1,9,"Bajo","Usó IA","walter.aquino@utec.edu.pe","2"
+"433",6,"Resolver ejercicios","5",4,"CS6006",4,6,"Muy alto","Usó IA","matias.caceres@utec.edu.pe","4"
+"434",7,"Redactar","3",1,"CS2101",2,7,"Moderado","Usó IA","pedro.chavez@utec.edu.pe","7"
+"435",32,"Resumir","4",3,"CC1403",3,4,"Moderado","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"436",8,"Programar","3",1,"CS2023",1,8,"Alto","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"437",3,"Redactar","4",2,"CC2104",2,6,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"438",0,"No usó IA","2",0,"No aplica",1,3,"Moderado","No usó IA","adriana.solorzano@utec.edu.pe","2"
+"439",10,"Resumir","3",0,"CC1105",2,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"440",10,"Resolver ejercicios","3",2,"CC2012",5,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"441",3,"Redactar","3",2,"Cl2013",3,6,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"442",0,"No usó IA","5",0,"No aplica",5.5,7.5,"Muy alto","No usó IA","eduardo.vila@utec.edu.pe","6"
+"443",61,"Resolver ejercicios","3",1,"CC2101",5,4,"Alto","Usó IA","miguel.dominguez@utec.edu.pe","1"
+"444",39,"Resolver ejercicios","4",0,"CC2101",5,6,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"445",6,"Resolver ejercicios","3",1,"CC1143",1,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"446",15,"Programar","3",5,"GI3101",4,4,"Muy bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"447",0,"No usó IA","4",0,"No aplica",3,6,"Moderado","No usó IA","diego.cardenas.q@utec.edu.pe","3"
+"448",2,"Resumir","3",1,"CI2031",4,9,"Moderado","Usó IA","david.jorquiera@utec.edu.pe","3"
+"449",2,"Resumir","3",1,"CS2013",1,7,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"450",1,"Resolver ejercicios","2",1,"CC2101",0,7,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"451",23,"Resolver ejercicios","2",1,"CS1105",2,9.67,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"452",20,"Resumir","3",0,"CC1105",2,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"453",13,"Programar","4",3,"CS2031",7,4,"Bajo","Usó IA","johan.huayta@utec.edu.pe","6"
+"454",3,"Redactar","4",2,"CC2104",2,6,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"455",10,"Resumir","3",2,"CC2012",5,7,"Alto","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"456",2,"Resumir","3",3,"Cl2013",2,5,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"457",0,"No usó IA","5",0,"No aplica",2.92,6.5,"Alto","No usó IA","eduardo.vila@utec.edu.pe","6"
+"458",14,"Resolver ejercicios","3",5,"CC1103",3,5,"Moderado","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"459",9,"Redactar","4",1,"CI2031",1,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"460",3,"Programar","3",2,"CC2104",3,7,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"461",4,"Resolver ejercicios","4",2,"Sin código válido",4,8,"Alto","Usó IA","nestor.delacruz@utec.edu.pe","4"
+"462",8,"Resolver ejercicios","2",2,"CC2101",2,8,"Moderado","Usó IA","martin.armas@utec.edu.pe","2"
+"463",6,"Redactar","4",1,"Sin código válido",2,5,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"464",22,"Resolver ejercicios","4",1,"CS2041",3,8,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"465",3,"Resolver ejercicios","1",0,"CC1105",0,4,"Moderado","Usó IA","eden.paredes@utec.edu.pe","4"
+"466",41,"Resolver ejercicios","4",1,"CC1122",5,5,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"467",24,"Resumir","3",0,"CS2013",2,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"468",13,"Resolver ejercicios","3",2,"CS2013",5,7,"Moderado","Usó IA","johan.huayta@utec.edu.pe","6"
+"469",12,"Resolver ejercicios","4",1,"CC2101",4.6,9.63,"Alto","Usó IA","indira.yabar@utec.edu.pe","6"
+"470",6,"Resumir","3",3,"CC1154",2,7,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"471",15,"Programar","2",4,"CC1105",3,6,"Bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"472",1,"Resumir","2",3,"Cl2013",2,3,"Bajo","Usó IA","bryan.luis@utec.edu.pe","1"
+"473",1,"Resumir","1",0,"-",1,7,"Bajo","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"474",2,"Resolver ejercicios","5",0,"CC2101",1.08,6.5,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"475",10,"Resolver ejercicios","3",2,"CC2012",4,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"476",42,"Programar","3",1,"CC1105",3,3,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"477",22,"Resolver ejercicios","3",1,"CC2101",3,8,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"478",13,"Programar","4",2,"CS2041",4,5,"Bajo","Usó IA","johan.huayta@utec.edu.pe","6"
+"479",2,"Resumir","4",1,"CC2104",2,8,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"480",24,"Resumir","3",0,"CC2101",3,3,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"481",23,"Resumir","4",1,"CS2031",1,5,"Alto","Usó IA","camila.alfaro@utec.edu.pe","5"
+"482",8,"Resolver ejercicios","4",1,"CI2012",1,7,"Alto","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"483",37,"Programar","3",1,"CC1105",3,4,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"484",3,"Redactar","4",1,"PI2102",2,4,"Moderado","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"485",15,"Programar","5",1,"CS2041",3.25,6.33,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"486",5,"Resumir","4",4,"CC1143",5,8,"Alto","Usó IA","martin.armas@utec.edu.pe","2"
+"487",6,"Resolver ejercicios","1",0,"CS2041",1.2,9.9,"Bajo","Usó IA","indira.yabar@utec.edu.pe","6"
+"488",5,"Resolver ejercicios","4",6,"CC1101",5,6,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"489",0,"No usó IA","3",0,"No aplica",3,7,"Bajo","No usó IA","david.jorquiera@utec.edu.pe","3"
+"490",16,"Programar","3",1,"CS2013",3,8,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"491",2,"Resolver ejercicios","3",2,"GI2101",1,6,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"492",12,"Resumir","5",3,"CS2031",6,5,"Alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"493",7,"Resolver ejercicios","3",3,"CC2012",5,6,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"494",7,"Programar","5",0,"CS2031",1.75,7.08,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"495",0,"No usó IA","1",0,"No aplica",0,10,"Muy bajo","No usó IA","david.jorquiera@utec.edu.pe","3"
+"496",8,"Resumir","3",0,"-",1,6,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"497",4,"Programar","3",0,"CS2013",1,8,"Moderado","Usó IA","walter.aquino@utec.edu.pe","2"
+"498",8,"Programar","3",2,"CC1105",2,9,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"499",20,"Resolver ejercicios","3",1,"CC1122",3,5,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"500",8,"Redactar","3",2,"GI2101",2,6,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"501",8,"Resumir","3",1,"CS2041",3,7,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"502",14,"Programar","5",2,"CS2031",9,8,"Alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"503",15,"Programar","5",1,"CS2013",3.67,7,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"504",20,"Resolver ejercicios","4",1,"CI2012",1,6,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"505",17,"Resumir","5",5,"CC1105",3,6,"Bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"506",47,"Resolver ejercicios","3",1,"CC2101",3,6,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"507",0,"No usó IA","1",0,"No aplica",0,5,"Muy bajo","No usó IA","david.jorquiera@utec.edu.pe","3"
+"508",4,"Redactar","3",2,"CC1105",2,6,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"509",10,"Resolver ejercicios","3",2,"CC2012",5,7,"Bajo","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"510",2,"Verificar respuestas","4",1,"CS2013",1,9,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"511",75,"Programar","3",2,"Sin código válido",2,0,"Moderado","Usó IA","miguel.dominguez@utec.edu.pe","1"
+"512",9,"Resolver ejercicios","3",1,"CS2023",1,8,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"513",24,"Resumir","3",1,"CC2101",4,5,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"514",5,"Redactar","3",1,"GI2101",2,7,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"515",6,"indagar","1",0,"Sin código válido",1.23,10.47,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"516",25,"Resumir","3",0,"CC2101",2,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"517",0,"No usó IA","1",0,"No aplica",0,5,"Muy bajo","No usó IA","eden.paredes@utec.edu.pe","4"
+"518",18,"Resolver ejercicios","4",1,"CI2012",2,6,"Alto","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"519",7,"Explicar conceptos","4",1,"CI2031",6,7,"Alto","Usó IA","david.jorquiera@utec.edu.pe","3"
+"520",33,"Programar","5",0,"CS2031",2.58,8,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"521",2,"Resolver ejercicios","2",1,"CC1256",1,2,"Bajo","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"522",13,"Resolver ejercicios","3",2,"CC2012",7,8,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"523",3,"Resumir","3",2,"Cl2013",3,5,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"524",1,"Investigar","1",0,"Sin código válido",0,6,"Muy bajo","Usó IA","eden.paredes@utec.edu.pe","4"
+"525",0,"No usó IA","2",0,"No aplica",0,9,"Moderado","No usó IA","nicolas.trillo@utec.edu.pe","8"
+"526",48,"Resumir","3",2,"CC1105",5,6,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"527",5,"Resumir","4",1,"CS2041",0,10,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"528",5,"Resumir","2",2,"-",2,7,"Bajo","Usó IA","frank.yauri@utec.edu.pe","5"
+"529",39,"Resumir","1",5,"CC1105",3,8,"Alto","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"530",26,"Resumir","3",1,"CC2101",2,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"531",9,"Programar","2",4,"GI3015",3,8,"Moderado","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"532",2,"Resolver ejercicios","3",2,"CI2012",3,3,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"533",10,"Programar","2",1,"CS2031",1,8,"Bajo","Usó IA","walter.aquino@utec.edu.pe","2"
+"534",27,"Programar","5",0,"CS2031",3.62,7,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"535",0,"No usó IA","4",0,"No aplica",2,6,"Moderado","No usó IA","adriana.solorzano@utec.edu.pe","2"
+"536",5,"Resolver ejercicios","4",2,"ME2013",4,8,"Alto","Usó IA","martin.armas@utec.edu.pe","2"
+"537",7,"Buscar información","2",2,"Sin código válido",3,5,"Moderado","Usó IA","angela.arevalo@utec.edu.pe","2"
+"538",7,"Redactar","3",3,"Cl2013",2,5,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"539",2,"Resolver ejercicios","4",2,"CC1182",2,7,"Moderado","Usó IA","diego.cardenas.q@utec.edu.pe","3"
+"540",1,"Resolver ejercicios","3",1,"CC1105",0.5,7,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"541",13,"Resolver ejercicios","4",2,"CC2012",5,7,"Moderado","Usó IA","bryan.rivera.c@utec.edu.pe","3"
+"542",18,"Programar","1",1,"CS2031",1.89,9.2365,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"543",30,"Resumir","3",0,"CS2031",3,2,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"544",43,"Resolver ejercicios","3",1,"CC1122",4,5,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"545",1,"Investigar","1",1,"Sin código válido",0,8,"Moderado","Usó IA","eden.paredes@utec.edu.pe","4"
+"546",6,"Programar","5",1,"CS2013",2.08,6.5,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"547",1,"Resolver ejercicios","3",0,"CI2012",4,7,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"548",0,"No usó IA","2",0,"No aplica",0,8,"Moderado","No usó IA","cristobal.aranda@utec.edu.pe","7"
+"549",12,"Resumir","5",3,"CS2013",6,8,"Muy alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"550",13,"Resolver ejercicios","4",1,"CC2104",4,8,"Alto","Usó IA","walter.aquino@utec.edu.pe","2"
+"551",47,"Resolver ejercicios","4",2,"CS2013",1,5,"Alto","Usó IA","camila.alfaro@utec.edu.pe","5"
+"552",10,"Programar","4",5,"-",3,6,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"553",12,"Resumir","2",0,"CS2041",1.13,10.23,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"554",25,"Resolver ejercicios","3",1,"CC2101",4,6,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"555",1,"Redactar","4",1,"PI2102",3,5,"Moderado","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"556",4,"Programar","2",3,"Cl2013",3,4,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"557",25,"Resolver ejercicios","3",6,"CC1143",2,9,"Moderado","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"558",8,"Resolver ejercicios","3",2,"CI2012",4,8,"Moderado","Usó IA","david.jorquiera@utec.edu.pe","3"
+"559",46,"Resumir","3",2,"Gl3101",4,5,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"560",0,"No usó IA","3",0,"No aplica",1,6,"Moderado","No usó IA","diego.cardenas.q@utec.edu.pe","3"
+"561",5,"Programar","3",1,"CS2031",1,6,"Moderado","Usó IA","walter.aquino@utec.edu.pe","2"
+"562",3,"Redactar","3",3,"PI6002",0,5,"Alto","Usó IA","martin.armas@utec.edu.pe","2"
+"563",1,"Programar","3",1,"GI2101",1,7,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"564",3,"Resumir","4",2,"Sin código válido",2,5,"Moderado","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"565",37,"Resumir","3",0,"GI3101",4,6,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"566",1,"Resolver ejercicios","2",2,"Cl2013",2,3,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"567",8,"Programar","3",1,"CS2013",1,8,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"568",0,"No usó IA","2",0,"No aplica",0,8,"Bajo","No usó IA","cristobal.aranda@utec.edu.pe","7"
+"569",11,"Programar","5",1,"CS2041",4,6.67,"Alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"570",7,"Redactar","4",2,"CS2101",1,6,"Bajo","Usó IA","pedro.chavez@utec.edu.pe","7"
+"571",27,"Programar","3",2,"PI6002",2,6,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"572",2,"Resolver ejercicios","3",1,"CC1143",4,5,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"573",4,"Programar","2",2,"-",2,5,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"574",4,"Programar","3",0,"CS2013",1,8,"Moderado","Usó IA","walter.aquino@utec.edu.pe","2"
+"575",2,"Redactar","4",1,"PI6002",3,3,"Alto","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"576",3,"Redactar","3",2,"Cc1103",3,5,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"577",5,"Resolver ejercicios","4",5,"CC1143",5,7,"Alto","Usó IA","martin.armas@utec.edu.pe","2"
+"578",0,"No usó IA","2",0,"No aplica",2,8,"Moderado","No usó IA","cristobal.aranda@utec.edu.pe","7"
+"579",14,"Resolver ejercicios","4",3,"CC1105",4,6,"Muy alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"580",5,"Programar","5",0,"CS2041",1.17,5.83,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"581",3,"Resolver ejercicios","4",2,"CC2104",2,7,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"582",13,"Resolver ejercicios","2",1,"CS2031",2,6,"Bajo","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"583",6,"Programar","3",4,"CS6006",7,7,"Moderado","Usó IA","matias.caceres@utec.edu.pe","4"
+"584",32,"Resolver ejercicios","4",1,"CS4054",3,8,"Alto","Usó IA","camila.alfaro@utec.edu.pe","5"
+"585",5,"Resolver ejercicios","4",5,"CC1143",4,7,"Alto","Usó IA","martin.armas@utec.edu.pe","2"
+"586",5,"Redactar","3",3,"CS2023",1,7,"Bajo","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"587",2,"Resolver ejercicios","2",1,"CC1102",1,4,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"588",54,"Programar","5",2,"CS2013",7.27,7.08,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"589",19,"Resolver ejercicios","4",3,"CC2101",6,4,"Moderado","Usó IA","pedro.chavez@utec.edu.pe","7"
+"590",23,"Resumir","5",0,"CS2013",5.4,8.2,"Alto","Usó IA","indira.yabar@utec.edu.pe","6"
+"591",15,"Programar","3",2,"CS2013",2,8,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"592",0,"No usó IA","2",0,"No aplica",0,7,"Moderado","No usó IA","cristobal.aranda@utec.edu.pe","7"
+"593",2,"Programar","4",1,"PI6002",3,4,"Alto","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"594",10,"Programar","3",1,"CS2031",1,8,"Moderado","Usó IA","walter.aquino@utec.edu.pe","2"
+"595",36,"Resumir","3",1,"GI3101",3,6,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"596",0,"No usó IA","1",0,"No aplica",0,5,"Muy bajo","No usó IA","eden.paredes@utec.edu.pe","4"
+"597",28,"Resolver ejercicios","4",1,"CC1105",3,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"598",16,"Resumir","4",3,"CC1143",4,9,"Moderado","Usó IA","david.jorquiera@utec.edu.pe","3"
+"599",11,"Redactar","3",5,"CS6006",4,8,"Moderado","Usó IA","matias.caceres@utec.edu.pe","4"
+"600",43,"Resumir","3",1,"GI3101",4,5,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"601",5,"Programar","5",0,"CC1105",3,7.08,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"602",12,"Resolver ejercicios","5",3,"CC1105",5,9,"Alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"603",23,"Resumir","3",1,"CS2013",2,4,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"604",2,"Redactar","4",2,"CC2104",1,7,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"605",0,"No usó IA","2",0,"No aplica",2,4,"Moderado","No usó IA","indira.yabar@utec.edu.pe","6"
+"606",0,"No usó IA","3",0,"No aplica",2,4,"Moderado","No usó IA","adriana.solorzano@utec.edu.pe","2"
+"607",2,"Programar","3",2,"cc1103",3,5,"Alto","Usó IA","bryan.luis@utec.edu.pe","1"
+"608",1,"Resumir","1",1,"CS2041",0,9,"Bajo","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"609",8,"Programar","4",3,"CC1105",5,9,"Alto","Usó IA","matias.caceres@utec.edu.pe","4"
+"610",48,"Programar","3",2,"CC1105",6,6,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"611",5,"Resolver ejercicios","3",5,"CC1105",1,6,"Moderado","Usó IA","martin.armas@utec.edu.pe","2"
+"612",1,"Redactar","3",1,"CI2003",1,9,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"613",5,"Resolver ejercicios","3",0,"CC1105",3,8,"Bajo","Usó IA","walter.aquino@utec.edu.pe","2"
+"614",9,"Resolver ejercicios","2",1,"CS2023",1,6,"Bajo","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"615",6,"Resolver ejercicios","5",0,"CC1105",5.92,7.75,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"616",0,"No usó IA","1",0,"No aplica",0,3,"Muy bajo","No usó IA","eden.paredes@utec.edu.pe","4"
+"617",0,"No usó IA","3",0,"No aplica",2,4,"Moderado","No usó IA","adriana.solorzano@utec.edu.pe","2"
+"618",3,"Resolver ejercicios","3",1,"CC2101",0,7,"Muy bajo","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"619",34,"Programar","3",1,"CS2013",4.5,11.4,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"620",12,"Resumir","5",3,"CS2042",5,10,"Alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"621",27,"Resumir","3",2,"CS2013",2,5,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"622",6,"Resolver ejercicios","3",2,"-",2,6,"Moderado","Usó IA","frank.yauri@utec.edu.pe","5"
+"623",7,"Redactar","2",3,"Cc1103",5,4,"Bajo","Usó IA","bryan.luis@utec.edu.pe","1"
+"624",1,"Programar","3",0,"CC1105",1,5,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"625",2,"Redactar","3",1,"Sin código válido",3,5,"Moderado","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"626",22,"Programar","4",0,"CC2101",0,6.83,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"627",26,"Resumir","3",0,"CC1105",2,0,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"628",9,"Programar","4",1,"CS2031",5,8,"Alto","Usó IA","matias.caceres@utec.edu.pe","4"
+"629",19,"Resolver ejercicios","4",5,"CC2011",4,10,"Bajo","Usó IA","renzo.rivera.t@utec.edu.pe","3"
+"630",19,"Resolver ejercicios","3",1,"CI2031",1,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"631",7,"Resolver ejercicios","2",2,"AM6102",3,7,"Moderado","Usó IA","angela.arevalo@utec.edu.pe","2"
+"632",5,"Resolver ejercicios","2",0,"CC2104",1,6,"Bajo","Usó IA","walter.aquino@utec.edu.pe","2"
+"633",0,"No usó IA","3",0,"No aplica",5,5,"Alto","No usó IA","david.jorquiera@utec.edu.pe","3"
+"634",8,"Programar","2",1,"CS2013",1,8,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"635",0,"No usó IA","1",0,"No aplica",0,8,"Muy bajo","No usó IA","eden.paredes@utec.edu.pe","4"
+"636",29,"Resumir","3",0,"CC1105",4.6,7.3,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"637",5,"Redactar","4",0,"CS6006",5,5,"Bajo","Usó IA","matias.caceres@utec.edu.pe","4"
+"638",2,"Resolver ejercicios","5",0,"CC2101",0.75,6.08,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"639",4,"Resumir","3",2,"Cc1103",3,4,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"640",1,"Resolver ejercicios","2",1,"CC1105",1,9,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"641",0,"No usó IA","3",0,"No aplica",3,6,"Alto","No usó IA","adriana.solorzano@utec.edu.pe","2"
+"642",10,"Programar","3",1,"CS2031",1,7,"Moderado","Usó IA","walter.aquino@utec.edu.pe","2"
+"643",10,"Armado de chasis","3",10,"PI6002",3,5,"Moderado","Usó IA","martin.armas@utec.edu.pe","2"
+"644",45,"Resolver ejercicios","3",1,"CC1105",4,4,"Moderado","Usó IA","ariana.perez@utec.edu.pe","1"
+"645",26,"Resolver ejercicios","4",1,"CC2101",4.5,5.4,"Alto","Usó IA","indira.yabar@utec.edu.pe","6"
+"646",5,"Resolver ejercicios","2",2,"CC2101",1,8,"Moderado","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"647",12,"Resumir","5",4,"CC2101",10,9,"Muy alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"648",14,"Programar","4",1,"HH6002",4,8,"Moderado","Usó IA","matias.caceres@utec.edu.pe","4"
+"649",10,"Resumir","4",6,"CC1103",3,7,"Alto","Usó IA","andre.merino@utec.edu.pe","9"
+"650",2,"Traducir","4",1,"Sin código válido",2,2,"Moderado","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"651",6,"Programar","4",1,"CC1105",2.5,6,"Moderado","Usó IA","cristobal.aranda@utec.edu.pe","7"
+"652",3,"Programar","4",1,"PI6002",3,4,"Alto","Usó IA","angela.arevalo@utec.edu.pe","2"
+"653",5,"Resolver ejercicios","2",1,"CS2013",2,8,"Bajo","Usó IA","walter.aquino@utec.edu.pe","2"
+"654",24,"Programar","5",0,"CS2031",3.5,6.58,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
+"655",1,"Resumir","3",1,"CI2031",1,5,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"656",3,"Redactar","3",2,"CC2104",1,5,"Moderado","Usó IA","marco.corimanya@utec.edu.pe","1"
+"657",20,"Resolver ejercicios","4",1,"CI2003",2,7,"Moderado","Usó IA","alvaro.pacheco@utec.edu.pe","3"
+"658",9,"Resolver ejercicios","4",3,"-",2,8,"Bajo","Usó IA","frank.yauri@utec.edu.pe","5"
+"659",52,"Programar","3",2,"CC1105",4,5,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"660",0,"Programar","2",1,"-",1,8,"Bajo","Usó IA","nicolas.trillo@utec.edu.pe","8"
+"661",5,"Resolver ejercicios","3",4,"CC1105",2,5,"Moderado","Usó IA","martin.armas@utec.edu.pe","2"
+"662",3,"Redactar","2",2,"Cc1103",2,3,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"663",1,"Investigar","1",1,"Sin código válido",0,6,"Muy bajo","Usó IA","eden.paredes@utec.edu.pe","4"
+"664",8,"Resumir","3",5,"CC1105",3,8,"Moderado","Usó IA","andre.merino@utec.edu.pe","9"
+"665",3,"Programar","3",3,"Cc1103",3,5,"Moderado","Usó IA","bryan.luis@utec.edu.pe","1"
+"666",42,"Resumir","4",2,"GI3101",5,5,"Alto","Usó IA","ariana.perez@utec.edu.pe","1"
+"667",2,"Programar","3",1,"PI6002",2,2,"Moderado","Usó IA","adriana.solorzano@utec.edu.pe","2"
+"668",7,"Resolver ejercicios","3",0,"CS2013",1,8,"Moderado","Usó IA","walter.aquino@utec.edu.pe","2"
+"669",1,"Programar","4",1,"GI2101",1,5,"Moderado","Usó IA","alejandro.soto@utec.edu.pe","2"
+"670",13,"Resolver ejercicios","5",4,"CS2013",7,5,"Muy alto","Usó IA","johan.huayta@utec.edu.pe","6"
+"671",12,"Programar","3",1,"CS2013",3,8,"Moderado","Usó IA","dervy.pillaca@utec.edu.pe","6"
+"672",22,"Resolver ejercicios","3",0,"CS2041",3.2,3.2,"Moderado","Usó IA","indira.yabar@utec.edu.pe","6"
+"673",20,"Resumir","3",0,"CS2013",3,6,"Moderado","Usó IA","mathius.quispe@utec.edu.pe","6"
+"674",13,"Programar","5",1,"PI6002",1.42,5.5,"Muy alto","Usó IA","eduardo.vila@utec.edu.pe","6"
