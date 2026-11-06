@@ -484,7 +484,7 @@ nrow(DF2)
 nrow(na.omit(DF2))
 round((1 - nrow(na.omit(DF2)) / nrow(DF2)) * 100, 2)
 ```
-La eliminación directa mediante `na.omit` descartaría el 16.01% de la muestra. Para evitarlo, se reconstruyen los criterios desde la base previa (`DFL1`) y se clasifica el origen de cada registro incompleto.
+La eliminación directa mediante `na.omit` descartaría el 15.43% de la muestra. Para evitarlo, se reconstruyen los criterios desde la base previa (`DFL1`) y se clasifica el origen de cada registro incompleto.
 
 ```{r}
 # DF2 sale de DFL1 sin filtrar filas, recuperamos de DFL1 los valores que el Paso 3 convirtió a NA
@@ -528,9 +528,9 @@ diagnostico %>%
   )
 ```
 
-**Sin uso de IA (26 registros).** El estudiante no usó la herramienta; el valor real del NA es cero.
+**Sin uso de IA (47 registros).** El estudiante no usó la herramienta; el valor real del NA es cero.
 
-**Curso fuera de formato (31 registros).** Sí usaron IA, pero el código del curso es inválido.
+**Curso fuera de formato (57 registros).** Sí usaron IA, pero el código del curso es inválido.
   
 Una política uniforme asignaría `consultas = 0` y `uso = "No usó IA"` a estudiantes con uso intensivo, sesgando las variables centrales de los objetivos 1 y 3. 
 
@@ -624,7 +624,7 @@ trazabilidad$Retencion <- round(trazabilidad$Observaciones / nrow(DF) * 100, 2)
 trazabilidad
 ```
 
-La base retiene 356 observaciones (81.84%) de 435. La pérdida corresponde a los criterios de la ventana horaria de envío.
+La base retiene 674 observaciones (79.20%) de 851. La pérdida corresponde a los criterios de la ventana horaria de envío.
 
 ```{r}
 # Mismo diagnóstico del Paso 1, ahora sobre la base limpia.
@@ -695,11 +695,11 @@ DF3_grupo %>% count(email)
 n_distinct(DF_GesNulos$email)
 ```
 
-Finalmente, el Grupo 6 ha aportado 79 observaciones limpias sobre el total de 356. Al ser longitudinal, se espera que la muestra crecerá hasta el mínimo requerido (150) para permitir la generalización a la población objetivo.
+Finalmente, el Grupo 6 ha aportado 166 observaciones limpias sobre el total de 851, superando al mínimo de 150 muestras limpias.
 
 **Conclusión de validación y limpieza**
 
-En total, se conservaron 356 observaciones (81.84%). La decisión más importante fue evitar el `na.omit` para no perder el 16.01% de la muestra, evitando sesgar el estudio al descartar muestras válidas. Al tratar los nulos según su origen, la base quedó sin faltantes, con los formatos correctos en cada columna y lista para analizar. Quedan pendientes revisar los 2 registros duplicados y completar la cuota de 150 observaciones limpias del grupo.
+En total, se conservaron 624 observaciones (79.20%). La decisión más importante fue evitar el `na.omit` para no perder el 15.43% de la muestra, evitando sesgar el estudio al descartar muestras válidas. Al tratar los nulos según su origen, la base quedó sin faltantes, con los formatos correctos en cada columna y lista para analizar. 
 
 # Análisis descriptivo
 
@@ -912,7 +912,7 @@ DF3 %>%
   rename(Uso = uso_g)
 ```
 
-Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades, existe una relación favorable. El 100% de los registros con uso 'Redactar' reportó ahorro de tiempo, seguido por 'Resolver ejercicios' (91.23%), 'Resumir' (79.55%), 'Programar' (76%) y 'Otros' (68%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios', 'Resumir' y 'Programar', al concentrar la mayor cantidad de registros.
+Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades, existe una relación favorable. El 98.28% de los registros con uso 'Redactar' reportó ahorro de tiempo, seguido por 'Resolver ejercicios' (89.04	%), 'Resumir' (75.95%), 'Programar' (77.24%) y 'Otros' (64.86%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios', 'Resumir' y 'Programar', al concentrar la mayor cantidad de registros.
 
 
 ### Objetivo 4: comprensión vs. sueño
@@ -956,7 +956,7 @@ GRUPO <- 6
 DF3_grupo <- DF_GesNulos %>% filter(Grupo == GRUPO)
 nrow(DF3_grupo)
 ```
-El Grupo 6 aportó 99 observaciones limpias sobre las 416 de la muestra efectiva de la sección.
+El Grupo 6 aportó 166 observaciones limpias sobre las 416 de la muestra efectiva de la sección.
 
 ### Variable 1: consultas
 
@@ -1202,7 +1202,7 @@ cdf_der <- q^(k_all - 1)              # P(X >= k)
 sum(pmf)                              # validación: ≈ 1
 
 espera <- diff(c(0, which(exito)))
-ks <- 1:10
+ks <- 1:20
 emp <- sapply(ks, function(i) mean(espera == i))
 
 par(mfrow = c(1, 2))
@@ -1211,6 +1211,9 @@ par(mfrow = c(1, 2))
 plot(k_all, pmf, type = "h", xlab = "k", ylab = "P(X = k)",
      main = "Distribución completa (1 a N)")
 
+```
+
+```{r}
 # Zoom: teórica vs. empírica
 plot(ks, pmf[ks], type = "h", lwd = 3, xlab = "k", ylab = "P(X = k)",
      ylim = c(0, max(pmf[ks], emp)),
@@ -1223,6 +1226,7 @@ legend("topright", legend = c("Teórica", "Empírica", "E(X)"),
 
 par(mfrow = c(1, 1))
 ```
+
 
 ```{r}
 # Acumulada hacia la izquierda
