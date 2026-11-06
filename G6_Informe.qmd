@@ -148,9 +148,8 @@ Se recolecta la información desde un formulario diario en Google Forms. Enlace:
 Cada variable será registrada en el formulario de Google Forms, el cual contendrá todas las restricciones de valores dependiendo del tipo y naturaleza de la variable.
 
 # Limpieza de datos
-Como ya se explicó esta parte en la primera entrega, solo se hará uso de 2 csv previamente exportados (`DF3` tiene la tabla prolija y `DF_GesNulos` incluye la columna con el correo y el grupo que aportó cada registro de la tabla).
+Como ya se explicó esta parte en la primera entrega, solo se hará uso de 1 csv previamente exportados (`DF3` tiene la tabla prolija).
 ```{r}
-DF_GesNulos<-read_csv("DF_GesNulos.csv")
 DF3<-read_csv("DF3.csv")
 ```
 
@@ -406,7 +405,7 @@ El CV se ubica entre 0.20 y 0.30 en todos los niveles, por lo que la media repre
 
 ```{r}
 GRUPO <- 6
-DF3_grupo <- DF_GesNulos %>% filter(Grupo == GRUPO)
+DF3_grupo <- DF3 %>% filter(Grupo == GRUPO)
 nrow(DF3_grupo)
 ```
 El Grupo 6 aportó 166 observaciones limpias sobre las 416 de la muestra efectiva de la sección.
