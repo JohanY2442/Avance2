@@ -33,6 +33,9 @@ Este tema es importante porque la mayoría de estudiantes usa la IA diariamente 
 ### Diagrama de Gantt
 
 ```{r}
+library(readr)
+library(dplyr)
+library(tidyverse)
 library(ggplot2)
 
 tareas <- data.frame(
@@ -707,15 +710,7 @@ X: número de registros, de 10 seleccionados al azar, en los que la IA ahorró t
 
 $X \sim Bin(n = 10,\ p = `r round(p_tar, 4)`)$, donde p = P(seleccionar un registro con 3 o más tareas en las que la IA ahorró tiempo).
 
-**3. Descripción de la distribución:**
-
-P(X = 0): probabilidad de que ninguno de los 10 registros tenga 3 o más tareas con ahorro de tiempo.
-
-P(X = 1): probabilidad de que exactamente 1 de los 10 registros tenga 3 o más tareas con ahorro de tiempo.
-
-…
-
-P(X = 10): probabilidad de que los 10 registros tengan 3 o más tareas con ahorro de tiempo.
+**3. Descripción de la distribución:** $P(X=k)=\binom{n}{x} * p^x * (1-p)^{n-x}$. Es una distribución que por tener $p<0.5$ presenta una cola larga hacia la derecha y una menor dispersión hacia la izquierda.Además, el valor esperado supera 2.
 
 **4. Propiedades:**
 
@@ -772,6 +767,20 @@ barplot(rbind(teorica, empirica),
 ```
 
 En `r n_grupos` grupos de 10 registros, el promedio real de éxitos es `r round(mean(exitos), 2)`, muy cerca del valor esperado del modelo (`r round(E_tar, 2)`). Además, las barras del modelo y de los datos tienen la misma forma, por lo que la binomial representa bien este caso.
+
+Acá presentamos la gráfica completa de la distribución teórica
+```{r}
+N <- length(DF3$tareas >= 3)
+k_all <- 1:N
+pmf <- dbinom(k_all - 1, n_tar, p_tar)
+
+par(mfrow = c(1, 2))
+
+# Distribución completa (1 a N)
+plot(k_all, pmf, type = "h", xlab = "k", ylab = "P(X = k)",
+     main = "Distribución completa (1 a N)")
+
+```
 
 ## Variables aleatorias continuas
 
@@ -984,17 +993,9 @@ Comparando la respuesta obtenida desde el modelo exponencial y aquella obtenida 
 
 # Conclusiones
 
-## Conclusión del Objetivo 2
+## Conclusión de la primera parte del estudio
 
-Se comprobó la asociación entre consultas y horas de estudio, la cual es positiva y moderada. Esto sugiere que los días con más horas de estudio tienden a tener más consultas, sin que ello implique causalidad.
-
-## Conclusión del Objetivo 3
-
-Se evidencia que el curso influye en el uso que se le da a la IA. El estudiante adapta la herramienta a las exigencias de cada materia. A su vez, el ahorro de tiempo fue de al menos 68% en todos los usos, y el mayor impacto global corresponde a los más frecuentes. Estos hallazgos son asociaciones y no implican causalidad, pues el ahorro reportado podría depender de otras variables de la rutina del estudiante.
-
-## Conclusión del Objetivo 4
-
-No se observa una relación clara entre las horas de sueño y el nivel de comprensión. Las medianas se mantienen entre 7 y 8 horas y las medias entre 6.71 y 7.55, sin seguir el orden de los niveles, por lo que con estos datos no se puede afirmar que el sueño se asocie con la comprensión.
+Después de limpiar los datos, vimos que los estudiantes de Estadística sección 1 usan la IA casi todos los días y para cosas distintas según el curso. Los que hacen más consultas suelen estudiar más horas y sentirse más satisfechos con su avance. En cambio, las horas de sueño casi no cambian según el nivel de comprensión. Esto no prueba que una cosa cause la otra, solo que suelen darse juntas.
 
 ## Conclusión de probabilidad
 
@@ -1003,7 +1004,3 @@ El análisis empírico evidencia que los estudiantes de la sección tienen un pr
 ## Conclusión de variables aleatorias
 
 La VA discreta 1 nos muestra que, revisando 5 registro o menos, hay más del 60% de probabilidad de encontrar uno que reporte más de 20 consultas a la IA. Este resultado nos habla sobre la gran intensidad en el uso de la IA por parte de los estudiantes, lo cual puede ayudarnos a inferir la enorme importancia de esta herramienta para los universitarios. 
-
-## Conclusión general del estudio
-
-Después de limpiar los datos, vimos que los estudiantes de Estadística sección 1 usan la IA casi todos los días y para cosas distintas según el curso. Los que hacen más consultas suelen estudiar más horas y sentirse más satisfechos con su avance. En cambio, las horas de sueño casi no cambian según el nivel de comprensión. Esto no prueba que una cosa cause la otra, solo que suelen darse juntas.
