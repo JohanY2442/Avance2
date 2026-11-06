@@ -1328,9 +1328,9 @@ En `r n_grupos` grupos de 10 registros, el promedio real de éxitos es `r round(
 
 ## Variables aleatorias continuas
 
-**1. Variable de estudio:** <!-- pendiente -->
+**1. Variable de estudio:**
 Horas de sueño
-**2. Validación de la distribución:** <!-- pendiente -->
+**2. Validación de la distribución:** 
 
 ```{r}
 #Datos basicos 
@@ -1348,26 +1348,29 @@ cv_<-(sd_/media_)*100
 
 hist(DF3$sueno, probability = TRUE, col = "lightgray", border = "white", 
      main = "Distribuciones Continuas",
-     xlab = "Horas de sueño", ylab = "Densidad")
+     xlab = "Horas de sueño", ylab = "Densidad" )
 
 
-# Curva Normal
+# Normal
 
 #el uso de dnorm() es la funcion de densidad de la probabilidad normal el cual usa x que es la variable independiente, despues el caso de from y to definen los limites de calculo y dibujo
 
 curve(dnorm(x, mean = media_, sd = sd_), col = "forestgreen", lwd = 2, add = TRUE, from = min_, to = max_)
 
-# Curva Exponencial
+# Exponencial
 
 # el uso de lambda es debido a la teoria que relaciona la media y la tasa 
 
 curve(dexp(x, rate = lambda_), col = "dodgerblue", lwd = 2, add = TRUE, from = min_, to = max_)
 
-# Curva Uniforme 
+# Uniforme 
 
 # El uso de min y max es debido a la propia formula de la densidad de probabilidad 
 
 curve(dunif(x, min = min_, max = max_), col = "purple", lwd = 2, add = TRUE, from = min_, to = max_)
+
+legend("topright", legend = c("Distribución Normal", "Distribucion Exponencial", "Distribucion Uniforme"),
+       col = c("forestgreen", "dodgerblue","purple"), lty=1, lwd=2)
 ```
 
 Para la curva normal se debera comprobar en este caso la simetria
@@ -1377,6 +1380,9 @@ Para la curva normal se debera comprobar en este caso la simetria
 mediana_
 media_
 ```
+$$mediana=7$$
+$$media= 6.6$$
+
 No se esta cumpliendo la simetria por lo que se descarta
 
 Para la curva exponencial se debera revisar el cv que deberia de ser 100
@@ -1384,6 +1390,8 @@ Para la curva exponencial se debera revisar el cv que deberia de ser 100
 ```{r}
 cv_
 ```
+$$CV=29.49941$$
+
 Como no es 100 entonces se descarta en la exponencial 
 
 
@@ -1396,11 +1404,18 @@ sd_*sqrt(12)
 sd_^2
 ((max_-min_)^2)/12
 ```
-Como las varianzas y la relacion de rango y desviasion estandar no son similares entonces se descarta
 
-**3. Propiedades:** <!-- pendiente -->
+Comparacion de varianza teorica con la empirica
+$$\frac{(max - min)^2}{12} = 16.33333$$
+$$sd^2 =3.791035$$
+Relacion rango con desviacion estandar 
+$$max-min=14$$
+$$ sd\cdot \sqrt(12) =6.744807$$
+Como la varianza teorica no es similar a la empirica y tambien la relacion rango con la desviacion estandar tampoco cumple por lo que se descarta
 
-Se tendra en cuenta en este caso la distribucion normal debido a la grafica y que sus valores son los mas cercanos un 6.65 a 7 
+**3. Propiedades:** 
+
+Se tendra en cuenta en este caso la distribucion normal debido a la grafica y que sus valores son los mas cercanos un 6.60 a 7 
 
 ```{r}
 sd_
@@ -1408,9 +1423,9 @@ media_
 ```
 
 Por lo que el modelo propuesto sera 
-$$N(\mu=6.653013,\sigma=1.926501)$$
+$$N(\mu=6.600329,\sigma=1.947058)$$
 
-**4. Ejemplo:** <!-- pendiente -->
+**4. Ejemplo:** 
 
 ¿Cual es la probabilidad de que un estudiante duerma 4 horas o menos? 
 
@@ -1420,7 +1435,7 @@ Probabilidad Teorica:
 prob_4_teo<-pnorm(q=4,mean=media_, sd=sd_)
 prob_4_teo
 ```
-
+$$prob_4_teo=0.09085359$$
 Probabilidad Empirica:
 
 ```{r}
@@ -1429,7 +1444,9 @@ prob_4_empirica
 
 prob_4_empirica-prob_4_teo
 ```
-Hay una diferencia de 0.02278505 lo cual nos ayuda a saber que el modelo elegido es adecuado
+
+$$pro_4_empirica= 0.115727 $$
+Hay una diferencia de 0.02487342 lo cual nos ayuda a saber que el modelo elegido es adecuado
 
 ### Variable aleatoria continua 2
 
