@@ -1496,16 +1496,16 @@ $$
 
 
 **4. Ejemplo:**
-¿Cuál es la probabilidad de que un registro reporte por lo menos 5 horas de estudio y a lo mucho 8 horas?
+¿Cuál es la probabilidad de que un registro reporte más de 5 horas de estudio y a lo mucho 8 horas?
 
 ```{r}
 pexp(8, lambda_estudio) - pexp(5, lambda_estudio)
 ```
 ```{r}
-nrow(DF3 %>% filter(5 <= estudio & estudio <= 8)) / nrow(DF3)
+nrow(DF3 %>% filter(5 < estudio & estudio <= 8)) / nrow(DF3)
 ```
 
-Comparando la respuesta obtenida desde el modelo exponencial y aquella obtenida directamente desde la muestra, se nota que la elección del modelo ha sido más o menos acertada considerando que las respuestas tienen una diferencia de `0.0709948`.
+Comparando la respuesta obtenida desde el modelo exponencial y aquella obtenida directamente desde la muestra, se nota que la elección del modelo ha sido más o menos acertada considerando que las respuestas tienen una diferencia de `0.04028112`.
 
 
 # Conclusiones
