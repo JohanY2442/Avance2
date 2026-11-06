@@ -882,7 +882,7 @@ Probabilidad Teorica:
 prob_4_teo<-pnorm(q=4,mean=media_, sd=sd_)
 prob_4_teo
 ```
-$$prob_4_teo=0.09085359$$
+$$probTeorica=0.09085359$$
 Probabilidad Empirica:
 
 ```{r}
@@ -892,7 +892,7 @@ prob_4_empirica
 prob_4_empirica-prob_4_teo
 ```
 
-$$pro_4_empirica= 0.115727 $$
+$$proEmpirica= 0.115727 $$
 Hay una diferencia de 0.02487342 lo cual nos ayuda a saber que el modelo elegido es adecuado
 
 ### Variable aleatoria continua 2
