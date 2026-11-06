@@ -142,7 +142,7 @@ Se recolecta la información desde un formulario diario en Google Forms. Enlace:
 
 ### Mediciones
 
-Cada variable va a ser registrada en el formulario de Google Forms, el cual contendrá todas las restricciones de valores que puede tomar la variable dependiendo de su tipo y naturaleza.
+Cada variable será registrada en el formulario de Google Forms, el cual contendrá todas las restricciones de valores dependiendo del tipo y naturaleza de la variable.
 
 ## Limpieza
 
@@ -161,9 +161,6 @@ DF <- read_csv("RespuestasDiario.csv")
 names(DF)
 DFL <- DF
 ```
-
-Renombramos y filtramos las columnas de interés.
-
 ```{r}
 DFL %>% rename(hora = `Marca temporal`
                , consultas = `¿Cuántas consultas a una IA realizaste hoy?`
@@ -221,22 +218,22 @@ Hay 4 valores faltantes en el dataframe. Esto es raro considerando que el formul
 ```{r}
 sum(DFL$consultas == 0, na.rm = TRUE)
 ```
-Hay 62 registros en los que el estudiante no consultó la IA en todo el día.
+Hay 71 registros en los que el estudiante no consultó la IA en todo el día.
 
 ```{r}
 sum(DFL$tareas == 0, na.rm = TRUE)
 ```
-Hay 162 registros en los que la IA no ahorró tiempo en ninguna tarea.
+Hay 184 registros en los que la IA no ahorró tiempo en ninguna tarea.
 
 ```{r}
 sum(DFL$estudio == 0, na.rm = TRUE)
 ```
-Hay 54 registros de personas que no estudiaron ni una hora durante 1 día.
+Hay 60 registros de personas que no estudiaron ni una hora durante 1 día.
 
 ```{r}
 sum(DFL$sueno == 0, na.rm = TRUE)
 ```
-Hay 9 registros de estudiantes que no durmieron ni 1 hora.
+Hay 10 registros de estudiantes que no durmieron ni 1 hora.
 
 #### Análisis de cardinalidad
 
@@ -265,23 +262,21 @@ length(unique(DFL$curso))
 length(unique(DFL$tareas))
 sort(unique(DFL$tareas))
 ```
-La variable discreta `tareas` ha tomado una cantidad reducida de valores encerrados en el intervalo \[0, 15\].
+La variable discreta `tareas` ha tomado una cantidad moderada de valores encerrados en el intervalo \[0, 20\].
 
 ```{r}
 unique(DFL$satisfaccion)
 ```
-La ordinal `satisfaccion` también tomó sus 5 niveles.
+La ordinal `satisfaccion` tomó sus 5 niveles.
 
 ```{r}
 length(unique(DFL$uso))
-unique(DFL$uso)
 ```
-La nominal `uso` presenta gran variabilidad, propia de su naturaleza.
+La nominal `uso` y la discreta `consultas` presentan gran cantidad de valores únicos.
 
 ```{r}
 length(unique(DFL$consultas))
 ```
-La discreta `consultas` también presenta una gran cantidad de valores únicos.
 
 ### Paso 2: Normalización
 
@@ -715,22 +710,20 @@ Dado un CV \> 0.6, usaremos la mediana y los cuantiles para el análisis.
 ```{r}
 boxplot(DF3$consultas,
         main = "Boxplot - Número de consultas a la IA",
-        ylab = "Cantidad de consultas",
-        col = "gray80")
+        ylab = "Cantidad de consultas")
 legend("topright",
        legend = paste("Mediana =", median(DF3$consultas, na.rm = TRUE), "\nQ3 =", quantile(DF3$consultas, 0.75, na.rm = T, type = 3)), bty = "n")
 ```
 
-Se ver que en al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos 25% de los registros, los estudiantes han hecho 19 o más consultas diarias a la IA.
+En al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos 25% de los registros, los estudiantes han hecho 19 o más consultas diarias a la IA.
 
 ```{r}
-barplot(table(DF3$consultas),
-        main = "Diagrama de barras - Número de consultas a la IA",
+plot(table(DF3$consultas),
+        main = "Diagrama de palos - Número de consultas a la IA",
         xlab = "Cantidad de consultas",
-        ylab = "Frecuencia de cada cantidad",
-        col = "gray80")
+        ylab = "Frecuencia de cada cantidad")
 ```
-El gráfico de barras confirma que si bien el uso no es intensivo, este sí es constante en el tiempo.
+El gráfico confirma que si bien el uso no es intensivo, este sí es constante en el tiempo.
 
 
 ### Nivel de comprensión
@@ -803,16 +796,17 @@ El histograma confirma ese equilibrio, la mayoría de los estudiantes duerme un 
 boxplot(consultas ~ satisfaccion, data = DF3,
         main = "Nivel de satisfacción vs Número de consultas",
         xlab = "Nivel de satisfacción",
-        ylab = "Cantidad de consultas")
+        ylab = "Cantidad de consultas",
+        varwidth = T)
 ```
-Se nota un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción (excepto en el nivel 5 de satisfacción). Esto indica que podría haber una relación importante entre el número de consultas a la IA y cuán satisfecho se está con el estudio de ese día.
+Se nota un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción. Esto indica que podría haber una relación importante entre el número de consultas a la IA y cuán satisfecho se está con el estudio de ese día.
 
 ```{r}
 quantile(DF3$consultas[DF3$satisfaccion == 3], 0.3, na.rm = T, type = 3)
 quantile(DF3$consultas[DF3$satisfaccion == 4], 0.3, na.rm = T, type = 3)
 quantile(DF3$consultas[DF3$satisfaccion == 5], 0.3, na.rm = T, type = 3)
 ```
-Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 5 o más consultas a la IA por día, reforzando la idea de una relación positiva entre `consultas` y `satisfacción`.
+Se puede notar que al menos el 70% de los registros de cada categoría de satisfacción "positiva" (3, 4, 5) incluye 4 o más consultas a la IA por día, reforzando la idea de una relación positiva entre `consultas` y `satisfacción`.
 
 
 ### Objetivo 2: consultas vs. estudio
@@ -1125,7 +1119,7 @@ Estos resultados indican que el $53.13\%$ de los registros de la jornada present
 ### Teorema de Bayes
 Aplicando el Teorema de Bayes para calcular la probabilidad del nivel de comprensión `Alto` ($A$) dado que las consultas están en el rango $[5, 15]$ ($B$):
 
-$$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c)} = 0.2197309$$
+$$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c)} = 0.2125984$$
 
 ```{r}
 P_B_dado_A = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(comprension == "Alto"))
@@ -1151,20 +1145,14 @@ Mientras que el resultado del cálculo directo es:
 P_A_dado_B
 ```
 
-Vemos que los cálculos se realizaron adecuadamente, pues los resultados coinciden.
+Los cálculos se realizaron adecuadamente, pues los resultados coinciden.
 
 ### Interpretación en el contexto del estudio
 
-De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de 21.97%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango [5, 15].
-
-```{r}
-# round(P_A_dado_B * 100, 2)
-```
+De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de 21.26%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango [5, 15].
 
 
 ## Variables aleatorias discretas
-
-<!-- las variables aleatorias son distintas de las variables de estudio y distintas entre ellas. Los numeros del texto deben salir de R en linea y no escritos a mano porque la base se va a actualizar. Unas 250 palabras por variable -->
 
 ### Variable aleatoria discreta 1
 
@@ -1443,114 +1431,81 @@ estudio <- DF3$estudio
 media_estudio <- mean(estudio, na.rm = TRUE)
 min_estudio <- min(estudio, na.rm = TRUE)
 max_estudio <- max(estudio, na.rm = TRUE)
-dens_estudio <- density(estudio, na.rm = TRUE)
-
-x_estudio <- seq(min_estudio, max_estudio, length.out = 400)
-
 prom_estudio <- mean(estudio, na.rm = TRUE)
 std_estudio <- sd(estudio, na.rm = TRUE)
+lambda_estudio <- 1 / media_estudio
 
+hist(estudio, probability = TRUE,
+     main = "Distribuciones Continuas VS Densidad Muestral",
+     xlab = "Número de horas diarias de estudio", ylab = "Densidad muestral")
 
-plot(dens_estudio, lwd = 3,
-     main = "Distribución Uniforme VS Densidad Real",
-     xlab = "Número de horas diarias de estudio", ylab = "Densidad")
+# Normal
+curve(dnorm(x, mean = media_estudio, sd = std_estudio), col = "forestgreen", lwd = 2, add = TRUE, from = min_estudio, to = max_estudio)
 
+# Exponencial
+curve(dexp(x, rate = lambda_estudio), col = "dodgerblue", lwd = 2, add = TRUE, from = min_estudio, to = max_estudio)
 
-lines(x_estudio, dunif(x_estudio, min_estudio, max_estudio), col = "cyan3", lwd = 3, lty = 2)
+# Uniforme
+curve(dunif(x, min = min_estudio, max = max_estudio), col = "purple", lwd = 2, add = TRUE, from = min_estudio, to = max_estudio)
 
-legend("topright", legend = c("Datos empíricos", "Distribución Uniforme"),
-       col = c("black", "cyan3"), lwd = c(3, 3), lty = c(1, 2))
+legend("topright", legend = c("Distribución Normal", "Distribución Exponencial", "Distribución Uniforme"),
+       col = c("forestgreen", "dodgerblue", "purple"), lwd = c(3, 3, 3), lty = c(1, 1, 1))
 ```
 
 ```{r}
-paste("Promedio Uniforme:", (min_estudio + max_estudio) / 2)
+paste("Esperanza Uniforme:", (min_estudio + max_estudio) / 2)
 paste("Promedio Muestral:", prom_estudio)
 ```
 ```{r}
 paste("Varianza Uniforme:", (max_estudio - min_estudio)^2 / 12)
 paste("Varianza Muestral:", std_estudio^2)
 ```
-
 Tanto el promedio como la varianza difieren enormemente entre los predicho por la distribución teórica y lo obtenido en la muestra. Por lo tanto, descartamos la distribución uniforme como aproximación.
 
 
-```{r}
-lambda <- 0.5
 
-plot(dens_estudio, lwd = 3,
-     main = "Distribución Exponencial VS Densidad Real",
-     xlab = "Número de horas diarias de estudio", ylab = "Densidad")
-
-
-lines(x_estudio, dexp(x_estudio, rate = lambda), col = "cyan3", lwd = 3, lty = 2)
-
-legend("topright", legend = c("Datos empíricos", "Distribución Exponencial"),
-       col = c("black", "cyan3"), lwd = c(3, 3), lty = c(1, 2))
-grid()
-```
-
-```{r}
-paste("Promedio Exponencial:", 1 / lambda)
-paste("Promedio Muestral:", prom_estudio)
-```
-```{r}
-paste("Varianza Exponencial:", 1 / lambda^2)
-paste("Varianza Muestral:", std_estudio^2)
-```
-
-Aunque el promedio y la varianza del modelo se acercan en buena medida a las de la muestra, en la gráfica se ve que el diagrama de densidad no refleja el comportamiento no creciente de la exponencial debido a las crestas que tiene. Por lo tanto, descartamos la distribución exponencial como aproximación.
-
-```{r}
-# Uso la propiedad de perdida de memoria?
-```
-
-
-```{r}
-plot(dens_estudio, lwd = 3,
-     main = "Distribución Normal VS Densidad Real",
-     xlab = "Cantidad de horas diarias de estudio", ylab = "Densidad")
-
-
-lines(x_estudio, dnorm(x_estudio, mean = prom_estudio, sd = std_estudio), col = "cyan3", lwd = 3, lty = 2)
-
-legend("topright", legend = c("Datos empíricos", "Distribución Normal"),
-       col = c("black", "cyan3"), lwd = c(3, 3), lty = c(1, 2))
-```
 ```{r}
 median(estudio, na.rm = T)
 prom_estudio
 ```
-La media y la mediana de la muestra se acercan bastante. Si bien la gráfica hace evidente un sesgo a la derecha, la distribución normal es la que mejor describe a la muestra entre los 3 modelos revisados debido a su elevación central característica que le da un comportamiento creciente y decreciente más cercano al que tiene la variable.
-Por este motivo, supondremos la siguiente distribución `estudio ~ Normal(2.915753, 3.361033)`
+Si bien la media y la mediana de la muestra se acercan bastante, la gráfica hace notar una gran asimetría en su distribución. Por lo tanto, descartamos la distribución normal como aproximación.
+
 
 
 ```{r}
-# Quitar esto para la entrega final
-# hist(estudio)
-# plot(density(estudio, na.rm = TRUE))
+paste("Esperanza Exponencial:", 1 / lambda_estudio)
+paste("Promedio Muestral:", prom_estudio)
 ```
+```{r}
+paste("Varianza Exponencial:", 1 / lambda_estudio^2)
+paste("Varianza Muestral:", std_estudio^2)
+```
+La varianza teórica y muestral difieren lo suficiente para descartar el modelo exponencial como aproximación. Sin embargo, al ser la exponencial la que mejor refleja el comportamiento de la distribución, supondremos que: $estudio \sim Exp(2.889481)$
+
 
 **3. Propiedades:**
 
 $$
-E(estudio) = 2.915753\\
-V(estudio) = 3.361033\\
-SD(estudio) = 1.833312\\
-CV(estudio) = 0.6287612
+\begin{cases}
+E(estudio) = 1 / \lambda = 2.889481 \\
+V(estudio) = 1 / \lambda^2 = 8.349099 \\
+SD(estudio) = 1 / \lambda = 2.889481 \\
+CV(estudio) = \frac{SD(estudio)}{|E(estudio)|}  = 1
+\end{cases}
 $$
-<!-- No recuerdo que haya más propiedades -->
+
 
 **4. Ejemplo:**
 ¿Cuál es la probabilidad de que un registro reporte por lo menos 5 horas de estudio y a lo mucho 8 horas?
 
 ```{r}
-pnorm(8, prom_estudio, std_estudio) - pnorm(5, prom_estudio, std_estudio)
+pexp(8, lambda_estudio) - pexp(5, lambda_estudio)
 ```
 ```{r}
 nrow(DF3 %>% filter(5 <= estudio & estudio <= 8)) / nrow(DF3)
 ```
 
-Comparando la respuesta obtenida desde el modelo normal y aquella obtenida directamente desde la muestra, se nota que la elección del modelo ha sido más o menos acertada considerando que las respuestas tienen una diferencia de `0.0656152`.
+Comparando la respuesta obtenida desde el modelo exponencial y aquella obtenida directamente desde la muestra, se nota que la elección del modelo ha sido más o menos acertada considerando que las respuestas tienen una diferencia de `0.0709948`.
 
 
 # Conclusiones
@@ -1573,7 +1528,7 @@ El análisis empírico evidencia que los estudiantes de la sección tienen un pr
 
 ## Conclusión de variables aleatorias
 
-<!-- pendiente -->
+La VA discreta 1 nos muestra que, revisando 5 registro o menos, hay más del 60% de probabilidad de encontrar uno que reporte más de 20 consultas a la IA. Este resultado nos habla sobre la gran intensidad en el uso de la IA por parte de los estudiantes, lo cual puede ayudarnos a inferir la enorme importancia de esta herramienta para los universitarios. 
 
 ## Conclusión general del estudio
 
