@@ -1,0 +1,675 @@
+consultas,uso,satisfaccion,tareas,curso,estudio,sueno,comprension,uso_ia
+13,Resumir,3,1,CS4054,3,9,Alto,Usó IA
+2,Investigar,4,1,CS2031,4,8.33,Muy alto,Usó IA
+4,Resumir,3,1,GI3101,1,8,Moderado,Usó IA
+32,Resumir,3,0,CS2041,7,7,Moderado,Usó IA
+2,Agendara recordatorio,1,2,CC1105,2,8,Alto,Usó IA
+2,Resumir,4,1,EL3012,3,8,Moderado,Usó IA
+20,Revisar conceptos,3,0,CS2031,7,5,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0,10,Bajo,No usó IA
+0,No usó IA,1,0,No aplica,0,8,Muy alto,No usó IA
+5,Programar,5,0,CS2031,3.7,8.16,Alto,Usó IA
+0,No usó IA,2,0,No aplica,0,6,Moderado,No usó IA
+68,Programar,3,1,CS2013,9,9,Moderado,Usó IA
+2,Resolver ejercicios,3,2,CI2012,4,9,Moderado,Usó IA
+15,profundizar conceptos,3,2,CS2031,7,5,Moderado,Usó IA
+12,Resumir,3,3,CS1015,5,9,Alto,Usó IA
+4,Resolver ejercicios,2,2,CC1105,2,9,Moderado,Usó IA
+26,Programar,4,1,CS2031,1.2,9,Moderado,Usó IA
+5,Resolver ejercicios,3,3,CC1103,2,5,Bajo,Usó IA
+6,Resolver ejercicios,3,2,CI2012,4,7,Moderado,Usó IA
+3,Resumir,3,2,Sin código válido,3,6,Moderado,Usó IA
+50,Resolver ejercicios,1,2,CC6201,6,4,Bajo,Usó IA
+12,Resolver ejercicios,3,2,GI2101,2,7,Alto,Usó IA
+40,Resumir,3,3,CS2031,5,3,Alto,Usó IA
+4,Resumir,3,4,CC1103,2,8,Moderado,Usó IA
+2,Consultar,5,1,CC1105,2,7,Alto,Usó IA
+2,Programar,3,2,CS2023,1,9,Moderado,Usó IA
+6,Redactar,2,4,cc2101,2,8,Alto,Usó IA
+6,Resumir,3,3,HH2102,2,7.5,Moderado,Usó IA
+29,Resolver ejercicios,4,2,Sin código válido,1.5,7,Alto,Usó IA
+12,Investigar,5,0,CS2031,0.66,7.66,Muy alto,Usó IA
+10,Resolver ejercicios,4,3,CS2013,4,4,Moderado,Usó IA
+27,Resolver ejercicios,4,2,CC1122,6,6,Moderado,Usó IA
+8,Resumir,3,5,CC1103,2,8,Moderado,Usó IA
+3,Resolver ejercicios,3,1,CI2012,4,5,Moderado,Usó IA
+1,Resumir,3,1,DS2011,2,7,Moderado,Usó IA
+2,Resolver ejercicios,4,1,CC2101,3,6,Alto,Usó IA
+33,Programar,3,1,CC1105,4,5,Alto,Usó IA
+5,Resumir,3,3,-,4,9,Moderado,Usó IA
+7,Resolver ejercicios,4,1,CC1105,1.5,6,Moderado,Usó IA
+30,Programar,4,4,Sin código válido,6,8,Moderado,Usó IA
+5,Programar,3,0,CC1105,0,6.66,Muy alto,Usó IA
+10,Traducir y entender idiomas,2,2,Sin código válido,3,5,Moderado,Usó IA
+50,investigar temas,3,1,CS2031,5,4,Moderado,Usó IA
+9,Resumir,3,3,CC1143,4,3,Moderado,Usó IA
+35,Resolver ejercicios,4,2,CC2101,3,5,Moderado,Usó IA
+14,Resolver ejercicios,3,1,CS2041,2,6,Alto,Usó IA
+1,Redactar,4,1,CI2031,1,6,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0,7.5,Muy bajo,No usó IA
+4,Buscar herramientas,4,0,CS2041,2.83,6.5,Alto,Usó IA
+2,Programar,3,2,CS2023,0,8,Moderado,Usó IA
+10,Resolver ejercicios,3,15,PI2102,2,6,Alto,Usó IA
+6,Programar,3,5,CS6006,4,9,Alto,Usó IA
+42,Programar,4,1,CC1105,3,6,Alto,Usó IA
+20,Programar,4,5,CC2101,5,8,Alto,Usó IA
+19,Resolver ejercicios,3,4,GI2101,3,7,Moderado,Usó IA
+20,Resolver ejercicios,4,2,Sin código válido,2,5,Alto,Usó IA
+54,Resumir,2,0,CS2031,3,8,Bajo,Usó IA
+4,Ayudarme a encontrar errores,5,3,CI3014,5,6,Alto,Usó IA
+37,revisar conceptos,3,0,CC1105,3,3,Moderado,Usó IA
+4,Resumir,2,2,CC1103,2,8,Alto,Usó IA
+1,Resolver ejercicios,1,2,Sin código válido,4,4,Muy bajo,Usó IA
+20,Resolver ejercicios,4,2,CC2101,5,5,Alto,Usó IA
+8,Programar,4,5,EL3014,5,7,Moderado,Usó IA
+10,Resumir,4,2,GI3113,3,9,Alto,Usó IA
+0,No usó IA,3,0,No aplica,1,6,Moderado,No usó IA
+28,Programar,4,2,CS2031,2,4,Alto,Usó IA
+3,Resumir,3,2,CC1105,5,8,Moderado,Usó IA
+3,Resumir,3,4,Sin código válido,4,6,Moderado,Usó IA
+3,Resolver ejercicios,1,0,GI3101,2,10,Moderado,Usó IA
+3,Resolver ejercicios,3,2,CC6201,5,6,Moderado,Usó IA
+5,Resolver ejercicios,4,3,CC1105,4,7,Moderado,Usó IA
+10,Resumir,4,1,CC1105,3,4,Moderado,Usó IA
+8,Programar,3,1,CC1105,1,8,Moderado,Usó IA
+3,Resumir,4,2,cc2101,3,6,Alto,Usó IA
+25,Programar,3,6,CS2031,6,6,Moderado,Usó IA
+20,Programar,4,0,CS2041,1.58,6.5,Alto,Usó IA
+6,Resolver ejercicios,4,2,CC1105,2,7,Moderado,Usó IA
+6,Resolver ejercicios,3,2,CC2104,2,7,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0,10,Moderado,No usó IA
+0,No usó IA,3,0,No aplica,5,8,Alto,No usó IA
+12,Programar,3,1,CC1105,2,8,Moderado,Usó IA
+7,Resumir,3,7,CC1103,3,8,Moderado,Usó IA
+48,Resumir,3,4,CS2031,3,6,Alto,Usó IA
+4,Resolver ejercicios,4,0,CC2101,2.42,7,Alto,Usó IA
+2,Resumir,4,1,PI2102,4,6,Alto,Usó IA
+31,Resumir,3,0,CS2013,3,7,Moderado,Usó IA
+6,Resumir,3,3,GI3101,3,6,Alto,Usó IA
+3,Investigar,3,1,BI4013,0.5,8,Bajo,Usó IA
+5,Resolver ejercicios,4,5,EL2082,5,8,Moderado,Usó IA
+0,No usó IA,3,0,No aplica,0,9,Moderado,No usó IA
+4,Resumir,3,3,CC1103,2,8,Moderado,Usó IA
+11,Programar,5,1,CC1105,7,7,Muy alto,Usó IA
+21,Programar,5,11,CS2031,5,5,Alto,Usó IA
+27,Resumir,3,0,CS2031,3,6,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0,6,Muy bajo,No usó IA
+56,Resolver ejercicios,4,3,CC2101,5,6,Alto,Usó IA
+1,Programar,3,1,CC1105,4,9,Moderado,Usó IA
+7,Redactar,3,4,CC1105,3,7,Moderado,Usó IA
+4,Resolver ejercicios,3,4,CC1103,2,8,Moderado,Usó IA
+22,Programar,4,0,CC1105,5.2,9,Alto,Usó IA
+42,Programar,4,3,CC1105,4,3.5,Alto,Usó IA
+3,Resolver ejercicios,3,2,Sin código válido,2,7,Moderado,Usó IA
+33,Programar,4,2,CC1105,4,7,Moderado,Usó IA
+18,Programar,4,2,CS2013,3.5,6,Moderado,Usó IA
+41,Resumir,3,1,CC1105,4,4,Moderado,Usó IA
+5,Resolver ejercicios,3,1,CS2023,1,7,Alto,Usó IA
+43,Resolver ejercicios,3,1,CC1105,4,13,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0.5,8.5,Muy bajo,No usó IA
+45,Programar,5,6,CS2031,5,9,Moderado,Usó IA
+2,Redactar,3,1,Sin código válido,2,8,Moderado,Usó IA
+17,Programar,4,1,CC1105,5,6,Muy alto,Usó IA
+7,Programar,3,0,CS2031,2.33,8,Moderado,Usó IA
+2,Resumir,2,1,CC1105,2,4,Moderado,Usó IA
+0,No usó IA,2,0,No aplica,1,6,Moderado,No usó IA
+7,Resolver ejercicios,3,5,CC1105,3,8,Moderado,Usó IA
+0,No usó IA,3,0,No aplica,1,7,Moderado,No usó IA
+27,Resolver ejercicios,5,1,CC2101,5,6,Alto,Usó IA
+3,Redactar,3,1,CC1105,6,2,Moderado,Usó IA
+15,Resolver ejercicios,1,1,CC1105,1,9,Muy bajo,Usó IA
+42,repasar,2,1,CC1105,3,8.45,Bajo,Usó IA
+40,Resolver ejercicios,4,1,CC1143,5,7,Bajo,Usó IA
+6,Redactar,3,2,Sin código válido,5,7,Moderado,Usó IA
+16,Programar,3,6,GI2101,2,8,Moderado,Usó IA
+27,Resumir,3,0,CS2031,3,3,Moderado,Usó IA
+6,Resolver ejercicios,4,3,CC1105,3,6,Moderado,Usó IA
+50,Resolver ejercicios,3,3,CS2041,6,2,Alto,Usó IA
+5,Resolver ejercicios,3,4,CC1105,3,9,Moderado,Usó IA
+0,No usó IA,2,0,No aplica,1.5,8,Bajo,No usó IA
+5,Resolver ejercicios,3,1,CC2101,3,6,Moderado,Usó IA
+2,Resumir,3,1,CC1143,4,9,Alto,Usó IA
+9,Resumir,4,5,CC1105,4,8,Moderado,Usó IA
+40,Resumir,4,2,CC1122,4,4,Moderado,Usó IA
+5,Programar,1,1,CS2013,0,8,Alto,Usó IA
+10,Resumir,4,4,CC2101,4,7,Moderado,Usó IA
+18,Resumir,2,1,CC2101,2,11,Moderado,Usó IA
+25,Resolver ejercicios,4,2,CC1105,1.5,6.5,Alto,Usó IA
+15,Resolver ejercicios,3,3,CI3014,4,6,Alto,Usó IA
+32,Programar,3,2,CS2013,3,5,Moderado,Usó IA
+4,Ayudar a aprender,2,4,Sin código válido,2,8,Alto,Usó IA
+36,Resumir,3,2,CS2013,3,8,Alto,Usó IA
+26,Resumir,3,2,CS2013,4,4,Moderado,Usó IA
+4,Redactar,4,2,Sin código válido,2,7,Moderado,Usó IA
+1,Programar,4,1,CI2003,2,9,Alto,Usó IA
+5,Resolver ejercicios,3,2,CS2013,2,6,Alto,Usó IA
+13,Programar,3,4,CS2041,2,9,Moderado,Usó IA
+5,Resolver ejercicios,3,4,CC1103,1,8,Moderado,Usó IA
+5,Resumir,3,2,Sin código válido,3,6,Moderado,Usó IA
+34,Resolver ejercicios,4,1,CC1143,3,6,Moderado,Usó IA
+21,Resolver ejercicios,3,1,CC1122,5,5,Alto,Usó IA
+5,Resumir,3,3,CI3032,4,6,Alto,Usó IA
+5,Programar,3,0,-,6,6,Bajo,Usó IA
+30,Resumir,3,1,CS2041,5,7.6555,Moderado,Usó IA
+20,Resolver ejercicios,3,2,CI3013,3,8,Moderado,Usó IA
+27,Programar,4,2,CS2031,6,6,Alto,Usó IA
+5,Consultar,3,3,Cc2101,2,6,Moderado,Usó IA
+40,Resumir,3,0,CS2031,3,4,Moderado,Usó IA
+28,Programar,5,1,CS2031,2.33,8,Muy alto,Usó IA
+18,Resumir,4,1,CS2013,0.5,7,Moderado,Usó IA
+5,Resolver ejercicios,3,2,CI2012,5,7,Moderado,Usó IA
+11,Programar,4,5,CS2041,4,9,Moderado,Usó IA
+3,Programar,2,2,CC1105,2,8,Moderado,Usó IA
+5,Redactar,4,2,HH2101,2,7,Alto,Usó IA
+2,Redactar,3,1,Sin código válido,1,6,Alto,Usó IA
+13,Resolver ejercicios,4,1,CC1143,6,10,Muy alto,Usó IA
+25,Resolver ejercicios,4,1,CC1143,3,7,Alto,Usó IA
+30,Resumir,3,1,CS2013,3,5,Moderado,Usó IA
+38,Resolver ejercicios,4,2,CC2101,5,4,Moderado,Usó IA
+0,Resumir,2,2,Sin código válido,2,6,Bajo,Usó IA
+6,Resolver ejercicios,3,4,CC1105,2,8,Moderado,Usó IA
+13,Programar,4,0,PI2102,1.17,4.17,Muy alto,Usó IA
+7,Programar,4,4,CS6006,2,6,Moderado,Usó IA
+4,Resolver ejercicios,4,1,CC2101,1,6,Moderado,Usó IA
+15,Redactar,3,2,GI2101,3,9,Moderado,Usó IA
+3,Programar,4,3,CS2031,4,8,Alto,Usó IA
+34,Resolver ejercicios,4,1,CC1122,5,7,Muy alto,Usó IA
+6,Resolver ejercicios,3,4,CC1105,1,8,Moderado,Usó IA
+4,Resolver ejercicios,2,5,CC1143,1,10,Muy bajo,Usó IA
+21,Resolver ejercicios,4,1,CC1143,5,9,Alto,Usó IA
+3,Resolver ejercicios,2,3,Sin código válido,5,2,Moderado,Usó IA
+57,Programar,3,2,CS2031,2,6,Moderado,Usó IA
+37,Resumir,3,1,CS2013,2,6,Moderado,Usó IA
+25,Resumir,4,3,CS2031,4,7,Muy alto,Usó IA
+1,Redactar,1,1,CC1105,1,7,Muy bajo,Usó IA
+5,Resolver ejercicios,3,4,CC1103,2,8,Moderado,Usó IA
+2,Resumir,3,1,Cc1103,3,5,Moderado,Usó IA
+34,Resolver ejercicios,4,2,CC1122,5,6,Moderado,Usó IA
+52,Programar,2,0,CS2031,6,9,Bajo,Usó IA
+3,Programar,5,0,CC1105,2,7,Muy alto,Usó IA
+7,Programar,3,2,CS2013,2,7,Alto,Usó IA
+5,Resolver ejercicios,3,3,CI2012,4,6,Moderado,Usó IA
+5,Resumir,4,2,PI2102,2,6,Moderado,Usó IA
+45,Resumir,3,1,CS2041,2,7,Moderado,Usó IA
+4,Resolver ejercicios,3,2,CC1103,1,8,Moderado,Usó IA
+4,Resolver ejercicios,3,1,CS2013,1,7,Bajo,Usó IA
+2,Resolver ejercicios,4,1,Sin código válido,2,9,Moderado,Usó IA
+17,Programar,3,1,CC1105,2,9,Moderado,Usó IA
+47,Resumir,4,3,GI3101,8,6,Alto,Usó IA
+6,Resolver ejercicios,4,1,CC1143,2,5,Muy alto,Usó IA
+8,Resolver ejercicios,4,0,Sin código válido,6,7,Moderado,Usó IA
+5,Programar,3,2,CS2013,2,7,Alto,Usó IA
+33,Resolver ejercicios,4,1,GI3101,6,5,Alto,Usó IA
+17,Programar,5,0,CS2031,2.83,6,Alto,Usó IA
+15,Resumir,4,3,CS2031,5,9,Moderado,Usó IA
+15,Resumir,4,4,CI3032,5,4.5,Muy alto,Usó IA
+23,Redactar,3,4,CS2031,5,8,Alto,Usó IA
+2,Resumir,2,0,-,0.5,8.5,Moderado,Usó IA
+6,Resolver ejercicios,5,2,CI2012,8,9,Muy alto,Usó IA
+60,Resolver ejercicios,4,1,CI2012,5,7,Alto,Usó IA
+1,Resolver ejercicios,3,3,Sin código válido,8,6,Muy bajo,Usó IA
+35,Programar,3,12,CS2031,8,9,Muy alto,Usó IA
+2,Resolver ejercicios,4,0,CI2012,7,2,Moderado,Usó IA
+26,Resolver ejercicios,4,1,CI2012,3,8,Alto,Usó IA
+4,Resolver ejercicios,3,1,CC1103,2,6,Moderado,Usó IA
+13,Resumir,4,3,CS2041,5,8,Moderado,Usó IA
+30,Resumir,5,5,CI3032,5,3,Alto,Usó IA
+20,Resolver ejercicios,3,0,CS2031,5,9.8,Moderado,Usó IA
+12,Resolver ejercicios,4,1,CI2012,5,9,Alto,Usó IA
+4,Resumir,4,0,-,2.5,9,Moderado,Usó IA
+10,Programar,3,1,CS2013,3,7,Moderado,Usó IA
+33,Resumir,3,0,CS2013,8,0,Moderado,Usó IA
+17,Redactar,3,2,CC2104,2,9,Moderado,Usó IA
+20,Redactar,2,2,CC1105,3,8,Muy alto,Usó IA
+7,Programar,5,11,HH6002,9,7,Alto,Usó IA
+17,Resumir,3,3,CC2104,5,6,Alto,Usó IA
+21,Resolver ejercicios,4,1,CC2101,6,4,Alto,Usó IA
+12,Resolver ejercicios,3,0,CC2101,4,7,Alto,Usó IA
+7,Explicar temas,4,1,PI2102,3,6,Alto,Usó IA
+3,Redactar,4,2,El2013,4,4,Moderado,Usó IA
+4,Resolver ejercicios,3,2,CC1103,3,8,Moderado,Usó IA
+1,Resumir,3,0,GI2101,3,9,Moderado,Usó IA
+5,Programar,3,2,-,3,7,Moderado,Usó IA
+21,Resolver ejercicios,4,3,CC1143,7,10,Muy alto,Usó IA
+30,Programar,4,1,CC1105,6,8,Alto,Usó IA
+6,Resolver ejercicios,4,2,Cc2012,4,7,Moderado,Usó IA
+0,No usó IA,3,0,No aplica,4,7,Moderado,No usó IA
+27,Resumir,3,1,CS2013,3,7,Moderado,Usó IA
+14,Resumir,3,1,CS2031,4,9.4,Moderado,Usó IA
+5,Resumir,3,0,CS2041,1.5,8,Moderado,Usó IA
+2,Programar,2,2,GI3101,3,3,Muy bajo,Usó IA
+3,Resolver ejercicios,3,4,CC1103,2,7,Moderado,Usó IA
+3,Resolver ejercicios,4,3,CI3013,1,7,Alto,Usó IA
+34,Programar,4,1,CC1105,6,5,Moderado,Usó IA
+47,Resumir,4,1,CS2031,7,8.2,Alto,Usó IA
+8,Resolver ejercicios,4,4,Sin código válido,5,6,Moderado,Usó IA
+45,Resolver ejercicios,4,1,CC1143,6,8,Alto,Usó IA
+6,Programar,3,0,CC2012,5,6,Moderado,Usó IA
+4,Resumir,2,1,GI2101,4,10,Alto,Usó IA
+20,Resolver ejercicios,3,3,CC1105,10,0,Alto,Usó IA
+5,Resolver ejercicios,3,2,CS2013,2,7,Moderado,Usó IA
+14,Resolver ejercicios,4,3,CI3051,5,8.5,Alto,Usó IA
+20,Resolver ejercicios,3,4,CC1105,6,5,Moderado,Usó IA
+33,Resumir,3,0,CS2031,3,0,Moderado,Usó IA
+8,Programar,4,8,-,5,6,Moderado,Usó IA
+6,Resolver ejercicios,4,2,CC1105,5,9,Alto,Usó IA
+6,Programar,4,6,CS2031,4,9,Alto,Usó IA
+4,Resolver ejercicios,4,2,CC2012,5,7,Moderado,Usó IA
+1,Traducir,4,1,CC1105,3,3,Alto,Usó IA
+20,Resolver ejercicios,4,1,CC1105,4,6,Moderado,Usó IA
+6,Resumir,4,3,CC1105,2,6,Moderado,Usó IA
+29,Programar,4,0,CC1105,4,7,Alto,Usó IA
+29,Resumir,3,0,CS2031,7,5,Moderado,Usó IA
+22,Resumir,3,0,CS2031,4,6,Moderado,Usó IA
+0,No usó IA,3,0,No aplica,1,8,Alto,No usó IA
+4,Resumir,4,2,CC1103,1,8,Alto,Usó IA
+34,Aprender inglés,4,2,CC2101,4,6,Alto,Usó IA
+0,No usó IA,1,0,No aplica,0,10.5,Muy bajo,No usó IA
+20,preguntas de conceptos,3,0,CC1105,0,7,Moderado,Usó IA
+9,Resumir,3,3,CS2041,4,6,Muy alto,Usó IA
+10,Redactar,1,1,CI3091,1,10,Moderado,Usó IA
+1,Dudas cotidianas,3,1,Sin código válido,1,4,Alto,Usó IA
+0,Resumir,1,1,Sin código válido,1,5,Bajo,Usó IA
+1,Programar,2,0,CC1105,0,7,Bajo,Usó IA
+0,No usó IA,3,0,No aplica,1,9,Moderado,No usó IA
+4,Resolver ejercicios,3,3,CC1105,1,8,Moderado,Usó IA
+27,Resumir,4,1,GI3101,4,7,Moderado,Usó IA
+0,No usó IA,2,0,No aplica,0,10,Bajo,No usó IA
+0,No usó IA,1,0,No aplica,0,9,Moderado,No usó IA
+4,Resolver ejercicios,2,1,CC2012,3,7,Moderado,Usó IA
+28,Resumir,3,0,-,3,7,Moderado,Usó IA
+6,Redactar,1,1,CC1105,1,7,Bajo,Usó IA
+6,Programar,3,3,CC1105,5,6,Moderado,Usó IA
+4,Resumir,3,3,CS2041,3,8,Muy alto,Usó IA
+4,Resumir,2,3,CC1103,2,8,Moderado,Usó IA
+35,Programar,3,1,CC1105,4,4,Moderado,Usó IA
+1,Traducir,4,1,PI2102,2,6,Moderado,Usó IA
+4,Resolver ejercicios,4,3,cc1105,3,5,Alto,Usó IA
+0,No usó IA,1,0,No aplica,1,14,Moderado,No usó IA
+30,Programar,3,1,CS2013,1,7,Moderado,Usó IA
+25,Redactar,3,1,CC1105,2,6,Moderado,Usó IA
+4,Resolver ejercicios,2,0,-,0,9,Bajo,Usó IA
+6,Resumir,3,4,CC1105,3,6,Moderado,Usó IA
+1,Programar,5,0,CS2013,2.5,7.17,Muy alto,Usó IA
+16,Programar,3,2,CC1103,3,8,Muy alto,Usó IA
+1,Redactar,3,1,CI2031,1,9,Moderado,Usó IA
+7,Resolver ejercicios,3,0,CS2031,2,8,Moderado,Usó IA
+13,Resumir,4,1,CC2101,2.3,7,Alto,Usó IA
+13,Resolver ejercicios,4,1,CS2013,1,7,Alto,Usó IA
+2,Resumir,4,1,PI2102,2,4,Moderado,Usó IA
+4,Resumir,3,1,Sin código válido,2,6,Moderado,Usó IA
+4,Resolver ejercicios,3,0,CC2012,4,7,Moderado,Usó IA
+1,Resolver ejercicios,4,1,CC1105,1,5,Moderado,Usó IA
+1,Resumir,3,1,CC1143,1,8,Moderado,Usó IA
+3,Resumir,3,3,CS2041,3,7,Alto,Usó IA
+0,No usó IA,1,0,No aplica,1,9,Bajo,No usó IA
+28,Redactar,3,1,CC2101,4,5,Moderado,Usó IA
+5,Programar,4,4,CS6006,4,11,Moderado,Usó IA
+6,Resumir,4,3,CC1103,1,7,Moderado,Usó IA
+4,Resumir,4,3,Sin código válido,4,7,Moderado,Usó IA
+16,Resumir,3,1,CC2101,5,5,Moderado,Usó IA
+17,Programar,4,2,CI3013,2,4,Moderado,Usó IA
+3,Resolver ejercicios,3,1,CC2012,3,7,Moderado,Usó IA
+5,Resolver ejercicios,2,1,CS2013,1,8,Moderado,Usó IA
+11,Resolver ejercicios,4,0,CC2101,2.83,7,Alto,Usó IA
+8,Resolver ejercicios,2,2,CI3013,2,6,Muy alto,Usó IA
+12,Resolver ejercicios,4,1,CI2012,2,8,Alto,Usó IA
+4,Investigar,1,0,CS2041,2,9,Moderado,Usó IA
+7,Resolver ejercicios,5,4,CC2101,6,9,Muy alto,Usó IA
+19,Programar,5,0,CS2013,5.83,7.17,Alto,Usó IA
+26,Programar,3,1,CC1105,5,6,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0,14,Moderado,No usó IA
+3,Resolver ejercicios,3,1,CC2012,3,7,Moderado,Usó IA
+0,Programar,4,1,Sin código válido,1,7,Moderado,Usó IA
+0,No usó IA,3,0,No aplica,1,8,Moderado,No usó IA
+12,Resolver ejercicios,4,2,Sin código válido,2,6,Moderado,Usó IA
+3,Redactar,3,2,GI2101,2,6,Moderado,Usó IA
+7,Resolver ejercicios,4,4,Sin código válido,5,7,Moderado,Usó IA
+16,Programar,5,0,CS2031,5.33,7.83,Muy alto,Usó IA
+3,Resolver ejercicios,3,1,CC2012,2,6,Moderado,Usó IA
+8,Programar,3,1,CS2031,2,6,Moderado,Usó IA
+0,No usó IA,2,0,No aplica,0,9,Muy bajo,No usó IA
+5,Redactar,3,4,CS6006,4,6,Alto,Usó IA
+0,No usó IA,1,0,No aplica,0,6,Moderado,No usó IA
+20,Resolver ejercicios,3,2,CI2012,2,7,Moderado,Usó IA
+7,Programar,5,0,CC1105,3,7.5,Muy alto,Usó IA
+8,Programar,3,0,CS2041,2,7,Moderado,Usó IA
+35,Resumir,3,0,CS2031,4,0,Moderado,Usó IA
+15,Resumir,3,0,-,4,5,Moderado,Usó IA
+1,Redactar,5,1,CI2031,1,6,Alto,Usó IA
+15,Redactar,1,3,Sin código válido,2,10,Bajo,Usó IA
+2,Investigar,1,2,Sin código válido,0,7,Muy bajo,Usó IA
+5,Redactar,3,1,Sin código válido,4,7,Bajo,Usó IA
+7,Buscar informacion,5,0,PI2102,2,7.5,Muy alto,Usó IA
+37,Resolver ejercicios,3,2,CC1122,5,6,Moderado,Usó IA
+3,Redactar,3,1,CI2031,3,10,Alto,Usó IA
+2,Redactar,3,3,CC1105,3,7,Alto,Usó IA
+14,Resumir,4,1,CI2031,2,7,Moderado,Usó IA
+8,Resolver ejercicios,3,2,CC2012,4,7,Moderado,Usó IA
+6,Programar,4,5,CC1103,1,9,Moderado,Usó IA
+2,Resolver ejercicios,3,2,CI2012,3,6,Moderado,Usó IA
+6,Programar,2,1,CS2031,1,7,Moderado,Usó IA
+35,Resumir,3,0,CS2031,3,5,Moderado,Usó IA
+8,Resolver ejercicios,3,1,CS2041,1,10,Moderado,Usó IA
+24,Resolver ejercicios,3,3,CS2031,3,5,Moderado,Usó IA
+13,Redactar,2,2,CC1143,1,8,Bajo,Usó IA
+0,No usó IA,3,0,No aplica,2,5,Moderado,No usó IA
+1,Investigar,1,0,Sin código válido,0,9,Muy bajo,Usó IA
+2,Resolver ejercicios,3,1,CI2012,3,6,Moderado,Usó IA
+2,Resumir,3,1,PI2102,1,5,Moderado,Usó IA
+4,Resolver ejercicios,3,2,CC2012,5,7,Moderado,Usó IA
+13,Programar,5,0,CS2041,4.33,7.17,Alto,Usó IA
+34,investigar,4,0,CS2041,4,0,Alto,Usó IA
+3,Redactar,3,2,CC1105,2,6,Moderado,Usó IA
+8,Resolver ejercicios,3,1,CC2101,2,4,Moderado,Usó IA
+20,Programar,5,4,CS2031,8,7,Muy alto,Usó IA
+36,Resumir,4,1,CC1122,5,5,Alto,Usó IA
+27,Resumir,4,4,CC1303,2,5,Bajo,Usó IA
+9,Programar,4,6,-,5,8,Moderado,Usó IA
+6,Programar,5,0,CC1105,4.33,6.5,Muy alto,Usó IA
+0,No usó IA,3,0,No aplica,0,6,Moderado,No usó IA
+44,Resumir,3,1,CC2101,6,3,Moderado,Usó IA
+10,Resolver ejercicios,3,1,CS2041,0,8,Moderado,Usó IA
+14,Programar,4,2,CS2041,2,6,Moderado,Usó IA
+3,Resumir,5,2,Sin código válido,3,5,Moderado,Usó IA
+8,Resolver ejercicios,3,3,CC2012,5,7,Moderado,Usó IA
+5,Resolver ejercicios,2,1,CI2012,1,7,Bajo,Usó IA
+0,No usó IA,4,0,No aplica,2,7,Alto,No usó IA
+6,Programar,2,1,CS2041,2,7,Bajo,Usó IA
+17,Resolver ejercicios,4,3,CC2101,4,6,Alto,Usó IA
+28,Resumir,3,0,CC2101,4,0,Moderado,Usó IA
+19,Resumir,5,4,CI3013,3,5,Bajo,Usó IA
+54,Resolver ejercicios,4,4,CC2101,3,7,Alto,Usó IA
+5,Resumir,3,1,CI2003,1,7,Moderado,Usó IA
+3,Resolver ejercicios,5,0,CC2101,4,6.5,Muy alto,Usó IA
+8,Redactar,3,8,-,2,6,Moderado,Usó IA
+21,Resolver ejercicios,3,0,CC2101,4,9.6,Moderado,Usó IA
+5,Resumir,3,0,-,1,8,Moderado,Usó IA
+35,Resumir,4,1,CC1122,5,5,Alto,Usó IA
+10,Resolver ejercicios,4,1,Sin código válido,5,5,Moderado,Usó IA
+7,Resolver ejercicios,3,1,CC2101,2,7,Moderado,Usó IA
+17,Resumir,5,2,CS2031,3,5,Alto,Usó IA
+3,Resumir,4,1,PI2102,2,3,Alto,Usó IA
+6,Resolver ejercicios,4,1,CC2104,2,6,Moderado,Usó IA
+13,Redactar,1,2,CI3091,2,8,Muy bajo,Usó IA
+1,Resumir,1,1,CI2031,0.5,10,Bajo,Usó IA
+1,Redactar,3,1,CI2031,1,7,Moderado,Usó IA
+0,No usó IA,2,0,No aplica,0,7,Muy bajo,No usó IA
+9,Programar,5,1,CS2031,5.08,7,Muy alto,Usó IA
+17,Resolver ejercicios,4,3,CS2041,5,5,Moderado,Usó IA
+13,Resumir,1,0,CS2041,2,0,Moderado,Usó IA
+21,Resumir,3,0,CC1122,3,6,Moderado,Usó IA
+0,No usó IA,2,0,No aplica,0,6,Moderado,No usó IA
+10,Resolver ejercicios,3,1,CI2003,1,7,Moderado,Usó IA
+6,Resolver ejercicios,3,1,CS2041,2,6,Bajo,Usó IA
+5,Programar,3,0,CS2013,1,8,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0,6,Muy bajo,No usó IA
+6,Resolver ejercicios,5,1,Sin código válido,3,4,Moderado,Usó IA
+7,Programar,3,4,Ci3091,3,6,Moderado,Usó IA
+5,Resolver ejercicios,5,2,CS2013,3,9,Alto,Usó IA
+3,Redactar,3,3,CC2104,2,7,Moderado,Usó IA
+36,Resumir,4,0,CC1122,4,5,Moderado,Usó IA
+13,Programar,5,0,CS2031,3,7,Muy alto,Usó IA
+7,Resolver ejercicios,3,5,CC2012,4,7,Moderado,Usó IA
+10,Resolver ejercicios,3,2,CS2041,2,6,Moderado,Usó IA
+10,Resumir,3,1,CI2003,1,7,Moderado,Usó IA
+20,Resumir,3,2,CS2013,3,6,Moderado,Usó IA
+12,Programar,3,1,CS2013,3,6,Moderado,Usó IA
+3,Organizar avances de proyecto,5,0,CS2031,2.83,7.42,Muy alto,Usó IA
+13,Resolver ejercicios,5,5,CC1105,3,3,Muy bajo,Usó IA
+10,Resolver ejercicios,2,2,CC2012,4,7,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0,9,Moderado,No usó IA
+6,Resolver ejercicios,4,1,Sin código válido,4,5,Alto,Usó IA
+10,Resumir,3,0,PI6002,2,6,Moderado,Usó IA
+5,Resolver ejercicios,2,0,-,1,10,Moderado,Usó IA
+0,No usó IA,3,0,No aplica,2,5,Moderado,No usó IA
+6,indagar,1,0,CS2013,1.2,0,Bajo,Usó IA
+0,No usó IA,1,0,No aplica,0,7,Muy bajo,No usó IA
+3,Resumir,2,1,PI6002,1,8,Bajo,Usó IA
+9,Resolver ejercicios,3,3,CC2012,5,6,Alto,Usó IA
+8,Programar,5,0,CS2031,1.97,7.83,Muy alto,Usó IA
+3,Resolver ejercicios,5,2,Sin código válido,2,6,Moderado,Usó IA
+23,Resolver ejercicios,3,1,CC2101,4,7,Moderado,Usó IA
+2,Resolver ejercicios,3,1,CC2104,1,9,Bajo,Usó IA
+6,Resolver ejercicios,5,4,CS6006,4,6,Muy alto,Usó IA
+7,Redactar,3,1,CS2101,2,7,Moderado,Usó IA
+32,Resumir,4,3,CC1403,3,4,Moderado,Usó IA
+8,Programar,3,1,CS2023,1,8,Alto,Usó IA
+3,Redactar,4,2,CC2104,2,6,Moderado,Usó IA
+0,No usó IA,2,0,No aplica,1,3,Moderado,No usó IA
+10,Resumir,3,0,CC1105,2,5,Moderado,Usó IA
+10,Resolver ejercicios,3,2,CC2012,5,7,Moderado,Usó IA
+3,Redactar,3,2,Cl2013,3,6,Moderado,Usó IA
+0,No usó IA,5,0,No aplica,5.5,7.5,Muy alto,No usó IA
+61,Resolver ejercicios,3,1,CC2101,5,4,Alto,Usó IA
+39,Resolver ejercicios,4,0,CC2101,5,6,Alto,Usó IA
+6,Resolver ejercicios,3,1,CC1143,1,7,Moderado,Usó IA
+15,Programar,3,5,GI3101,4,4,Muy bajo,Usó IA
+0,No usó IA,4,0,No aplica,3,6,Moderado,No usó IA
+2,Resumir,3,1,CI2031,4,9,Moderado,Usó IA
+2,Resumir,3,1,CS2013,1,7,Moderado,Usó IA
+1,Resolver ejercicios,2,1,CC2101,0,7,Moderado,Usó IA
+23,Resolver ejercicios,2,1,CS1105,2,9.67,Moderado,Usó IA
+20,Resumir,3,0,CC1105,2,5,Moderado,Usó IA
+13,Programar,4,3,CS2031,7,4,Bajo,Usó IA
+3,Redactar,4,2,CC2104,2,6,Moderado,Usó IA
+10,Resumir,3,2,CC2012,5,7,Alto,Usó IA
+2,Resumir,3,3,Cl2013,2,5,Moderado,Usó IA
+0,No usó IA,5,0,No aplica,2.92,6.5,Alto,No usó IA
+14,Resolver ejercicios,3,5,CC1103,3,5,Moderado,Usó IA
+9,Redactar,4,1,CI2031,1,7,Moderado,Usó IA
+3,Programar,3,2,CC2104,3,7,Moderado,Usó IA
+4,Resolver ejercicios,4,2,Sin código válido,4,8,Alto,Usó IA
+8,Resolver ejercicios,2,2,CC2101,2,8,Moderado,Usó IA
+6,Redactar,4,1,Sin código válido,2,5,Moderado,Usó IA
+22,Resolver ejercicios,4,1,CS2041,3,8,Moderado,Usó IA
+3,Resolver ejercicios,1,0,CC1105,0,4,Moderado,Usó IA
+41,Resolver ejercicios,4,1,CC1122,5,5,Alto,Usó IA
+24,Resumir,3,0,CS2013,2,5,Moderado,Usó IA
+13,Resolver ejercicios,3,2,CS2013,5,7,Moderado,Usó IA
+12,Resolver ejercicios,4,1,CC2101,4.6,9.63,Alto,Usó IA
+6,Resumir,3,3,CC1154,2,7,Moderado,Usó IA
+15,Programar,2,4,CC1105,3,6,Bajo,Usó IA
+1,Resumir,2,3,Cl2013,2,3,Bajo,Usó IA
+1,Resumir,1,0,-,1,7,Bajo,Usó IA
+2,Resolver ejercicios,5,0,CC2101,1.08,6.5,Muy alto,Usó IA
+10,Resolver ejercicios,3,2,CC2012,4,7,Moderado,Usó IA
+42,Programar,3,1,CC1105,3,3,Alto,Usó IA
+22,Resolver ejercicios,3,1,CC2101,3,8,Moderado,Usó IA
+13,Programar,4,2,CS2041,4,5,Bajo,Usó IA
+2,Resumir,4,1,CC2104,2,8,Moderado,Usó IA
+24,Resumir,3,0,CC2101,3,3,Moderado,Usó IA
+23,Resumir,4,1,CS2031,1,5,Alto,Usó IA
+8,Resolver ejercicios,4,1,CI2012,1,7,Alto,Usó IA
+37,Programar,3,1,CC1105,3,4,Moderado,Usó IA
+3,Redactar,4,1,PI2102,2,4,Moderado,Usó IA
+15,Programar,5,1,CS2041,3.25,6.33,Alto,Usó IA
+5,Resumir,4,4,CC1143,5,8,Alto,Usó IA
+6,Resolver ejercicios,1,0,CS2041,1.2,9.9,Bajo,Usó IA
+5,Resolver ejercicios,4,6,CC1101,5,6,Moderado,Usó IA
+0,No usó IA,3,0,No aplica,3,7,Bajo,No usó IA
+16,Programar,3,1,CS2013,3,8,Moderado,Usó IA
+2,Resolver ejercicios,3,2,GI2101,1,6,Moderado,Usó IA
+12,Resumir,5,3,CS2031,6,5,Alto,Usó IA
+7,Resolver ejercicios,3,3,CC2012,5,6,Moderado,Usó IA
+7,Programar,5,0,CS2031,1.75,7.08,Alto,Usó IA
+0,No usó IA,1,0,No aplica,0,10,Muy bajo,No usó IA
+8,Resumir,3,0,-,1,6,Moderado,Usó IA
+4,Programar,3,0,CS2013,1,8,Moderado,Usó IA
+8,Programar,3,2,CC1105,2,9,Moderado,Usó IA
+20,Resolver ejercicios,3,1,CC1122,3,5,Alto,Usó IA
+8,Redactar,3,2,GI2101,2,6,Moderado,Usó IA
+8,Resumir,3,1,CS2041,3,7,Moderado,Usó IA
+14,Programar,5,2,CS2031,9,8,Alto,Usó IA
+15,Programar,5,1,CS2013,3.67,7,Muy alto,Usó IA
+20,Resolver ejercicios,4,1,CI2012,1,6,Moderado,Usó IA
+17,Resumir,5,5,CC1105,3,6,Bajo,Usó IA
+47,Resolver ejercicios,3,1,CC2101,3,6,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0,5,Muy bajo,No usó IA
+4,Redactar,3,2,CC1105,2,6,Moderado,Usó IA
+10,Resolver ejercicios,3,2,CC2012,5,7,Bajo,Usó IA
+2,Verificar respuestas,4,1,CS2013,1,9,Moderado,Usó IA
+75,Programar,3,2,Sin código válido,2,0,Moderado,Usó IA
+9,Resolver ejercicios,3,1,CS2023,1,8,Moderado,Usó IA
+24,Resumir,3,1,CC2101,4,5,Moderado,Usó IA
+5,Redactar,3,1,GI2101,2,7,Moderado,Usó IA
+6,indagar,1,0,Sin código válido,1.23,10.47,Moderado,Usó IA
+25,Resumir,3,0,CC2101,2,5,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0,5,Muy bajo,No usó IA
+18,Resolver ejercicios,4,1,CI2012,2,6,Alto,Usó IA
+7,Explicar conceptos,4,1,CI2031,6,7,Alto,Usó IA
+33,Programar,5,0,CS2031,2.58,8,Muy alto,Usó IA
+2,Resolver ejercicios,2,1,CC1256,1,2,Bajo,Usó IA
+13,Resolver ejercicios,3,2,CC2012,7,8,Moderado,Usó IA
+3,Resumir,3,2,Cl2013,3,5,Moderado,Usó IA
+1,Investigar,1,0,Sin código válido,0,6,Muy bajo,Usó IA
+0,No usó IA,2,0,No aplica,0,9,Moderado,No usó IA
+48,Resumir,3,2,CC1105,5,6,Moderado,Usó IA
+5,Resumir,4,1,CS2041,0,10,Moderado,Usó IA
+5,Resumir,2,2,-,2,7,Bajo,Usó IA
+39,Resumir,1,5,CC1105,3,8,Alto,Usó IA
+26,Resumir,3,1,CC2101,2,5,Moderado,Usó IA
+9,Programar,2,4,GI3015,3,8,Moderado,Usó IA
+2,Resolver ejercicios,3,2,CI2012,3,3,Moderado,Usó IA
+10,Programar,2,1,CS2031,1,8,Bajo,Usó IA
+27,Programar,5,0,CS2031,3.62,7,Muy alto,Usó IA
+0,No usó IA,4,0,No aplica,2,6,Moderado,No usó IA
+5,Resolver ejercicios,4,2,ME2013,4,8,Alto,Usó IA
+7,Buscar información,2,2,Sin código válido,3,5,Moderado,Usó IA
+7,Redactar,3,3,Cl2013,2,5,Moderado,Usó IA
+2,Resolver ejercicios,4,2,CC1182,2,7,Moderado,Usó IA
+1,Resolver ejercicios,3,1,CC1105,0.5,7,Moderado,Usó IA
+13,Resolver ejercicios,4,2,CC2012,5,7,Moderado,Usó IA
+18,Programar,1,1,CS2031,1.89,9.2365,Moderado,Usó IA
+30,Resumir,3,0,CS2031,3,2,Moderado,Usó IA
+43,Resolver ejercicios,3,1,CC1122,4,5,Moderado,Usó IA
+1,Investigar,1,1,Sin código válido,0,8,Moderado,Usó IA
+6,Programar,5,1,CS2013,2.08,6.5,Muy alto,Usó IA
+1,Resolver ejercicios,3,0,CI2012,4,7,Moderado,Usó IA
+0,No usó IA,2,0,No aplica,0,8,Moderado,No usó IA
+12,Resumir,5,3,CS2013,6,8,Muy alto,Usó IA
+13,Resolver ejercicios,4,1,CC2104,4,8,Alto,Usó IA
+47,Resolver ejercicios,4,2,CS2013,1,5,Alto,Usó IA
+10,Programar,4,5,-,3,6,Moderado,Usó IA
+12,Resumir,2,0,CS2041,1.13,10.23,Moderado,Usó IA
+25,Resolver ejercicios,3,1,CC2101,4,6,Moderado,Usó IA
+1,Redactar,4,1,PI2102,3,5,Moderado,Usó IA
+4,Programar,2,3,Cl2013,3,4,Moderado,Usó IA
+25,Resolver ejercicios,3,6,CC1143,2,9,Moderado,Usó IA
+8,Resolver ejercicios,3,2,CI2012,4,8,Moderado,Usó IA
+46,Resumir,3,2,Gl3101,4,5,Moderado,Usó IA
+0,No usó IA,3,0,No aplica,1,6,Moderado,No usó IA
+5,Programar,3,1,CS2031,1,6,Moderado,Usó IA
+3,Redactar,3,3,PI6002,0,5,Alto,Usó IA
+1,Programar,3,1,GI2101,1,7,Moderado,Usó IA
+3,Resumir,4,2,Sin código válido,2,5,Moderado,Usó IA
+37,Resumir,3,0,GI3101,4,6,Alto,Usó IA
+1,Resolver ejercicios,2,2,Cl2013,2,3,Moderado,Usó IA
+8,Programar,3,1,CS2013,1,8,Moderado,Usó IA
+0,No usó IA,2,0,No aplica,0,8,Bajo,No usó IA
+11,Programar,5,1,CS2041,4,6.67,Alto,Usó IA
+7,Redactar,4,2,CS2101,1,6,Bajo,Usó IA
+27,Programar,3,2,PI6002,2,6,Moderado,Usó IA
+2,Resolver ejercicios,3,1,CC1143,4,5,Moderado,Usó IA
+4,Programar,2,2,-,2,5,Moderado,Usó IA
+4,Programar,3,0,CS2013,1,8,Moderado,Usó IA
+2,Redactar,4,1,PI6002,3,3,Alto,Usó IA
+3,Redactar,3,2,Cc1103,3,5,Moderado,Usó IA
+5,Resolver ejercicios,4,5,CC1143,5,7,Alto,Usó IA
+0,No usó IA,2,0,No aplica,2,8,Moderado,No usó IA
+14,Resolver ejercicios,4,3,CC1105,4,6,Muy alto,Usó IA
+5,Programar,5,0,CS2041,1.17,5.83,Muy alto,Usó IA
+3,Resolver ejercicios,4,2,CC2104,2,7,Moderado,Usó IA
+13,Resolver ejercicios,2,1,CS2031,2,6,Bajo,Usó IA
+6,Programar,3,4,CS6006,7,7,Moderado,Usó IA
+32,Resolver ejercicios,4,1,CS4054,3,8,Alto,Usó IA
+5,Resolver ejercicios,4,5,CC1143,4,7,Alto,Usó IA
+5,Redactar,3,3,CS2023,1,7,Bajo,Usó IA
+2,Resolver ejercicios,2,1,CC1102,1,4,Moderado,Usó IA
+54,Programar,5,2,CS2013,7.27,7.08,Muy alto,Usó IA
+19,Resolver ejercicios,4,3,CC2101,6,4,Moderado,Usó IA
+23,Resumir,5,0,CS2013,5.4,8.2,Alto,Usó IA
+15,Programar,3,2,CS2013,2,8,Moderado,Usó IA
+0,No usó IA,2,0,No aplica,0,7,Moderado,No usó IA
+2,Programar,4,1,PI6002,3,4,Alto,Usó IA
+10,Programar,3,1,CS2031,1,8,Moderado,Usó IA
+36,Resumir,3,1,GI3101,3,6,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0,5,Muy bajo,No usó IA
+28,Resolver ejercicios,4,1,CC1105,3,7,Moderado,Usó IA
+16,Resumir,4,3,CC1143,4,9,Moderado,Usó IA
+11,Redactar,3,5,CS6006,4,8,Moderado,Usó IA
+43,Resumir,3,1,GI3101,4,5,Moderado,Usó IA
+5,Programar,5,0,CC1105,3,7.08,Muy alto,Usó IA
+12,Resolver ejercicios,5,3,CC1105,5,9,Alto,Usó IA
+23,Resumir,3,1,CS2013,2,4,Moderado,Usó IA
+2,Redactar,4,2,CC2104,1,7,Moderado,Usó IA
+0,No usó IA,2,0,No aplica,2,4,Moderado,No usó IA
+0,No usó IA,3,0,No aplica,2,4,Moderado,No usó IA
+2,Programar,3,2,cc1103,3,5,Alto,Usó IA
+1,Resumir,1,1,CS2041,0,9,Bajo,Usó IA
+8,Programar,4,3,CC1105,5,9,Alto,Usó IA
+48,Programar,3,2,CC1105,6,6,Alto,Usó IA
+5,Resolver ejercicios,3,5,CC1105,1,6,Moderado,Usó IA
+1,Redactar,3,1,CI2003,1,9,Moderado,Usó IA
+5,Resolver ejercicios,3,0,CC1105,3,8,Bajo,Usó IA
+9,Resolver ejercicios,2,1,CS2023,1,6,Bajo,Usó IA
+6,Resolver ejercicios,5,0,CC1105,5.92,7.75,Muy alto,Usó IA
+0,No usó IA,1,0,No aplica,0,3,Muy bajo,No usó IA
+0,No usó IA,3,0,No aplica,2,4,Moderado,No usó IA
+3,Resolver ejercicios,3,1,CC2101,0,7,Muy bajo,Usó IA
+34,Programar,3,1,CS2013,4.5,11.4,Moderado,Usó IA
+12,Resumir,5,3,CS2042,5,10,Alto,Usó IA
+27,Resumir,3,2,CS2013,2,5,Moderado,Usó IA
+6,Resolver ejercicios,3,2,-,2,6,Moderado,Usó IA
+7,Redactar,2,3,Cc1103,5,4,Bajo,Usó IA
+1,Programar,3,0,CC1105,1,5,Moderado,Usó IA
+2,Redactar,3,1,Sin código válido,3,5,Moderado,Usó IA
+22,Programar,4,0,CC2101,0,6.83,Muy alto,Usó IA
+26,Resumir,3,0,CC1105,2,0,Moderado,Usó IA
+9,Programar,4,1,CS2031,5,8,Alto,Usó IA
+19,Resolver ejercicios,4,5,CC2011,4,10,Bajo,Usó IA
+19,Resolver ejercicios,3,1,CI2031,1,7,Moderado,Usó IA
+7,Resolver ejercicios,2,2,AM6102,3,7,Moderado,Usó IA
+5,Resolver ejercicios,2,0,CC2104,1,6,Bajo,Usó IA
+0,No usó IA,3,0,No aplica,5,5,Alto,No usó IA
+8,Programar,2,1,CS2013,1,8,Moderado,Usó IA
+0,No usó IA,1,0,No aplica,0,8,Muy bajo,No usó IA
+29,Resumir,3,0,CC1105,4.6,7.3,Moderado,Usó IA
+5,Redactar,4,0,CS6006,5,5,Bajo,Usó IA
+2,Resolver ejercicios,5,0,CC2101,0.75,6.08,Muy alto,Usó IA
+4,Resumir,3,2,Cc1103,3,4,Moderado,Usó IA
+1,Resolver ejercicios,2,1,CC1105,1,9,Moderado,Usó IA
+0,No usó IA,3,0,No aplica,3,6,Alto,No usó IA
+10,Programar,3,1,CS2031,1,7,Moderado,Usó IA
+10,Armado de chasis,3,10,PI6002,3,5,Moderado,Usó IA
+45,Resolver ejercicios,3,1,CC1105,4,4,Moderado,Usó IA
+26,Resolver ejercicios,4,1,CC2101,4.5,5.4,Alto,Usó IA
+5,Resolver ejercicios,2,2,CC2101,1,8,Moderado,Usó IA
+12,Resumir,5,4,CC2101,10,9,Muy alto,Usó IA
+14,Programar,4,1,HH6002,4,8,Moderado,Usó IA
+10,Resumir,4,6,CC1103,3,7,Alto,Usó IA
+2,Traducir,4,1,Sin código válido,2,2,Moderado,Usó IA
+6,Programar,4,1,CC1105,2.5,6,Moderado,Usó IA
+3,Programar,4,1,PI6002,3,4,Alto,Usó IA
+5,Resolver ejercicios,2,1,CS2013,2,8,Bajo,Usó IA
+24,Programar,5,0,CS2031,3.5,6.58,Muy alto,Usó IA
+1,Resumir,3,1,CI2031,1,5,Moderado,Usó IA
+3,Redactar,3,2,CC2104,1,5,Moderado,Usó IA
+20,Resolver ejercicios,4,1,CI2003,2,7,Moderado,Usó IA
+9,Resolver ejercicios,4,3,-,2,8,Bajo,Usó IA
+52,Programar,3,2,CC1105,4,5,Alto,Usó IA
+0,Programar,2,1,-,1,8,Bajo,Usó IA
+5,Resolver ejercicios,3,4,CC1105,2,5,Moderado,Usó IA
+3,Redactar,2,2,Cc1103,2,3,Moderado,Usó IA
+1,Investigar,1,1,Sin código válido,0,6,Muy bajo,Usó IA
+8,Resumir,3,5,CC1105,3,8,Moderado,Usó IA
+3,Programar,3,3,Cc1103,3,5,Moderado,Usó IA
+42,Resumir,4,2,GI3101,5,5,Alto,Usó IA
+2,Programar,3,1,PI6002,2,2,Moderado,Usó IA
+7,Resolver ejercicios,3,0,CS2013,1,8,Moderado,Usó IA
+1,Programar,4,1,GI2101,1,5,Moderado,Usó IA
+13,Resolver ejercicios,5,4,CS2013,7,5,Muy alto,Usó IA
+12,Programar,3,1,CS2013,3,8,Moderado,Usó IA
+22,Resolver ejercicios,3,0,CS2041,3.2,3.2,Moderado,Usó IA
+20,Resumir,3,0,CS2013,3,6,Moderado,Usó IA
+13,Programar,5,1,PI6002,1.42,5.5,Muy alto,Usó IA
