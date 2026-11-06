@@ -33,6 +33,9 @@ Este tema es importante porque la mayoría de estudiantes usa la IA diariamente 
 ### Diagrama de Gantt
 
 ```{r}
+library(readr)
+library(dplyr)
+library(tidyverse)
 library(ggplot2)
 
 tareas <- data.frame(
