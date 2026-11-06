@@ -147,6 +147,7 @@ Cada variable será registrada en el formulario de Google Forms, el cual contend
 #Limpieza de datos
 Como ya se explico esta parte en la primera entrega se hara uso de un csv previamente exportado
 ```{r}
+DF_GesNulos<-read_csv("DF_GesNulos.csv")
 DF3<-read_csv("DF3.csv")
 ```
 
@@ -965,8 +966,7 @@ E(estudio) = 1 / \lambda = 2.889481 \\
 V(estudio) = 1 / \lambda^2 = 8.349099 \\
 SD(estudio) = 1 / \lambda = 2.889481 \\
 CV(estudio) = \frac{SD(estudio)}{|E(estudio)|}  = 1
-\end{cases}
-$$
+\end{cases}$$
 
 
 **4. Ejemplo:**
