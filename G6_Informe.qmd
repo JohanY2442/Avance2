@@ -90,29 +90,27 @@ Analizar el impacto de las horas de sueño y el uso de IA en el rendimiento acad
 
 ## Población objetivo
 
-Estudiantes universitarios de UTEC durante el semestre 2026-2 que cursan la materia de Estadística y Probabilidades de la sección 01.
+Estudiantes universitarios de UTEC durante el semestre 2026-2 que cursan Estadística y Probabilidades de la sección 01.
 
 ### Unidad muestral
 
 Conformada por los estudiantes universitarios evaluados de forma individual y diaria. A cada uno de ellos se le aplicará un registro de datos para medir su comportamiento diario, su rendimiento académico y su relación con el uso de IA (en la tabla principal).
 
-Además se contará con dos tablas externas: la "Tabla Exámenes", cuya unidad muestral es cada examen rendido, y la "Tabla Demográfica", con los datos invariantes del ciclo y cuya unidad muestral es cada estudiante.
-
 ### Representatividad de la muestra
 
 Con la finalidad de que la muestra obtenida refleje a la población y se minimicen posibles sesgos, se plantean las siguientes medidas:
 
-Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario y así evitando el sesgo de no respuesta
+Cobertura total de la sección: El instrumento de medición se aplicará en un aula específica, de modo que todos los integrantes contarán con acceso diario al formulario, evitando el sesgo de no respuesta
 
-Medición al cierre del día: El cuestionario se realizará al final de cada día el cual permitirá registrar las variables diarias (como las horas de estudio o el uso de IA), atenuando el sesgo de memoria. El registro de un día se contará como válido si este se hace después de las 9:30 p.m. pero antes de la medianoche.
+Medición al cierre del día: El cuestionario se realizará al final de cada día, lo cual permitirá registrar las variables diarias atenuando el sesgo de memoria. El registro de un día se contará como válido si este se hace después de las 9:30 p.m. pero antes de la medianoche.
 
 ## Tipo de muestreo
 
-Se utilizará un muestreo sistemático por conveniencia, estructurado bajo un diseño de recolección de datos de tipo longitudinal. Esta decisión responde a la exigencia del estudio, el cual requiere que los estudiantes reporten sus métricas académicas, de sueño y de uso de Inteligencia Artificial de forma diaria. El diseño longitudinal genera observaciones repetidas por estudiante, lo que permite capturar patrones de comportamiento en el tiempo.
+Se utilizará un muestreo sistemático por conveniencia, estructurado bajo un diseño de recolección de datos de tipo longitudinal. Esta decisión responde a la exigencia del estudio, el cual requiere que los estudiantes reporten sus métricas académicas, de sueño y de uso de IA de forma diaria. El diseño longitudinal genera observaciones repetidas por estudiante, lo que permite capturar patrones de comportamiento en el tiempo.
 
 ## Recolección de datos
 
-Se diseñaron 3 formularios en Google Forms: demográfico (una vez por estudiante), diario (una vez por día) y de exámenes (uno por examen). Enlaces: [formulario diario](https://docs.google.com/forms/d/e/1FAIpQLSf9LZ3tyLEgC4oDca7NH8S9Zh-StC2w6ukAMH6yRnJej6tVzQ/viewform), [formulario demográfico](https://docs.google.com/forms/d/e/1FAIpQLSeTo6X7RJB_Jq6qrQ4By-Qrbfe_6qafpZ0N9gP62h2pQwOmlA/viewform), [formulario de exámenes](https://docs.google.com/forms/d/e/1FAIpQLScOFYt4wl2XJGtB4w-PzHCnRUiT-wfdmIg2zGpAUDZ_R_GAIA/viewform).
+Se recolecta la información desde un formulario diario en Google Forms. Enlace: [formulario diario](https://docs.google.com/forms/d/e/1FAIpQLSf9LZ3tyLEgC4oDca7NH8S9Zh-StC2w6ukAMH6yRnJej6tVzQ/viewform).
 
 ## Variables
 
@@ -144,7 +142,7 @@ Se diseñaron 3 formularios en Google Forms: demográfico (una vez por estudiant
 
 ### Mediciones
 
-Cada variable va a ser registrada en el formulario de Google Forms, el cual contendrá todas las restricciones de valores que puede tomar la variable dependiendo de su tipo y de su naturaleza.
+Cada variable será registrada en el formulario de Google Forms, el cual contendrá todas las restricciones de valores dependiendo del tipo y naturaleza de la variable.
 
 #Limpieza de datos
 Como ya se explico esta parte en la primera entrega se hara uso de un csv previamente exportado
@@ -167,20 +165,18 @@ Dado un CV \> 0.6, usaremos la mediana y los cuantiles para el análisis.
 ```{r}
 boxplot(DF3$consultas,
         main = "Boxplot - Número de consultas a la IA",
-        ylab = "Cantidad de consultas",
-        col = "gray80")
+        ylab = "Cantidad de consultas")
 legend("topright",
        legend = paste("Mediana =", median(DF3$consultas, na.rm = TRUE), "\nQ3 =", quantile(DF3$consultas, 0.75, na.rm = T, type = 3)), bty = "n")
 ```
 
-Se puede ver que en al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos un cuarto de los registros, los estudiantes han hecho 20 o más consultas diarias a la IA.
+En al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos 25% de los registros, los estudiantes han hecho 19 o más consultas diarias a la IA.
 
 ```{r}
-barplot(table(DF3$consultas),
-        main = "Diagrama de barras - Número de consultas a la IA",
+plot(table(DF3$consultas),
+        main = "Diagrama de palos - Número de consultas a la IA",
         xlab = "Cantidad de consultas",
-        ylab = "Frecuencia de cada cantidad",
-        col = "gray80")
+        ylab = "Frecuencia de cada cantidad")
 ```
 
 El gráfico confirma que si bien el uso no es intensivo, este sí es constante en el tiempo.
@@ -254,7 +250,8 @@ El histograma confirma ese equilibrio, la mayoría de los estudiantes duerme un 
 boxplot(consultas ~ satisfaccion, data = DF3,
         main = "Nivel de satisfacción vs Número de consultas",
         xlab = "Nivel de satisfacción",
-        ylab = "Cantidad de consultas")
+        ylab = "Cantidad de consultas",
+        varwidth = T)
 ```
 
 Se nota un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción. Esto indica que podría haber una relación importante entre el número de consultas a la IA y cuán satisfecho se está con el estudio de ese día.
@@ -365,7 +362,8 @@ DF3 %>%
   rename(Uso = uso_g)
 ```
 
-Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades, existe una relación favorable. El 98.28% de los registros con uso 'Redactar' reportó ahorro de tiempo, seguido por 'Resolver ejercicios' (89.04 %), 'Resumir' (75.95%), 'Programar' (77.24%) y 'Otros' (64.86%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios', 'Resumir' y 'Programar', al concentrar la mayor cantidad de registros.
+Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades, existe una relación favorable. El 98.28% de los registros con uso 'Redactar' reportó ahorro de tiempo, seguido por 'Resolver ejercicios' (89.04	%), 'Resumir' (75.95%), 'Programar' (77.24%) y 'Otros' (64.86%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios', 'Resumir' y 'Programar', al concentrar la mayor cantidad de registros.
+
 
 ### Objetivo 4: comprensión vs. sueño
 
@@ -407,7 +405,6 @@ GRUPO <- 6
 DF3_grupo <- DF_GesNulos %>% filter(Grupo == GRUPO)
 nrow(DF3_grupo)
 ```
-
 El Grupo 6 aportó 166 observaciones limpias sobre las 416 de la muestra efectiva de la sección.
 
 ### Variable 1: consultas
@@ -491,7 +488,7 @@ $0.0721 + 0.0841 + 0.4663 + 0.3005 + 0.0769 = 1$
 
 ```{r}
 barplot(prob_sat,
-        main = "Probabilidad empírica de la satisfacción",
+        main = "Probabilidad empírica de la variable satisfacción",
         xlab = "Nivel de satisfacción (1 = muy baja, 5 = muy alta)",
         ylab = "Probabilidad",
         col = "gray70",
@@ -504,7 +501,7 @@ El nivel más probable es 3, con 0.4663. La probabilidad de una satisfacción al
 
 ### Eventos de interés
 
-Se eligió el rango \[5,15\] ya que se evita la alta frecuencia que hay en \[0,5\] y se prioriza una buena cantidad de datos.
+Se eligió el rango [5,15] ya que se evita la alta frecuencia que  hay en [0,5] y se prioriza una buena cantidad de datos.
 
 Vamos a ver la probabilidad del evento A dado el evento B
 
@@ -522,6 +519,8 @@ P_B = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15)) / nrow(DF3)
 paste("Probabilidad de B:", P_B)
 ```
 
+
+
 ### Validación de independencia
 
 ```{r}
@@ -530,6 +529,7 @@ P_A_dado_B = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension 
 P_A_dado_B
 ```
 
+
 ```{r}
 P_A_inter_B<- nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3)
 round(P_A_inter_B,2) == round(P_A* P_B,2)
@@ -537,12 +537,12 @@ round(P_A_inter_B,3) == round(P_A* P_B,3)
 P_A_dado_B==P_A
 ```
 
-$P(A \cap B)=0.0769$ y $P(A)\cdot P(B)=0.0895$ $P(A \cap B) \neq P(A) \cdot P(B)$ para la aproximación de 2 y 3 decimales, por lo cual decimos que los eventos son dependientes.
+$P(A \cap B)=0.0769$ y $P(A)\cdot P(B)=0.0895$
+$P(A \cap B) \neq P(A) \cdot P(B)$ para la aproximación de 2 y 3 decimales, por lo cual decimos que los eventos son dependientes.
 
 ### Probabilidad condicional y propiedades
 
 Se clasifican los eventos simples $A$ (nivel de comprensión `Alto`) y $B$ (consultas en $[5, 15]$), junto con sus eventos compuestos asociados y complementos. Aplicando las propiedades de probabilidad:
-
 ```{r}
 
 P_A_U_B<-P_A+P_B-P_A_inter_B
@@ -559,49 +559,52 @@ P_B_comp
 P_A_U_B_comp
 P_A_inter_B_comp
 ```
+Los eventos compuestos son en este caso A union B, interseccion con complemento y union con complemento y ademas tambien se considera A complemento y B complemento a diferencia de A y B que serian simples 
 
-Los eventos compuestos son en este caso A union B, interseccion con complemento y union con complemento y ademas tambien se considera A complemento y B complemento a diferencia de A y B que serian simples
-
-- **Unión:** $P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0.2500 + 0.3582 - 0.0769 = 0.5313$
-- **Complementos:** $P(A^c) = 1 - P(A) = 0.7500 \quad \text{y} \quad P(B^c) = 1 - P(B) = 0.6418$
-- **Leyes de De Morgan (Complemento de la Unión e Intersección):** $$P((A \cup B)^c) = 1 - P(A \cup B) = 0.4688, \qquad P((A \cap B)^c) = 1 - P(A \cap B) = 0.9231$$
+* **Unión:** $P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0.2500 + 0.3582 - 0.0769 = 0.5313$
+* **Complementos:** $P(A^c) = 1 - P(A) = 0.7500 \quad \text{y} \quad P(B^c) = 1 - P(B) = 0.6418$
+* **Leyes de De Morgan (Complemento de la Unión e Intersección):** 
+  $$P((A \cup B)^c) = 1 - P(A \cup B) = 0.4688, \qquad P((A \cap B)^c) = 1 - P(A \cap B) = 0.9231$$
 
 Estos resultados indican que el $53.13\%$ de los registros de la jornada presentan una comprensión alta, un número de consultas entre 5 y 15, o ambas condiciones simultáneamente.
 
 <!-- falta ampliar las propiedades con su formula y su valor, por ejemplo la diferencia A−B y B−A, la diferencia simetrica AΔB, P(A ∩ Bc), la regla del producto y la probabilidad total. Escribir cada formula en LaTeX sin espacios para que cuente como una sola palabra -->
 
 ### Teorema de Bayes
-
 Aplicando el Teorema de Bayes para calcular la probabilidad del nivel de comprensión `Alto` ($A$) dado que las consultas están en el rango $[5, 15]$ ($B$):
 
 $$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c)} = 0.2125984$$
 
 ```{r}
-P_A_dado_noB = nrow(DF3 %>% filter((consultas < 5 | 15 < consultas) & comprension == "Alto")) / nrow(DF3 %>% filter(consultas < 5 | 15 < consultas))
+P_B_dado_A = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(comprension == "Alto"))
 
-P_A_dado_noB
+P_B_dado_A
 ```
 
 ```{r}
-P_noB = 1 - P_B
-P_noB
+P_B_dado_noA = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension != "Alto")) / nrow(DF3 %>% filter(comprension != "Alto"))
+
+P_B_dado_noA
 ```
 
-Entonces, el valor obtenido por medio del Teorema de Bayes es:
+Entonces, el valor obtenido por medio del Teorema de Bayes expandido es:
+
 ```{r}
-( P_A_dado_B * P_B ) / ( P_A_dado_B * P_B + P_A_dado_noB * P_noB )
+( P_B_dado_A * P_A ) / ( P_B_dado_A * P_A + P_B_dado_noA * P_A_comp)
 ```
+
 Mientras que el resultado del cálculo directo es:
+
 ```{r}
-directo <- nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(comprension == "Alto"))
-directo
+P_A_dado_B
 ```
 
-Vemos que los cálculos se realizaron adecuadamente, pues los resultados coinciden.
+Los cálculos se realizaron adecuadamente, pues los resultados coinciden.
 
 ### Interpretación en el contexto del estudio
 
-De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo \[5, 15\] es de 21.26%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango \[5, 15\].
+De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de 21.26%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango [5, 15].
+
 
 ## Variables aleatorias discretas
 
@@ -621,10 +624,10 @@ q <- 1 - p
 
 **4. Propiedades:**
 
-- $E(X)=\frac{1}{p}=$ `r round(1/p,2)` registros.
-- $Var(X)=\frac{1-p}{p^2}=$ `r round(q/p^2,2)` y $\sigma=$ `r round(sqrt(q)/p,2)`.
-- $CV=\frac{\sigma}{E(X)}=\sqrt{1-p}=$ `r round(sqrt(q),4)`.
-- Falta de memoria: $P(X>m+n\mid X>m)=P(X>n)$.
+* $E(X)=\frac{1}{p}=$ `r round(1/p,2)` registros.
+* $Var(X)=\frac{1-p}{p^2}=$ `r round(q/p^2,2)` y $\sigma=$ `r round(sqrt(q)/p,2)`.
+* $CV=\frac{\sigma}{E(X)}=\sqrt{1-p}=$ `r round(sqrt(q),4)`.
+* Falta de memoria: $P(X>m+n\mid X>m)=P(X>n)$.
 
 **5. Respuesta del caso:** $P(X=5)=$ `r round(dgeom(x = 4, prob = p), 4)`. Hay una probabilidad de `r round(dgeom(x = 4, prob = p)*100, 2)`% de que el primer registro con más de 20 consultas sea el quinto.
 
@@ -665,6 +668,7 @@ legend("topright", legend = c("Teórica", "Empírica", "E(X)"),
 
 par(mfrow = c(1, 1))
 ```
+
 
 ```{r}
 # Acumulada hacia la izquierda
@@ -770,7 +774,9 @@ En `r n_grupos` grupos de 10 registros, el promedio real de éxitos es `r round(
 
 ## Variables aleatorias continuas
 
-**1. Variable de estudio:** Horas de sueño **2. Validación de la distribución:**
+**1. Variable de estudio:**
+Horas de sueño
+**2. Validación de la distribución:** 
 
 ```{r}
 #Datos basicos 
@@ -820,22 +826,22 @@ Para la curva normal se debera comprobar en este caso la simetria
 mediana_
 media_
 ```
+$$mediana=7$$
+$$media= 6.6$$
 
-$$mediana=7$$ $$media= 6.6$$
-
-No se esta cumpliendo la simetria pero tiene valores aproximados por lo que se descarta por el momento
+No se esta cumpliendo la simetria por lo que se descarta
 
 Para la curva exponencial se debera revisar el cv que deberia de ser 100
 
 ```{r}
 cv_
 ```
-
 $$CV=29.49941$$
 
-Como no es 100 entonces se descarta en la exponencial
+Como no es 100 entonces se descarta en la exponencial 
 
-Para la distribucion uniforme se debera revisar si el rango de datos es aproximadamente 3.464 (raiz cuadrada de 12) veces la desviacion estandar muestral y comprobar las varianzas
+
+Para la distribucion uniforme se debera revisar si el rango de datos es aproximadamente 3.464 veces la desviacion estandar muestral y comprobar las varianzas
 
 ```{r}
 max_-min_
@@ -845,22 +851,29 @@ sd_^2
 ((max_-min_)^2)/12
 ```
 
-Comparacion de varianza teorica con la empirica $$\frac{(max - min)^2}{12} = 16.33333$$ $$sd^2 =3.791035$$ Relacion rango con desviacion estandar $$max-min=14$$ $$ sd\cdot \sqrt(12) =6.744807$$ Como la varianza teorica no es similar a la empirica y tambien la relacion rango con la desviacion estandar tampoco cumple por lo que se descarta
+Comparacion de varianza teorica con la empirica
+$$\frac{(max - min)^2}{12} = 16.33333$$
+$$sd^2 =3.791035$$
+Relacion rango con desviacion estandar 
+$$max-min=14$$
+$$ sd\cdot \sqrt(12) =6.744807$$
+Como la varianza teorica no es similar a la empirica y tambien la relacion rango con la desviacion estandar tampoco cumple por lo que se descarta
 
-**3. Propiedades:**
+**3. Propiedades:** 
 
-Se tendra en cuenta en este caso la distribucion normal debido a la grafica y que sus valores son los mas cercanos un 6.60 a 7
+Se tendra en cuenta en este caso la distribucion normal debido a la grafica y que sus valores son los mas cercanos un 6.60 a 7 
 
 ```{r}
 sd_
 media_
 ```
 
-Por lo que el modelo propuesto sera $$N(\mu=6.600329,\sigma=1.947058)$$
+Por lo que el modelo propuesto sera 
+$$N(\mu=6.600329,\sigma=1.947058)$$
 
-**4. Ejemplo:**
+**4. Ejemplo:** 
 
-¿Cual es la probabilidad de que un estudiante duerma 4 horas o menos?
+¿Cual es la probabilidad de que un estudiante duerma 4 horas o menos? 
 
 Probabilidad Teorica:
 
@@ -868,8 +881,8 @@ Probabilidad Teorica:
 prob_4_teo<-pnorm(q=4,mean=media_, sd=sd_)
 prob_4_teo
 ```
-
-$$probTeorica=0.09085359$$ Probabilidad Empirica:
+$$prob_4_teo=0.09085359$$
+Probabilidad Empirica:
 
 ```{r}
 prob_4_empirica<-mean(DF3$sueno<=4,na.rm=TRUE)
@@ -878,7 +891,8 @@ prob_4_empirica
 prob_4_empirica-prob_4_teo
 ```
 
-$$probEmpirica=0.115727 $$ Hay una diferencia de 0.02487342 lo cual nos ayuda a saber que el modelo elegido es adecuado
+$$pro_4_empirica= 0.115727 $$
+Hay una diferencia de 0.02487342 lo cual nos ayuda a saber que el modelo elegido es adecuado
 
 ### Variable aleatoria continua 2
 
@@ -917,26 +931,26 @@ legend("topright", legend = c("Distribución Normal", "Distribución Exponencial
 paste("Esperanza Uniforme:", (min_estudio + max_estudio) / 2)
 paste("Promedio Muestral:", prom_estudio)
 ```
-
 ```{r}
 paste("Varianza Uniforme:", (max_estudio - min_estudio)^2 / 12)
 paste("Varianza Muestral:", std_estudio^2)
 ```
-
 Tanto el promedio como la varianza difieren enormemente entre los predicho por la distribución teórica y lo obtenido en la muestra. Por lo tanto, descartamos la distribución uniforme como aproximación.
+
+
 
 ```{r}
 median(estudio, na.rm = T)
 prom_estudio
 ```
-
 Si bien la media y la mediana de la muestra se acercan bastante, la gráfica hace notar una gran asimetría en su distribución. Por lo tanto, descartamos la distribución normal como aproximación.
+
+
 
 ```{r}
 paste("Esperanza Exponencial:", 1 / lambda_estudio)
 paste("Promedio Muestral:", prom_estudio)
 ```
-
 ```{r}
 paste("Varianza Exponencial:", 1 / lambda_estudio^2)
 paste("Varianza Muestral:", std_estudio^2)
@@ -951,19 +965,22 @@ E(estudio) = 1 / \lambda = 2.889481 \\
 V(estudio) = 1 / \lambda^2 = 8.349099 \\
 SD(estudio) = 1 / \lambda = 2.889481 \\
 CV(estudio) = \frac{SD(estudio)}{|E(estudio)|}  = 1
-\end{cases}$$
+\end{cases}
+$$
 
-**4. Ejemplo:** ¿Cuál es la probabilidad de que un registro reporte más de 5 horas de estudio y a lo mucho 8 horas?
+
+**4. Ejemplo:**
+¿Cuál es la probabilidad de que un registro reporte más de 5 horas de estudio y a lo mucho 8 horas?
 
 ```{r}
 pexp(8, lambda_estudio) - pexp(5, lambda_estudio)
 ```
-
 ```{r}
 nrow(DF3 %>% filter(5 < estudio & estudio <= 8)) / nrow(DF3)
 ```
 
 Comparando la respuesta obtenida desde el modelo exponencial y aquella obtenida directamente desde la muestra, se nota que la elección del modelo ha sido más o menos acertada considerando que las respuestas tienen una diferencia de `0.04028112`.
+
 
 # Conclusiones
 
@@ -985,7 +1002,7 @@ El análisis empírico evidencia que los estudiantes de la sección tienen un pr
 
 ## Conclusión de variables aleatorias
 
-La VA discreta 1 nos muestra que, revisando 5 registro o menos, hay más del 60% de probabilidad de encontrar uno que reporte más de 20 consultas a la IA. Este resultado nos habla sobre la gran intensidad en el uso de la IA por parte de los estudiantes, lo cual puede ayudarnos a inferir la enorme importancia de esta herramienta para los universitarios.
+La VA discreta 1 nos muestra que, revisando 5 registro o menos, hay más del 60% de probabilidad de encontrar uno que reporte más de 20 consultas a la IA. Este resultado nos habla sobre la gran intensidad en el uso de la IA por parte de los estudiantes, lo cual puede ayudarnos a inferir la enorme importancia de esta herramienta para los universitarios. 
 
 ## Conclusión general del estudio
 
