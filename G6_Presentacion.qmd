@@ -1,0 +1,272 @@
+---
+title: "Uso de IA, sueño y rendimiento académico en estudiantes de UTEC"
+subtitle: "PG2 | Grupo 6 | Estadística y Probabilidades, sección 01"
+author: "Johan Huayta, Indira Yabar, Dervy Pillaca, Mathius Quispe, Eduardo Vila"
+date: "2026-11-13"
+lang: es
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    embed-resources: true
+    width: 1280
+    height: 720
+    margin: 0.04
+    fontsize: 1.05em
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup, include=FALSE}
+# Instala automaticamente los paquetes que falten
+pkgs <- c("readr", "dplyr", "tidyr", "ggplot2", "knitr")
+for (p in pkgs) {
+  if (!require(p, character.only = TRUE, quietly = TRUE))
+    install.packages(p, quiet = TRUE)
+  library(p, character.only = TRUE)
+}
+
+# DF3.csv ya es la tabla limpia de la seccion (limpieza explicada en la PG1)
+DF3 <- read_csv("DF3.csv", show_col_types = FALSE)
+DF3$Grupo <- as.integer(DF3$Grupo)
+
+GRUPO <- 6
+DFL <- DF3 %>% filter(Grupo == GRUPO)   # base limpia del Grupo 6
+
+n_pedidas <- 151
+
+# NOTAS (borrar al final):
+# - Maximo 12 laminas en total, contando la de titulo. No usar tabsets ni .scrollable.
+# - Cada lamina debe caber en pantalla. Al final borrar todos los comentarios.
+# - DF3 = seccion completa limpia. DFL = solo Grupo 6.
+# - Columnas: consultas, uso, satisfaccion, tareas, curso, estudio, sueno,
+#   comprension, uso_ia, email, Grupo.
+```
+
+## I. Introducción: tema, relevancia y objetivos
+
+::::: columns
+::: {.column width="48%"}
+### Tema
+
+**Uso de IA, sueño y rendimiento académico en estudiantes de UTEC.**
+
+### Relevancia
+
+La inteligencia artificial generativa ya forma parte del estudio diario, y tanto el **sueño** como las **horas de estudio** influyen en el aprendizaje. Saber cómo se relacionan estos hábitos con la **comprensión** y la **satisfacción** con el avance académico ayuda a orientar mejores prácticas de estudio en la comunidad de UTEC.
+:::
+
+::: {.column width="52%"}
+### Objetivo general
+
+**Analizar** el impacto de las horas de sueño y del uso de IA en el rendimiento académico de los estudiantes de Estadística, sección 01, ciclo 2026-2.
+
+### Objetivos específicos
+
+- **OE1: Analizar** la relación entre las consultas diarias a la IA y la satisfacción con el avance académico.
+- **OE2: Analizar** la correlación entre las consultas a la IA y las horas de estudio.
+- **OE3: Identificar** si el curso más consultado influye en el uso principal de la IA y qué usos ahorran más tareas.
+- **OE4: Determinar** si las horas de sueño se relacionan con el nivel de comprensión.
+:::
+:::::
+
+## II. Contexto: datos y muestra efectiva
+
+::::: columns
+::: {.column width="50%"}
+- **Población objetivo:** estudiantes de UTEC que cursan Estadística y Probabilidades, sección 01, ciclo 2026-2.
+- **Unidad muestral:** un registro diario de un estudiante (un estudiante en un día).
+- **Muestreo:** sistemático por conveniencia, con diseño longitudinal (observaciones repetidas por estudiante).
+- **Fuente:** primaria; formulario diario en Google Forms, válido si se llena entre las 9:30 p. m. y la medianoche.
+- **Representatividad:** acceso diario al formulario para toda la sección y medición al cierre del día para reducir el sesgo de memoria.
+
+```{r tabla-muestra}
+data.frame(
+  Conjunto = c("Sección 01 (registros limpios)",
+               "Grupo 6 (registros limpios)",
+               "Registros pedidos al Grupo 6"),
+  Registros = c(nrow(DF3), nrow(DFL), n_pedidas)
+) |> knitr::kable()
+```
+
+El Grupo 6 aporta **`r nrow(DFL)` observaciones limpias** frente a las **`r n_pedidas`** pedidas: `r ifelse(nrow(DFL) >= n_pedidas, "se cumple el mínimo.", paste0("faltan ", n_pedidas - nrow(DFL), "."))`
+:::
+
+::: {.column width="50%"}
+### Variables
+
+```{r tabla-variables}
+data.frame(
+  Variable = c("Consultas a la IA", "Tareas donde la IA ahorró tiempo",
+               "Horas efectivas de estudio", "Horas de sueño",
+               "Satisfacción con el avance", "Comprensión de actividades",
+               "Uso principal de la IA", "Curso más consultado"),
+  Tipo = c("Discreta", "Discreta", "Continua", "Continua",
+           "Ordinal", "Ordinal", "Nominal", "Nominal"),
+  Restricción = c("x ≥ 0", "x ≥ 0", "x ≥ 0", "0 ≤ x ≤ 24",
+                  "Likert 1 a 5", "Muy bajo a Muy alto",
+                  "Categorías de uso", "Código XX####")
+) |> knitr::kable()
+```
+:::
+:::::
+
+## III. Análisis descriptivo {.smaller}
+
+<!-- Reusar de G6_Informe.qmd (Avance2): seccion Analisis descriptivo. Lo descriptivo de la PG1 que guio la eleccion de las variables aleatorias con un solo grafico por cada uno. Si cabe: incluir interaccion (2 categoricas, 2 numericas, 1 categorica y 1 numerica). Graficos con titulo claro, ejes con unidades, leyenda si hace falta y color coherente. Mostrar media/mediana y desviacion/IQR e interpretarlos. -->
+
+## IV.1 Probabilidad empírica {.smaller}
+
+<!-- Reusar: Probabilidad empirica (consultas por niveles y satisfaccion). Las dos variables con sus espacios muestrales, probabilidades empiricas y la validacion de que suman 1 -->
+
+## IV.2 Probabilidad condicional
+
+```{r prob-condicional}
+# Probabilidades simples
+P_A <- nrow(DF3 %>% filter(comprension == "Alto")) / nrow(DF3)
+P_B <- nrow(DF3 %>% filter(consultas >= 5, consultas <= 15)) / nrow(DF3)
+
+# Intersección y condicional
+P_A_inter_B <- nrow(DF3 %>% filter(comprension == "Alto", consultas >= 5, consultas <= 15)) / nrow(DF3)
+P_A_dado_B  <- P_A_inter_B / P_B
+
+# Propiedades
+P_A_U_B          <- P_A + P_B - P_A_inter_B
+P_A_comp         <- 1 - P_A
+P_B_comp         <- 1 - P_B
+P_A_U_B_comp     <- 1 - P_A_U_B
+P_A_inter_B_comp <- 1 - P_A_inter_B
+```
+
+::::: columns
+::: {.column width="48%"}
+### Eventos de interés
+
+- **A:** registro con comprensión **Alto** → $P(A)=$ `r round(P_A, 4)`
+- **B:** registro con **5 a 15 consultas** a la IA → $P(B)=$ `r round(P_B, 4)`
+
+Se eligió $[5,15]$ para evitar la alta concentración en $[0,5]$ y conservar suficientes datos.
+
+Se analizará la probabilidad del evento A dado el evento B.
+
+### Validación de independencia
+
+#### Por medio de la intersección
+
+Aproximación con 3 decimales:
+$P(A\cap B)=$ `r round(P_A_inter_B, 3)` $\neq$ $P(A) * P(B)=$ `r round(P_A * P_B, 3)`
+
+Aproximación con 2 decimales:
+$P(A\cap B)=$ `r round(P_A_inter_B, 2)` $\neq$ $P(A) * P(B)=$ `r round(P_A * P_B, 2)`
+
+#### Por medio de la probabilidad condicional
+
+Aproximación con 3 decimales:
+
+$P(A|B)=\frac{P(A\cap B)}{P(B)}=$ `r round(P_A_dado_B, 3)` $\neq P(A) =$ `r round(P_A, 3)`
+
+Aproximación con 2 decimales:
+
+$P(A|B)=\frac{P(A\cap B)}{P(B)}=$ `r round(P_A_dado_B, 2)` $\neq P(A) =$ `r round(P_A, 2)`
+
+Ambos pares de resultados han sido diferentes para la aproximación de 2 y 3 decimales, por lo cual decimos que los eventos A y B son **dependientes**.
+:::
+
+::: {.column width="52%"}
+### Propiedades
+
+Procederemos a mostrar las propiedades de los eventos simples $A$ (nivel de comprensión `Alto`) y $B$ (consultas en $[5, 15]$), junto con sus eventos compuestos asociados y complementos.
+
+- **Unión:** $P(A\cup B)=P(A)+P(B)-P(A\cap B)=$ `r round(P_A_U_B, 4)`
+- **Complementos:** $P(A^c)=$ `r round(P_A_comp, 4)` y $P(B^c)=$ `r round(P_B_comp, 4)`
+- **De Morgan (unión):** $P((A\cup B)^c)=1-P(A\cup B)=$ `r round(P_A_U_B_comp, 4)`
+- **De Morgan (intersección):** $P((A\cap B)^c)=1-P(A\cap B)=$ `r round(P_A_inter_B_comp, 4)`
+
+El **`r round(P_A_U_B * 100, 2)`%** de los registros tiene comprensión alta, entre 5 y 15 consultas, o ambas.
+
+```{r grafico-dependencia}
+P_A_dado_noB <- nrow(DF3 %>% filter(comprension == "Alto", consultas < 5 | consultas > 15)) /
+  nrow(DF3 %>% filter(consultas < 5 | consultas > 15))
+
+barplot(c(P_A_dado_B, P_A_dado_noB),
+        main = "Probabilidad de A tras la ocurrencia de B o Bc",
+        names.arg = c("Probabilidad de A | B", "Probabilidad de A | Bc"),
+        col = "steelblue",
+        sub = "La ocurrencia de B claramente afecta la ocurrencia de A, por lo que son eventos dependientes",
+        ylim = c(0, 0.25),
+        space = 1.5)
+abline(h = P_A, col = "red", lty = 2)
+legend("topright", legend = "P(A)", col = "red", lty = 2)
+```
+:::
+:::::
+
+<!-- falta ampliar las propiedades con su formula y su valor, por ejemplo la diferencia A−B y B−A, la diferencia simetrica AΔB, P(A ∩ Bc), la regla del producto y la probabilidad total. Escribir cada formula en LaTeX sin espacios para que cuente como una sola palabra -->
+
+
+
+## IV.2 Teorema de Bayes e interpretación
+
+```{r bayes}
+# P(B|A): probabilidad de B dentro de los registros con comprensión Alto
+P_B_dado_A <- nrow(DF3 %>% filter(comprension == "Alto", consultas >= 5, consultas <= 15)) /
+  nrow(DF3 %>% filter(comprension == "Alto"))
+
+# P(B|A^c): probabilidad de B dentro de los registros sin comprensión Alto
+P_B_dado_noA <- nrow(DF3 %>% filter(comprension != "Alto", consultas >= 5, consultas <= 15)) /
+  nrow(DF3 %>% filter(comprension != "Alto"))
+
+# Teorema de Bayes expandido
+P_bayes <- (P_B_dado_A * P_A) / (P_B_dado_A * P_A + P_B_dado_noA * P_A_comp)
+```
+
+::::: columns
+::: {.column width="52%"}
+### Teorema de Bayes
+
+Aplicando el Teorema de Bayes para calcular la probabilidad del nivel de comprensión `Alto` ($A$) dado que las consultas están en el rango $[5, 15]$ ($B$):
+
+$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c)} =$ `r round(P_A_dado_B, 7)`
+
+$P(B|A)=$ `r round(P_B_dado_A, 7)`\
+$P(B|A^c)=$ `r round(P_B_dado_noA, 7)`\
+
+Aplicamos el Teorema de Bayes expandido:
+
+$$P(A|B) = \frac{`r round(P_B_dado_A, 4)` \cdot `r round(P_A, 4)`}{`r round(P_B_dado_A, 4)` \cdot `r round(P_A, 4)` + `r round(P_B_dado_noA, 4)` \cdot `r round(P_A_comp, 4)`} = `r round(P_A_dado_B, 7)`$$
+
+Entonces, el valor obtenido es: **`r round(P_bayes, 7)`**
+
+Mientras que el resultado del cálculo directo fue: **`r round(P_A_dado_B, 7)`**
+
+Los cálculos se realizaron adecuadamente, pues los resultados coinciden.
+:::
+
+::: {.column width="48%"}
+### Interpretación en el contexto del estudio
+
+De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de `r round(100 * P_A_dado_B, 2)`%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango [5, 15].
+:::
+:::::
+
+## IV.3 Variable aleatoria discreta: geométrica {.smaller}
+
+<!-- Reusar: VA discreta 1 (exito = mas de 20 consultas). Caso, por que este modelo, parametro, propiedades (E y Var), respuesta y grafico comparando datos empiricos vs modelo teorico -->
+
+## IV.3 Variable aleatoria discreta: binomial {.smaller}
+
+<!-- Vas a reusar: VA discreta 2 (tareas >= 3 en 10 registros). Caso, por que este modelo, parametros, propiedades (E y Var), respuesta y grafico comparando datos empiricos vs modelo teorico -->
+
+## IV.3 Variable aleatoria continua: normal {.smaller}
+
+<!-- Reusar: VA continua 1 (horas de sueno). Validacion con los datos (histograma + curva teorica), por que este modelo, parametros, propiedades y un ejemplo -->
+
+## IV.3 Variable aleatoria continua: exponencial {.smaller}
+
+<!-- Reusar: VA continua 2 (horas de estudio). OJO: en el avance ellos mismos descartaron la exponencial (varianzas distintas); justificar mejor o cambiar el modelo. Validacion con los datos (histograma + curva teorica), propiedades y un ejemplo -->
+
+## V. Conclusiones {.smaller}
+
+<!-- 3 conclusiones consonantes con los objetivos y los resultados, mas limitaciones y que no hay causalidad. -->

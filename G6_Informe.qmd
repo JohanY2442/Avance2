@@ -543,6 +543,21 @@ P_A_dado_B==P_A
 $P(A \cap B)=0.0769$ y $P(A)\cdot P(B)=0.0895$
 $P(A \cap B) \neq P(A) \cdot P(B)$ para la aproximación de 2 y 3 decimales, por lo cual decimos que los eventos son dependientes.
 
+```{r grafico-dependencia}
+P_A_dado_noB <- nrow(DF3 %>% filter(comprension == "Alto", consultas < 5 | consultas > 15)) /
+  nrow(DF3 %>% filter(consultas < 5 | consultas > 15))
+
+barplot(c(P_A_dado_B, P_A_dado_noB),
+        main = "Probabilidad de A tras la ocurrencia de B o Bc",
+        names.arg = c("Probabilidad de A | B", "Probabilidad de A | Bc"),
+        col = "steelblue",
+        sub = "La ocurrencia de B claramente afecta la ocurrencia de A",
+        ylim = c(0, 0.25),
+        space = 1.5)
+abline(h = P_A, col = "red", lty = 2)
+legend("topright", legend = "P(A)", col = "red", lty = 2)
+```
+
 ### Probabilidad condicional y propiedades
 
 Se clasifican los eventos simples $A$ (nivel de comprensión `Alto`) y $B$ (consultas en $[5, 15]$), junto con sus eventos compuestos asociados y complementos. Aplicando las propiedades de probabilidad:
@@ -606,7 +621,7 @@ Los cálculos se realizaron adecuadamente, pues los resultados coinciden.
 
 ### Interpretación en el contexto del estudio
 
-De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de 21.26%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango [5, 15].
+De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de `r round(100 * P_A_dado_B, 2)`%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango [5, 15].
 
 
 ## Variables aleatorias discretas
@@ -967,6 +982,16 @@ paste("Varianza Muestral:", std_estudio^2)
 
 La varianza teórica y muestral difieren lo suficiente para descartar el modelo exponencial como aproximación. Sin embargo, al ser la exponencial la que mejor refleja el comportamiento de la distribución, supondremos que: $estudio \sim Exp(2.889481)$
 
+```{r}
+hist(estudio, probability = TRUE,
+     main = "Distribución Teórica VS Densidad Muestral",
+     xlab = "Número de horas diarias de estudio", ylab = "Densidad muestral")
+
+# Exponencial
+curve(dexp(x, rate = lambda_estudio), col = "dodgerblue", lwd = 2, add = TRUE, from = min_estudio, to = max_estudio)
+```
+
+
 **3. Propiedades:**
 
 $$\begin{cases}
@@ -981,13 +1006,15 @@ CV(estudio) = \frac{SD(estudio)}{|E(estudio)|}  = 1
 ¿Cuál es la probabilidad de que un registro reporte más de 5 horas de estudio y a lo mucho 8 horas?
 
 ```{r}
-pexp(8, lambda_estudio) - pexp(5, lambda_estudio)
+v1 <- pexp(8, lambda_estudio) - pexp(5, lambda_estudio)
+v1
 ```
 ```{r}
-nrow(DF3 %>% filter(5 < estudio & estudio <= 8)) / nrow(DF3)
+v2 <- nrow(DF3 %>% filter(5 < estudio & estudio <= 8)) / nrow(DF3)
+v2
 ```
 
-Comparando la respuesta obtenida desde el modelo exponencial y aquella obtenida directamente desde la muestra, se nota que la elección del modelo ha sido más o menos acertada considerando que las respuestas tienen una diferencia de `0.04028112`.
+Comparando la respuesta obtenida desde el modelo exponencial y aquella obtenida directamente desde la muestra, se nota que la elección del modelo ha sido más o menos acertada considerando que las respuestas tienen una diferencia de solo: `r abs(v1 - v2)`.
 
 
 # Conclusiones

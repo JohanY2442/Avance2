@@ -1,0 +1,862 @@
+---
+title: "Análisis estadístico de las condiciones ambientales y factores de concurrencia en el campus UTEC 2026-1"
+author: "S2-G6"
+date: "2026-06-26"
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    embed-resources: true
+    width: 1280
+    height: 720
+    margin: 0.04
+    fontsize: 1.05em
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup, include=FALSE}
+pkgs <- c("tidyverse", "readr", "ggplot2", "dplyr", "knitr")
+for (p in pkgs) {
+  if (!require(p, character.only = TRUE, quietly = TRUE))
+    install.packages(p, quiet = TRUE)
+  library(p, character.only = TRUE)
+}
+
+# ── Carga ────────────────────────────────────────────────────────────────────
+DF_TablaMala_Encuestas  <- read_csv("Condiciones ambientales en UTEC 2026-1 (respuestas) - Respuestas de formulario 1 (5).csv", show_col_types = FALSE)
+DF_TablaMala_Mediciones <- read_csv("Condiciones ambientales en UTEC 2026-1 - Condiciones del lugar (Respuestas) - Respuestas de formulario 1 (1).csv", show_col_types = FALSE)
+
+unificar_columnas <- function(data, nombre_base) {
+  cols <- names(data)[startsWith(names(data), nombre_base)]
+  apply(data[, cols, drop = FALSE], 1, function(fila) {
+    valores <- fila[!is.na(fila) & fila != ""]
+    if (length(valores) > 0) valores[1] else NA
+  })
+}
+
+cols_piso_enc     <- names(DF_TablaMala_Encuestas)[startsWith(names(DF_TablaMala_Encuestas), "¿En qué piso se encuentra?")]
+cols_ambiente_enc <- names(DF_TablaMala_Encuestas)[startsWith(names(DF_TablaMala_Encuestas), "¿En qué ambiente se encuentra?")]
+cols_piso_med     <- names(DF_TablaMala_Mediciones)[startsWith(names(DF_TablaMala_Mediciones), "¿En qué piso se encuentra?")]
+cols_ambiente_med <- names(DF_TablaMala_Mediciones)[startsWith(names(DF_TablaMala_Mediciones), "¿En qué ambiente se encuentra?")]
+
+DF_TablaBuena_Encuestas <- DF_TablaMala_Encuestas %>%
+  mutate(
+    Piso     = unificar_columnas(., "¿En qué piso se encuentra?"),
+    Ambiente = unificar_columnas(., "¿En qué ambiente se encuentra?"),
+    ID = paste0(Piso, `¿En qué torre se encuentra?`, Ambiente, "-",
+                format(as.POSIXct(`Marca temporal`, format = "%d/%m/%Y %H:%M:%S"), "%d%m"), "-",
+                gsub("[^0-9]", "", `¿En qué horario está llenando el formulario?`))
+  ) %>%
+  select(-all_of(cols_piso_enc), -all_of(cols_ambiente_enc)) %>%
+  relocate(ID, `Marca temporal`, `¿Qué grupo lo/la está encuestando?`,
+           `¿En qué horario está llenando el formulario?`,
+           `¿En qué torre se encuentra?`, Piso, Ambiente)
+
+DF_TablaBuena_Mediciones <- DF_TablaMala_Mediciones %>%
+  mutate(
+    Piso     = unificar_columnas(., "¿En qué piso se encuentra?"),
+    Ambiente = unificar_columnas(., "¿En qué ambiente se encuentra?"),
+    ID = paste0(Piso, `¿En qué torre se encuentra?`, Ambiente, "-",
+                format(as.POSIXct(`Marca temporal`, format = "%d/%m/%Y %H:%M:%S"), "%d%m"), "-",
+                gsub("[^0-9]", "", `¿En qué horario está llenando el formulario?`))
+  ) %>%
+  select(-all_of(cols_piso_med), -all_of(cols_ambiente_med)) %>%
+  relocate(ID, `Marca temporal`, Grupo,
+           `¿En qué horario está llenando el formulario?`,
+           `¿En qué torre se encuentra?`, Piso, Ambiente)
+
+DF_Grupo6_Encuestas <- DF_TablaBuena_Encuestas %>%
+  select(ID, `Marca temporal`, `¿Qué grupo lo/la está encuestando?`,
+         `¿En qué horario está llenando el formulario?`,
+         `¿En qué torre se encuentra?`, Piso, Ambiente,
+         `Nivel de comodidad`, `Frecuencia de uso del ambiente`,
+         `Avance de actividades curriculares`,
+         `Nivel de facilidad para estudiar en el ambiente`) %>%
+  mutate(
+    `¿En qué horario está llenando el formulario?` = case_when(
+      `¿En qué horario está llenando el formulario?` %in% c("09", "9") ~ "9",
+      `¿En qué horario está llenando el formulario?` == "13" ~ "13",
+      `¿En qué horario está llenando el formulario?` == "18" ~ "18",
+      TRUE ~ NA_character_),
+    `Nivel de comodidad` = factor(`Nivel de comodidad`, levels = 1:5, ordered = TRUE),
+    `Frecuencia de uso del ambiente` = factor(`Frecuencia de uso del ambiente`, levels = 1:3, ordered = TRUE),
+    `Avance de actividades curriculares` = factor(`Avance de actividades curriculares`, levels = 1:5, ordered = TRUE),
+    `Nivel de facilidad para estudiar en el ambiente` = factor(
+      `Nivel de facilidad para estudiar en el ambiente`, levels = 1:5, ordered = TRUE)
+  )
+
+DF_Grupo6_Mediciones <- DF_TablaBuena_Mediciones %>%
+  select(ID, `Marca temporal`, Grupo,
+         `¿En qué horario está llenando el formulario?`,
+         `¿En qué torre se encuentra?`, Piso, Ambiente,
+         `Nivel de presión sonora (dB)`, `Nivel de iluminancia`,
+         `Fuente de luz`, `Fuente principal de ruido`,
+         `N° de personas presentes`, `N° de tomacorrientes disponibles`,
+         `Cantidad de luminarias (focos) funcionando`,
+         `Tipo de distractores no relacionados con su propósito`,
+         `Propósito en la comunidad`) %>%
+  mutate(
+    `Nivel de presión sonora (dB)` = as.numeric(gsub(",", ".", gsub("dB", "", `Nivel de presión sonora (dB)`))),
+    `Nivel de iluminancia`          = as.numeric(gsub(",", ".", `Nivel de iluminancia`)),
+    `N° de tomacorrientes disponibles` = as.numeric(`N° de tomacorrientes disponibles`),
+    `Nivel de presión sonora (dB)` = ifelse(
+      `Nivel de presión sonora (dB)` >= 0 & `Nivel de presión sonora (dB)` <= 170,
+      `Nivel de presión sonora (dB)`, NA_real_),
+    `Nivel de iluminancia` = ifelse(
+      `Nivel de iluminancia` >= 0 & `Nivel de iluminancia` <= 2000,
+      `Nivel de iluminancia`, NA_real_),
+    `Nivel de presión sonora (dB)` = ifelse(`Nivel de presión sonora (dB)` < 30, NA_real_, `Nivel de presión sonora (dB)`),
+    `Fuente de luz` = factor(`Fuente de luz`, levels = c("Natural", "Artificial", "Mixta")),
+    `Fuente principal de ruido` = factor(`Fuente principal de ruido`,
+      levels = c("Tráfico vehicular", "Charla de estudiantes", "Obras de construcción", "Pasillos")),
+    `Tipo de distractores no relacionados con su propósito` = factor(
+      `Tipo de distractores no relacionados con su propósito`,
+      levels = c("Auditivos", "Visuales", "Tecnológicos", "Olfativos")),
+    `Propósito en la comunidad` = factor(`Propósito en la comunidad`,
+      levels = c("Estudio", "Tránsito", "Descanso", "Socialización", "Alimentación", "Esparcimiento"))
+  )
+
+DF_Grupo6_Mediciones_Limpio <- DF_Grupo6_Mediciones %>%
+  select(-`Cantidad de luminarias (focos) funcionando`) %>% na.omit()
+DF_Grupo6_Encuestas_Limpio  <- na.omit(DF_Grupo6_Encuestas)
+
+DF_Final <- inner_join(DF_Grupo6_Mediciones_Limpio, DF_Grupo6_Encuestas_Limpio, by = "ID") %>%
+  select(ID, Grupo,
+         `¿En qué horario está llenando el formulario?.x`,
+         `¿En qué torre se encuentra?.x`, `Piso.x`, `Ambiente.x`,
+         `Nivel de presión sonora (dB)`, `Nivel de iluminancia`,
+         `Fuente de luz`, `Fuente principal de ruido`,
+         `N° de personas presentes`, `N° de tomacorrientes disponibles`,
+         `Tipo de distractores no relacionados con su propósito`,
+         `Propósito en la comunidad`,
+         `Nivel de comodidad`, `Frecuencia de uso del ambiente`,
+         `Avance de actividades curriculares`,
+         `Nivel de facilidad para estudiar en el ambiente`) %>%
+  rename(Horario  = `¿En qué horario está llenando el formulario?.x`,
+         Torre    = `¿En qué torre se encuentra?.x`,
+         Piso     = `Piso.x`,
+         Ambiente = `Ambiente.x`)
+```
+
+---
+
+## I. Introducción y Contexto {.smaller .scrollable}
+
+::: columns
+::: {.column width="45%"}
+### Relevancia
+El bienestar y el rendimiento académico de los estudiantes están vinculados con las condiciones físicas de los espacios donde desarrollan sus actividades. Factores como el **ruido**, la **iluminación**, la **concurrencia** y la **disponibilidad de tomacorrientes** influyen en la concentración, el avance de tareas y la comodidad. Este estudio busca generar evidencia cuantitativa y cualitativa que permita identificar patrones y orientar mejoras en la infraestructura del campus UTEC.
+
+### Contexto Metodológico
+* **Población:** Espacios físicos del campus UTEC (ciclo 2026-1). Se midieron **5 ambientes** en **3 franjas horarias** (9:00 am, 1:00 pm, 6:00 pm) con **14 encuestados por sesión**.
+* **Muestreo:** Conveniencia estratificado por ambiente y horario.
+* **Recolección:** Google Forms combinando mediciones técnicas (*phyphox* para ruido y lux) y encuestas, vinculados por ID único.
+* **Dataset final:** **`r nrow(DF_Final)` observaciones** tras limpieza.
+:::
+
+::: {.column width="55%"}
+### Objetivos específicos
+* **OE1:** Analizar relación entre ruido (dB), iluminación (lux), fuente de luz según propósito y facilidad para estudiar.
+* **OE2:** Comparar comodidad y frecuencia de uso según fuente de ruido y distractores.
+* **OE3:** Evaluar influencia del aforo, tomacorrientes y distractores en el avance académico y facilidad de estudio.
+
+### Variables del Estudio
+```{r tabla-variables, echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+tibble(
+  Tipo = c("Nominal","Nominal","Nominal","Nominal",
+            "Ordinal","Ordinal","Ordinal","Ordinal",
+            "Continua","Continua","Discreta","Discreta"),
+  Variable = c("Fuente ppal. ruido","Fuente de luz",
+               "Propósito en comunidad","Tipo distractores",
+               "Facilidad p/ estudiar","Avance act. curriculares",
+               "Nivel de comodidad","Frec. de uso",
+               "**Presión sonora (dB)**","**Iluminancia (lux)**",
+               "**N° personas**","**N° tomacorrientes**"),
+  OE = c("OE2","OE1","OE1","OE2/3","OE1/3","OE3","OE2","OE2","OE1","OE1","OE3","OE3")
+) |> knitr::kable(align = "llc")
+```
+
+*Variables en negrita son las principales del análisis.*
+:::
+:::
+
+---
+
+## III.1 Análisis Univariado – Presión Sonora y Tabla {.smaller}
+
+::: columns
+::: {.column width="35%"}
+```{r tabla-db}
+Q1 <- quantile(DF_Final$`Nivel de presión sonora (dB)`, 0.25, na.rm = TRUE)
+Q3 <- quantile(DF_Final$`Nivel de presión sonora (dB)`, 0.75, na.rm = TRUE)
+
+data.frame(
+  Descriptor = c("Media","Mediana","Desviación estándar",
+                 "Coef. de variación","Q1","Q3","IQR","Mínimo","Máximo"),
+  Valor = c(
+    round(mean(DF_Final$`Nivel de presión sonora (dB)`, na.rm=TRUE), 2),
+    round(median(DF_Final$`Nivel de presión sonora (dB)`, na.rm=TRUE), 2),
+    round(sd(DF_Final$`Nivel de presión sonora (dB)`, na.rm=TRUE), 2),
+    round(sd(DF_Final$`Nivel de presión sonora (dB)`, na.rm=TRUE) /
+            mean(DF_Final$`Nivel de presión sonora (dB)`, na.rm=TRUE), 2),
+    round(Q1, 2), round(Q3, 2), round(Q3-Q1, 2),
+    round(min(DF_Final$`Nivel de presión sonora (dB)`, na.rm=TRUE), 2),
+    round(max(DF_Final$`Nivel de presión sonora (dB)`, na.rm=TRUE), 2)
+  )
+) |> knitr::kable()
+```
+
+Se analizaron **1272 registros** de presión sonora con alta dispersión (IQR = 58.27 dB). La **mediana es 121.63 dB** (CV = 0.34), superando el límite recomendado de 60 dB.
+
+El histograma revela comportamiento **bimodal**: un grupo en torno a 50 dB y otro alrededor de 130 dB. El boxplot muestra caja amplia sin atípicos extremos.
+:::
+
+::: {.column width="65%"}
+```{r plots-db, fig.width=8, fig.height=5.2}
+par(mfrow = c(1,2), mar = c(5,5,4,2), cex.main=1.3, cex.lab=1.15, cex.axis=1.05)
+
+hist(
+  na.omit(DF_Final$`Nivel de presión sonora (dB)`),
+  main = "Distribución del nivel de presión sonora",
+  xlab = "Presión sonora (dB)",
+  ylab = "Frecuencia",
+  col  = "steelblue",
+  border = "white"
+)
+abline(v = median(na.omit(DF_Final$`Nivel de presión sonora (dB)`)),
+       col = "red", lty = 2, lwd = 2)
+legend("topright", legend = "Mediana", col = "red", lty = 2, cex = 1)
+
+boxplot(
+  na.omit(DF_Final$`Nivel de presión sonora (dB)`),
+  main = "Boxplot – Presión sonora (dB)",
+  ylab = "dB",
+  col  = "steelblue"
+)
+
+par(mfrow = c(1,1))
+```
+:::
+:::
+
+---
+
+## III.1 Análisis Univariado – Iluminancia y Tabla {.smaller}
+
+::: columns
+::: {.column width="35%"}
+```{r tabla-lux}
+Q1_lux <- quantile(DF_Final$`Nivel de iluminancia`, 0.25, na.rm=TRUE)
+Q3_lux <- quantile(DF_Final$`Nivel de iluminancia`, 0.75, na.rm=TRUE)
+
+data.frame(
+  Descriptor = c("Media","Mediana","Desviación estándar",
+                 "Coef. de variación","Q1","Q3","IQR","Mínimo","Máximo"),
+  Valor = c(
+    round(mean(DF_Final$`Nivel de iluminancia`, na.rm=TRUE), 2),
+    round(median(DF_Final$`Nivel de iluminancia`, na.rm=TRUE), 2),
+    round(sd(DF_Final$`Nivel de iluminancia`, na.rm=TRUE), 2),
+    round(sd(DF_Final$`Nivel de iluminancia`, na.rm=TRUE) /
+            mean(DF_Final$`Nivel de iluminancia`, na.rm=TRUE), 2),
+    round(Q1_lux, 2), round(Q3_lux, 2), round(Q3_lux-Q1_lux, 2),
+    round(min(DF_Final$`Nivel de iluminancia`, na.rm=TRUE), 2),
+    round(max(DF_Final$`Nivel de iluminancia`, na.rm=TRUE), 2)
+  )
+) |> knitr::kable()
+```
+
+Los **1272 registros** de iluminancia son heterogéneos, con **mediana de 245.63 lux**. El 75% no alcanza los 400 lux y el Q1 está bajo los 118 lux.
+
+El histograma concentra la mayoría entre 0 y 500 lux. El boxplot identifica atípicos sobre 750 lux (luz natural o artificial intensa).
+:::
+
+::: {.column width="65%"}
+```{r plots-lux, fig.width=8, fig.height=5.2}
+par(mfrow = c(1,2), mar = c(5,5,4,2), cex.main=1.3, cex.lab=1.15, cex.axis=1.05)
+
+hist(
+  na.omit(DF_Final$`Nivel de iluminancia`),
+  main   = "Distribución del nivel de iluminancia",
+  xlab   = "Iluminancia (lux)",
+  ylab   = "Frecuencia",
+  col    = "orange",
+  border = "white"
+)
+abline(v = median(na.omit(DF_Final$`Nivel de iluminancia`)),
+       col = "red", lty = 2, lwd = 2)
+legend("topright", legend = "Mediana", col = "red", lty = 2, cex = 1)
+
+boxplot(
+  na.omit(DF_Final$`Nivel de iluminancia`),
+  main = "Boxplot – Iluminancia (lux)",
+  ylab = "Lux",
+  col  = "orange"
+)
+
+par(mfrow = c(1,1))
+```
+:::
+:::
+
+---
+
+## III.1 Análisis Univariado – Variables Categóricas {.smaller}
+
+::: columns
+::: {.column width="40%"}
+```{r tabla-facilidad}
+tabla_facil <- DF_Final %>%
+  count(`Nivel de facilidad para estudiar en el ambiente`) %>%
+  rename(`Frec. absoluta` = n) %>%
+  mutate(`Frec. acumulada` = cumsum(`Frec. absoluta`),
+         `%` = round(`Frec. absoluta` / sum(`Frec. absoluta`) * 100, 2))
+knitr::kable(tabla_facil)
+```
+
+**Mediana:** `r median(as.integer(DF_Final$'Nivel de facilidad para estudiar en el ambiente'), na.rm=TRUE)` · **Moda:** 3
+
+De los 1272 registros, el **32% reportó nivel 3** (moda y mediana). Los niveles 4 y 5 suman el 48.4% y los niveles bajos (1-2) representan el 19.7%.
+
+```{r tabla-dist}
+tabla_dist <- DF_Final %>%
+  count(`Tipo de distractores no relacionados con su propósito`) %>%
+  rename(`Frec. absoluta` = n) %>%
+  mutate(`%` = round(`Frec. absoluta` / sum(`Frec. absoluta`) * 100, 2))
+knitr::kable(tabla_dist)
+```
+
+**Moda: Auditivos** (49.9%)
+:::
+
+::: {.column width="60%"}
+```{r plots-cat, fig.width=7.5, fig.height=5.2}
+p1 <- ggplot(DF_Final, aes(x = `Nivel de facilidad para estudiar en el ambiente`,
+                            fill = `Nivel de facilidad para estudiar en el ambiente`)) +
+  geom_bar(color = "white") +
+  scale_fill_manual(values = rep("purple", 5)) +
+  labs(title = "Nivel de facilidad para estudiar",
+       x = "Nivel (1 = muy difícil, 5 = muy fácil)",
+       y = "Frecuencia", fill = "Nivel de facilidad") +
+  theme_minimal(base_size = 13)
+
+p2 <- ggplot(DF_Final, aes(x = `Tipo de distractores no relacionados con su propósito`)) +
+  geom_bar(fill = "red", color = "white") +
+  labs(title = "Tipo de distractores en los ambientes",
+       x = "Tipo de distractor", y = "Frecuencia") +
+  theme_minimal(base_size = 13)
+
+gridExtra::grid.arrange(p1, p2, nrow = 2)
+```
+:::
+:::
+
+---
+
+## III.2 Análisis de Interacción – Par Numérico y Numérica × Categórica {.smaller}
+
+::: columns
+::: {.column width="50%"}
+```{r plot-scatter, fig.width=5.5, fig.height=3.5}
+par(mar = c(5,5,4,2), cex.main=1.2, cex.lab=1.05, cex.axis=1.0)
+plot(
+  x = DF_Final$`Nivel de presión sonora (dB)`,
+  y = DF_Final$`Nivel de iluminancia`,
+  main = "Relación entre ruido e iluminancia",
+  xlab = "Presión sonora (dB)",
+  ylab = "Iluminancia (lux)",
+  pch  = 16,
+  col  = "steelblue"
+)
+abline(lm(`Nivel de iluminancia` ~ `Nivel de presión sonora (dB)`, data = DF_Final),
+       col = "orange", lty = 2)
+```
+:::
+
+::: {.column width="50%"}
+```{r plot-boxplot-fuenteluz, fig.width=5.5, fig.height=3.5}
+par(mar = c(5,5,4,2), cex.main=1.2, cex.lab=1.05, cex.axis=1.0)
+boxplot(
+  `Nivel de presión sonora (dB)` ~ `Fuente de luz`,
+  data = DF_Final,
+  main = "Ruido según fuente de luz",
+  xlab = "Fuente de luz",
+  ylab = "Presión sonora (dB)",
+  col  = "lightgreen"
+)
+```
+:::
+:::
+
+::: columns
+::: {.column width="50%"}
+```{r plot-lux-facilidad, fig.width=5.5, fig.height=3.5}
+par(mar = c(5,5,4,2), cex.main=1.2, cex.lab=1.05, cex.axis=1.0)
+boxplot(
+  `Nivel de iluminancia` ~ `Nivel de facilidad para estudiar en el ambiente`,
+  data = DF_Final,
+  main = "Iluminancia según facilidad para estudiar",
+  xlab = "Facilidad para estudiar (1=Muy difícil, 5=Muy fácil)",
+  ylab = "Iluminancia (lux)",
+  col  = "purple"
+)
+```
+:::
+
+::: {.column width="50%"}
+```{r plot-db-proposito, fig.width=5.5, fig.height=3.7}
+ggplot(DF_Final, aes(x = `Propósito en la comunidad`,
+                     y = `Nivel de presión sonora (dB)`)) +
+  geom_boxplot(fill = "slategray") +
+  labs(title = "Presión sonora según propósito del ambiente",
+       x = "Propósito del ambiente",
+       y = "Presión sonora (dB)") +
+  theme_minimal(base_size = 11) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+:::
+:::
+
+---
+
+## III.2 Análisis de Interacción – Par Categórico y Concurrencia {.smaller}
+
+::: columns
+::: {.column width="50%"}
+```{r plot-comodidad-ruido, fig.width=5.5, fig.height=3.3}
+tabla_o2 <- table(
+  DF_Final$`Fuente principal de ruido`,
+  DF_Final$`Nivel de comodidad`
+)
+colores_marron <- c("#4E342E","#6D4C41","#8D6E63","#BCAAA4")
+
+par(mar = c(4,4,3,1), cex.main=1.0, cex.lab=0.9, cex.axis=0.85)
+barplot(
+  prop.table(tabla_o2, margin = 1) * 100,
+  beside  = TRUE,
+  main    = "Comodidad según fuente de ruido",
+  xlab    = "Fuente de ruido",
+  ylab    = "Porcentaje (%)",
+  col     = colores_marron,
+  legend  = rownames(tabla_o2),
+  args.legend = list(x = "topright", cex = 0.6)
+)
+```
+:::
+
+::: {.column width="50%"}
+```{r plot-frecuso-distractores, fig.width=5.5, fig.height=3.3}
+tabla_o2b <- table(
+  DF_Final$`Tipo de distractores no relacionados con su propósito`,
+  DF_Final$`Frecuencia de uso del ambiente`
+)
+colores_celeste <- c("#4FC3F7","#81D4FA","#B3E5FC","#E1F5FE")
+
+par(mar = c(4,4,3,1), cex.main=1.0, cex.lab=0.9, cex.axis=0.85)
+barplot(
+  tabla_o2b,
+  beside  = TRUE,
+  main    = "Frec. de uso según distractores",
+  xlab    = "Frecuencia de uso (1=Baja,2=Media,3=Alta)",
+  ylab    = "N° de observaciones",
+  col     = colores_celeste,
+  legend  = rownames(tabla_o2b),
+  args.legend = list(x = "topright", cex = 0.6)
+)
+```
+:::
+:::
+
+::: columns
+::: {.column width="50%"}
+```{r plot-personas-facilidad, fig.width=5.5, fig.height=3.3}
+ggplot(DF_Final, aes(x = `Nivel de facilidad para estudiar en el ambiente`,
+                     y = `N° de personas presentes`,
+                     fill = `Nivel de facilidad para estudiar en el ambiente`)) +
+  geom_boxplot() +
+  scale_fill_manual(values = rep("purple", 5)) +
+  labs(title = "Personas según facilidad",
+       x = "Facilidad (1=difícil,5=fácil)",
+       y = "N° de personas") +
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "none")
+```
+:::
+
+::: {.column width="50%"}
+```{r plot-toma-avance, fig.width=5.5, fig.height=3.3}
+ggplot(DF_Final, aes(x = `Avance de actividades curriculares`,
+                     y = `N° de tomacorrientes disponibles`,
+                     fill = `Avance de actividades curriculares`)) +
+  geom_boxplot() +
+  scale_fill_manual(values = rep("pink", 5)) +
+  labs(title = "Tomacorrientes según avance",
+       x = "Avance (1=nada,5=completo)",
+       y = "N° tomacorrientes") +
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "none")
+```
+:::
+:::
+
+---
+
+## IV. Análisis Probabilístico – Probabilidad Empírica {.smaller .scrollable}
+
+::: columns
+::: {.column width="50%"}
+### EA₁: Presión sonora (dB)
+
+Seleccionar una medición al azar y observar la **categoría acústica**.
+
+$$\Omega_1 = \{\text{Bajo},\ \text{Moderado},\ \text{Alto},\ \text{Muy alto}\}$$
+
+```{r prob-empirica-db}
+dB_v <- na.omit(DF_Final$`Nivel de presión sonora (dB)`)
+presion_cat <- cut(dB_v, breaks = c(30,70,90,120,Inf),
+                   labels = c("Bajo","Moderado","Alto","Muy alto"), right = FALSE)
+freq_abs <- table(presion_cat)
+freq_rel <- prop.table(freq_abs)
+
+data.frame(
+  `Evento atómico` = names(freq_abs),
+  `Frec. absoluta` = as.integer(freq_abs),
+  `P empírica`     = round(as.numeric(freq_rel), 4),
+  check.names = FALSE
+) |> knitr::kable()
+```
+
+**Muy alto (≥120 dB)** concentra la mayor probabilidad empírica: hay más del **50% de probabilidad** de que un ambiente esté en condición acústica crítica.
+
+Comprobación: La suma de las probabilidades es igual a **`r sum(freq_rel)`**
+:::
+
+::: {.column width="50%"}
+### EA₂: Facilidad para estudiar
+
+Seleccionar un registro al azar y observar el **nivel de facilidad** reportado.
+
+$$\Omega_2 = \{\text{Muy difícil},\ \text{Difícil},\ \text{Regular},\ \text{Fácil},\ \text{Muy fácil}\}$$
+
+```{r prob-empirica-facilidad}
+facilidad_vec <- na.omit(as.integer(DF_Final$`Nivel de facilidad para estudiar en el ambiente`))
+facilidad_factor <- factor(facilidad_vec, levels = 1:5,
+                           labels = c("Muy difícil","Difícil","Regular","Fácil","Muy fácil"))
+freq_abs_fac <- table(facilidad_factor)
+freq_rel_fac <- prop.table(freq_abs_fac)
+
+data.frame(
+  `Evento atómico`      = names(freq_abs_fac),
+  `Frec. absoluta`      = as.integer(freq_abs_fac),
+  `P empírica`          = round(as.numeric(freq_rel_fac), 4),
+  check.names = FALSE
+) |> knitr::kable()
+```
+
+**Regular (Nivel 3)** es el más probable. Los niveles 4 y 5 acumulan ~48% y los niveles 1-2 el ~20%.
+
+Comprobación: La suma de las probabilidades es igual a **`r sum(freq_rel_fac)`**
+:::
+:::
+
+::: columns
+::: {.column width="50%"}
+**E₁:** Presión sonora **Muy alto** (≥120 dB) · **E₂:** Facilidad **Muy difícil** (Nivel 1)
+
+```{r tabla-bayes}
+data_prob <- DF_Final %>%
+  filter(!is.na(`Nivel de presión sonora (dB)`),
+         !is.na(`Nivel de facilidad para estudiar en el ambiente`)) %>%
+  mutate(
+    cat_dB  = cut(`Nivel de presión sonora (dB)`, breaks = c(30,70,90,120,Inf),
+                  labels = c("Bajo","Moderado","Alto","Muy alto"), right = FALSE),
+    niv_fac = as.integer(`Nivel de facilidad para estudiar en el ambiente`)
+  )
+n_total_prob <- nrow(data_prob)
+n_E1 <- sum(data_prob$cat_dB == "Muy alto")
+n_E2 <- sum(data_prob$niv_fac == 1)
+n_interseccion <- sum(data_prob$cat_dB == "Muy alto" & data_prob$niv_fac == 1)
+P_E1 <- n_E1/n_total_prob; P_E2 <- n_E2/n_total_prob
+P_inter <- n_interseccion/n_total_prob
+P_E1_por_E2 <- P_E1 * P_E2
+P_union <- P_E1 + P_E2 - P_inter
+P_E1_dado_E2 <- P_inter / P_E2
+P_E2c <- 1 - P_E2
+n_E1_inter_E2c <- sum(data_prob$cat_dB == "Muy alto" & data_prob$niv_fac != 1)
+P_E1_dado_E2c <- n_E1_inter_E2c / sum(data_prob$niv_fac != 1)
+P_E1_total <- P_E1_dado_E2 * P_E2 + P_E1_dado_E2c * P_E2c
+P_E2_dado_E1_Bayes <- (P_E1_dado_E2 * P_E2) / P_E1_total
+
+data.frame(
+  Operación = c("P(E₁)","P(E₂)","P(E₁∩E₂) empírica","P(E₁)×P(E₂) teórico",
+                "P(E₁∪E₂)","P(E₁|E₂)","P(E₁|E₂ᶜ)","P(E₁) total","P(E₂|E₁) Bayes"),
+  Valor = round(c(P_E1,P_E2,P_inter,P_E1_por_E2,P_union,
+                  P_E1_dado_E2,P_E1_dado_E2c,P_E1_total,P_E2_dado_E1_Bayes), 4)
+) |> knitr::kable()
+```
+:::
+
+::: {.column width="50%"}
+**E₁ y E₂ son DEPENDIENTES** — P(E₁∩E₂) ≠ P(E₁)·P(E₂).
+
+**Probabilidad total:**
+
+$$P(E_1) = P(E_1|E_2)\cdot P(E_2) + P(E_1|E_2^c)\cdot P(E_2^c)$$
+
+**Teorema de Bayes:**
+
+$$P(E_2|E_1) = \frac{P(E_1|E_2)\cdot P(E_2)}{P(E_1)}$$
+
+La probabilidad de percibir un ambiente como **Muy difícil** aumenta de **8.10% → 10.85%** cuando el ruido es Muy alto.
+
+**Tabla de contingencia:**
+
+```{r tabla-contingencia}
+addmargins(table(
+  `Presión sonora` = data_prob$cat_dB,
+  `Facilidad`      = data_prob$niv_fac
+)) |> knitr::kable()
+```
+:::
+:::
+
+---
+
+## IV. Variables Aleatorias Discretas – Caso 1: Geométrica {.smaller}
+
+::: columns
+::: {.column width="50%"}
+**Caso:** ¿Cuántas mediciones se necesitan hasta encontrar la **primera** con **charla de estudiantes** como fuente de ruido?
+
+Sea $X$ el número de mediciones hasta el primer éxito.
+
+$$X \sim \text{Geom}(p = 0.52)$$
+
+$$P(X = k) = (1-p)^{k-1} \cdot p, \quad k = 1, 2, 3, \ldots$$
+
+```{r geom-props}
+fuente_ruido_validos <- DF_Final %>% filter(!is.na(`Fuente principal de ruido`))
+n_charla <- sum(fuente_ruido_validos$`Fuente principal de ruido` == "Charla de estudiantes")
+n_total_ruido <- nrow(fuente_ruido_validos)
+p_geom <- n_charla / n_total_ruido
+
+data.frame(
+  Propiedad = c("Esperanza: E(X) = 1/p",
+                "Varianza: Var(X) = (1-p)/p²",
+                "Desv. est.: SD(X)"),
+  Valor = round(c(1/p_geom, (1-p_geom)/p_geom^2, sqrt((1-p_geom)/p_geom^2)), 4)
+) |> knitr::kable()
+```
+
+**P(X = 5)** = $(1-0.52)^4 \cdot 0.52$ = **`r round(dgeom(4, p_geom), 4)`** ≈ 2.71%
+
+**P(X < 3)** = P(X ≤ 2) = **`r round(pgeom(1, p_geom), 4)`** ≈ 77.19%
+
+Existe un **77.19%** de probabilidad de necesitar menos de 3 mediciones para encontrar por primera vez un ambiente con charla de estudiantes.
+:::
+
+::: {.column width="50%"}
+```{r plots-geom, fig.width=6, fig.height=5.5}
+k_zoom <- 1:15
+
+par(mfrow = c(3,1), mar = c(4,5,3,2), cex.main=1.2, cex.lab=1.1, cex.axis=1.05)
+
+barplot(
+  dgeom(k_zoom - 1, prob = p_geom),
+  names.arg = k_zoom,
+  col   = "#6D4C41",
+  border = "white",
+  main  = "Distribución puntual Geométrica (k=1..15)",
+  xlab  = "k", ylab = "P(X = k)"
+)
+
+plot(k_zoom, pgeom(k_zoom-1, prob=p_geom, lower.tail=TRUE),
+     type="s", col="#6D4C41", lwd=2,
+     main="Dist. acumulada izquierda P(X ≤ k)",
+     xlab="k", ylab="P(X ≤ k)")
+points(k_zoom, pgeom(k_zoom-1, prob=p_geom, lower.tail=TRUE), col="#6D4C41", pch=19, cex=0.9)
+
+plot(k_zoom, pgeom(k_zoom-1, prob=p_geom, lower.tail=FALSE),
+     type="s", col="#6D4C41", lwd=2,
+     main="Dist. acumulada derecha P(X > k)",
+     xlab="k", ylab="P(X > k)")
+points(k_zoom, pgeom(k_zoom-1, prob=p_geom, lower.tail=FALSE), col="#6D4C41", pch=19, cex=0.9)
+
+par(mfrow = c(1,1))
+```
+:::
+:::
+
+---
+
+## IV. Variables Aleatorias Discretas – Caso 2: Binomial {.smaller}
+
+::: columns
+::: {.column width="50%"}
+**Caso:** De **15 estudiantes** seleccionados al azar, ¿cuántos reportan facilidad **alta** (niveles 4 o 5) para estudiar?
+
+$$X \sim \text{Binom}(n=15,\ p \approx 0.4775)$$
+
+$$P(X=k) = \binom{15}{k}p^k(1-p)^{15-k}, \quad k=0,\ldots,15$$
+
+```{r binom-props}
+p_bin <- sum(na.omit(as.integer(DF_Final$`Nivel de facilidad para estudiar en el ambiente`)) >= 4) /
+         length(na.omit(as.integer(DF_Final$`Nivel de facilidad para estudiar en el ambiente`)))
+n_bin <- 15
+
+data.frame(
+  Propiedad = c("Esperanza: E(X) = n·p",
+                "Varianza: Var(X) = n·p·(1-p)",
+                "Desv. est.: SD(X)"),
+  Valor = round(c(n_bin*p_bin, n_bin*p_bin*(1-p_bin), sqrt(n_bin*p_bin*(1-p_bin))), 4)
+) |> knitr::kable()
+```
+
+En promedio, se espera que **~7 de 15** estudiantes reporten facilidad alta para estudiar.
+
+**P(X = 6)** = $\binom{15}{6}p^6(1-p)^9$ = **`r round(dbinom(6, n_bin, p_bin), 4)`** ≈ 17.21%
+
+**P(X ≥ 10)** = 1 − P(X ≤ 9) = **`r round(pbinom(9, n_bin, p_bin, lower.tail=FALSE), 4)`** ≈ 11.34%
+:::
+
+::: {.column width="50%"}
+```{r plots-binom, fig.width=6, fig.height=5.5}
+k_bin <- 0:15
+
+par(mfrow = c(3,1), mar = c(4,5,3,2), cex.main=1.2, cex.lab=1.1, cex.axis=1.05)
+
+barplot(
+  dbinom(k_bin, size=n_bin, prob=p_bin),
+  names.arg = k_bin,
+  col   = "darkorchid",
+  border = "white",
+  main  = "Distribución puntual Binomial(15, p≈0.4775)",
+  xlab  = "k", ylab = "P(X = k)"
+)
+
+plot(k_bin, pbinom(k_bin, n_bin, p_bin, lower.tail=TRUE),
+     type="s", col="darkorchid", lwd=2,
+     main="Dist. acumulada izquierda P(X ≤ k)",
+     xlab="k", ylab="P(X ≤ k)")
+points(k_bin, pbinom(k_bin, n_bin, p_bin, lower.tail=TRUE), col="darkorchid", pch=19, cex=0.9)
+
+plot(k_bin, pbinom(k_bin, n_bin, p_bin, lower.tail=FALSE),
+     type="s", col="darkorchid", lwd=2,
+     main="Dist. acumulada derecha P(X > k)",
+     xlab="k", ylab="P(X > k)")
+points(k_bin, pbinom(k_bin, n_bin, p_bin, lower.tail=FALSE), col="darkorchid", pch=19, cex=0.9)
+
+par(mfrow = c(1,1))
+```
+:::
+:::
+
+---
+
+## IV. Variables Aleatorias Continuas {.smaller}
+
+::: columns
+::: {.column width="50%"}
+### Caso 1 – Presión sonora (dB): Normal (supuesto)
+
+La distribución real es **bimodal**; no ajusta a Normal, Exponencial ni Uniforme. Se asume normalidad de forma ilustrativa.
+
+$$X \sim \mathcal{N}(\mu = 115.04,\ \sigma = 37.06)$$
+
+```{r normal-props}
+dB_vec <- na.omit(DF_Final$`Nivel de presión sonora (dB)`)
+mu_dB <- mean(dB_vec); sd_dB <- sd(dB_vec)
+
+data.frame(
+  Propiedad = c("Parámetro μ (media)","Parámetro σ (desv. est.)",
+                "E[X] = μ","Var[X] = σ²","SD[X] = σ"),
+  Valor = round(c(mu_dB, sd_dB, mu_dB, sd_dB^2, sd_dB), 2)
+) |> knitr::kable()
+```
+
+**Pregunta:** ¿Cuál es la P de que una medición caiga entre 90 y 140 dB?
+
+$$P(90 < X < 140) = \texttt{pnorm}(140,\mu,\sigma) - \texttt{pnorm}(90,\mu,\sigma)$$
+
+$$= `r round(pnorm(140, mu_dB, sd_dB) - pnorm(90, mu_dB, sd_dB), 4)` \approx 50\%$$
+
+```{r plot-continua-db, fig.width=5.8, fig.height=3.6}
+x_dB <- seq(min(dB_vec)-10, max(dB_vec)+10, length.out=300)
+par(mar = c(4,5,3,2), cex.main=1.1, cex.lab=1.0, cex.axis=0.95)
+hist(dB_vec, freq=FALSE,
+     main="Empírico vs. Normal teórica – Presión sonora",
+     xlab="dB", ylab="Densidad", col="steelblue", border="white", breaks=20)
+lines(x_dB, dnorm(x_dB, mean=mu_dB, sd=sd_dB), col="red", lwd=2)
+legend("topleft", legend=c("Distribución empírica","Normal teórica"),
+       fill=c("steelblue",NA), lty=c(NA,1), col=c(NA,"red"), lwd=c(NA,2),
+       border=c("white",NA), cex=0.8)
+```
+:::
+
+::: {.column width="50%"}
+### Caso 2 – Iluminancia (lux): Exponencial
+
+$$X \sim \text{Exp}(\lambda), \quad \lambda = 1/\mu$$
+
+```{r exp-props}
+lux_vec <- na.omit(DF_Final$`Nivel de iluminancia`)
+mu_lux <- mean(lux_vec); lambda_lux <- 1/mu_lux
+
+data.frame(
+  Propiedad = c("Parámetro λ (tasa)","E[X] = 1/λ","Var[X] = 1/λ²","SD[X] = 1/λ"),
+  Fórmula   = c("1/media empírica","1/λ","1/λ²","1/λ"),
+  Valor     = round(c(lambda_lux, 1/lambda_lux, (1/lambda_lux)^2, 1/lambda_lux), 4)
+) |> knitr::kable()
+```
+
+**Pregunta:** ¿Cuál es la P de que la iluminancia esté entre 100 y 400 lux?
+
+$$P(100<X<400) = \texttt{pexp}(400,\lambda) - \texttt{pexp}(100,\lambda)$$
+
+$$= `r round(pexp(400, lambda_lux) - pexp(100, lambda_lux), 4)` \approx 44.23\%$$
+
+```{r plot-continua-lux, fig.width=5.8, fig.height=3.6}
+x_lux <- seq(0, max(lux_vec)+50, length.out=300)
+par(mar = c(4,5,3,2), cex.main=1.1, cex.lab=1.0, cex.axis=0.95)
+hist(lux_vec, freq=FALSE,
+     main="Empírico vs. Exponencial teórica – Iluminancia",
+     xlab="Lux", ylab="Densidad", col="orange", border="white", breaks=20)
+lines(x_lux, dexp(x_lux, rate=lambda_lux), col="darkred", lwd=2)
+legend("topright", legend=c("Distribución empírica","Exp. teórica"),
+       fill=c("orange",NA), lty=c(NA,1), col=c(NA,"darkred"), lwd=c(NA,2),
+       border=c("white",NA), cex=0.8)
+```
+:::
+:::
+
+---
+
+## V. Conclusiones {.smaller}
+
+::: columns
+::: {.column width="50%"}
+**El ruido es el principal factor adverso del campus**
+
+Con una mediana de **121.63 dB**, la mitad de los ambientes supera ampliamente el límite recomendado de 60 dB para el estudio. Los distractores auditivos representan casi el **50%** de todos los registros, y los espacios de Alimentación concentran los niveles más críticos.
+
+**La iluminación es insuficiente en la mayoría de ambientes**
+
+Más del **75% de los espacios no alcanza los 300 lux** mínimos recomendados para lectura, constituyendo una limitación objetiva e independiente del horario o propósito del espacio.
+:::
+
+::: {.column width="50%"}
+**La concurrencia impacta más que la infraestructura**
+
+La percepción de facilidad para estudiar no mostró asociación clara con iluminancia ni tomacorrientes. Los ambientes **menos concurridos** son consistentemente percibidos como más propicios para el estudio.
+
+**Hallazgos probabilísticos clave**
+
+- P(Muy alto dB) > 50% → más de la mitad de los registros en condición acústica crítica.
+- **Teorema de Bayes:** probabilidad de "Muy difícil" aumenta de 8.1% → 10.85% con ruido Muy alto.
+- Con p = 0.52, existe **77.19%** de probabilidad de encontrar un ambiente con charla en menos de 3 mediciones (Geométrica).
+- Iluminancia se ajusta a **Exponencial**: alta heterogeneidad de condiciones lumínicas en el campus.
+:::
+:::
