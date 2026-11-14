@@ -1,0 +1,127 @@
+## IV.3 Variable aleatoria continua: normal
+
+```{r normal-calculos}
+# Horas de sueño de toda la sección
+su <- DF3$sueno
+
+# Parámetros del modelo (salen de los datos)
+mu_su  <- mean(su)
+sd_su  <- sd(su)
+med_su <- median(su)
+cv_su  <- sd_su / mu_su
+
+# Ejemplo: dormir 4 horas o menos
+p4_teo <- pnorm(4, mean = mu_su, sd = sd_su)
+p4_emp <- mean(su <= 4)
+```
+
+::::: columns
+::: {.column width="52%"}
+```{r normal-grafico, fig.width=6.6, fig.height=5.4}
+hist(su, breaks = seq(0, 14, by = 1), probability = TRUE,
+     col = "gray85", border = "white",
+     main = "Horas de sueño: datos vs. modelo normal",
+     xlab = "Horas de sueño (h)", ylab = "Densidad")
+curve(dnorm(x, mean = mu_su, sd = sd_su),
+      add = TRUE, col = "steelblue", lwd = 3)
+legend("topright", legend = c("Datos", "Modelo normal"),
+       col = c("gray75", "steelblue"), lwd = c(10, 3), bty = "n")
+```
+:::
+
+::: {.column width="48%"}
+### ¿Por qué normal?
+
+- Los datos forman una **campana** alrededor de 7 horas.
+- Media (`r round(mu_su, 2)` h) ≈ mediana (`r med_su` h): distribución **aproximadamente simétrica**.
+- $CV = `r round(cv_su, 2)`$, lejos de 1, por lo que se descarta la exponencial.
+
+### Modelo
+
+$X$: horas de sueño de un registro elegido al azar.
+
+$X \sim N(\mu = `r round(mu_su, 2)`,\ \sigma = `r round(sd_su, 2)`)$
+
+### Propiedades
+
+```{r normal-tabla}
+knitr::kable(data.frame(
+  Propiedad = c("E(X) = μ", "V(X) = σ²", "SD(X) = σ", "CV(X) = σ/μ"),
+  Valor = round(c(mu_su, sd_su^2, sd_su, cv_su), 2)
+))
+```
+
+### Ejemplo
+
+¿Probabilidad de dormir **4 horas o menos**?
+
+$P(X \leq 4) = `r round(p4_teo, 4)`$ (modelo) frente a `r round(p4_emp, 4)` (datos): una diferencia de solo `r round(abs(p4_emp - p4_teo), 4)`.
+:::
+:::::
+
+## IV.3 Variable aleatoria continua: exponencial
+
+```{r expo-calculos}
+# Horas de estudio de toda la sección
+es <- DF3$estudio
+
+# Parámetro del modelo: lambda = 1 / media
+lam_es <- 1 / mean(es)
+
+# Teórico vs. datos
+E_teo_es  <- 1 / lam_es
+V_teo_es  <- 1 / lam_es^2
+E_dat_es  <- mean(es)
+V_dat_es  <- var(es)
+CV_dat_es <- sd(es) / mean(es)
+
+# Ejemplo: estudiar más de 5 y hasta 8 horas
+p58_teo <- pexp(8, rate = lam_es) - pexp(5, rate = lam_es)
+p58_emp <- mean(es > 5 & es <= 8)
+```
+
+::::: columns
+::: {.column width="52%"}
+```{r expo-grafico, fig.width=6.6, fig.height=5.4}
+hist(es, breaks = seq(0, 10, by = 1), probability = TRUE,
+     col = "gray85", border = "white", ylim = c(0, 0.36),
+     main = "Horas de estudio: datos vs. modelo exponencial",
+     xlab = "Horas de estudio al día (h)", ylab = "Densidad")
+curve(dexp(x, rate = lam_es),
+      add = TRUE, col = "darkorange", lwd = 3)
+legend("topright", legend = c("Datos", "Modelo exponencial"),
+       col = c("gray75", "darkorange"), lwd = c(10, 3), bty = "n")
+```
+:::
+
+::: {.column width="48%"}
+### ¿Por qué exponencial?
+
+- Solo toma valores **positivos** y es **asimétrica a la derecha**: muchos registros con pocas horas y cada vez menos con muchas.
+- Se descarta la normal por la asimetría y la uniforme porque las frecuencias no son parejas.
+
+### Modelo
+
+$X$: horas de estudio de un registro elegido al azar.
+
+$X \sim Exp(\lambda = 1/\bar{x} = `r round(lam_es, 4)`)$
+
+### Propiedades: modelo vs. datos
+
+```{r expo-tabla}
+knitr::kable(data.frame(
+  Propiedad = c("E(X) = 1/λ", "V(X) = 1/λ²", "CV(X)"),
+  Modelo = round(c(E_teo_es, V_teo_es, 1), 2),
+  Datos  = round(c(E_dat_es, V_dat_es, CV_dat_es), 2)
+))
+```
+
+**Limitación:** la varianza del modelo (`r round(V_teo_es, 2)`) es mayor que la real (`r round(V_dat_es, 2)`), así que el modelo **exagera la dispersión**. Aun así, es el que mejor refleja la forma de los datos entre los modelos vistos.
+
+### Ejemplo
+
+¿Probabilidad de estudiar **más de 5 y hasta 8 horas**?
+
+$P(5 < X \leq 8) = `r round(p58_teo, 4)`$ (modelo) frente a `r round(p58_emp, 4)` (datos): el modelo da más probabilidad a los valores altos, como se esperaba.
+:::
+:::::
