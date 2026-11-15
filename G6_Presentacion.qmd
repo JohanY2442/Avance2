@@ -113,13 +113,201 @@ data.frame(
 :::
 :::::
 
-## III. Análisis descriptivo {.smaller}
+## III.1. Análisis descriptivo: análisis univariado
 
-<!-- Reusar de G6_Informe.qmd (Avance2): seccion Analisis descriptivo. Lo descriptivo de la PG1 que guio la eleccion de las variables aleatorias con un solo grafico por cada uno. Si cabe: incluir interaccion (2 categoricas, 2 numericas, 1 categorica y 1 numerica). Graficos con titulo claro, ejes con unidades, leyenda si hace falta y color coherente. Mostrar media/mediana y desviacion/IQR e interpretarlos. -->
+```{r graficos-univariados}
+#| layout-ncol: 2
+#| fig-width: 6
+#| fig-height: 2.6
 
-## IV.1 Probabilidad empírica {.smaller}
+boxplot(DF3$consultas,
+        main = "Boxplot - Número de consultas a la IA",
+        xlab = paste("Cantidad de consultas | Mediana =", median(DF3$consultas, na.rm = TRUE),
+                     "| Q3 =", quantile(DF3$consultas, 0.75, na.rm = T, type = 3)),
+        horizontal = TRUE)
+
+DF3 %>%
+  count(comprension) %>%
+  mutate(p = n / sum(n) * 100) %>%
+  ggplot(aes(x = comprension, y = p, fill = comprension)) +
+  geom_col(color = "black", width = 0.75) +
+  geom_text(aes(label = paste0(round(p, 2), "%")), vjust = -0.5, size = 3.5) +
+  scale_fill_manual(values = c("gray92", "gray80", "gray66", "gray50", "gray35")) +
+  labs(title = "Proporción de registros según nivel de comprensión",
+       x = "Nivel de comprensión", y = "Porcentaje de registros (%)") +
+  ylim(0, 65) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+boxplot(DF3$sueno,
+        main = "Horas de sueño",
+        xlab = "Horas",
+        col = "gray80",
+        horizontal = TRUE)
+
+hist(DF3$sueno,
+     main = "Horas de sueño",
+     xlab = "Horas",
+     col = "gray80",
+     ylab = "Frecuencia")
+axis(1, at = 0:ceiling(max(DF3$sueno)))
+abline(v = mean(DF3$sueno, na.rm = TRUE), col = "firebrick", lwd = 2, lty = 2)
+legend("topright",
+       legend = paste("Media =", round(mean(DF3$sueno, na.rm = TRUE), 2)),
+       col = "firebrick", lty = 2, lwd = 2, bty = "n")
+```
+
+- **Número de consultas a la IA:** En al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta.
+- **Nivel de comprensión:** La moda y la mediana son Moderado.
+- **Horas de sueño:** la mitad duerme 7 horas o menos, y el 50% central concentra su descanso entre las 6 y 8 horas.
+
+## III. Análisis descriptivo: análisis de interacción
+
+```{r graficos-interaccion}
+#| layout-ncol: 2
+#| fig-width: 6
+#| fig-height: 2.6
+
+# Objetivo 1
+ggplot(DF3, aes(x = factor(satisfaccion), y = consultas)) +
+  geom_boxplot(varwidth = TRUE) +
+  labs(title = "Nivel de satisfacción vs Número de consultas",
+       x = "Nivel de satisfacción",
+       y = "Cantidad de consultas")
+
+# Objetivo 2
+ggplot(DF3, aes(x = consultas, y = estudio)) +
+  geom_point(color = "navy", size = 2.5) +
+  labs(
+    title = "Consultas vs. horas de estudio",
+    x = "Consultas a la IA",
+    y = "Horas de estudio"
+  )
+
+# Objetivo 3a: mismos filtros del informe
+DFC <- DF3[DF3$uso_ia == "Usó IA", ]
+DFC$curso <- toupper(DFC$curso)
+DFC$uso <- as.character(DFC$uso)
+DFC <- DFC[DFC$curso %in% c("CC1105", "CS2031", "CC2101", "CS2013"), ]
+DFC <- DFC[DFC$uso %in% c("Resolver ejercicios", "Resumir", "Programar", "Redactar"), ]
+
+DFC %>%
+  count(curso, uso) %>%
+  group_by(curso) %>%
+  mutate(p = n / sum(n) * 100) %>%
+  ggplot(aes(x = curso, y = p, fill = uso)) +
+  geom_col(width = 0.75) +
+  geom_text(aes(label = paste0(round(p, 1), "%")),
+            position = position_stack(vjust = 0.5), size = 3) +
+  scale_fill_manual(values = c("gray92", "gray78", "gray64", "gray50")) +
+  labs(title = "Proporción de usos de la IA según el curso",
+       x = "Curso", y = "Porcentaje de registros (%)", fill = "Uso principal") +
+  theme_minimal()
+
+# Objetivo 4
+ggplot(DF3, aes(x = comprension, y = sueno, fill = comprension)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("gray92", "gray80", "gray66", "gray50", "gray35")) +
+  geom_hline(yintercept = mean(DF3$sueno, na.rm = TRUE),
+             color = "firebrick", linewidth = 1, linetype = "dashed") +
+  annotate("text", x = 5, y = 12,
+           label = paste("Media =", round(mean(DF3$sueno, na.rm = TRUE), 2)),
+           color = "firebrick") +
+  labs(title = "Sueño según comprensión",
+       x = "Comprensión",
+       y = "Horas de sueño") +
+  theme(legend.position = "none")
+```
+
+::::: columns
+::: {.column width="70%"}
+- **Objetivo 1:** Se nota un claro incremento en la mediana de `consultas` de acuerdo al incremento del nivel de satisfacción.
+- **Objetivo 2:** hay una tendencia de que a mayor cantidad de horas de estudio habrá más consultas que se realizaron.
+:::
+
+::: {.column width="30%"}
+- **Objetivo 3a:** el uso de la IA cambia según el curso.
+- **Objetivo 4:** No se observa una tendencia clara.
+:::
+:::::
 
 <!-- Reusar: Probabilidad empirica (consultas por niveles y satisfaccion). Las dos variables con sus espacios muestrales, probabilidades empiricas y la validacion de que suman 1 -->
+
+## IV.1 Probabilidad empírica
+
+```{r prob-empirica}
+# Variable 1: consultas (mismo cálculo del informe)
+consultas_cat <- cut(DF3$consultas,
+                     breaks = c(0, 1, 11, 21, 31, Inf),
+                     right = FALSE,
+                     labels = c("Sin uso", "Bajo", "Moderado",
+                                "Frecuente", "Muy frecuente"))
+frec_con <- table(consultas_cat)
+prob_con <- prop.table(frec_con)
+
+# Variable 2: satisfacción (mismo cálculo del informe)
+frec_sat <- table(DF3$satisfaccion)
+prob_sat <- prop.table(frec_sat)
+```
+
+::::: columns
+::: {.column width="50%"}
+### Variable 1: consultas
+
+**Experimento aleatorio:** seleccionar al azar un registro de la muestra efectiva y observar el nivel de uso de IA según el número de consultas realizadas ese día.
+
+**Espacio de resultados:** $\Omega_{EA_1} = \{\text{Sin uso}, \text{Bajo}, \text{Moderado}, \text{Frecuente}, \text{Muy frecuente}\}$, donde Sin uso $= 0$, Bajo $= [1;10]$, Moderado $= [11;20]$, Frecuente $= [21;30]$ y Muy frecuente $= [31;+\infty\rangle$ consultas.
+
+**Eventos atómicos:** $C_i$: seleccionar un registro al azar cuyo nivel de uso de IA sea el $i$-ésimo de $\Omega_{EA_1}$, con $i = 1, 2, 3, 4, 5$.
+
+$P(C_1) =$ `r round(prob_con["Sin uso"], 4)`; $P(C_2) =$ `r round(prob_con["Bajo"], 4)`; $P(C_3) =$ `r round(prob_con["Moderado"], 4)`; $P(C_4) =$ `r round(prob_con["Frecuente"], 4)`; $P(C_5) =$ `r round(prob_con["Muy frecuente"], 4)`.
+
+**Validación:** $`r round(prob_con["Sin uso"], 4)` + `r round(prob_con["Bajo"], 4)` + `r round(prob_con["Moderado"], 4)` + `r round(prob_con["Frecuente"], 4)` + `r round(prob_con["Muy frecuente"], 4)` = `r sum(prob_con)`$
+
+```{r grafico-consultas}
+#| fig-width: 6
+#| fig-height: 2.4
+
+ggplot(as.data.frame(prob_con), aes(x = consultas_cat, y = Freq)) +
+  geom_col(fill = "gray70", color = "black") +
+  ylim(0, 0.6) +
+  labs(title = "Probabilidad empírica del nivel de uso de IA",
+       x = "Nivel de uso (según número de consultas)",
+       y = "Probabilidad") +
+  theme(plot.margin = margin(5, 5, 0, 5))
+```
+
+El nivel más probable es el bajo, con `r round(prob_con["Bajo"], 4)`. Las categorías moderado (`r round(prob_con["Moderado"], 4)`), frecuente (`r round(prob_con["Frecuente"], 4)`) y muy frecuente (`r round(prob_con["Muy frecuente"], 4)`) se mantienen por debajo de 0.2, y sin uso tiene `r round(prob_con["Sin uso"], 4)`, que corresponde a días sin ninguna consulta a la IA.
+:::
+
+::: {.column width="50%"}
+### Variable 2: satisfacción
+
+**Experimento aleatorio:** seleccionar al azar un registro de la muestra efectiva y observar su nivel de satisfacción con el avance académico del día.
+
+**Espacio de resultados:** $\Omega_{EA_2} = \{1, 2, 3, 4, 5\}$, donde 1 es muy baja y 5 muy alta.
+
+**Eventos atómicos:** $S_i$: seleccionar un registro al azar cuyo nivel de satisfacción sea $i$, con $i = 1, 2, 3, 4, 5$.
+
+$P(S_1) =$ `r round(prob_sat["1"], 4)`; $P(S_2) =$ `r round(prob_sat["2"], 4)`; $P(S_3) =$ `r round(prob_sat["3"], 4)`; $P(S_4) =$ `r round(prob_sat["4"], 4)`; $P(S_5) =$ `r round(prob_sat["5"], 4)`.
+
+**Validación:** $`r round(prob_sat["1"], 4)` + `r round(prob_sat["2"], 4)` + `r round(prob_sat["3"], 4)` + `r round(prob_sat["4"], 4)` + `r round(prob_sat["5"], 4)` = `r sum(prob_sat)`$
+
+```{r grafico-satisfaccion}
+#| fig-width: 6
+#| fig-height: 2.8
+
+ggplot(as.data.frame(prob_sat), aes(x = Var1, y = Freq)) +
+  geom_col(fill = "gray70", color = "black") +
+  ylim(0, 0.6) +
+  labs(title = "Probabilidad empírica de la variable satisfacción",
+       x = "Nivel de satisfacción (1 = muy baja, 5 = muy alta)",
+       y = "Probabilidad")
+```
+
+El nivel más probable es 3, con `r round(prob_sat["3"], 4)`. La probabilidad de una satisfacción alta (4 o 5) es `r round(prob_sat["4"] + prob_sat["5"], 4)`, casi el doble que la de una baja (1 o 2), que es `r round(prob_sat["1"] + prob_sat["2"], 4)`.
+:::
+:::::
 
 ## IV.2 Probabilidad condicional
 
@@ -180,6 +368,7 @@ Ambos pares de resultados han sido diferentes para la aproximación de 2 y 3 dec
 Procederemos a mostrar las propiedades de los eventos simples $A$ (nivel de comprensión `Alto`) y $B$ (consultas en $[5, 15]$), junto con sus eventos compuestos asociados y complementos.
 
 - **Unión:** $P(A\cup B)=P(A)+P(B)-P(A\cap B)=$ `r round(P_A_U_B, 4)`
+- **Intersección:** $P(A\cap B)=$ `r round(P_A_inter_B, 4)`
 - **Complementos:** $P(A^c)=$ `r round(P_A_comp, 4)` y $P(B^c)=$ `r round(P_B_comp, 4)`
 - **De Morgan (unión):** $P((A\cup B)^c)=1-P(A\cup B)=$ `r round(P_A_U_B_comp, 4)`
 - **De Morgan (intersección):** $P((A\cap B)^c)=1-P(A\cap B)=$ `r round(P_A_inter_B_comp, 4)`
@@ -187,18 +376,24 @@ Procederemos a mostrar las propiedades de los eventos simples $A$ (nivel de comp
 El **`r round(P_A_U_B * 100, 2)`%** de los registros tiene comprensión alta, entre 5 y 15 consultas, o ambas.
 
 ```{r grafico-dependencia}
+# P(A|B^c): comprensión Alto entre los registros FUERA del rango [5, 15]
 P_A_dado_noB <- nrow(DF3 %>% filter(comprension == "Alto", consultas < 5 | consultas > 15)) /
   nrow(DF3 %>% filter(consultas < 5 | consultas > 15))
 
-barplot(c(P_A_dado_B, P_A_dado_noB),
-        main = "Probabilidad de A tras la ocurrencia de B o Bc",
-        names.arg = c("Probabilidad de A | B", "Probabilidad de A | Bc"),
-        col = "steelblue",
-        sub = "La ocurrencia de B claramente afecta la ocurrencia de A, por lo que son eventos dependientes",
-        ylim = c(0, 0.25),
-        space = 1.5)
-abline(h = P_A, col = "red", lty = 2)
-legend("topright", legend = "P(A)", col = "red", lty = 2)
+datos_grafico <- data.frame(
+  Probabilidad = c("P(A|Bc)", "P(A|B)"),
+  Valor = c(P_A_dado_noB, P_A_dado_B)
+)
+
+ggplot(datos_grafico, aes(x = Probabilidad, y = Valor)) +
+  geom_col(fill = "steelblue", width = 0.4) +
+  geom_hline(yintercept = P_A, color = "red", linetype = "dashed", linewidth = 1) +
+  annotate("text", x = 2.4, y = P_A + 0.015, label = "P(A)", color = "red", size = 6) +
+  scale_x_discrete(limits = c("P(A|Bc)", "P(A|B)")) +
+  ylim(0, 0.25) +
+  labs(title = "Probabilidad de A tras la ocurrencia de B o Bc",
+       x = NULL, y = "Probabilidad") +
+  theme_minimal(base_size = 18)
 ```
 :::
 :::::

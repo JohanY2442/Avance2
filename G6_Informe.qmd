@@ -173,7 +173,7 @@ legend("topright",
        legend = paste("Mediana =", median(DF3$consultas, na.rm = TRUE), "\nQ3 =", quantile(DF3$consultas, 0.75, na.rm = T, type = 3)), bty = "n")
 ```
 
-En al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos 25% de los registros, los estudiantes han hecho 19 o más consultas diarias a la IA.
+En al menos la mitad de los registros, el estudiante hace `r median(DF3$consultas, na.rm = TRUE)` o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta. Esto se ve reforzado al notar que, en por lo menos 25% de los registros, los estudiantes han hecho `r quantile(DF3$consultas, 0.75, na.rm = T, type = 3)` o más consultas diarias a la IA.
 
 ```{r}
 plot(table(DF3$consultas),
@@ -529,6 +529,10 @@ paste("Probabilidad de B:", P_B)
 ```{r}
 P_A_dado_B = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(5 <= consultas & consultas <= 15))
 
+P_B_dado_A = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(comprension == "Alto"))
+
+P_B_dado_noA = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension != "Alto")) / nrow(DF3 %>% filter(comprension != "Alto"))
+
 P_A_dado_B
 ```
 
@@ -592,21 +596,39 @@ P_A_d_B<-P_A_inter_B/P_B
 P_A_d_B
 P_A_inter_B
 ```
-Los eventos compuestos son en este caso A union B, interseccion con complemento y union con complemento y ademas tambien se considera A complemento y B complemento a diferencia de A y B que serian simples 
+Los único eventos simples son A y B, el resto serían eventos compuestos.
 
 * **Unión:** $P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0.2500 + 0.3582 - 0.0769 = 0.5313$
+
+Este primer resultado indica que el $53.13\%$ de los registros de la jornada presentan una comprensión alta, un número de consultas entre 5 y 15, o ambas condiciones simultáneamente.
+
 * **Complementos:** $P(A^c) = 1 - P(A) = 0.7500 \quad \text{y} \quad P(B^c) = 1 - P(B) = 0.6418$
 * **Leyes de De Morgan (Complemento de la Unión e Intersección):** 
   $$P((A \cup B)^c) = 1 - P(A \cup B) = 0.4688, \qquad P((A \cap B)^c) = 1 - P(A \cap B) = 0.9231$$
 
-**Propiedades adicionales**
-Interseccion:$$P(A \cap B)=0.08011869$$
-Diferencia:$$P(A \setminus B) = P(A) - P(A \cap B)=0.224035608308605-0.08011869=0.143916918308605$$
+* **Intersección:** $$P(A \cap B)=0.08011869$$
+
+* **Diferencia:** 
+
+$$P(A \setminus B) = P(A) - P(A \cap B)=0.224035608308605-0.08011869=0.143916918308605$$
 
 $$P(B \setminus A)=P(B)-P(A \cap B)=0.3768546-0.08011869=0.29673591$$
 
-$$P(A \triangle B)=P(A \cup B)-P(A \setminus B)=0.5207715-0.08011869=0.44065281$$
-Estos resultados indican que el $53.13\%$ de los registros de la jornada presentan una comprensión alta, un número de consultas entre 5 y 15, o ambas condiciones simultáneamente.
+* **Diferencia simétrica:** 
+
+$$P(A \triangle B)=P(A \cup B)-P(A \cap B)=0.5207715-0.08011869=0.44065281$$
+
+* **Regla del producto:**
+
+$P(A \cap B) = P(A) * P(B|A)=$ `r P_A` * `r P_B_dado_A` = `r P_A * P_B_dado_A`
+
+$P(A \cap B) = P(B) * P(A|B)=$ `r P_B` * `r P_A_dado_B` = `r P_B * P_A_dado_B`
+
+* **Probabilidad total:**
+
+$P(B) = P(B|A) * P(A) + P(B|A^c) * P(A^c) =$ `r round(P_B_dado_A, 4)` * `r round(P_A, 4)` + `r round(P_B_dado_noA, 4)` * `r round(P_A_comp, 4)` = `r P_B_dado_A * P_A + P_B_dado_noA * P_A_comp`
+
+$P(A) = P(A|B) * P(B) + P(A|B^c) * P(B^c) =$ `r round(P_A_dado_B, 4)` * `r round(P_B, 4)` + `r round(P_A_dado_noB, 4)` * `r round(P_B_comp, 4)` = `r P_A_dado_B * P_B + P_A_dado_noB * P_B_comp`
 
 <!-- falta ampliar las propiedades con su formula y su valor, por ejemplo la diferencia A−B y B−A, la diferencia simetrica AΔB, P(A ∩ Bc), la regla del producto y la probabilidad total. Escribir cada formula en LaTeX sin espacios para que cuente como una sola palabra -->
 
@@ -616,14 +638,10 @@ Aplicando el Teorema de Bayes para calcular la probabilidad del nivel de compren
 $$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c)} = 0.2125984$$
 
 ```{r}
-P_B_dado_A = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3 %>% filter(comprension == "Alto"))
-
 P_B_dado_A
 ```
 
 ```{r}
-P_B_dado_noA = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension != "Alto")) / nrow(DF3 %>% filter(comprension != "Alto"))
-
 P_B_dado_noA
 ```
 
@@ -822,6 +840,7 @@ plot(k_all, pmf, type = "h", xlab = "k", ylab = "P(X = k)",
 
 **1. Variable de estudio:**
 Horas de sueño
+
 **2. Validación de la distribución:** 
 
 ```{r}
@@ -865,29 +884,25 @@ legend("topright", legend = c("Distribución Normal", "Distribucion Exponencial"
        col = c("forestgreen", "dodgerblue","purple"), lty=1, lwd=2)
 ```
 
-Para la curva normal se debera comprobar en este caso la simetria
+Para la curva normal se deberá comprobar en este caso la simetría
 
-```{r}
-#simetria
-mediana_
-media_
-```
-$$mediana=7$$
-$$media= 6.6$$
+$mediana=$ `r mediana_`
 
-No se esta cumpliendo la simetria por lo que se descarta
+$media=$ `r media_`
 
-Para la curva exponencial se debera revisar el cv que deberia de ser 100
+No se está cumpliendo la simetría por lo que se descarta
+
+Para la curva exponencial se deberá revisar el cv, que debería de ser 100
 
 ```{r}
 cv_
 ```
 $$CV=29.49941$$
 
-Como no es 100 entonces se descarta en la exponencial 
+No es 100, entonces se descarta la exponencial 
 
 
-Para la distribucion uniforme se debera revisar si el rango de datos es aproximadamente 3.464 veces la desviacion estandar muestral y comprobar las varianzas
+Para la distribución uniforme se deberá revisar si el rango de datos es aproximadamente 3.464 veces la desviación estándar muestral y comprobar las varianzas
 
 ```{r}
 max_-min_
@@ -897,38 +912,49 @@ sd_^2
 ((max_-min_)^2)/12
 ```
 
-Comparacion de varianza teorica con la empirica
+Comparación de varianza teórica con la empírica
 $$\frac{(max - min)^2}{12} = 16.33333$$
 $$sd^2 =3.791035$$
-Relacion rango con desviacion estandar 
+Relación rango con desviación estándar 
 $$max-min=14$$
 $$ sd\cdot \sqrt(12) =6.744807$$
-Como la varianza teorica no es similar a la empirica y tambien la relacion rango con la desviacion estandar tampoco cumple por lo que se descarta
+Como la varianza teórica no es similar a la empírica y también la relación rango con la desviación estándar tampoco cumple por lo que se descarta
 
 **3. Propiedades:** 
 
-Se tendra en cuenta en este caso la distribucion normal debido a la grafica y que sus valores son los mas cercanos un 6.60 a 7 
+Se tendrá en cuenta en este caso la distribución normal debido a la gráfica y que sus valores son los mas cercanos un 6.60 a 7 
 
 ```{r}
 sd_
 media_
 ```
 
-Por lo que el modelo propuesto sera 
+Por lo que el modelo propuesto será: 
 $$N(\mu=6.600329,\sigma=1.947058)$$
+
+```{r}
+hist(DF3$sueno, probability = TRUE, col = "lightgray", border = "white", 
+     main = "Distribución Teórica VS Densidad Muestral",
+     xlab = "Horas de sueño", ylab = "Densidad" )
+
+curve(dnorm(x, mean = media_, sd = sd_), col = "forestgreen", lwd = 2, add = TRUE, from = min_, to = max_)
+
+legend("topright", legend = c("Distribución Normal"),
+       col = c("forestgreen"), lty=1, lwd=2)
+```
 
 **4. Ejemplo:** 
 
 ¿Cual es la probabilidad de que un estudiante duerma 4 horas o menos? 
 
-Probabilidad Teorica:
+Probabilidad Teórica:
 
 ```{r}
 prob_4_teo<-pnorm(q=4,mean=media_, sd=sd_)
 prob_4_teo
 ```
 $$probTeorica=0.09085359$$
-Probabilidad Empirica:
+Probabilidad Empírica:
 
 ```{r}
 prob_4_empirica<-mean(DF3$sueno<=4,na.rm=TRUE)
