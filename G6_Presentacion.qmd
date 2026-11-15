@@ -253,11 +253,142 @@ De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el 
 
 ## IV.3 Variable aleatoria discreta: geométrica {.smaller}
 
-<!-- Reusar: VA discreta 1 (exito = mas de 20 consultas). Caso, por que este modelo, parametro, propiedades (E y Var), respuesta y grafico comparando datos empiricos vs modelo teorico -->
+```{r geo-calculos, echo=FALSE}
+exito <- DF3$consultas > 20
+p <- mean(exito); q <- 1 - p; N <- length(exito)
+P_X5    <- prod(c(q, q, q, q, p))   # FFFFÉ
+P_acum5 <- pgeom(4, p)              # P(X <= 5)
 
-## IV.3 Variable aleatoria discreta: binomial {.smaller}
+set.seed(6)
+mezcla <- sample(exito)
+espera <- diff(c(0, which(mezcla)))
+k_geo  <- 1:15
+emp_geo <- as.numeric(table(factor(espera, levels = k_geo))) / length(espera)
+```
 
-<!-- Vas a reusar: VA discreta 2 (tareas >= 3 en 10 registros). Caso, por que este modelo, parametros, propiedades (E y Var), respuesta y grafico comparando datos empiricos vs modelo teorico -->
+::::: columns
+:::: {.column width="50%"}
+**Caso:** Al revisar registros seleccionados al azar, uno tras otro, ¿cuál es la probabilidad de que el primer éxito (É) sea el 5.º registro?
+
+Éxito (É): más de 20 consultas a la IA. Fracaso (F): 20 o menos.
+
+**Modelo**
+
+- $X$: registros revisados hasta el primer éxito
+- $X\sim Geom(p)$ con $p=\frac{`r sum(exito)`}{`r N`}=`r round(p, 4)`$
+
+**Eventos atómicos**
+
+$\Omega=\{\text{É},\text{FÉ},\text{FFÉ},\text{FFFÉ},\text{FFFFÉ},\dots\}$ con $P(X=k)=(1-p)^{k-1}p$
+
+```{r geo-props, echo=FALSE}
+knitr::kable(data.frame(
+  Propiedad = c("E(X) = 1/p", "Var(X) = (1-p)/p²", "SD(X) = √Var(X)"),
+  Modelo = round(c(1 / p, q / p^2, sqrt(q) / p), 4),
+  Datos  = round(c(mean(espera), var(espera), sd(espera)), 4)
+))
+```
+
+::: {style="background:#f0f0f0; padding:6px 10px; border-radius:6px;"}
+$P(X=5)=(1-`r round(p, 4)`)^4\cdot`r round(p, 4)`=`r round(P_X5, 4)`\approx`r round(P_X5 * 100, 2)`\%$
+
+$P(X\le5)=1-(1-`r round(p, 4)`)^5=`r round(P_acum5, 4)`\approx`r round(P_acum5 * 100, 2)`\%$
+
+Hay `r round(P_X5 * 100, 2)`% de probabilidad de que el primer registro con más de 20 consultas sea el 5.º, y `r round(P_acum5 * 100, 2)`% de encontrarlo en 5 registros o menos.
+:::
+::::
+
+:::: {.column width="50%"}
+```{r geo-graficos, echo=FALSE, fig.width=6, fig.height=5.5}
+par(mfrow = c(3, 1), mar = c(4, 4, 2.5, 1))
+
+barplot(rbind(dgeom(k_geo - 1, p), emp_geo), beside = TRUE, names.arg = k_geo,
+        main = "Distribución de X: modelo vs datos",
+        xlab = "Registros revisados hasta el primer éxito (k)", ylab = "Probabilidad",
+        legend.text = c("Modelo", "Datos"), args.legend = list(x = "topright", cex = 0.8))
+
+plot(k_geo, pgeom(k_geo - 1, p), type = "s",
+     main = "Acumulada izquierda: P(X ≤ k)",
+     xlab = "Registros revisados (k)", ylab = "Probabilidad", ylim = c(0, 1))
+
+plot(k_geo, q^(k_geo - 1), type = "s",
+     main = "Acumulada derecha: P(X ≥ k)",
+     xlab = "Registros revisados (k)", ylab = "Probabilidad", ylim = c(0, 1))
+```
+::::
+:::::
+
+## IV.4 Variable aleatoria discreta: binomial {.smaller}
+
+```{r bin-calculos, echo=FALSE}
+n_tar   <- 10
+exito_t <- DF3$tareas >= 3
+p_tar   <- mean(exito_t)
+E_tar   <- n_tar * p_tar
+V_tar   <- n_tar * p_tar * (1 - p_tar)
+P_X3    <- dbinom(3, n_tar, p_tar)   # P(X = 3)
+P_le2   <- pbinom(2, n_tar, p_tar)   # P(X <= 2)
+
+set.seed(6)
+mezcla_t <- sample(exito_t)
+n_gr    <- floor(length(mezcla_t) / n_tar)
+grupos  <- matrix(mezcla_t[1:(n_gr * n_tar)], nrow = n_tar)
+exitos  <- colSums(grupos)
+k_bin   <- 0:n_tar
+emp_bin <- as.numeric(table(factor(exitos, levels = k_bin))) / length(exitos)
+```
+
+::::: columns
+:::: {.column width="50%"}
+**Caso:** De 10 registros seleccionados al azar, ¿cuál es la probabilidad de que exactamente 3 sean éxito (É)?
+
+Éxito (É): día con 3 o más tareas en las que la IA ahorró tiempo.
+
+**Modelo**
+
+- $X$: número de éxitos en 10 registros
+- $X\sim Bin(10,p)$ con $p=\frac{`r sum(exito_t)`}{`r length(exito_t)`}=`r round(p_tar, 4)`$
+
+**Eventos atómicos**
+
+$\Omega=\{0,1,2,\dots,10\}$ con $P(X=k)=\binom{10}{k}p^k(1-p)^{10-k}$
+
+```{r bin-props, echo=FALSE}
+knitr::kable(data.frame(
+  Propiedad = c("E(X) = np", "Var(X) = np(1-p)", "SD(X) = √Var(X)"),
+  Modelo = round(c(E_tar, V_tar, sqrt(V_tar)), 4),
+  Datos  = round(c(mean(exitos), var(exitos), sd(exitos)), 4)
+))
+```
+
+::: {style="background:#f0f0f0; padding:6px 10px; border-radius:6px;"}
+$P(X=3)=\binom{10}{3}(`r round(p_tar, 4)`)^3(1-`r round(p_tar, 4)`)^7=`r round(P_X3, 4)`\approx`r round(P_X3 * 100, 2)`\%$
+
+$P(X<3)=P(X\le2)=`r round(P_le2, 4)`\approx`r round(P_le2 * 100, 2)`\%$
+
+Hay `r round(P_X3 * 100, 2)`% de probabilidad de que exactamente 3 de los 10 registros sean éxito, y `r round(P_le2 * 100, 2)`% de que sean menos de 3.
+:::
+::::
+
+:::: {.column width="50%"}
+```{r bin-graficos, echo=FALSE, fig.width=6, fig.height=5.5}
+par(mfrow = c(3, 1), mar = c(4, 4, 2.5, 1))
+
+barplot(rbind(dbinom(k_bin, n_tar, p_tar), emp_bin), beside = TRUE, names.arg = k_bin,
+        main = "Distribución de X: modelo vs datos",
+        xlab = "Registros con 3 o más tareas (de 10)", ylab = "Probabilidad",
+        legend.text = c("Modelo", "Datos"), args.legend = list(x = "topright", cex = 0.8))
+
+plot(k_bin, pbinom(k_bin, n_tar, p_tar), type = "s",
+     main = "Acumulada izquierda: P(X ≤ k)",
+     xlab = "Registros con 3 o más tareas (k)", ylab = "Probabilidad", ylim = c(0, 1))
+
+plot(k_bin, pbinom(k_bin - 1, n_tar, p_tar, lower.tail = FALSE), type = "s",
+     main = "Acumulada derecha: P(X ≥ k)",
+     xlab = "Registros con 3 o más tareas (k)", ylab = "Probabilidad", ylim = c(0, 1))
+```
+::::
+:::::
 
 ## IV.3 Variable aleatoria continua: normal {.smaller}
 
