@@ -148,9 +148,14 @@ Se recolecta la información desde un formulario diario en Google Forms. Enlace:
 Cada variable será registrada en el formulario de Google Forms, el cual contendrá todas las restricciones de valores dependiendo del tipo y naturaleza de la variable.
 
 # Limpieza de datos
+
 Como ya se explicó esta parte en la primera entrega, solo se hará uso de 1 csv previamente exportados (`DF3` tiene la tabla prolija).
+
 ```{r}
 DF3<-read_csv("DF3.csv")
+DF3$comprension <- factor(DF3$comprension,
+                          levels = c("Muy bajo", "Bajo", "Moderado", "Alto", "Muy alto"),
+                          ordered = TRUE)
 ```
 
 # Análisis descriptivo
@@ -194,7 +199,7 @@ round(prop.table(table(DF3$comprension)) * 100, 2)
 round(cumsum(prop.table(table(DF3$comprension))) * 100, 2)
 ```
 
-La moda y la mediana son Moderado (56.46%; el acumulado pasa el 50% ahí con 66.01%). El 33.98% tuvo comprensión alta o muy alta y solo el 9.55% baja o muy baja.
+La moda y la mediana son Moderado (57.27%; el acumulado pasa el 50% ahí con 69.73%). El 30.27% tuvo comprensión alta o muy alta y solo el 12.46% baja o muy baja.
 
 ```{r}
 DF3 %>%
@@ -219,7 +224,7 @@ IQR(DF3$sueno)
 round(sd(DF3$sueno) / mean(DF3$sueno),2) #CV
 ```
 
-El coeficiente de variación es `0.28` por lo que tanto la media como la mediana representan bien el sueño de los estudiantes y al ser `sueno` una variable cuantitativa continua, se eligieron boxplot e histograma para describirla.
+El coeficiente de variación es `0.29` por lo que tanto la media como la mediana representan bien el sueño de los estudiantes y al ser `sueno` una variable cuantitativa continua, se eligieron boxplot e histograma para describirla.
 
 ```{r}
 boxplot(DF3$sueno,
@@ -273,7 +278,7 @@ Se puede notar que al menos el 70% de los registros de cada categoría de satisf
 cor.test(DF3$consultas,DF3$estudio,method="spearman")
 ```
 
-Se usó el coeficiente de correlación de Spearman debido a que resiste mejor la presencia de outliers, el cual fue de 0.497, lo que confirma una asociación positiva y moderada, además de que con el p-value \< 0.001 podemos asegurar significancia estadística, ya que indica que no es resultado de azar. En conclusión, hay una tendencia de que a mayor cantidad de horas de estudio habrá más consultas que se realizaron.
+Se usó el coeficiente de correlación de Spearman debido a que resiste mejor la presencia de outliers, el cual fue de 0.497, lo que muestra una asociación positiva y moderada, además de que la prueba da un p-value \< 0.001. Como hay registros repetidos por estudiante, ese valor debe interpretarse con cuidado. Hay una tendencia de que a mayor cantidad de horas de estudio habrá más consultas que se realizaron.
 
 ```{r}
 ggplot(DF3, aes(x = consultas, y = estudio)) +
@@ -319,7 +324,7 @@ DFC %>%
   theme_minimal()
 ```
 
-Con 137 registros, en CC2101 predomina resolver ejercicios (61.90%), mientras que en CS2031, CS2013 y CC1105 predomina programar (48.65%, 41.67% y 40%), aunque en CS2031 resumir también es alto (40.54%). Es decir, el uso de la IA cambia según el curso.
+Con 244 registros, en CC2101 predomina resolver ejercicios (70.83%), mientras que en CS2031, CS2013 y CC1105 predomina programar (58.62%, 45.10% y 37.93%), aunque en CC1105 resolver ejercicios también es alto (34.48%). Es decir, el uso de la IA cambia según el curso.
 
 ### Objetivo 3b: uso vs. tareas
 
@@ -359,14 +364,12 @@ DF3 %>%
   group_by(uso_g) %>%
   summarise(
     registros   = n(),
-    ta_ahorrada = round(mean(tareas > 0, na.rm = TRUE) * 100,2),
-
+    ta_ahorrada = round(mean(tareas > 0, na.rm = TRUE) * 100,2)
   ) %>%
   rename(Uso = uso_g)
 ```
 
-Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades, existe una relación favorable. El 98.28% de los registros con uso 'Redactar' reportó ahorro de tiempo, seguido por 'Resolver ejercicios' (89.04	%), 'Resumir' (75.95%), 'Programar' (77.24%) y 'Otros' (64.86%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios', 'Resumir' y 'Programar', al concentrar la mayor cantidad de registros.
-
+Aunque no se puede afirmar una causalidad directa, porque el tiempo ahorrado podría corresponder a otras actividades, existe una relación favorable. El 98.28% de los registros con uso 'Redactar' reportó ahorro de tiempo, seguido por 'Resolver ejercicios' (89.04%), 'Resumir' (75.95%), 'Programar' (77.24%) y 'Otros' (64.86%). Sin embargo, el mayor impacto global recae en 'Resolver ejercicios', 'Resumir' y 'Programar', al concentrar la mayor cantidad de registros.
 
 ### Objetivo 4: comprensión vs. sueño
 
@@ -393,9 +396,9 @@ DF3%>%group_by(comprension)%>% summarise(n=n(),
                                          )
 ```
 
-En Moderado y Alto, que reúnen la mayoría de los registros, el Q1 es 6, la mediana 7 y el Q3 8 horas, es decir, el 50% central duerme entre 6 y 8 horas.
+En Moderado y Alto, que reúnen la mayoría de los registros, el Q1 es 5 y 5.7 horas respectivamente, la mediana 7 y el Q3 8 horas, es decir, el 50% central duerme aproximadamente entre 5 y 8 horas.
 
-El CV se ubica entre 0.20 y 0.30 en todos los niveles, por lo que la media representa bien el sueño de cada grupo. No se observa una tendencia clara: las medias van de 6.71 h (Alto) a 7.55 h (Bajo) sin seguir el orden de la comprensión.
+El CV se ubica entre 0.17 y 0.33 según el nivel, por lo que la dispersión cambia entre grupos. No se observa una tendencia clara: las medias van de 6.51 h (Moderado) a 7.13 h (Muy alto) sin seguir el orden de la comprensión.
 
 # Análisis Probabilístico
 
@@ -408,7 +411,8 @@ GRUPO <- 6
 DF3_grupo <- DF3 %>% filter(Grupo == GRUPO)
 nrow(DF3_grupo)
 ```
-El Grupo 6 aportó 166 observaciones limpias sobre las 416 de la muestra efectiva de la sección.
+
+El Grupo 6 aportó `r nrow(DF3_grupo)` observaciones limpias sobre las `r nrow(DF3)` de la muestra efectiva de la sección.
 
 ### Variable 1: consultas
 
@@ -437,7 +441,7 @@ frec_con
 round(prob_con, 4)
 ```
 
-$P(C_1) = 34/416 = 0.0817$; $P(C_2) = 216/416 = 0.5192$; $P(C_3) = 71/416 = 0.1707$; $P(C_4) = 42/416 = 0.1010$; $P(C_5) = 53/416 = 0.1274$.
+$P(C_1) = 61/674 = 0.0905$; $P(C_2) = 356/674 = 0.5282$; $P(C_3) = 113/674 = 0.1677$; $P(C_4) = 67/674 = 0.0994$; $P(C_5) = 77/674 = 0.1142$.
 
 **5. Validación:**
 
@@ -445,7 +449,7 @@ $P(C_1) = 34/416 = 0.0817$; $P(C_2) = 216/416 = 0.5192$; $P(C_3) = 71/416 = 0.17
 sum(prob_con)
 ```
 
-$0.0817 + 0.5192 + 0.1707 + 0.1010 + 0.1274 = 1$
+$\sum_{i=1}^{5} P(C_i) = `r round(sum(prob_con), 4)`$
 
 **Interpretación:**
 
@@ -458,7 +462,7 @@ barplot(prob_con,
         ylim = c(0, 0.6))
 ```
 
-El nivel más probable es el bajo, con 0.5192. Las categorías moderado (0.1707), frecuente (0.1010) y muy frecuente (0.1274) se mantienen por debajo de 0.2, y sin uso tiene 0.0817, que corresponde a días sin ninguna consulta a la IA.
+El nivel más probable es el bajo, con 0.5282. Las categorías moderado (0.1677), frecuente (0.0994) y muy frecuente (0.1142) se mantienen por debajo de 0.2, y sin uso tiene 0.0905, que corresponde a días sin ninguna consulta a la IA.
 
 ### Variable 2: satisfacción
 
@@ -477,7 +481,7 @@ frec_sat
 round(prob_sat, 4)
 ```
 
-$P(S_1) = 30/416 = 0.0721$; $P(S_2) = 35/416 = 0.0841$; $P(S_3) = 194/416 = 0.4663$; $P(S_4) = 125/416 = 0.3005$; $P(S_5) = 32/416 = 0.0769$.
+$P(S_1) = 49/674 = 0.0727$; $P(S_2) = 71/674 = 0.1053$; $P(S_3) = 305/674 = 0.4525$; $P(S_4) = 186/674 = 0.2760$; $P(S_5) = 63/674 = 0.0935$.
 
 **5. Validación:**
 
@@ -485,7 +489,7 @@ $P(S_1) = 30/416 = 0.0721$; $P(S_2) = 35/416 = 0.0841$; $P(S_3) = 194/416 = 0.46
 sum(prob_sat)
 ```
 
-$0.0721 + 0.0841 + 0.4663 + 0.3005 + 0.0769 = 1$
+$\sum_{i=1}^{5} P(S_i) = `r round(sum(prob_sat), 4)`$
 
 **Interpretación:**
 
@@ -498,13 +502,13 @@ barplot(prob_sat,
         ylim = c(0, 0.6))
 ```
 
-El nivel más probable es 3, con 0.4663. La probabilidad de una satisfacción alta (4 o 5) es 0.3774, casi el doble que la de una baja (1 o 2), que es 0.1562.
+El nivel más probable es 3, con 0.4525. La probabilidad de una satisfacción alta (4 o 5) es 0.3694, aproximadamente el doble que la de una baja (1 o 2), que es 0.1780.
 
 ## Probabilidad condicional
 
 ### Eventos de interés
 
-Se eligió el rango [5,15] ya que se evita la alta frecuencia que  hay en [0,5] y se prioriza una buena cantidad de datos.
+Se eligió el rango [5,15] ya que se evita la alta frecuencia que hay en [0,5] y se prioriza una buena cantidad de datos.
 
 Vamos a ver la probabilidad del evento A dado el evento B
 
@@ -522,8 +526,6 @@ P_B = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15)) / nrow(DF3)
 paste("Probabilidad de B:", P_B)
 ```
 
-
-
 ### Validación de independencia
 
 ```{r}
@@ -536,16 +538,16 @@ P_B_dado_noA = nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprensio
 P_A_dado_B
 ```
 
-
 ```{r}
 P_A_inter_B<- nrow(DF3 %>% filter(5 <= consultas & consultas <= 15 & comprension == "Alto")) / nrow(DF3)
-round(P_A_inter_B,2) == round(P_A* P_B,2)
-round(P_A_inter_B,3) == round(P_A* P_B,3)
+P_A_inter_B == P_A * P_B
+round(P_A_inter_B,4) == round(P_A* P_B,4)
 P_A_dado_B==P_A
 ```
 
-$P(A \cap B)=0.0769$ y $P(A)\cdot P(B)=0.0895$
-$P(A \cap B) \neq P(A) \cdot P(B)$ para la aproximación de 2 y 3 decimales, por lo cual decimos que los eventos son dependientes.
+$P(A \cap B)=0.0801$ y $P(A)\cdot P(B)=0.0844$.
+
+$P(A \cap B) \neq P(A) \cdot P(B)$ para los datos de la muestra, por lo cual los eventos no son exactamente independientes en la distribución empírica. La diferencia es pequeña y no permite asegurar dependencia en toda la población.
 
 ```{r grafico-dependencia}
 P_A_dado_noB <- nrow(DF3 %>% filter(comprension == "Alto", consultas < 5 | consultas > 15)) /
@@ -555,7 +557,7 @@ barplot(c(P_A_dado_B, P_A_dado_noB),
         main = "Probabilidad de A tras la ocurrencia de B o Bc",
         names.arg = c("Probabilidad de A | B", "Probabilidad de A | Bc"),
         col = "steelblue",
-        sub = "La ocurrencia de B claramente afecta la ocurrencia de A",
+        sub = "Las probabilidades son distintas en los registros de la muestra",
         ylim = c(0, 0.25),
         space = 1.5)
 abline(h = P_A, col = "red", lty = 2)
@@ -565,8 +567,8 @@ legend("topright", legend = "P(A)", col = "red", lty = 2)
 ### Probabilidad condicional y propiedades
 
 Se clasifican los eventos simples $A$ (nivel de comprensión `Alto`) y $B$ (consultas en $[5, 15]$), junto con sus eventos compuestos asociados y complementos. Aplicando las propiedades de probabilidad:
-```{r}
 
+```{r}
 P_A_U_B<-P_A+P_B-P_A_inter_B
 P_A_comp<-1-P_A
 P_B_comp<-1-P_B
@@ -585,7 +587,6 @@ P_B_comp
 P_A_U_B_comp
 P_A_inter_B_comp
 
-
 P_A_dif_B<-P_A-P_A_inter_B
 P_A_dif_B
 P_B_dif_A<-P_B-P_A_inter_B
@@ -596,27 +597,28 @@ P_A_d_B<-P_A_inter_B/P_B
 P_A_d_B
 P_A_inter_B
 ```
-Los único eventos simples son A y B, el resto serían eventos compuestos.
 
-* **Unión:** $P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0.2500 + 0.3582 - 0.0769 = 0.5313$
+Los eventos de interés son A y B; el resto son sus combinaciones y complementos.
 
-Este primer resultado indica que el $53.13\%$ de los registros de la jornada presentan una comprensión alta, un número de consultas entre 5 y 15, o ambas condiciones simultáneamente.
+* **Unión:** $P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0.2240 + 0.3769 - 0.0801 = 0.5208$
 
-* **Complementos:** $P(A^c) = 1 - P(A) = 0.7500 \quad \text{y} \quad P(B^c) = 1 - P(B) = 0.6418$
-* **Leyes de De Morgan (Complemento de la Unión e Intersección):** 
-  $$P((A \cup B)^c) = 1 - P(A \cup B) = 0.4688, \qquad P((A \cap B)^c) = 1 - P(A \cap B) = 0.9231$$
+Este primer resultado indica que el $52.08\%$ de los registros de la jornada presentan una comprensión alta, un número de consultas entre 5 y 15, o ambas condiciones simultáneamente.
+
+* **Complementos:** $P(A^c) = 1 - P(A) = 0.7760 \quad \text{y} \quad P(B^c) = 1 - P(B) = 0.6231$
+* **Leyes de De Morgan (Complemento de la Unión e Intersección):**
+  $$P((A \cup B)^c) = 1 - P(A \cup B) = 0.4792, \qquad P((A \cap B)^c) = 1 - P(A \cap B) = 0.9199$$
 
 * **Intersección:** $$P(A \cap B)=0.08011869$$
 
-* **Diferencia:** 
+* **Diferencia:**
 
-$$P(A \setminus B) = P(A) - P(A \cap B)=0.224035608308605-0.08011869=0.143916918308605$$
+$$P(A \setminus B) = P(A) - P(A \cap B) = 0.1439$$
 
-$$P(B \setminus A)=P(B)-P(A \cap B)=0.3768546-0.08011869=0.29673591$$
+$$P(B \setminus A) = P(B) - P(A \cap B) = 0.2967$$
 
-* **Diferencia simétrica:** 
+* **Diferencia simétrica:**
 
-$$P(A \triangle B)=P(A \cup B)-P(A \cap B)=0.5207715-0.08011869=0.44065281$$
+$$P(A \triangle B) = P(A \cup B) - P(A \cap B) = 0.4407$$
 
 * **Regla del producto:**
 
@@ -633,9 +635,10 @@ $P(A) = P(A|B) * P(B) + P(A|B^c) * P(B^c) =$ `r round(P_A_dado_B, 4)` * `r round
 <!-- falta ampliar las propiedades con su formula y su valor, por ejemplo la diferencia A−B y B−A, la diferencia simetrica AΔB, P(A ∩ Bc), la regla del producto y la probabilidad total. Escribir cada formula en LaTeX sin espacios para que cuente como una sola palabra -->
 
 ### Teorema de Bayes
+
 Aplicando el Teorema de Bayes para calcular la probabilidad del nivel de comprensión `Alto` ($A$) dado que las consultas están en el rango $[5, 15]$ ($B$):
 
-$$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c)} = 0.2125984$$
+$$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c)} = `r round(P_A_dado_B, 7)`$$
 
 ```{r}
 P_B_dado_A
@@ -663,7 +666,6 @@ Los cálculos se realizaron adecuadamente, pues los resultados coinciden.
 
 De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el nivel de compresión sea `Alto` dado que la cantidad de consultas a la IA está en el intervalo [5, 15] es de `r round(100 * P_A_dado_B, 2)`%. Esto indicaría que es más probable obtener un nivel de comprensión distinto de `Alto` cuando se utiliza un número de consultas contenido en el rango [5, 15].
 
-
 ## Variables aleatorias discretas
 
 ### Variable aleatoria discreta 1
@@ -674,7 +676,7 @@ p <- mean(exito)
 q <- 1 - p
 ```
 
-**1. Caso:** Se revisan registros de la muestra efectiva al azar, uno tras otro. Un éxito es un registro con más de 20 consultas a la IA. ¿Cuál es la probabilidad de que el primer éxito sea exactamente el quinto registro?
+**1. Caso:** Se revisan registros de la muestra efectiva al azar, uno tras otro, con reposición. Un éxito es un registro con más de 20 consultas a la IA. ¿Cuál es la probabilidad de que el primer éxito sea exactamente el quinto registro?
 
 **2. Distribución teórica:** Sea $X$ el número de registros revisados hasta encontrar el primero con más de 20 consultas a la IA. Entonces $X\sim Geom(p)$ con soporte $\{1,2,3,\dots\}$, donde $p$ es la probabilidad de seleccionar un registro con más de 20 consultas. Con los datos, $p=$ `r sum(exito)`$/$`r length(exito)` $=$ `r round(p,4)`.
 
@@ -701,7 +703,9 @@ cdf_izq <- pgeom(k_all - 1, p)        # P(X <= k)
 cdf_der <- q^(k_all - 1)              # P(X >= k)
 sum(pmf)                              # validación: ≈ 1
 
-espera <- diff(c(0, which(exito)))
+set.seed(6)
+seleccion_geo <- sample(exito, size = 3000, replace = TRUE)
+espera <- diff(c(0, which(seleccion_geo)))
 ks <- 1:20
 emp <- sapply(ks, function(i) mean(espera == i))
 
@@ -727,7 +731,6 @@ legend("topright", legend = c("Teórica", "Empírica", "E(X)"),
 par(mfrow = c(1, 1))
 ```
 
-
 ```{r}
 # Acumulada hacia la izquierda
 plot(ks, cdf_izq[ks], type = "s", xlab = "k", ylab = "P(X <= k)",
@@ -746,11 +749,11 @@ data.frame(k = ks, `P(X=k)` = round(pmf[ks], 4), empirica = round(emp, 4),
            check.names = FALSE)
 ```
 
-Las esperas observadas entre registros con más de 20 consultas tienen media `r round(mean(espera),2)`, frente a $E(X)=$ `r round(1/p,2)`.
+Las esperas simuladas entre registros con más de 20 consultas tienen media `r round(mean(espera),2)`, frente a $E(X)=$ `r round(1/p,2)`.
 
 ### Variable aleatoria discreta 2
 
-**1. Caso:** Se desea conocer la probabilidad de que, al seleccionar al azar 10 registros del estudio, exactamente 3 correspondan a días en los que la IA ahorró tiempo en 3 o más tareas. Elegimos este éxito porque la mayoría de registros tiene entre 0 y 2 tareas, así que 3 o más representa un día de uso intensivo de la IA.
+**1. Caso:** Se desea conocer la probabilidad de que, al seleccionar al azar 10 registros del estudio con reposición, exactamente 3 correspondan a días en los que la IA ahorró tiempo en 3 o más tareas. Elegimos este éxito porque la mayoría de registros tiene entre 0 y 2 tareas, así que 3 o más representa un día de uso intensivo de la IA.
 
 **2. Distribución teórica:**
 
@@ -764,7 +767,7 @@ X: número de registros, de 10 seleccionados al azar, en los que la IA ahorró t
 
 $X \sim Bin(n = 10,\ p = `r round(p_tar, 4)`)$, donde p = P(seleccionar un registro con 3 o más tareas en las que la IA ahorró tiempo).
 
-**3. Descripción de la distribución:** $P(X=k)=\binom{n}{x} * p^x * (1-p)^{n-x}$. Es una distribución que por tener $p<0.5$ presenta una cola larga hacia la derecha y una menor dispersión hacia la izquierda.Además, el valor esperado supera 2.
+**3. Descripción de la distribución:** $P(X=k)=\binom{n}{k} p^k(1-p)^{n-k}$. Es una distribución que por tener $p<0.5$ presenta una cola hacia la derecha. Además, el valor esperado supera 2.
 
 **4. Propiedades:**
 
@@ -795,13 +798,13 @@ pbinom(2, n_tar, p_tar)
 
 $P(X \leq 2) = `r round(pbinom(2, n_tar, p_tar), 4)`$, por lo que en más de la mitad de los casos habrá como máximo 2 días de uso intensivo entre 10 registros.
 
-**Evidencia con los datos:** mezclamos los registros al azar, formamos grupos de 10 y contamos en cada grupo cuántos tienen 3 o más tareas, para compararlo con el modelo.
+**Evidencia con los datos:** seleccionamos registros con reposición, formamos grupos de 10 y contamos en cada grupo cuántos tienen 3 o más tareas, para compararlo con el modelo.
 
 ```{r}
 set.seed(6)
-mezcla <- sample(DF3$tareas)
-n_grupos <- floor(length(mezcla) / 10)
-grupos <- matrix(mezcla[1:(n_grupos * 10)] >= 3, nrow = 10)
+n_grupos <- 1000
+mezcla <- sample(DF3$tareas, size = n_grupos * n_tar, replace = TRUE)
+grupos <- matrix(mezcla >= 3, nrow = n_tar)
 exitos <- colSums(grupos)
 mean(exitos)
 ```
@@ -820,47 +823,47 @@ barplot(rbind(teorica, empirica),
         ylab = "Probabilidad")
 ```
 
-En `r n_grupos` grupos de 10 registros, el promedio real de éxitos es `r round(mean(exitos), 2)`, muy cerca del valor esperado del modelo (`r round(E_tar, 2)`). Además, las barras del modelo y de los datos tienen la misma forma, por lo que la binomial representa bien este caso.
+En `r n_grupos` grupos de 10 registros seleccionados con reposición, el promedio de éxitos es `r round(mean(exitos), 2)`, cerca del valor esperado del modelo (`r round(E_tar, 2)`). Además, las barras del modelo y de la simulación tienen una forma similar.
 
 Acá presentamos la gráfica completa de la distribución teórica
+
 ```{r}
-N <- length(DF3$tareas >= 3)
-k_all <- 1:N
-pmf <- dbinom(k_all - 1, n_tar, p_tar)
+k_all <- 0:n_tar
+pmf <- dbinom(k_all, n_tar, p_tar)
 
-par(mfrow = c(1, 2))
+par(mfrow = c(1, 1))
 
-# Distribución completa (1 a N)
+# Distribución completa (0 a 10)
 plot(k_all, pmf, type = "h", xlab = "k", ylab = "P(X = k)",
-     main = "Distribución completa (1 a N)")
+     main = "Distribución completa (0 a 10)")
 
 ```
 
 ## Variables aleatorias continuas
 
 **1. Variable de estudio:**
+
 Horas de sueño
 
-**2. Validación de la distribución:** 
+**2. Validación de la distribución:**
 
 ```{r}
-#Datos basicos 
+#Datos basicos
 media_ <- mean(DF3$sueno,na.rm=TRUE)
 mediana_<-median(DF3$sueno,na.rm=TRUE)
 var_<-var(DF3$sueno,na.rm=TRUE)
 sd_ <- sd(DF3$sueno,na.rm=TRUE)
-lambda_ <- 1 / media_  
+lambda_ <- 1 / media_
 min_ <- min(DF3$sueno,na.rm=TRUE)
 max_ <- max(DF3$sueno,na.rm=TRUE)
 
 cv_<-(sd_/media_)*100
 
-# con probability= TRUE sirve para el cambio de escala para que represente la densidad de probabilidad 
+# con probability= TRUE sirve para el cambio de escala para que represente la densidad de probabilidad
 
-hist(DF3$sueno, probability = TRUE, col = "lightgray", border = "white", 
+hist(DF3$sueno, probability = TRUE, col = "lightgray", border = "white",
      main = "Distribuciones Continuas",
      xlab = "Horas de sueño", ylab = "Densidad" )
-
 
 # Normal
 
@@ -870,13 +873,13 @@ curve(dnorm(x, mean = media_, sd = sd_), col = "forestgreen", lwd = 2, add = TRU
 
 # Exponencial
 
-# el uso de lambda es debido a la teoria que relaciona la media y la tasa 
+# el uso de lambda es debido a la teoria que relaciona la media y la tasa
 
 curve(dexp(x, rate = lambda_), col = "dodgerblue", lwd = 2, add = TRUE, from = min_, to = max_)
 
-# Uniforme 
+# Uniforme
 
-# El uso de min y max es debido a la propia formula de la densidad de probabilidad 
+# El uso de min y max es debido a la propia formula de la densidad de probabilidad
 
 curve(dunif(x, min = min_, max = max_), col = "purple", lwd = 2, add = TRUE, from = min_, to = max_)
 
@@ -890,17 +893,17 @@ $mediana=$ `r mediana_`
 
 $media=$ `r media_`
 
-No se está cumpliendo la simetría por lo que se descarta
+La simetría no es exacta, por lo que se usará la normal solo como aproximación.
 
 Para la curva exponencial se deberá revisar el cv, que debería de ser 100
 
 ```{r}
 cv_
 ```
-$$CV=29.49941$$
 
-No es 100, entonces se descarta la exponencial 
+$$CV=`r round(cv_, 5)`$$
 
+No es 100, entonces se descarta la exponencial
 
 Para la distribución uniforme se deberá revisar si el rango de datos es aproximadamente 3.464 veces la desviación estándar muestral y comprobar las varianzas
 
@@ -913,27 +916,34 @@ sd_^2
 ```
 
 Comparación de varianza teórica con la empírica
-$$\frac{(max - min)^2}{12} = 16.33333$$
-$$sd^2 =3.791035$$
-Relación rango con desviación estándar 
-$$max-min=14$$
-$$ sd\cdot \sqrt(12) =6.744807$$
+
+$$\frac{(max - min)^2}{12} = `r round((max_-min_)^2/12, 5)`$$
+
+$$sd^2 = `r round(sd_^2, 6)`$$
+
+Relación rango con desviación estándar
+
+$$max-min=`r round(max_-min_, 2)`$$
+
+$$sd\cdot \sqrt{12} = `r round(sd_*sqrt(12), 6)`$$
+
 Como la varianza teórica no es similar a la empírica y también la relación rango con la desviación estándar tampoco cumple por lo que se descarta
 
-**3. Propiedades:** 
+**3. Propiedades:**
 
-Se tendrá en cuenta en este caso la distribución normal debido a la gráfica y que sus valores son los mas cercanos un 6.60 a 7 
+Se tendrá en cuenta en este caso la distribución normal como aproximación debido a la gráfica y a que la media está cerca de la mediana.
 
 ```{r}
 sd_
 media_
 ```
 
-Por lo que el modelo propuesto será: 
-$$N(\mu=6.600329,\sigma=1.947058)$$
+Por lo que el modelo propuesto será:
+
+$$N(\mu=`r round(media_, 6)`,\sigma=`r round(sd_, 6)`)$$
 
 ```{r}
-hist(DF3$sueno, probability = TRUE, col = "lightgray", border = "white", 
+hist(DF3$sueno, probability = TRUE, col = "lightgray", border = "white",
      main = "Distribución Teórica VS Densidad Muestral",
      xlab = "Horas de sueño", ylab = "Densidad" )
 
@@ -943,9 +953,9 @@ legend("topright", legend = c("Distribución Normal"),
        col = c("forestgreen"), lty=1, lwd=2)
 ```
 
-**4. Ejemplo:** 
+**4. Ejemplo:**
 
-¿Cual es la probabilidad de que un estudiante duerma 4 horas o menos? 
+¿Cual es la probabilidad de que un estudiante duerma 4 horas o menos?
 
 Probabilidad Teórica:
 
@@ -953,7 +963,9 @@ Probabilidad Teórica:
 prob_4_teo<-pnorm(q=4,mean=media_, sd=sd_)
 prob_4_teo
 ```
-$$probTeorica=0.09085359$$
+
+$$probTeorica=`r round(prob_4_teo, 8)`$$
+
 Probabilidad Empírica:
 
 ```{r}
@@ -963,8 +975,9 @@ prob_4_empirica
 prob_4_empirica-prob_4_teo
 ```
 
-$$proEmpirica= 0.115727 $$
-Hay una diferencia de 0.02487342 lo cual nos ayuda a saber que el modelo elegido es adecuado
+$$proEmpirica=`r round(prob_4_empirica, 8)`$$
+
+Hay una diferencia de `r round(abs(prob_4_empirica - prob_4_teo), 8)`, por lo que el modelo sirve como aproximación de los datos.
 
 ### Variable aleatoria continua 2
 
@@ -1003,32 +1016,32 @@ legend("topright", legend = c("Distribución Normal", "Distribución Exponencial
 paste("Esperanza Uniforme:", (min_estudio + max_estudio) / 2)
 paste("Promedio Muestral:", prom_estudio)
 ```
+
 ```{r}
 paste("Varianza Uniforme:", (max_estudio - min_estudio)^2 / 12)
 paste("Varianza Muestral:", std_estudio^2)
 ```
+
 Tanto el promedio como la varianza difieren enormemente entre los predicho por la distribución teórica y lo obtenido en la muestra. Por lo tanto, descartamos la distribución uniforme como aproximación.
-
-
 
 ```{r}
 median(estudio, na.rm = T)
 prom_estudio
 ```
+
 Si bien la media y la mediana de la muestra se acercan bastante, la gráfica hace notar una gran asimetría en su distribución. Por lo tanto, descartamos la distribución normal como aproximación.
-
-
 
 ```{r}
 paste("Esperanza Exponencial:", 1 / lambda_estudio)
 paste("Promedio Muestral:", prom_estudio)
 ```
+
 ```{r}
 paste("Varianza Exponencial:", 1 / lambda_estudio^2)
 paste("Varianza Muestral:", std_estudio^2)
 ```
 
-La varianza teórica y muestral difieren lo suficiente para descartar el modelo exponencial como aproximación. Sin embargo, al ser la exponencial la que mejor refleja el comportamiento de la distribución, supondremos que: $estudio \sim Exp(2.889481)$
+La varianza teórica y la muestral son diferentes, por lo que la exponencial no es un ajuste exacto. Sin embargo, como la variable es no negativa y tiene más registros con pocas horas, se utilizará como aproximación: $estudio \sim Exp(\lambda = `r round(lambda_estudio, 6)`)$, donde $\lambda = 1/\bar{x}$ es la tasa y no la media.
 
 ```{r}
 hist(estudio, probability = TRUE,
@@ -1042,27 +1055,27 @@ curve(dexp(x, rate = lambda_estudio), col = "dodgerblue", lwd = 2, add = TRUE, f
 **3. Propiedades:**
 
 $$\begin{cases}
-E(estudio) = 1 / \lambda = 2.889481 \\
-V(estudio) = 1 / \lambda^2 = 8.349099 \\
-SD(estudio) = 1 / \lambda = 2.889481 \\
+E(estudio) = 1 / \lambda = `r round(1/lambda_estudio, 6)` \\
+V(estudio) = 1 / \lambda^2 = `r round(1/lambda_estudio^2, 6)` \\
+SD(estudio) = 1 / \lambda = `r round(1/lambda_estudio, 6)` \\
 CV(estudio) = \frac{SD(estudio)}{|E(estudio)|}  = 1
 \end{cases}$$
 
-
 **4. Ejemplo:**
+
 ¿Cuál es la probabilidad de que un registro reporte más de 5 horas de estudio y a lo mucho 8 horas?
 
 ```{r}
 v1 <- pexp(8, lambda_estudio) - pexp(5, lambda_estudio)
 v1
 ```
+
 ```{r}
 v2 <- nrow(DF3 %>% filter(5 < estudio & estudio <= 8)) / nrow(DF3)
 v2
 ```
 
-Comparando la respuesta obtenida desde el modelo exponencial y aquella obtenida directamente desde la muestra, se nota que la elección del modelo ha sido más o menos acertada considerando que las respuestas tienen una diferencia de solo: `r abs(v1 - v2)`.
-
+Comparando la respuesta obtenida desde el modelo exponencial (`r round(100 * v1, 2)`%) y aquella obtenida directamente desde la muestra (`r round(100 * v2, 2)`%), se nota una diferencia de `r round(abs(v1 - v2), 4)`. Por eso se toma la exponencial como aproximación y no como un ajuste exacto.
 
 # Conclusiones
 
@@ -1072,8 +1085,8 @@ Después de limpiar los datos, vimos que los estudiantes de Estadística secció
 
 ## Conclusión de probabilidad
 
-El análisis empírico evidencia que los estudiantes de la sección tienen un predominante uso moderado de la Inteligencia artificial. Por un lado, el $51.92\%$ realiza entre 1 y 10 consultas diarias y el $46.63\%$ reporta un nivel intermedio de satisfacción académica (un nivel 3). Asimismo, el análisis condicional demuestra que existe una relación entre hacer $[5, 15]$ consultas y una alta comprensión académica ($P(A \cap B) \neq P(A)P(B)$), registrando una probabilidad condicional del $P(A|B) = 21.48\%$. Esto sugiere que hacer un número intermedio de consultas no asegura una comprensión máxima, sino que es más bien un hábito dentro de la rutina de estudio del estudiante.
+El análisis empírico evidencia que los estudiantes de la sección tienen un predominante uso bajo de la Inteligencia artificial. Por un lado, el $52.82\%$ realiza entre 1 y 10 consultas diarias y el $45.25\%$ reporta un nivel intermedio de satisfacción académica (un nivel 3). Asimismo, el análisis condicional muestra una diferencia pequeña entre hacer $[5, 15]$ consultas y una alta comprensión académica ($P(A \cap B) \neq P(A)P(B)$), registrando una probabilidad condicional del $P(A|B) = 21.26\%$. Esto sugiere que hacer un número intermedio de consultas no asegura una comprensión máxima, sino que es más bien un hábito dentro de la rutina de estudio del estudiante.
 
 ## Conclusión de variables aleatorias
 
-La VA discreta 1 nos muestra que, revisando 5 registro o menos, hay más del 60% de probabilidad de encontrar uno que reporte más de 20 consultas a la IA. Este resultado nos habla sobre la gran intensidad en el uso de la IA por parte de los estudiantes, lo cual puede ayudarnos a inferir la enorme importancia de esta herramienta para los universitarios. 
+La VA discreta 1 nos muestra que, revisando 5 registros o menos con reposición, hay más del 60% de probabilidad de encontrar uno que reporte más de 20 consultas a la IA. Este resultado nos habla sobre la intensidad en el uso de la IA en varios registros, aunque no permite inferir por sí solo su importancia para todos los universitarios.

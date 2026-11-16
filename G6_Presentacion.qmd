@@ -1,7 +1,7 @@
 ---
 title: "Uso de IA, sueño y rendimiento académico en estudiantes de UTEC"
 subtitle: "PG2 | Grupo 6 | Estadística y Probabilidades, sección 01"
-author: "Johan Huayta, Indira Yabar, Dervy Pillaca, Mathius Quispe, Eduardo Vila"
+author: [Eduardo Raul Vila Castellares, Indira Shian Yabar Ramos, Johan Yadir Huayta Enriquez, Dervy Pillaca Pullo, Mathius Edgar Quispe Sicha]
 date: "2026-11-13"
 lang: es
 format:
@@ -31,34 +31,28 @@ for (p in pkgs) {
 # DF3.csv ya es la tabla limpia de la seccion (limpieza explicada en la PG1)
 DF3 <- read_csv("DF3.csv", show_col_types = FALSE)
 DF3$Grupo <- as.integer(DF3$Grupo)
+DF3$comprension <- factor(
+  DF3$comprension,
+  levels = c("Muy bajo", "Bajo", "Moderado", "Alto", "Muy alto"),
+  ordered = TRUE
+)
 
 GRUPO <- 6
-DFL <- DF3 %>% filter(Grupo == GRUPO)   # base limpia del Grupo 6
+DFL <- DF3 %>% filter(Grupo == GRUPO)
 
 n_pedidas <- 151
-
-# NOTAS (borrar al final):
-# - Maximo 12 laminas en total, contando la de titulo. No usar tabsets ni .scrollable.
-# - Cada lamina debe caber en pantalla. Al final borrar todos los comentarios.
-# - DF3 = seccion completa limpia. DFL = solo Grupo 6.
-# - Columnas: consultas, uso, satisfaccion, tareas, curso, estudio, sueno,
-#   comprension, uso_ia, email, Grupo.
 ```
 
-## I. Introducción: tema, relevancia y objetivos
+## I–II. Introducción y contexto {.smaller}
 
 ::::: columns
-::: {.column width="48%"}
-### Tema
+::: {.column width="52%"}
+### Tema y relevancia
 
 **Uso de IA, sueño y rendimiento académico en estudiantes de UTEC.**
 
-### Relevancia
+La inteligencia artificial generativa ya forma parte del estudio diario, y tanto el **sueño** como las **horas de estudio** influyen en el aprendizaje. Saber cómo se relacionan estos hábitos con la **comprensión** y la **satisfacción** ayuda a orientar mejores prácticas de estudio en UTEC.
 
-La inteligencia artificial generativa ya forma parte del estudio diario, y tanto el **sueño** como las **horas de estudio** influyen en el aprendizaje. Saber cómo se relacionan estos hábitos con la **comprensión** y la **satisfacción** con el avance académico ayuda a orientar mejores prácticas de estudio en la comunidad de UTEC.
-:::
-
-::: {.column width="52%"}
 ### Objetivo general
 
 **Analizar** el impacto de las horas de sueño y del uso de IA en el rendimiento académico de los estudiantes de Estadística, sección 01, ciclo 2026-2.
@@ -70,46 +64,23 @@ La inteligencia artificial generativa ya forma parte del estudio diario, y tanto
 - **OE3: Identificar** si el curso más consultado influye en el uso principal de la IA y qué usos ahorran más tareas.
 - **OE4: Determinar** si las horas de sueño se relacionan con el nivel de comprensión.
 :::
-:::::
 
-## II. Contexto: datos y muestra efectiva
+::: {.column width="48%"}
+### Datos y muestra efectiva
 
-::::: columns
-::: {.column width="50%"}
-- **Población objetivo:** estudiantes de UTEC que cursan Estadística y Probabilidades, sección 01, ciclo 2026-2.
-- **Unidad muestral:** un registro diario de un estudiante (un estudiante en un día).
-- **Muestreo:** sistemático por conveniencia, con diseño longitudinal (observaciones repetidas por estudiante).
-- **Fuente:** primaria; formulario diario en Google Forms, válido si se llena entre las 9:30 p. m. y la medianoche.
-- **Representatividad:** acceso diario al formulario para toda la sección y medición al cierre del día para reducir el sesgo de memoria.
+- **Población:** estudiantes UTEC de Estadística y Probabilidades, sección 01, 2026-2.
+- **Unidad:** registro estudiante–día; se repiten mediciones por estudiante.
+- **Muestreo:** sistemático por conveniencia, con diseño longitudinal.
+- **Fuente:** formulario diario de Google Forms, al cierre del día (9:30 p. m.–medianoche).
+- **Representatividad:** acceso diario a toda la sección y medición al cierre del día para reducir sesgo de memoria.
+- **Muestra:** **`r nrow(DF3)` registros** de `r dplyr::n_distinct(DF3$email)` estudiantes. Grupo 6: **`r nrow(DFL)`**; se cumple el mínimo de `r n_pedidas`.
 
-```{r tabla-muestra}
-data.frame(
-  Conjunto = c("Sección 01 (registros limpios)",
-               "Grupo 6 (registros limpios)",
-               "Registros pedidos al Grupo 6"),
-  Registros = c(nrow(DF3), nrow(DFL), n_pedidas)
-) |> knitr::kable()
-```
-
-El Grupo 6 aporta **`r nrow(DFL)` observaciones limpias** frente a las **`r n_pedidas`** pedidas: `r ifelse(nrow(DFL) >= n_pedidas, "se cumple el mínimo.", paste0("faltan ", n_pedidas - nrow(DFL), "."))`
-:::
-
-::: {.column width="50%"}
 ### Variables
 
-```{r tabla-variables}
-data.frame(
-  Variable = c("Consultas a la IA", "Tareas donde la IA ahorró tiempo",
-               "Horas efectivas de estudio", "Horas de sueño",
-               "Satisfacción con el avance", "Comprensión de actividades",
-               "Uso principal de la IA", "Curso más consultado"),
-  Tipo = c("Discreta", "Discreta", "Continua", "Continua",
-           "Ordinal", "Ordinal", "Nominal", "Nominal"),
-  Restricción = c("x ≥ 0", "x ≥ 0", "x ≥ 0", "0 ≤ x ≤ 24",
-                  "Likert 1 a 5", "Muy bajo a Muy alto",
-                  "Categorías de uso", "Código XX####")
-) |> knitr::kable()
-```
+- **Discretas:** consultas y tareas con ahorro (enteros ≥ 0).
+- **Continuas:** estudio (≥ 0 h) y sueño (0–24 h).
+- **Ordinales:** satisfacción (Likert 1–5) y comprensión (muy bajo a muy alto).
+- **Nominales:** uso principal de IA y curso (código XX####).
 :::
 :::::
 
@@ -122,8 +93,11 @@ data.frame(
 
 boxplot(DF3$consultas,
         main = "Boxplot - Número de consultas a la IA",
-        xlab = paste("Cantidad de consultas | Mediana =", median(DF3$consultas, na.rm = TRUE),
-                     "| Q3 =", quantile(DF3$consultas, 0.75, na.rm = T, type = 3)),
+        xlab = paste("Cantidad de consultas | Mediana =",
+                     median(DF3$consultas, na.rm = TRUE),
+                     "| Q3 =",
+                     quantile(DF3$consultas, 0.75,
+                              na.rm = TRUE, type = 3)),
         horizontal = TRUE)
 
 DF3 %>%
@@ -131,10 +105,16 @@ DF3 %>%
   mutate(p = n / sum(n) * 100) %>%
   ggplot(aes(x = comprension, y = p, fill = comprension)) +
   geom_col(color = "black", width = 0.75) +
-  geom_text(aes(label = paste0(round(p, 2), "%")), vjust = -0.5, size = 3.5) +
-  scale_fill_manual(values = c("gray92", "gray80", "gray66", "gray50", "gray35")) +
-  labs(title = "Proporción de registros según nivel de comprensión",
-       x = "Nivel de comprensión", y = "Porcentaje de registros (%)") +
+  geom_text(aes(label = paste0(round(p, 2), "%")),
+            vjust = -0.5, size = 3.5) +
+  scale_fill_manual(
+    values = c("gray92", "gray80", "gray66", "gray50", "gray35")
+  ) +
+  labs(
+    title = "Proporción de registros según nivel de comprensión",
+    x = "Nivel de comprensión",
+    y = "Porcentaje de registros (%)"
+  ) +
   ylim(0, 65) +
   theme_minimal() +
   theme(legend.position = "none")
@@ -150,16 +130,22 @@ hist(DF3$sueno,
      xlab = "Horas",
      col = "gray80",
      ylab = "Frecuencia")
+
 axis(1, at = 0:ceiling(max(DF3$sueno)))
-abline(v = mean(DF3$sueno, na.rm = TRUE), col = "firebrick", lwd = 2, lty = 2)
+
+abline(v = mean(DF3$sueno, na.rm = TRUE),
+       col = "firebrick", lwd = 2, lty = 2)
+
 legend("topright",
-       legend = paste("Media =", round(mean(DF3$sueno, na.rm = TRUE), 2)),
+       legend = paste(
+         "Media =", round(mean(DF3$sueno, na.rm = TRUE), 2)
+       ),
        col = "firebrick", lty = 2, lwd = 2, bty = "n")
 ```
 
-- **Número de consultas a la IA:** En al menos la mitad de los registros, el estudiante hace 7 o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta.
+- **Número de consultas a la IA:** En al menos la mitad de los registros, el estudiante hace `r median(DF3$consultas)` o más consultas diarias a la IA, lo que indica un uso frecuente de esta herramienta.
 - **Nivel de comprensión:** La moda y la mediana son Moderado.
-- **Horas de sueño:** la mitad duerme 7 horas o menos, y el 50% central concentra su descanso entre las 6 y 8 horas.
+- **Horas de sueño:** la mitad duerme `r median(DF3$sueno)` horas o menos, y el 50% central concentra su descanso entre las `r round(quantile(DF3$sueno, 0.25), 2)` y `r round(quantile(DF3$sueno, 0.75), 2)` horas.
 
 ## III. Análisis descriptivo: análisis de interacción
 
@@ -171,9 +157,11 @@ legend("topright",
 # Objetivo 1
 ggplot(DF3, aes(x = factor(satisfaccion), y = consultas)) +
   geom_boxplot(varwidth = TRUE) +
-  labs(title = "Nivel de satisfacción vs Número de consultas",
-       x = "Nivel de satisfacción",
-       y = "Cantidad de consultas")
+  labs(
+    title = "Nivel de satisfacción vs Número de consultas",
+    x = "Nivel de satisfacción",
+    y = "Cantidad de consultas"
+  )
 
 # Objetivo 2
 ggplot(DF3, aes(x = consultas, y = estudio)) +
@@ -188,8 +176,16 @@ ggplot(DF3, aes(x = consultas, y = estudio)) +
 DFC <- DF3[DF3$uso_ia == "Usó IA", ]
 DFC$curso <- toupper(DFC$curso)
 DFC$uso <- as.character(DFC$uso)
-DFC <- DFC[DFC$curso %in% c("CC1105", "CS2031", "CC2101", "CS2013"), ]
-DFC <- DFC[DFC$uso %in% c("Resolver ejercicios", "Resumir", "Programar", "Redactar"), ]
+
+DFC <- DFC[
+  DFC$curso %in% c("CC1105", "CS2031", "CC2101", "CS2013"),
+]
+
+DFC <- DFC[
+  DFC$uso %in% c(
+    "Resolver ejercicios", "Resumir", "Programar", "Redactar"
+  ),
+]
 
 DFC %>%
   count(curso, uso) %>%
@@ -197,25 +193,48 @@ DFC %>%
   mutate(p = n / sum(n) * 100) %>%
   ggplot(aes(x = curso, y = p, fill = uso)) +
   geom_col(width = 0.75) +
-  geom_text(aes(label = paste0(round(p, 1), "%")),
-            position = position_stack(vjust = 0.5), size = 3) +
-  scale_fill_manual(values = c("gray92", "gray78", "gray64", "gray50")) +
-  labs(title = "Proporción de usos de la IA según el curso",
-       x = "Curso", y = "Porcentaje de registros (%)", fill = "Uso principal") +
+  geom_text(
+    aes(label = paste0(round(p, 1), "%")),
+    position = position_stack(vjust = 0.5),
+    size = 3
+  ) +
+  scale_fill_manual(
+    values = c("gray92", "gray78", "gray64", "gray50")
+  ) +
+  labs(
+    title = "Proporción de usos de la IA según el curso",
+    x = "Curso",
+    y = "Porcentaje de registros (%)",
+    fill = "Uso principal"
+  ) +
   theme_minimal()
 
 # Objetivo 4
 ggplot(DF3, aes(x = comprension, y = sueno, fill = comprension)) +
   geom_boxplot() +
-  scale_fill_manual(values = c("gray92", "gray80", "gray66", "gray50", "gray35")) +
-  geom_hline(yintercept = mean(DF3$sueno, na.rm = TRUE),
-             color = "firebrick", linewidth = 1, linetype = "dashed") +
-  annotate("text", x = 5, y = 12,
-           label = paste("Media =", round(mean(DF3$sueno, na.rm = TRUE), 2)),
-           color = "firebrick") +
-  labs(title = "Sueño según comprensión",
-       x = "Comprensión",
-       y = "Horas de sueño") +
+  scale_fill_manual(
+    values = c("gray92", "gray80", "gray66", "gray50", "gray35")
+  ) +
+  geom_hline(
+    yintercept = mean(DF3$sueno, na.rm = TRUE),
+    color = "firebrick",
+    linewidth = 1,
+    linetype = "dashed"
+  ) +
+  annotate(
+    "text",
+    x = 5,
+    y = 12,
+    label = paste(
+      "Media =", round(mean(DF3$sueno, na.rm = TRUE), 2)
+    ),
+    color = "firebrick"
+  ) +
+  labs(
+    title = "Sueño según comprensión",
+    x = "Comprensión",
+    y = "Horas de sueño"
+  ) +
   theme(legend.position = "none")
 ```
 
@@ -231,17 +250,20 @@ ggplot(DF3, aes(x = comprension, y = sueno, fill = comprension)) +
 :::
 :::::
 
-<!-- Reusar: Probabilidad empirica (consultas por niveles y satisfaccion). Las dos variables con sus espacios muestrales, probabilidades empiricas y la validacion de que suman 1 -->
-
 ## IV.1 Probabilidad empírica
 
 ```{r prob-empirica}
 # Variable 1: consultas (mismo cálculo del informe)
-consultas_cat <- cut(DF3$consultas,
-                     breaks = c(0, 1, 11, 21, 31, Inf),
-                     right = FALSE,
-                     labels = c("Sin uso", "Bajo", "Moderado",
-                                "Frecuente", "Muy frecuente"))
+consultas_cat <- cut(
+  DF3$consultas,
+  breaks = c(0, 1, 11, 21, 31, Inf),
+  right = FALSE,
+  labels = c(
+    "Sin uso", "Bajo", "Moderado",
+    "Frecuente", "Muy frecuente"
+  )
+)
+
 frec_con <- table(consultas_cat)
 prob_con <- prop.table(frec_con)
 
@@ -268,12 +290,17 @@ $P(C_1) =$ `r round(prob_con["Sin uso"], 4)`; $P(C_2) =$ `r round(prob_con["Bajo
 #| fig-width: 6
 #| fig-height: 2.4
 
-ggplot(as.data.frame(prob_con), aes(x = consultas_cat, y = Freq)) +
+ggplot(
+  as.data.frame(prob_con),
+  aes(x = consultas_cat, y = Freq)
+) +
   geom_col(fill = "gray70", color = "black") +
   ylim(0, 0.6) +
-  labs(title = "Probabilidad empírica del nivel de uso de IA",
-       x = "Nivel de uso (según número de consultas)",
-       y = "Probabilidad") +
+  labs(
+    title = "Probabilidad empírica del nivel de uso de IA",
+    x = "Nivel de uso (según número de consultas)",
+    y = "Probabilidad"
+  ) +
   theme(plot.margin = margin(5, 5, 0, 5))
 ```
 
@@ -297,12 +324,17 @@ $P(S_1) =$ `r round(prob_sat["1"], 4)`; $P(S_2) =$ `r round(prob_sat["2"], 4)`; 
 #| fig-width: 6
 #| fig-height: 2.8
 
-ggplot(as.data.frame(prob_sat), aes(x = Var1, y = Freq)) +
+ggplot(
+  as.data.frame(prob_sat),
+  aes(x = Var1, y = Freq)
+) +
   geom_col(fill = "gray70", color = "black") +
   ylim(0, 0.6) +
-  labs(title = "Probabilidad empírica de la variable satisfacción",
-       x = "Nivel de satisfacción (1 = muy baja, 5 = muy alta)",
-       y = "Probabilidad")
+  labs(
+    title = "Probabilidad empírica de la variable satisfacción",
+    x = "Nivel de satisfacción (1 = muy baja, 5 = muy alta)",
+    y = "Probabilidad"
+  )
 ```
 
 El nivel más probable es 3, con `r round(prob_sat["3"], 4)`. La probabilidad de una satisfacción alta (4 o 5) es `r round(prob_sat["4"] + prob_sat["5"], 4)`, casi el doble que la de una baja (1 o 2), que es `r round(prob_sat["1"] + prob_sat["2"], 4)`.
@@ -313,18 +345,30 @@ El nivel más probable es 3, con `r round(prob_sat["3"], 4)`. La probabilidad de
 
 ```{r prob-condicional}
 # Probabilidades simples
-P_A <- nrow(DF3 %>% filter(comprension == "Alto")) / nrow(DF3)
-P_B <- nrow(DF3 %>% filter(consultas >= 5, consultas <= 15)) / nrow(DF3)
+P_A <- nrow(
+  DF3 %>% filter(comprension == "Alto")
+) / nrow(DF3)
+
+P_B <- nrow(
+  DF3 %>% filter(consultas >= 5, consultas <= 15)
+) / nrow(DF3)
 
 # Intersección y condicional
-P_A_inter_B <- nrow(DF3 %>% filter(comprension == "Alto", consultas >= 5, consultas <= 15)) / nrow(DF3)
-P_A_dado_B  <- P_A_inter_B / P_B
+P_A_inter_B <- nrow(
+  DF3 %>% filter(
+    comprension == "Alto",
+    consultas >= 5,
+    consultas <= 15
+  )
+) / nrow(DF3)
+
+P_A_dado_B <- P_A_inter_B / P_B
 
 # Propiedades
-P_A_U_B          <- P_A + P_B - P_A_inter_B
-P_A_comp         <- 1 - P_A
-P_B_comp         <- 1 - P_B
-P_A_U_B_comp     <- 1 - P_A_U_B
+P_A_U_B <- P_A + P_B - P_A_inter_B
+P_A_comp <- 1 - P_A
+P_B_comp <- 1 - P_B
+P_A_U_B_comp <- 1 - P_A_U_B
 P_A_inter_B_comp <- 1 - P_A_inter_B
 ```
 
@@ -343,23 +387,13 @@ Se analizará la probabilidad del evento A dado el evento B.
 
 #### Por medio de la intersección
 
-Aproximación con 3 decimales:
-$P(A\cap B)=$ `r round(P_A_inter_B, 3)` $\neq$ $P(A) * P(B)=$ `r round(P_A * P_B, 3)`
-
-Aproximación con 2 decimales:
-$P(A\cap B)=$ `r round(P_A_inter_B, 2)` $\neq$ $P(A) * P(B)=$ `r round(P_A * P_B, 2)`
+$P(A\cap B)=$ `r round(P_A_inter_B, 4)` $\neq$ $P(A)P(B)=$ `r round(P_A * P_B, 4)`.
 
 #### Por medio de la probabilidad condicional
 
-Aproximación con 3 decimales:
+$P(A|B)=$ `r round(P_A_dado_B, 4)` $\neq P(A)=$ `r round(P_A, 4)`.
 
-$P(A|B)=\frac{P(A\cap B)}{P(B)}=$ `r round(P_A_dado_B, 3)` $\neq P(A) =$ `r round(P_A, 3)`
-
-Aproximación con 2 decimales:
-
-$P(A|B)=\frac{P(A\cap B)}{P(B)}=$ `r round(P_A_dado_B, 2)` $\neq P(A) =$ `r round(P_A, 2)`
-
-Ambos pares de resultados han sido diferentes para la aproximación de 2 y 3 decimales, por lo cual decimos que los eventos A y B son **dependientes**.
+Los valores son diferentes en la muestra, pero la diferencia es pequeña y no prueba dependencia en toda la población.
 :::
 
 ::: {.column width="52%"}
@@ -372,13 +406,21 @@ Procederemos a mostrar las propiedades de los eventos simples $A$ (nivel de comp
 - **Complementos:** $P(A^c)=$ `r round(P_A_comp, 4)` y $P(B^c)=$ `r round(P_B_comp, 4)`
 - **De Morgan (unión):** $P((A\cup B)^c)=1-P(A\cup B)=$ `r round(P_A_U_B_comp, 4)`
 - **De Morgan (intersección):** $P((A\cap B)^c)=1-P(A\cap B)=$ `r round(P_A_inter_B_comp, 4)`
+- **Diferencias:** $P(A\setminus B)=$ `r round(P_A - P_A_inter_B, 4)`; $P(B\setminus A)=$ `r round(P_B - P_A_inter_B, 4)`.
+- **Diferencia simétrica:** $P(A\triangle B)=$ `r round(P_A_U_B - P_A_inter_B, 4)`.
 
 El **`r round(P_A_U_B * 100, 2)`%** de los registros tiene comprensión alta, entre 5 y 15 consultas, o ambas.
 
 ```{r grafico-dependencia}
-# P(A|B^c): comprensión Alto entre los registros FUERA del rango [5, 15]
-P_A_dado_noB <- nrow(DF3 %>% filter(comprension == "Alto", consultas < 5 | consultas > 15)) /
-  nrow(DF3 %>% filter(consultas < 5 | consultas > 15))
+# P(A|B^c): comprensión Alto entre los registros fuera del rango
+P_A_dado_noB <- nrow(
+  DF3 %>% filter(
+    comprension == "Alto",
+    consultas < 5 | consultas > 15
+  )
+) / nrow(
+  DF3 %>% filter(consultas < 5 | consultas > 15)
+)
 
 datos_grafico <- data.frame(
   Probabilidad = c("P(A|Bc)", "P(A|B)"),
@@ -387,34 +429,60 @@ datos_grafico <- data.frame(
 
 ggplot(datos_grafico, aes(x = Probabilidad, y = Valor)) +
   geom_col(fill = "steelblue", width = 0.4) +
-  geom_hline(yintercept = P_A, color = "red", linetype = "dashed", linewidth = 1) +
-  annotate("text", x = 2.4, y = P_A + 0.015, label = "P(A)", color = "red", size = 6) +
+  geom_hline(
+    yintercept = P_A,
+    color = "red",
+    linetype = "dashed",
+    linewidth = 1
+  ) +
+  annotate(
+    "text",
+    x = 2.4,
+    y = P_A + 0.015,
+    label = "P(A)",
+    color = "red",
+    size = 6
+  ) +
   scale_x_discrete(limits = c("P(A|Bc)", "P(A|B)")) +
   ylim(0, 0.25) +
-  labs(title = "Probabilidad de A tras la ocurrencia de B o Bc",
-       x = NULL, y = "Probabilidad") +
+  labs(
+    title = "Probabilidad de A tras la ocurrencia de B o Bc",
+    x = NULL,
+    y = "Probabilidad"
+  ) +
   theme_minimal(base_size = 18)
 ```
 :::
 :::::
 
-<!-- falta ampliar las propiedades con su formula y su valor, por ejemplo la diferencia A−B y B−A, la diferencia simetrica AΔB, P(A ∩ Bc), la regla del producto y la probabilidad total. Escribir cada formula en LaTeX sin espacios para que cuente como una sola palabra -->
-
-
-
 ## IV.2 Teorema de Bayes e interpretación
 
 ```{r bayes}
-# P(B|A): probabilidad de B dentro de los registros con comprensión Alto
-P_B_dado_A <- nrow(DF3 %>% filter(comprension == "Alto", consultas >= 5, consultas <= 15)) /
-  nrow(DF3 %>% filter(comprension == "Alto"))
+# P(B|A): probabilidad de B dentro de comprensión Alto
+P_B_dado_A <- nrow(
+  DF3 %>% filter(
+    comprension == "Alto",
+    consultas >= 5,
+    consultas <= 15
+  )
+) / nrow(
+  DF3 %>% filter(comprension == "Alto")
+)
 
-# P(B|A^c): probabilidad de B dentro de los registros sin comprensión Alto
-P_B_dado_noA <- nrow(DF3 %>% filter(comprension != "Alto", consultas >= 5, consultas <= 15)) /
-  nrow(DF3 %>% filter(comprension != "Alto"))
+# P(B|A^c): probabilidad de B sin comprensión Alto
+P_B_dado_noA <- nrow(
+  DF3 %>% filter(
+    comprension != "Alto",
+    consultas >= 5,
+    consultas <= 15
+  )
+) / nrow(
+  DF3 %>% filter(comprension != "Alto")
+)
 
 # Teorema de Bayes expandido
-P_bayes <- (P_B_dado_A * P_A) / (P_B_dado_A * P_A + P_B_dado_noA * P_A_comp)
+P_bayes <- (P_B_dado_A * P_A) /
+  (P_B_dado_A * P_A + P_B_dado_noA * P_A_comp)
 ```
 
 ::::: columns
@@ -425,8 +493,7 @@ Aplicando el Teorema de Bayes para calcular la probabilidad del nivel de compren
 
 $P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c)} =$ `r round(P_A_dado_B, 7)`
 
-$P(B|A)=$ `r round(P_B_dado_A, 7)`\
-$P(B|A^c)=$ `r round(P_B_dado_noA, 7)`\
+$P(B|A)=$ `r round(P_B_dado_A, 7)`; $P(B|A^c)=$ `r round(P_B_dado_noA, 7)`.
 
 Aplicamos el Teorema de Bayes expandido:
 
@@ -450,20 +517,26 @@ De los resultados del Teorema de Bayes se aprecia que la probabilidad de que el 
 
 ```{r geo-calculos, echo=FALSE}
 exito <- DF3$consultas > 20
-p <- mean(exito); q <- 1 - p; N <- length(exito)
-P_X5    <- prod(c(q, q, q, q, p))   # FFFFÉ
-P_acum5 <- pgeom(4, p)              # P(X <= 5)
+p <- mean(exito)
+q <- 1 - p
+N <- length(exito)
+
+P_X5 <- prod(c(q, q, q, q, p))
+P_acum5 <- pgeom(4, p)
 
 set.seed(6)
-mezcla <- sample(exito)
+mezcla <- sample(exito, size = 3000, replace = TRUE)
 espera <- diff(c(0, which(mezcla)))
-k_geo  <- 1:15
-emp_geo <- as.numeric(table(factor(espera, levels = k_geo))) / length(espera)
+k_geo <- 1:15
+
+emp_geo <- as.numeric(
+  table(factor(espera, levels = k_geo))
+) / length(espera)
 ```
 
 ::::: columns
 :::: {.column width="50%"}
-**Caso:** Al revisar registros seleccionados al azar, uno tras otro, ¿cuál es la probabilidad de que el primer éxito (É) sea el 5.º registro?
+**Caso:** Al revisar registros seleccionados al azar, uno tras otro y con reposición, ¿cuál es la probabilidad de que el primer éxito (É) sea el 5.º registro?
 
 Éxito (É): más de 20 consultas a la IA. Fracaso (F): 20 o menos.
 
@@ -477,11 +550,21 @@ emp_geo <- as.numeric(table(factor(espera, levels = k_geo))) / length(espera)
 $\Omega=\{\text{É},\text{FÉ},\text{FFÉ},\text{FFFÉ},\text{FFFFÉ},\dots\}$ con $P(X=k)=(1-p)^{k-1}p$
 
 ```{r geo-props, echo=FALSE}
-knitr::kable(data.frame(
-  Propiedad = c("E(X) = 1/p", "Var(X) = (1-p)/p²", "SD(X) = √Var(X)"),
-  Modelo = round(c(1 / p, q / p^2, sqrt(q) / p), 4),
-  Datos  = round(c(mean(espera), var(espera), sd(espera)), 4)
-))
+knitr::kable(
+  data.frame(
+    Propiedad = c(
+      "E(X) = 1/p",
+      "Var(X) = (1-p)/p²",
+      "SD(X) = √Var(X)"
+    ),
+    Modelo = round(
+      c(1 / p, q / p^2, sqrt(q) / p), 4
+    ),
+    Simulación = round(
+      c(mean(espera), var(espera), sd(espera)), 4
+    )
+  )
+)
 ```
 
 ::: {style="background:#f0f0f0; padding:6px 10px; border-radius:6px;"}
@@ -497,18 +580,34 @@ Hay `r round(P_X5 * 100, 2)`% de probabilidad de que el primer registro con más
 ```{r geo-graficos, echo=FALSE, fig.width=6, fig.height=5.5}
 par(mfrow = c(3, 1), mar = c(4, 4, 2.5, 1))
 
-barplot(rbind(dgeom(k_geo - 1, p), emp_geo), beside = TRUE, names.arg = k_geo,
-        main = "Distribución de X: modelo vs datos",
-        xlab = "Registros revisados hasta el primer éxito (k)", ylab = "Probabilidad",
-        legend.text = c("Modelo", "Datos"), args.legend = list(x = "topright", cex = 0.8))
+barplot(
+  rbind(dgeom(k_geo - 1, p), emp_geo),
+  beside = TRUE,
+  names.arg = k_geo,
+  main = "Distribución de X: modelo vs simulación",
+  xlab = "Registros revisados hasta el primer éxito (k)",
+  ylab = "Probabilidad",
+  legend.text = c("Modelo", "Simulación"),
+  args.legend = list(x = "topright", cex = 0.8)
+)
 
-plot(k_geo, pgeom(k_geo - 1, p), type = "s",
-     main = "Acumulada izquierda: P(X ≤ k)",
-     xlab = "Registros revisados (k)", ylab = "Probabilidad", ylim = c(0, 1))
+plot(
+  k_geo, pgeom(k_geo - 1, p),
+  type = "s",
+  main = "Acumulada izquierda: P(X ≤ k)",
+  xlab = "Registros revisados (k)",
+  ylab = "Probabilidad",
+  ylim = c(0, 1)
+)
 
-plot(k_geo, q^(k_geo - 1), type = "s",
-     main = "Acumulada derecha: P(X ≥ k)",
-     xlab = "Registros revisados (k)", ylab = "Probabilidad", ylim = c(0, 1))
+plot(
+  k_geo, q^(k_geo - 1),
+  type = "s",
+  main = "Acumulada derecha: P(X ≥ k)",
+  xlab = "Registros revisados (k)",
+  ylab = "Probabilidad",
+  ylim = c(0, 1)
+)
 ```
 ::::
 :::::
@@ -516,26 +615,37 @@ plot(k_geo, q^(k_geo - 1), type = "s",
 ## IV.4 Variable aleatoria discreta: binomial {.smaller}
 
 ```{r bin-calculos, echo=FALSE}
-n_tar   <- 10
+n_tar <- 10
 exito_t <- DF3$tareas >= 3
-p_tar   <- mean(exito_t)
-E_tar   <- n_tar * p_tar
-V_tar   <- n_tar * p_tar * (1 - p_tar)
-P_X3    <- dbinom(3, n_tar, p_tar)   # P(X = 3)
-P_le2   <- pbinom(2, n_tar, p_tar)   # P(X <= 2)
+p_tar <- mean(exito_t)
+
+E_tar <- n_tar * p_tar
+V_tar <- n_tar * p_tar * (1 - p_tar)
+
+P_X3 <- dbinom(3, n_tar, p_tar)
+P_le2 <- pbinom(2, n_tar, p_tar)
 
 set.seed(6)
-mezcla_t <- sample(exito_t)
-n_gr    <- floor(length(mezcla_t) / n_tar)
-grupos  <- matrix(mezcla_t[1:(n_gr * n_tar)], nrow = n_tar)
-exitos  <- colSums(grupos)
-k_bin   <- 0:n_tar
-emp_bin <- as.numeric(table(factor(exitos, levels = k_bin))) / length(exitos)
+n_gr <- 1000
+mezcla_t <- sample(
+  exito_t,
+  size = n_gr * n_tar,
+  replace = TRUE
+)
+
+grupos <- matrix(mezcla_t, nrow = n_tar)
+exitos <- colSums(grupos)
+
+k_bin <- 0:n_tar
+
+emp_bin <- as.numeric(
+  table(factor(exitos, levels = k_bin))
+) / length(exitos)
 ```
 
 ::::: columns
 :::: {.column width="50%"}
-**Caso:** De 10 registros seleccionados al azar, ¿cuál es la probabilidad de que exactamente 3 sean éxito (É)?
+**Caso:** De 10 registros seleccionados al azar con reposición, ¿cuál es la probabilidad de que exactamente 3 sean éxito (É)?
 
 Éxito (É): día con 3 o más tareas en las que la IA ahorró tiempo.
 
@@ -549,11 +659,21 @@ emp_bin <- as.numeric(table(factor(exitos, levels = k_bin))) / length(exitos)
 $\Omega=\{0,1,2,\dots,10\}$ con $P(X=k)=\binom{10}{k}p^k(1-p)^{10-k}$
 
 ```{r bin-props, echo=FALSE}
-knitr::kable(data.frame(
-  Propiedad = c("E(X) = np", "Var(X) = np(1-p)", "SD(X) = √Var(X)"),
-  Modelo = round(c(E_tar, V_tar, sqrt(V_tar)), 4),
-  Datos  = round(c(mean(exitos), var(exitos), sd(exitos)), 4)
-))
+knitr::kable(
+  data.frame(
+    Propiedad = c(
+      "E(X) = np",
+      "Var(X) = np(1-p)",
+      "SD(X) = √Var(X)"
+    ),
+    Modelo = round(
+      c(E_tar, V_tar, sqrt(V_tar)), 4
+    ),
+    Simulación = round(
+      c(mean(exitos), var(exitos), sd(exitos)), 4
+    )
+  )
+)
 ```
 
 ::: {style="background:#f0f0f0; padding:6px 10px; border-radius:6px;"}
@@ -569,30 +689,200 @@ Hay `r round(P_X3 * 100, 2)`% de probabilidad de que exactamente 3 de los 10 reg
 ```{r bin-graficos, echo=FALSE, fig.width=6, fig.height=5.5}
 par(mfrow = c(3, 1), mar = c(4, 4, 2.5, 1))
 
-barplot(rbind(dbinom(k_bin, n_tar, p_tar), emp_bin), beside = TRUE, names.arg = k_bin,
-        main = "Distribución de X: modelo vs datos",
-        xlab = "Registros con 3 o más tareas (de 10)", ylab = "Probabilidad",
-        legend.text = c("Modelo", "Datos"), args.legend = list(x = "topright", cex = 0.8))
+barplot(
+  rbind(dbinom(k_bin, n_tar, p_tar), emp_bin),
+  beside = TRUE,
+  names.arg = k_bin,
+  main = "Distribución de X: modelo vs simulación",
+  xlab = "Registros con 3 o más tareas (de 10)",
+  ylab = "Probabilidad",
+  legend.text = c("Modelo", "Simulación"),
+  args.legend = list(x = "topright", cex = 0.8)
+)
 
-plot(k_bin, pbinom(k_bin, n_tar, p_tar), type = "s",
-     main = "Acumulada izquierda: P(X ≤ k)",
-     xlab = "Registros con 3 o más tareas (k)", ylab = "Probabilidad", ylim = c(0, 1))
+plot(
+  k_bin, pbinom(k_bin, n_tar, p_tar),
+  type = "s",
+  main = "Acumulada izquierda: P(X ≤ k)",
+  xlab = "Registros con 3 o más tareas (k)",
+  ylab = "Probabilidad",
+  ylim = c(0, 1)
+)
 
-plot(k_bin, pbinom(k_bin - 1, n_tar, p_tar, lower.tail = FALSE), type = "s",
-     main = "Acumulada derecha: P(X ≥ k)",
-     xlab = "Registros con 3 o más tareas (k)", ylab = "Probabilidad", ylim = c(0, 1))
+plot(
+  k_bin,
+  pbinom(k_bin - 1, n_tar, p_tar, lower.tail = FALSE),
+  type = "s",
+  main = "Acumulada derecha: P(X ≥ k)",
+  xlab = "Registros con 3 o más tareas (k)",
+  ylab = "Probabilidad",
+  ylim = c(0, 1)
+)
 ```
 ::::
 :::::
 
-## IV.3 Variable aleatoria continua: normal {.smaller}
+## IV.5 Variable aleatoria continua: normal {.smaller}
 
-<!-- Reusar: VA continua 1 (horas de sueno). Validacion con los datos (histograma + curva teorica), por que este modelo, parametros, propiedades y un ejemplo -->
+```{r normal-calculos}
+media_ <- mean(DF3$sueno, na.rm = TRUE)
+mediana_ <- median(DF3$sueno, na.rm = TRUE)
+sd_ <- sd(DF3$sueno, na.rm = TRUE)
+var_ <- var(DF3$sueno, na.rm = TRUE)
 
-## IV.3 Variable aleatoria continua: exponencial {.smaller}
+cv_ <- sd_ / media_ * 100
 
-<!-- Reusar: VA continua 2 (horas de estudio). OJO: en el avance ellos mismos descartaron la exponencial (varianzas distintas); justificar mejor o cambiar el modelo. Validacion con los datos (histograma + curva teorica), propiedades y un ejemplo -->
+prob_4_teo <- pnorm(
+  4, mean = media_, sd = sd_
+)
+
+prob_4_empirica <- mean(
+  DF3$sueno <= 4, na.rm = TRUE
+)
+```
+
+::::: columns
+::: {.column width="50%"}
+**Variable de estudio:** horas de sueño de la noche anterior.
+
+**Modelo propuesto:** $X\sim N(\mu,\sigma)$, como aproximación.
+
+**Validación:** la media (`r round(media_, 3)` h) está cerca de la mediana (`r round(mediana_, 2)` h), pero la simetría no es exacta. Se descartaron la exponencial y la uniforme para esta variable, como se explicó en el informe.
+
+**Propiedades**
+
+- $E(X)=\mu=$ `r round(media_, 3)` h.
+- $Var(X)=\sigma^2=$ `r round(var_, 3)` h².
+- $SD(X)=\sigma=$ `r round(sd_, 3)` h.
+- $CV=$ `r round(cv_, 2)`%.
+
+**Ejemplo:** ¿cuál es la probabilidad de dormir 4 horas o menos?
+
+- **Teórica:** $P(X\le 4)=$ `r round(100 * prob_4_teo, 2)`%.
+- **Empírica:** `r round(100 * prob_4_empirica, 2)`%.
+
+La diferencia es de `r round(100 * abs(prob_4_teo - prob_4_empirica), 2)` puntos porcentuales. El modelo sirve como aproximación.
+:::
+
+::: {.column width="50%"}
+```{r normal-grafico, fig.width=6, fig.height=4.4}
+hist(
+  DF3$sueno,
+  probability = TRUE,
+  col = "gray80",
+  border = "white",
+  main = "Horas de sueño: datos y normal",
+  xlab = "Horas de sueño",
+  ylab = "Densidad"
+)
+
+curve(
+  dnorm(x, mean = media_, sd = sd_),
+  add = TRUE,
+  from = min(DF3$sueno),
+  to = max(DF3$sueno),
+  col = "forestgreen",
+  lwd = 2
+)
+
+legend(
+  "topright",
+  legend = "Normal (aproximación)",
+  col = "forestgreen",
+  lty = 1,
+  lwd = 2,
+  bty = "n"
+)
+```
+:::
+:::::
+
+## IV.6 Variable aleatoria continua: exponencial {.smaller}
+
+```{r exponencial-calculos}
+estudio <- DF3$estudio
+
+media_estudio <- mean(estudio, na.rm = TRUE)
+std_estudio <- sd(estudio, na.rm = TRUE)
+var_estudio <- var(estudio, na.rm = TRUE)
+
+lambda_estudio <- 1 / media_estudio
+var_exp_teorica <- 1 / lambda_estudio^2
+
+v1 <- pexp(
+  8, rate = lambda_estudio
+) - pexp(
+  5, rate = lambda_estudio
+)
+
+v2 <- mean(
+  estudio > 5 & estudio <= 8,
+  na.rm = TRUE
+)
+```
+
+::::: columns
+::: {.column width="50%"}
+**Variable de estudio:** horas efectivas de estudio.
+
+**Modelo propuesto:** $X\sim Exp(\lambda)$, como aproximación.
+
+**Validación:** la variable es no negativa y la gráfica muestra más registros con pocas horas que con muchas. La varianza del modelo (`r round(var_exp_teorica, 3)`) no coincide con la muestral (`r round(var_estudio, 3)`), por lo que el ajuste no es exacto.
+
+**Propiedades**
+
+- **Tasa:** $\lambda=1/\bar{x}=$ `r round(lambda_estudio, 6)` h⁻¹.
+- $E(X)=1/\lambda=$ `r round(media_estudio, 3)` h.
+- $Var(X)=1/\lambda^2=$ `r round(var_exp_teorica, 3)` h².
+- $SD(X)=1/\lambda=$ `r round(media_estudio, 3)` h; $CV=1$.
+
+**Ejemplo:** ¿cuál es la probabilidad de estudiar más de 5 y hasta 8 horas?
+
+- **Teórica:** $P(5<X\le 8)=$ `r round(100 * v1, 2)`%.
+- **Empírica:** `r round(100 * v2, 2)`%.
+
+La diferencia es de `r round(100 * abs(v1 - v2), 2)` puntos porcentuales.
+:::
+
+::: {.column width="50%"}
+```{r exponencial-grafico, fig.width=6, fig.height=4.4}
+hist(
+  estudio,
+  probability = TRUE,
+  col = "gray80",
+  border = "white",
+  main = "Horas de estudio: datos y exponencial",
+  xlab = "Horas de estudio",
+  ylab = "Densidad"
+)
+
+curve(
+  dexp(x, rate = lambda_estudio),
+  add = TRUE,
+  from = min(estudio),
+  to = max(estudio),
+  col = "dodgerblue",
+  lwd = 2
+)
+
+legend(
+  "topright",
+  legend = "Exponencial (aproximación)",
+  col = "dodgerblue",
+  lty = 1,
+  lwd = 2,
+  bty = "n"
+)
+```
+:::
+:::::
 
 ## V. Conclusiones {.smaller}
 
-<!-- 3 conclusiones consonantes con los objetivos y los resultados, mas limitaciones y que no hay causalidad. -->
+1. **Primera parte del estudio:** Después de limpiar los datos, vimos que los estudiantes de Estadística sección 1 usan la IA casi todos los días y para cosas distintas según el curso. Los que hacen más consultas suelen estudiar más horas y sentirse más satisfechos. Las horas de sueño casi no cambian según la comprensión.
+
+2. **Probabilidad:** El `r round(100 * mean(DF3$consultas >= 1 & DF3$consultas <= 10), 2)`% realiza entre 1 y 10 consultas diarias; el `r round(100 * mean(DF3$satisfaccion == 3), 2)`% reportó satisfacción de nivel 3. Entre quienes hicieron de 5 a 15 consultas, el `r round(100 * P_A_dado_B, 2)`% obtuvo comprensión Alto. Esto no asegura una comprensión alta.
+
+3. **Variables aleatorias:** Al revisar 5 registros o menos con reposición, hay un `r round(100 * P_acum5, 2)`% de probabilidad de encontrar uno con más de 20 consultas. La geométrica y la binomial se aplican a los casos planteados; la normal y la exponencial son aproximaciones de los datos.
+
+**Alcance:** son `r nrow(DF3)` registros de `r dplyr::n_distinct(DF3$email)` estudiantes, con mediciones repetidas. Las relaciones observadas no prueban que una variable cause la otra.
